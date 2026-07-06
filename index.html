@@ -32,17 +32,18 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .sr{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .si{flex:1;min-width:150px;padding:7px 11px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;outline:none;background:var(--surface);transition:border-color .12s}
 .si:hover{border-color:var(--text-muted)}
-.si:focus{border-color:var(--text-muted)}
+.si:focus{border-color:var(--border)}
 .sc2{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
 .sl{max-height:200px;overflow-y:auto;border:1px solid var(--border-light);border-radius:var(--radius-sm);background:var(--surface);-webkit-overflow-scrolling:touch;box-shadow:inset 0 1px 3px rgba(44,42,38,.04)}
 #RC .panel.active{padding-top:6px}
 .si2{display:flex;align-items:center;gap:9px;padding:7px 11px;cursor:pointer;border-bottom:1px solid var(--border-light);font-size:13px;-webkit-tap-highlight-color:transparent;transition:background .1s}
 .si2:last-child{border-bottom:none}
 .si2:hover{background:var(--accent-bg);box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}
-details, summary, .si2, .card, .sl, .id-bar, #studentSelect{outline:none}
-details:focus, summary:focus, .si2:focus, .card:focus, .sl:focus, .id-bar:focus, #studentSelect:focus{outline:none!important}
-details:focus-visible, summary:focus-visible, .si2:focus-visible, .card:focus-visible, .sl:focus-visible{outline:none!important}
-details::-moz-focus-inner, summary::-moz-focus-inner{border:0}
+details, summary, .si2, .card, .sl, .id-bar, #studentSelect, .si, input, select, textarea{outline:none}
+details:focus, summary:focus, .si2:focus, .card:focus, .sl:focus, .id-bar:focus, #studentSelect:focus, .si:focus, input:focus, select:focus, textarea:focus{outline:none!important;box-shadow:none!important}
+details:focus-visible, summary:focus-visible, .si2:focus-visible, .card:focus-visible, .sl:focus-visible, .si:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{outline:none!important;box-shadow:none!important}
+details::-moz-focus-inner, summary::-moz-focus-inner, input::-moz-focus-inner{border:0}
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus{-webkit-box-shadow:0 0 0 30px var(--surface) inset!important;-webkit-text-fill-color:var(--text)!important}
 
 .no-r{padding:20px;text-align:center;color:var(--text-light);font-size:13px}
 #stList{margin-top:8px}
@@ -427,7 +428,7 @@ var sel={},so=[],ci=0,q='',sq='',ss='trim',at='iv';
 var ni={};for(var _=0;_<STUDENTS.length;_++)ni[STUDENTS[_]]=_;
 function hs(n){return Object.prototype.hasOwnProperty.call(sel,n);}
 function gc(n){var u=[12,28,42,56,70,84],h=u[ni[n]%u.length];return ['hsl('+h+',82%,85%)','hsl('+h+',62%,18%)','hsl('+h+',62%,18%)'];}
-function ti(i,e){if(e){e.stopPropagation();e.preventDefault()}tog(STUDENTS[i]);if(document.activeElement)document.activeElement.blur()}
+function ti(i,e){if(e){e.stopPropagation();e.preventDefault()}tog(STUDENTS[i]);var inp=document.getElementById('sIn');if(inp)inp.blur()}
 function he(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function sN(c){return c.replace(/\s*[-\u2013]\s*(Dr\.?|Prof\.?|New|Visiting|New\/Visiting)[\s\S]*$/i,'').replace(/\s*\([^)]*\)/i,'').trim();}
 function fN(c){var m=c.match(/[-\u2013(]\s*((Dr\.?|Prof\.?|New[\/\s]*Visiting Faculty|New Faculty|Visiting Faculty)[\s\S]+)/i);return m?m[1].replace(/\s*\)\s*$/,'').trim():'';}
