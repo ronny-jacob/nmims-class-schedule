@@ -11,8 +11,10 @@
         "BV_B",
         "IAPM_B",
         "MC_B",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Heeral Tandon",
@@ -25,8 +27,10 @@
         "IMC",
         "PRS",
         "PS",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Shubh Gupta",
@@ -39,8 +43,10 @@
         "BV_B",
         "IAPM_B",
         "FD",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Kanishk Mehta",
@@ -53,8 +59,10 @@
         "IMC",
         "PS",
         "MC_B",
-        "LD"
-      ]
+        "LD",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Ishita Sinha",
@@ -67,8 +75,10 @@
         "BV_B",
         "IAPM_B",
         "FD",
-        "CB"
-      ]
+        "CB",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Lakshmi S",
@@ -81,12 +91,14 @@
         "MA",
         "PS",
         "MC_B",
-        "AI"
-      ]
+        "AI",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Deepti Yendluri",
-      "roll": "80012500077",
+      "roll": "H009",
       "email": "DEEPTI.YENDLURI77@nmims.in",
       "major": "Finance",
       "minor": "Analytics;",
@@ -95,8 +107,10 @@
         "BV_B",
         "IAPM_B",
         "CBM",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Abhishek Kumar",
@@ -109,8 +123,10 @@
         "IMC",
         "MA",
         "PS",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Hanima Ahuja",
@@ -123,8 +139,10 @@
         "IMC",
         "MA",
         "PS",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Dibyendu Das",
@@ -137,8 +155,10 @@
         "BV_B",
         "IAPM_B",
         "FD",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Devanshi Kyal",
@@ -151,8 +171,10 @@
         "IMC",
         "MA",
         "PS",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Mahi Kinariwala",
@@ -165,8 +187,10 @@
         "BV_B",
         "IAPM_B",
         "MC_B",
-        "DAB"
-      ]
+        "DAB",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Ankit Ghoradkar",
@@ -179,8 +203,10 @@
         "IMC",
         "MA",
         "PS",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Hritik Kumar",
@@ -193,8 +219,10 @@
         "BV_B",
         "IAPM_B",
         "CBM",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Vidhu P",
@@ -207,8 +235,10 @@
         "PRS",
         "MC_B",
         "AI",
-        "DAB"
-      ]
+        "DAB",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Vaishnavi Dudem",
@@ -221,8 +251,10 @@
         "BV_B",
         "IAPM_B",
         "MC_B",
-        "AI"
-      ]
+        "AI",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Harshita Pradhan",
@@ -235,8 +267,10 @@
         "IAPM_B",
         "CBM",
         "MC_B",
-        "DAB"
-      ]
+        "DAB",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "HARMIT SINGH",
@@ -249,8 +283,10 @@
         "BV_B",
         "IAPM_B",
         "FD",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Kanishka Gupta",
@@ -263,8 +299,10 @@
         "IMC",
         "MA",
         "PS",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Ishan Sanghavi",
@@ -277,8 +315,10 @@
         "BV_B",
         "FD",
         "MC_B",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Savitha Sri S",
@@ -291,8 +331,10 @@
         "BV_B",
         "IAPM_B",
         "FD",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Aman Shahin",
@@ -305,8 +347,10 @@
         "MA",
         "PS",
         "MC_B",
-        "AI"
-      ]
+        "AI",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Rishita Ramdeo",
@@ -319,8 +363,10 @@
         "BV_B",
         "IAPM_B",
         "MC_B",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Isha Jain",
@@ -333,8 +379,10 @@
         "IMC",
         "MA",
         "PS",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Niladri Kundu",
@@ -347,8 +395,10 @@
         "BV_B",
         "IAPM_B",
         "FD",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Ayush Dutta",
@@ -361,8 +411,10 @@
         "BV_B",
         "IAPM_B",
         "MA",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Swapnil Tiwari",
@@ -375,8 +427,10 @@
         "BV_B",
         "IAPM_B",
         "FD",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Manav Malhotra",
@@ -389,8 +443,10 @@
         "MA",
         "PRS",
         "PS",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Insha Ali",
@@ -403,8 +459,10 @@
         "MA",
         "PS",
         "MC_B",
-        "AI"
-      ]
+        "AI",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Nihal Bibikar",
@@ -417,8 +475,10 @@
         "IMC",
         "MA",
         "PS",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Avantika sain",
@@ -431,8 +491,10 @@
         "IMC",
         "MA",
         "PRS",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Aastha Saini",
@@ -445,8 +507,10 @@
         "MA",
         "PS",
         "MC_B",
-        "AI"
-      ]
+        "AI",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Suraj Satpute",
@@ -459,8 +523,10 @@
         "BV_B",
         "IAPM_B",
         "MC_B",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Gaurav Wadhwa",
@@ -473,8 +539,10 @@
         "IMC",
         "MA",
         "PS",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "SANSKAR MAHALKA",
@@ -487,8 +555,10 @@
         "IMC",
         "MA",
         "PS",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Antara Gupta",
@@ -501,8 +571,10 @@
         "BV_B",
         "IAPM_B",
         "MC_B",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Sudhanshu Chauhan",
@@ -515,8 +587,10 @@
         "BV_B",
         "IAPM_B",
         "MC_B",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Masoom Singh",
@@ -529,8 +603,10 @@
         "IMC",
         "MA",
         "PS",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Jyoti Bikas Das",
@@ -543,8 +619,10 @@
         "MA",
         "PRS",
         "PS",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Pramiti Gupta",
@@ -557,8 +635,10 @@
         "MA",
         "PS",
         "MC_B",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Paridhi Rungta",
@@ -571,8 +651,10 @@
         "MA",
         "PRS",
         "PS",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Vishnu Vyas",
@@ -585,8 +667,10 @@
         "BV_B",
         "IAPM_B",
         "CBM",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Monish Das",
@@ -599,8 +683,10 @@
         "IMC",
         "MA",
         "PS",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Naman Jain",
@@ -613,8 +699,10 @@
         "BV_B",
         "IAPM_B",
         "MC_B",
-        "DAB"
-      ]
+        "DAB",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Pratham Bagri",
@@ -627,8 +715,10 @@
         "IMC",
         "PS",
         "MC_B",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Ajay Vigneshwar A",
@@ -641,8 +731,10 @@
         "BV_B",
         "IAPM_B",
         "MC_B",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Anannya Gupta",
@@ -655,8 +747,10 @@
         "BV_B",
         "IAPM_B",
         "MC_B",
-        "DAB"
-      ]
+        "DAB",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Ankush P. Karwa",
@@ -669,8 +763,10 @@
         "BV_B",
         "IAPM_B",
         "MA",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Raunit Raj",
@@ -683,8 +779,10 @@
         "BV_B",
         "IAPM_B",
         "CBM",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Arsh Vardhan Sinha",
@@ -697,8 +795,10 @@
         "IMC",
         "PS",
         "MC_B",
-        "AI"
-      ]
+        "AI",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Pilla Venkata Sai Tharun",
@@ -711,8 +811,10 @@
         "IMC",
         "MA",
         "MC_B",
-        "AI"
-      ]
+        "AI",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Shreya Gupta",
@@ -725,8 +827,10 @@
         "BV_B",
         "IAPM_B",
         "MC_B",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Aby K Mathai",
@@ -739,8 +843,10 @@
         "PRS",
         "MC_B",
         "AI",
-        "DAB"
-      ]
+        "DAB",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Krish Siddharth Negi",
@@ -753,8 +859,10 @@
         "IMC",
         "PS",
         "MC_B",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Amir Rahman",
@@ -767,8 +875,10 @@
         "IMC",
         "MA",
         "PS",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Rituparna Sharma",
@@ -781,8 +891,10 @@
         "IMC",
         "PS",
         "MC_B",
-        "AI"
-      ]
+        "AI",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Astha kejriwal",
@@ -795,8 +907,10 @@
         "BV_B",
         "IAPM_B",
         "MC_B",
-        "DAB"
-      ]
+        "DAB",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Rohit ranjan",
@@ -809,8 +923,10 @@
         "BV_B",
         "IAPM_B",
         "MC_B",
-        "DAB"
-      ]
+        "DAB",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "pratham Kamath",
@@ -823,8 +939,10 @@
         "IMC",
         "PRS",
         "PS",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Tushita Mishra",
@@ -837,8 +955,10 @@
         "BV_B",
         "IAPM_B",
         "MA",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Swechha Jaiswal",
@@ -851,8 +971,10 @@
         "BV_B",
         "IAPM_B",
         "MC_B",
-        "DAB"
-      ]
+        "DAB",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Ashish Gupta",
@@ -865,8 +987,10 @@
         "IMC",
         "MA",
         "PS",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Jeel Shah",
@@ -879,8 +1003,10 @@
         "BV_B",
         "IAPM_B",
         "FD",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Vishnu P S",
@@ -893,8 +1019,10 @@
         "IAPM_B",
         "CBM",
         "MC_B",
-        "LD"
-      ]
+        "LD",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Shraddha Randive",
@@ -907,8 +1035,10 @@
         "BV_B",
         "IAPM_B",
         "FD",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Rohit Ramakant Patil",
@@ -921,8 +1051,10 @@
         "MA",
         "PRS",
         "PS",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Akella Venkata Karthik",
@@ -935,8 +1067,10 @@
         "BV_B",
         "IAPM_B",
         "CBM",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Himanshi Tanwar",
@@ -949,8 +1083,10 @@
         "BV_B",
         "IAPM_B",
         "CBM",
-        "MC_B"
-      ]
+        "MC_B",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Pratham Goel",
@@ -963,8 +1099,10 @@
         "BV_B",
         "IAPM_B",
         "MC_B",
-        "DAB"
-      ]
+        "DAB",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Prerna Tekade",
@@ -977,8 +1115,10 @@
         "BV_B",
         "IAPM_B",
         "MC_A",
-        "DAB"
-      ]
+        "DAB",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Kshitiz Gupta",
@@ -991,8 +1131,10 @@
         "BV_B",
         "IAPM_B",
         "MC_A",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Tushar soni",
@@ -1005,8 +1147,10 @@
         "BV_B",
         "IAPM_B",
         "MA",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "SUJITH REDDY YEDULLA",
@@ -1019,8 +1163,10 @@
         "MA",
         "PRS",
         "AI",
-        "DAB"
-      ]
+        "DAB",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Srishti Shinde",
@@ -1033,8 +1179,10 @@
         "BV_A",
         "IAPM_A",
         "CBM",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Shwetha R",
@@ -1047,8 +1195,10 @@
         "IMC",
         "PS",
         "MC_A",
-        "AI"
-      ]
+        "AI",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Ronny Jacob",
@@ -1061,8 +1211,10 @@
         "MA",
         "PS",
         "MC_A",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Prateek Gaur",
@@ -1075,8 +1227,10 @@
         "BV_A",
         "IAPM_A",
         "FD",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Tejaswita",
@@ -1089,8 +1243,10 @@
         "BV_A",
         "IAPM_A",
         "MC_A",
-        "DAB"
-      ]
+        "DAB",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Priyanshu Mittal",
@@ -1103,8 +1259,10 @@
         "BV_A",
         "IAPM_A",
         "FD",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Mahika Vasandani",
@@ -1117,8 +1275,10 @@
         "IMC",
         "MA",
         "PS",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Kishore P",
@@ -1131,8 +1291,10 @@
         "BV_A",
         "IAPM_A",
         "ENT",
-        "AI"
-      ]
+        "AI",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Anusha Heliwal",
@@ -1145,8 +1307,10 @@
         "BV_A",
         "IAPM_A",
         "MC_A",
-        "DAB"
-      ]
+        "DAB",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Jash Vaja",
@@ -1159,8 +1323,10 @@
         "MA",
         "PRS",
         "PS",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Koustav Jana",
@@ -1173,8 +1339,10 @@
         "IMC",
         "PS",
         "MC_A",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Medha Jha",
@@ -1187,8 +1355,10 @@
         "BV_A",
         "IAPM_A",
         "CBM",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Gaurang Maheshwari",
@@ -1201,8 +1371,10 @@
         "BV_A",
         "IAPM_A",
         "CBM",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Shrishti Mittal",
@@ -1215,8 +1387,10 @@
         "IMC",
         "PS",
         "MC_A",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Dhairya Mehta",
@@ -1229,8 +1403,10 @@
         "BV_A",
         "IAPM_A",
         "FD",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Gaurav Agarwal",
@@ -1243,8 +1419,10 @@
         "IMC",
         "MA",
         "PRS",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Varun Patwary",
@@ -1257,8 +1435,10 @@
         "BV_A",
         "IAPM_A",
         "CBM",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "I Dharshana",
@@ -1271,8 +1451,10 @@
         "BV_A",
         "IAPM_A",
         "MC_A",
-        "DAB"
-      ]
+        "DAB",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Mudit Mittal",
@@ -1285,8 +1467,10 @@
         "BV_A",
         "IAPM_A",
         "CBM",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Umang Gupta",
@@ -1299,8 +1483,10 @@
         "BV_A",
         "IAPM_A",
         "CBM",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Aditya Chaubey",
@@ -1313,8 +1499,10 @@
         "IMC",
         "PS",
         "MC_A",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Tanisha Singh",
@@ -1327,8 +1515,10 @@
         "BV_A",
         "IAPM_A",
         "MC_A",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Vasu Jain",
@@ -1341,8 +1531,10 @@
         "IAPM_A",
         "CBM",
         "FD",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Anna Ria",
@@ -1355,8 +1547,10 @@
         "BV_A",
         "IAPM_A",
         "FD",
-        "DAB"
-      ]
+        "DAB",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Marie Aparajith Rajashankar",
@@ -1369,8 +1563,10 @@
         "MA",
         "PS",
         "MC_A",
-        "DAB"
-      ]
+        "DAB",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Umang Agarwal",
@@ -1383,8 +1579,10 @@
         "BV_A",
         "IAPM_A",
         "MC_A",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Riya Malik",
@@ -1397,8 +1595,10 @@
         "IMC",
         "PS",
         "MC_A",
-        "LD"
-      ]
+        "LD",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Kritik Pillai",
@@ -1411,8 +1611,10 @@
         "BV_A",
         "IAPM_A",
         "CBM",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Saurabh Pathak",
@@ -1425,8 +1627,10 @@
         "BV_A",
         "IAPM_A",
         "MC_A",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Preetkanwal Singh",
@@ -1440,8 +1644,10 @@
         "PRS",
         "PS",
         "MC_A",
-        "AI"
-      ]
+        "AI",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Subhashribad Lenka",
@@ -1454,8 +1660,10 @@
         "BV_A",
         "IAPM_A",
         "CBM",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Puru Laroia",
@@ -1468,8 +1676,10 @@
         "BV_A",
         "IAPM_A",
         "CBM",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Ridhi Kothari",
@@ -1482,8 +1692,10 @@
         "BV_A",
         "IAPM_A",
         "CBM",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Ankita Patwardhan",
@@ -1496,8 +1708,10 @@
         "BV_A",
         "IAPM_A",
         "MA",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Ruttva Virendrasinh Raj",
@@ -1510,8 +1724,10 @@
         "BV_A",
         "IAPM_A",
         "CBM",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Girish Kabra",
@@ -1524,8 +1740,10 @@
         "BV_A",
         "IAPM_A",
         "MC_A",
-        "AI"
-      ]
+        "AI",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Shreya Shivangi",
@@ -1538,8 +1756,10 @@
         "MA",
         "PRS",
         "PS",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Ayush Kayande",
@@ -1552,8 +1772,10 @@
         "BV_A",
         "IAPM_A",
         "MA",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Jay Dave",
@@ -1566,8 +1788,10 @@
         "IMC",
         "MA",
         "PS",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Tanishq Dahiya",
@@ -1580,8 +1804,10 @@
         "IMC",
         "PS",
         "MC_A",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Akshita Chopde",
@@ -1594,8 +1820,10 @@
         "BV_A",
         "IAPM_A",
         "MA",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Chirag Tandon",
@@ -1608,8 +1836,10 @@
         "IMC",
         "PS",
         "MC_A",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Nachiketh N",
@@ -1622,8 +1852,10 @@
         "MA",
         "PS",
         "AI",
-        "DAB"
-      ]
+        "DAB",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Aryaman Gupta",
@@ -1636,8 +1868,10 @@
         "IMC",
         "MA",
         "PS",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Yashashree Jitendra Kothawade",
@@ -1650,8 +1884,10 @@
         "MA",
         "PRS",
         "PS",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Pragya Rastogi",
@@ -1664,8 +1900,10 @@
         "BV_A",
         "IAPM_A",
         "MA",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Ojaswinee Biswal",
@@ -1678,8 +1916,10 @@
         "MA",
         "PRS",
         "PS",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Uzma khan",
@@ -1692,8 +1932,10 @@
         "BV_A",
         "IAPM_A",
         "FD",
-        "DAB"
-      ]
+        "DAB",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Mridul Arora",
@@ -1706,8 +1948,10 @@
         "IMC",
         "PS",
         "MC_A",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Prakhar",
@@ -1720,8 +1964,10 @@
         "BV_A",
         "IAPM_A",
         "MC_A",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Jahnvi Sahay",
@@ -1734,8 +1980,10 @@
         "BV_A",
         "IAPM_A",
         "CBM",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Nikhar Talreja",
@@ -1748,8 +1996,10 @@
         "IMC",
         "MA",
         "PS",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "S K HARRISH",
@@ -1762,8 +2012,10 @@
         "MA",
         "PS",
         "MC_A",
-        "DAB"
-      ]
+        "DAB",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Saksham Gupta",
@@ -1776,8 +2028,10 @@
         "BV_A",
         "IAPM_A",
         "CBM",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Samhita Banerjee",
@@ -1790,8 +2044,10 @@
         "IMC",
         "PS",
         "MC_A",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Rishabh Tulsian",
@@ -1804,8 +2060,10 @@
         "BV_A",
         "IAPM_A",
         "MC_A",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Tharani S S",
@@ -1818,8 +2076,10 @@
         "BV_A",
         "IAPM_A",
         "FD",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Sraeya Balakrishnan",
@@ -1832,8 +2092,10 @@
         "BV_A",
         "IAPM_A",
         "MC_A",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "SIMRAN KUMARI",
@@ -1846,8 +2108,10 @@
         "BV_A",
         "IAPM_A",
         "MC_A",
-        "AI"
-      ]
+        "AI",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Dristi Mittal",
@@ -1860,8 +2124,10 @@
         "IMC",
         "MA",
         "PS",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Sanskar Tulsian",
@@ -1874,8 +2140,10 @@
         "BV_A",
         "IAPM_A",
         "CBM",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Bharvi Girkar",
@@ -1888,8 +2156,10 @@
         "IMC",
         "MA",
         "PS",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Tina Kewlani",
@@ -1902,8 +2172,10 @@
         "IMC",
         "PS",
         "MC_A",
-        "ENT"
-      ]
+        "ENT",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Vedant Swarnkar",
@@ -1916,8 +2188,10 @@
         "MC_A",
         "LD",
         "RS",
-        "TR"
-      ]
+        "TR",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Aryan Agnihotri",
@@ -1930,8 +2204,10 @@
         "BV_A",
         "IAPM_B",
         "LD",
-        "RS"
-      ]
+        "RS",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Tumuluri Vaashista Vivek",
@@ -1944,8 +2220,10 @@
         "MA",
         "PRS",
         "AI",
-        "DAB"
-      ]
+        "DAB",
+        "BS"
+      ],
+      "bs_div": "Div C"
     },
     {
       "name": "Kurian George",
@@ -1958,8 +2236,10 @@
         "PRS",
         "PS",
         "MC_A",
-        "AI"
-      ]
+        "AI",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Sanidhya Mishra",
@@ -1972,8 +2252,10 @@
         "PRS",
         "PS",
         "MC_A",
-        "AI"
-      ]
+        "AI",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Akshara T Santhosh",
@@ -1986,8 +2268,10 @@
         "LD",
         "RS",
         "TR",
-        "DAB"
-      ]
+        "DAB",
+        "BS"
+      ],
+      "bs_div": "Div B"
     },
     {
       "name": "Arjya Bose",
@@ -2000,8 +2284,10 @@
         "MA",
         "PRS",
         "PS",
-        "MC_A"
-      ]
+        "MC_A",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Nidhi Shaw",
@@ -2014,12 +2300,14 @@
         "LD",
         "RS",
         "TR",
-        "AI"
-      ]
+        "AI",
+        "BS"
+      ],
+      "bs_div": "Div A"
     },
     {
       "name": "Chandrakant Narwani",
-      "roll": "80012500712",
+      "roll": "H078",
       "email": "CHANDRAKANTNARWANI.NARWANI12@nmims.in",
       "major": "Marketing",
       "minor": "Strategy;",
@@ -2028,8 +2316,10 @@
         "BV_A",
         "IAPM_A",
         "MC_A",
-        "DAB"
-      ]
+        "DAB",
+        "BS"
+      ],
+      "bs_div": "Div B"
     }
   ],
   "subjects": {
@@ -2141,7 +2431,7 @@
     "BS": {
       "code": "BS",
       "name": "Business Simulation",
-      "student_count": 0
+      "student_count": 145
     }
   },
   "timetable": [

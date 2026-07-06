@@ -4,6 +4,7 @@ from datetime import datetime
 import openpyxl
 
 STUDENT_LIST = "/Users/ronnyjacob/Downloads/Division wise List- Trimester IV.xlsx"
+LAST_YEAR_LIST = "/Users/ronnyjacob/Documents/First Year Division list.xlsx"
 TIMETABLE   = "/Users/ronnyjacob/Downloads/6.07.2026 to 12.07.2026.xlsx"
 OUTPUT      = "data.json"
 
@@ -179,8 +180,33 @@ def parse_timetable():
     return timetable
 
 NON_STUDENT_PATTERNS = ['placements', 'faculty', 'division', 'total', 'sub total']
+EXCLUDED_NAMES = ['Abhijatya Negi']
+BS_DIV_OVERRIDE = {
+    'Ajay Vigneshwar A': 'Div C',
+    'Tina Kewlani': 'Div C',
+}
 
 def parse_students():
+    # Read last year's list for roll corrections and departed-student detection
+    ly_students = {}  # sap -> {name, roll, div}
+    try:
+        wb_ly = openpyxl.load_workbook(LAST_YEAR_LIST)
+        for sheet_name in wb_ly.sheetnames:
+            ws = wb_ly[sheet_name]
+            div_name = sheet_name.strip()
+            for row in ws.iter_rows(min_row=2, values_only=True):
+                sl, name, sap, roll, gender = row
+                if name and str(name).strip() and sl is not None:
+                    sap = str(sap).strip() if sap else ''
+                    ly_students[sap] = {
+                        'name': normalize(str(name)),
+                        'roll': normalize(str(roll)) if roll else '',
+                        'div': f'Div {div_name[-1]}' if div_name else '',
+                    }
+    except FileNotFoundError:
+        ly_students = {}
+
+    # Read current Trimester IV list (primary source)
     wb = openpyxl.load_workbook(STUDENT_LIST)
     ws = wb['List ']
 
@@ -194,7 +220,6 @@ def parse_students():
     for row in ws.iter_rows(min_row=2, values_only=True):
         if not row[1]:
             continue
-        # Skip the header row itself
         if normalize(str(row[1])).lower() == 'name':
             continue
 
@@ -203,20 +228,36 @@ def parse_students():
         major    = normalize(str(row[7])) if row[7] else ''
         minor    = normalize(str(row[8])).replace('\xa0', '').strip() if row[8] else ''
 
+        # Detect non-student rows (e.g. "Placements Hyd")
+        if any(p in raw_name.lower() for p in NON_STUDENT_PATTERNS) and row[4]:
+            name  = normalize(str(row[4]))
+            email = normalize(str(row[6])) if row[6] else ''
+        else:
+            name  = normalize(str(row[4])) if row[4] else raw_name
+            email = normalize(str(row[0])) if row[0] else ''
+
+        # Get SAP ID — used only for roll correction from last year's list
+        sap = normalize(str(row[2])) if row[2] else ''
+
+        # Skip excluded students (e.g. left the college)
+        if name in EXCLUDED_NAMES:
+            continue
+
+        # Fix roll number if last year's list has a proper HXXX format
+        if sap and sap in ly_students and ly_students[sap]['roll'].startswith('H'):
+            roll = ly_students[sap]['roll']
+
+        # Get BS division from last year's list (which sheet they're in)
+        bs_div = ly_students[sap]['div'] if sap and sap in ly_students else ''
+        # Manual override for late-joining students not in last year's list
+        if name in BS_DIV_OVERRIDE:
+            bs_div = BS_DIV_OVERRIDE[name]
+
         # Normalize roll to Hxxx format if it starts with H
         if roll.startswith('H'):
             digits = re.sub(r'[^0-9]', '', roll)
             if digits:
                 roll = 'H' + digits.zfill(3)
-
-        # Detect non-student rows (e.g. "Placements Hyd") — data is shifted right
-        if any(p in raw_name.lower() for p in NON_STUDENT_PATTERNS) and row[4]:
-            name  = normalize(str(row[4]))
-            email = normalize(str(row[6])) if row[6] else ''
-        else:
-            # Prefer Name2 (col E) over Name (col B) — it has corrected names
-            name  = normalize(str(row[4])) if row[4] else raw_name
-            email = normalize(str(row[0])) if row[0] else ''
 
         subjects = []
         for col_idx, code in subject_cols:
@@ -231,7 +272,13 @@ def parse_students():
             "major": major,
             "minor": minor,
             "subjects": subjects,
+            "bs_div": bs_div,
         })
+
+    # BS (Business Simulation) is a common subject — add for all
+    for s in students:
+        if 'BS' not in s['subjects']:
+            s['subjects'].append('BS')
 
     return students
 
