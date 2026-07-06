@@ -659,20 +659,6 @@
       ]
     },
     {
-      "name": "Abhijatya Negi",
-      "roll": "H057",
-      "email": "ABHIJATYA.NEGI06@nmims.in",
-      "major": "Marketing",
-      "minor": "Strategy;",
-      "subjects": [
-        "CB",
-        "IMC",
-        "PS",
-        "MC_B",
-        "ENT"
-      ]
-    },
-    {
       "name": "Ankush P. Karwa",
       "roll": "H058",
       "email": "ANKUSH.KARWA19@nmims.in",
@@ -2090,12 +2076,12 @@
     "CB": {
       "code": "CB",
       "name": "Consumer Behaviour",
-      "student_count": 64
+      "student_count": 63
     },
     "IMC": {
       "code": "IMC",
       "name": "Integrated Marketing Communication",
-      "student_count": 41
+      "student_count": 40
     },
     "MA": {
       "code": "MA",
@@ -2110,7 +2096,7 @@
     "PS": {
       "code": "PS",
       "name": "Product Strategy",
-      "student_count": 58
+      "student_count": 57
     },
     "MC_A": {
       "code": "MC_A",
@@ -2120,12 +2106,12 @@
     "MC_B": {
       "code": "MC_B",
       "name": "Management Consulting B",
-      "student_count": 68
+      "student_count": 67
     },
     "ENT": {
       "code": "ENT",
       "name": "Entrepreneurship",
-      "student_count": 31
+      "student_count": 30
     },
     "LD": {
       "code": "LD",
