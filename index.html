@@ -132,7 +132,6 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
       <button class="pill sm" data-range="week" onclick="setTimeRange('week',this)">This Week</button>
     </div>
     <div id="ttCount" class="tt-count"></div>
-    <div id="ttDate" style="text-align:center;font-size:11px;color:var(--text-muted);margin-bottom:2px"></div>
     <div class="tt-scroll"><div class="tt-grid" id="timetable"></div></div>
     <div id="tt-legend" class="tt-legend"></div>
     <div id="ttNoData"></div>
@@ -304,8 +303,7 @@ function renderTimetable() {
       }
     }
   }
-  countEl.textContent = myCount + ' session' + (myCount !== 1 ? 's' : '');
-  var dtEl=document.getElementById('ttDate');if(dtEl)dtEl.textContent=DATA.date_range||'';
+  countEl.textContent = myCount + ' session' + (myCount !== 1 ? 's' : '') + (DATA.date_range ? '  ·  ' + DATA.date_range : '');
   var grid = {};
   for (var d = 0; d < numDays; d++) {
     grid[daysWithData[d]] = {};
