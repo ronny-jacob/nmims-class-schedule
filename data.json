@@ -1,0 +1,2574 @@
+{
+  "students": [
+    {
+      "name": "Aniket Patwari",
+      "roll": "H001",
+      "email": "ANIKET.PATWARI05@nmims.in",
+      "major": "Finance",
+      "minor": "Marketing",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "MC_B",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Heeral Tandon",
+      "roll": "H002",
+      "email": "HEERAL.TANDON03@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "PRS",
+        "PS",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Shubh Gupta",
+      "roll": "H003",
+      "email": "SHUBH.GUPTA31@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "FD",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Kanishk Mehta",
+      "roll": "H005",
+      "email": "KANISHK.MEHTA43@nmims.in",
+      "major": "Marketing",
+      "minor": "HR;Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "PS",
+        "MC_B",
+        "LD"
+      ]
+    },
+    {
+      "name": "Ishita Sinha",
+      "roll": "H006",
+      "email": "ISHITA.SINHA50@nmims.in",
+      "major": "Finance",
+      "minor": "Marketing;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "FD",
+        "CB"
+      ]
+    },
+    {
+      "name": "Lakshmi S",
+      "roll": "H008",
+      "email": "LAKSHMI.S64@nmims.in",
+      "major": "Marketing",
+      "minor": "Analytics;Strategy;",
+      "subjects": [
+        "CB",
+        "MA",
+        "PS",
+        "MC_B",
+        "AI"
+      ]
+    },
+    {
+      "name": "Deepti Yendluri",
+      "roll": "80012500077",
+      "email": "DEEPTI.YENDLURI77@nmims.in",
+      "major": "Finance",
+      "minor": "Analytics;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "CBM",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Abhishek Kumar",
+      "roll": "H010",
+      "email": "ABHISHEK.KUMAR83@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "MA",
+        "PS",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Hanima Ahuja",
+      "roll": "H012",
+      "email": "HANIMA.AHUJA91@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "MA",
+        "PS",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Dibyendu Das",
+      "roll": "H015",
+      "email": "DIBYENDU.DAS26@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "FD",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Devanshi Kyal",
+      "roll": "H016",
+      "email": "DEVANSHI.KYAL46@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "MA",
+        "PS",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Mahi Kinariwala",
+      "roll": "H017",
+      "email": "MAHI.KINARIWALA67@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;Analytics;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "MC_B",
+        "DAB"
+      ]
+    },
+    {
+      "name": "Ankit Ghoradkar",
+      "roll": "H018",
+      "email": "ANKIT.GHORADKAR80@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "MA",
+        "PS",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Hritik Kumar",
+      "roll": "H020",
+      "email": "HRITIK.KUMAR96@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "CBM",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Vidhu P",
+      "roll": "H021",
+      "email": "VIDHU.P98@nmims.in",
+      "major": "Marketing",
+      "minor": "Analytics;",
+      "subjects": [
+        "MA",
+        "PRS",
+        "MC_B",
+        "AI",
+        "DAB"
+      ]
+    },
+    {
+      "name": "Vaishnavi Dudem",
+      "roll": "H022",
+      "email": "VAISHNAVI.DUDEM03@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy ; Analytics",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "MC_B",
+        "AI"
+      ]
+    },
+    {
+      "name": "Harshita Pradhan",
+      "roll": "H023",
+      "email": "HARSHITAPRADHAN.PRADHAN11@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;Analytics;",
+      "subjects": [
+        "BV_B",
+        "IAPM_B",
+        "CBM",
+        "MC_B",
+        "DAB"
+      ]
+    },
+    {
+      "name": "HARMIT SINGH",
+      "roll": "H024",
+      "email": "HARMIT.SINGH13@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "FD",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Kanishka Gupta",
+      "roll": "H026",
+      "email": "KANISHKAGUPTA.GUPTA31@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "MA",
+        "PS",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Ishan Sanghavi",
+      "roll": "H027",
+      "email": "ISHAN.SANGHAVI46@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;Analytics;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "FD",
+        "MC_B",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Savitha Sri S",
+      "roll": "H029",
+      "email": "SAVITHA.SRIS71@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "FD",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Aman Shahin",
+      "roll": "H030",
+      "email": "AMAN.SHAHIN72@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "MA",
+        "PS",
+        "MC_B",
+        "AI"
+      ]
+    },
+    {
+      "name": "Rishita Ramdeo",
+      "roll": "H031",
+      "email": "RISHITA.RAMDEO78@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "MC_B",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Isha Jain",
+      "roll": "H032",
+      "email": "ISHA.JAIN88@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "MA",
+        "PS",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Niladri Kundu",
+      "roll": "H033",
+      "email": "NILADRI.KUNDU04@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "FD",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Ayush Dutta",
+      "roll": "H034",
+      "email": "AYUSH.DUTTA23@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "MA",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Swapnil Tiwari",
+      "roll": "H035",
+      "email": "SWAPNIL.TIWARI44@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "FD",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Manav Malhotra",
+      "roll": "H036",
+      "email": "MANAV.MALHOTRA47@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "MA",
+        "PRS",
+        "PS",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Insha Ali",
+      "roll": "H037",
+      "email": "INSHA.ALI51@nmims.in",
+      "major": "Marketing",
+      "minor": "Analytics;Strategy;HR;",
+      "subjects": [
+        "CB",
+        "MA",
+        "PS",
+        "MC_B",
+        "AI"
+      ]
+    },
+    {
+      "name": "Nihal Bibikar",
+      "roll": "H039",
+      "email": "NIHAL.BIBIKAR83@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "MA",
+        "PS",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Avantika sain",
+      "roll": "H040",
+      "email": "AVANTIKA.SAIN85@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "MA",
+        "PRS",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Aastha Saini",
+      "roll": "H041",
+      "email": "AASTHA.SAINI95@nmims.in",
+      "major": "Marketing",
+      "minor": "Analytics;",
+      "subjects": [
+        "CB",
+        "MA",
+        "PS",
+        "MC_B",
+        "AI"
+      ]
+    },
+    {
+      "name": "Suraj Satpute",
+      "roll": "H042",
+      "email": "SURAJ.SATPUTE03@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "MC_B",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Gaurav Wadhwa",
+      "roll": "H043",
+      "email": "GAURAV.WADHWA05@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "MA",
+        "PS",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "SANSKAR MAHALKA",
+      "roll": "H044",
+      "email": "SANSKAR.MAHALKA12@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "MA",
+        "PS",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Antara Gupta",
+      "roll": "H045",
+      "email": "ANTARA.GUPTA17@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "MC_B",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Sudhanshu Chauhan",
+      "roll": "H046",
+      "email": "SUDHANSHU.CHAUHAN41@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "MC_B",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Masoom Singh",
+      "roll": "H048",
+      "email": "MASOOM.SINGH48@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "MA",
+        "PS",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Jyoti Bikas Das",
+      "roll": "H049",
+      "email": "JYOTIBIKAS.DAS56@nmims.in",
+      "major": "Marketing",
+      "minor": "Analytics;",
+      "subjects": [
+        "CB",
+        "MA",
+        "PRS",
+        "PS",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Pramiti Gupta",
+      "roll": "H050",
+      "email": "PRAMITI.GUPTA57@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;Analytics;",
+      "subjects": [
+        "CB",
+        "MA",
+        "PS",
+        "MC_B",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Paridhi Rungta",
+      "roll": "H051",
+      "email": "PARIDHI.RUNGTA65@nmims.in",
+      "major": "Marketing",
+      "minor": "Analytics;Strategy;",
+      "subjects": [
+        "CB",
+        "MA",
+        "PRS",
+        "PS",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Vishnu Vyas",
+      "roll": "H052",
+      "email": "VISHNU.VYAS76@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "CBM",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Monish Das",
+      "roll": "H053",
+      "email": "MONISH.DAS83@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "MA",
+        "PS",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Naman Jain",
+      "roll": "H054",
+      "email": "NAMAN.JAIN85@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "MC_B",
+        "DAB"
+      ]
+    },
+    {
+      "name": "Pratham Bagri",
+      "roll": "H055",
+      "email": "PRATHAM.BAGRI92@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "PS",
+        "MC_B",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Ajay Vigneshwar A",
+      "roll": "H174",
+      "email": "AJAY.VIGNESHWARA497@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "MC_B",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Anannya Gupta",
+      "roll": "H056",
+      "email": "ANANNYA.GUPTA01@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;Analytics;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "MC_B",
+        "DAB"
+      ]
+    },
+    {
+      "name": "Abhijatya Negi",
+      "roll": "H057",
+      "email": "ABHIJATYA.NEGI06@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "PS",
+        "MC_B",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Ankush P. Karwa",
+      "roll": "H058",
+      "email": "ANKUSH.KARWA19@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;Analytics;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "MA",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Raunit Raj",
+      "roll": "H059",
+      "email": "RAUNIT.RAJ35@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "CBM",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Arsh Vardhan Sinha",
+      "roll": "H060",
+      "email": "ARSH.SINHA42@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "PS",
+        "MC_B",
+        "AI"
+      ]
+    },
+    {
+      "name": "Pilla Venkata Sai Tharun",
+      "roll": "H061",
+      "email": "PILLAVENKATA.SAITHARUN61@nmims.in",
+      "major": "Marketing",
+      "minor": "Analytics;Strategy;HR;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "MA",
+        "MC_B",
+        "AI"
+      ]
+    },
+    {
+      "name": "Shreya Gupta",
+      "roll": "H062",
+      "email": "SHREYA.GUPTA80@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "MC_B",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Aby K Mathai",
+      "roll": "H064",
+      "email": "ABY.MATHAI91@nmims.in",
+      "major": "Marketing",
+      "minor": "Analytics;",
+      "subjects": [
+        "MA",
+        "PRS",
+        "MC_B",
+        "AI",
+        "DAB"
+      ]
+    },
+    {
+      "name": "Krish Siddharth Negi",
+      "roll": "H067",
+      "email": "KRISHSIDDHARTH.NEGI24@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "PS",
+        "MC_B",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Amir Rahman",
+      "roll": "H068",
+      "email": "AMIR.RAHMAN31@nmims.in",
+      "major": "Marketing",
+      "minor": "Analytics;Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "MA",
+        "PS",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Rituparna Sharma",
+      "roll": "H069",
+      "email": "RITUPARNA.SHARMA40@nmims.in",
+      "major": "Marketing",
+      "minor": "Analytics;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "PS",
+        "MC_B",
+        "AI"
+      ]
+    },
+    {
+      "name": "Astha kejriwal",
+      "roll": "H070",
+      "email": "ASTHA.KEJRIWAL49@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "MC_B",
+        "DAB"
+      ]
+    },
+    {
+      "name": "Rohit ranjan",
+      "roll": "H073",
+      "email": "ROHIT.RANJAN91@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "MC_B",
+        "DAB"
+      ]
+    },
+    {
+      "name": "pratham Kamath",
+      "roll": "H074",
+      "email": "PRATHAM.KAMATH93@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "PRS",
+        "PS",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Tushita Mishra",
+      "roll": "H075",
+      "email": "TUSHITA.MISHRA00@nmims.in",
+      "major": "Finance",
+      "minor": "Analytics;Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "MA",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Swechha Jaiswal",
+      "roll": "H076",
+      "email": "SWECHHA.JAISWAL01@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "MC_B",
+        "DAB"
+      ]
+    },
+    {
+      "name": "Ashish Gupta",
+      "roll": "H077",
+      "email": "ASHISH.GUPTA07@nmims.in",
+      "major": "Marketing",
+      "minor": "Analytics;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "MA",
+        "PS",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Jeel Shah",
+      "roll": "H080",
+      "email": "JEEL.SHAH21@nmims.in",
+      "major": "Finance",
+      "minor": "Analytics;Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "FD",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Vishnu P S",
+      "roll": "H081",
+      "email": "VISHNU.PS27@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "BV_B",
+        "IAPM_B",
+        "CBM",
+        "MC_B",
+        "LD"
+      ]
+    },
+    {
+      "name": "Shraddha Randive",
+      "roll": "H084",
+      "email": "SHRADDHA.RANDIVE52@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "FD",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Rohit Ramakant Patil",
+      "roll": "H085",
+      "email": "ROHIT.RAMAKANT78@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;Analytics;",
+      "subjects": [
+        "CB",
+        "MA",
+        "PRS",
+        "PS",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Akella Venkata Karthik",
+      "roll": "H086",
+      "email": "AKELLAVENKATA.KARTHIK05@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "CBM",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Himanshi Tanwar",
+      "roll": "H087",
+      "email": "HIMANSHI.TANWAR09@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "CBM",
+        "MC_B"
+      ]
+    },
+    {
+      "name": "Pratham Goel",
+      "roll": "H088",
+      "email": "PRATHAM.GOEL10@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;Analytics;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "MC_B",
+        "DAB"
+      ]
+    },
+    {
+      "name": "Prerna Tekade",
+      "roll": "H089",
+      "email": "PRERNA.TEKADE13@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "MC_A",
+        "DAB"
+      ]
+    },
+    {
+      "name": "Kshitiz Gupta",
+      "roll": "H090",
+      "email": "KSHITIZ.GUPTA36@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "MC_A",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Tushar soni",
+      "roll": "H091",
+      "email": "TUSHAR.SONI40@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_B",
+        "BV_B",
+        "IAPM_B",
+        "MA",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "SUJITH REDDY YEDULLA",
+      "roll": "H092",
+      "email": "SUJITHREDDY.YEDULLA65@nmims.in",
+      "major": "Marketing",
+      "minor": "Analytics;",
+      "subjects": [
+        "CB",
+        "MA",
+        "PRS",
+        "AI",
+        "DAB"
+      ]
+    },
+    {
+      "name": "Srishti Shinde",
+      "roll": "H093",
+      "email": "SRISHTI.SHINDE66@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "CBM",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Shwetha R",
+      "roll": "H095",
+      "email": "SHWETHA.R77@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;Analytics;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "PS",
+        "MC_A",
+        "AI"
+      ]
+    },
+    {
+      "name": "Ronny Jacob",
+      "roll": "H096",
+      "email": "RONNY.JACOB85@nmims.in",
+      "major": "Marketing",
+      "minor": "Analytics;",
+      "subjects": [
+        "CB",
+        "MA",
+        "PS",
+        "MC_A",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Prateek Gaur",
+      "roll": "H097",
+      "email": "PRATEEK.GAUR93@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "FD",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Tejaswita",
+      "roll": "H098",
+      "email": "TEJASWITA99@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "MC_A",
+        "DAB"
+      ]
+    },
+    {
+      "name": "Priyanshu Mittal",
+      "roll": "H100",
+      "email": "PRIYANSHU.MITTAL04@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "FD",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Mahika Vasandani",
+      "roll": "H101",
+      "email": "MAHIKA.VASANDANI07@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "MA",
+        "PS",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Kishore P",
+      "roll": "H102",
+      "email": "KISHORE.P08@nmims.in",
+      "major": "Finance",
+      "minor": "Analytics;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "ENT",
+        "AI"
+      ]
+    },
+    {
+      "name": "Anusha Heliwal",
+      "roll": "H104",
+      "email": "ANUSHA.HELIWAL10@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;Analytics;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "MC_A",
+        "DAB"
+      ]
+    },
+    {
+      "name": "Jash Vaja",
+      "roll": "H105",
+      "email": "JASH.VAJA16@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "MA",
+        "PRS",
+        "PS",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Koustav Jana",
+      "roll": "H106",
+      "email": "KOUSTAV.JANA28@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "PS",
+        "MC_A",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Medha Jha",
+      "roll": "H108",
+      "email": "MEDHA.JHA38@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "CBM",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Gaurang Maheshwari",
+      "roll": "H110",
+      "email": "GAURANG.MAHESHWARI44@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "CBM",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Shrishti Mittal",
+      "roll": "H112",
+      "email": "SHRISHTI.MITTAL71@nmims.in",
+      "major": "Marketing",
+      "minor": "Marketing;Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "PS",
+        "MC_A",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Dhairya Mehta",
+      "roll": "H113",
+      "email": "DHAIRYA.MEHTA80@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "FD",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Gaurav Agarwal",
+      "roll": "H115",
+      "email": "GAURAV.AGARWAL93@nmims.in",
+      "major": "Marketing",
+      "minor": "Analytics;Strategy;Finance;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "MA",
+        "PRS",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Varun Patwary",
+      "roll": "H116",
+      "email": "VARUN.PATWARY97@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "CBM",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "I Dharshana",
+      "roll": "H117",
+      "email": "DHARSHANA.I05@nmims.in",
+      "major": "Finance",
+      "minor": "Analytics;Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "MC_A",
+        "DAB"
+      ]
+    },
+    {
+      "name": "Mudit Mittal",
+      "roll": "H118",
+      "email": "MUDIT.MITTAL18@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "CBM",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Umang Gupta",
+      "roll": "H119",
+      "email": "UMANG.GUPTA41@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "CBM",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Aditya Chaubey",
+      "roll": "H120",
+      "email": "ADITYA.CHAUBEY46@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "PS",
+        "MC_A",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Tanisha Singh",
+      "roll": "H122",
+      "email": "TANISHA.SINGH66@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "MC_A",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Vasu Jain",
+      "roll": "H123",
+      "email": "VASU.JAIN72@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "BV_A",
+        "IAPM_A",
+        "CBM",
+        "FD",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Anna Ria",
+      "roll": "H125",
+      "email": "ANNA.RIA88@nmims.in",
+      "major": "Finance",
+      "minor": "Analytics;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "FD",
+        "DAB"
+      ]
+    },
+    {
+      "name": "Marie Aparajith Rajashankar",
+      "roll": "H128",
+      "email": "MARIEAPARAJITH.RAJASHANKAR42@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "MA",
+        "PS",
+        "MC_A",
+        "DAB"
+      ]
+    },
+    {
+      "name": "Umang Agarwal",
+      "roll": "H130",
+      "email": "UMANG.AGARWAL52@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "MC_A",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Riya Malik",
+      "roll": "H131",
+      "email": "RIYA67@nmims.in",
+      "major": "HR",
+      "minor": "Marketing;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "PS",
+        "MC_A",
+        "LD"
+      ]
+    },
+    {
+      "name": "Kritik Pillai",
+      "roll": "H132",
+      "email": "KRITIK.PILLAI85@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;Analytics;HR;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "CBM",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Saurabh Pathak",
+      "roll": "H133",
+      "email": "SAURABH.PATHAK89@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "MC_A",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Preetkanwal Singh",
+      "roll": "H135",
+      "email": "PREETKANWAL.SINGH19@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "PRS",
+        "PS",
+        "MC_A",
+        "AI"
+      ]
+    },
+    {
+      "name": "Subhashribad Lenka",
+      "roll": "H136",
+      "email": "SUBHASHRIBAD.LENKA20@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "CBM",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Puru Laroia",
+      "roll": "H138",
+      "email": "PURU.LAROIA34@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "CBM",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Ridhi Kothari",
+      "roll": "H139",
+      "email": "RIDHI.KOTHARI41@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "CBM",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Ankita Patwardhan",
+      "roll": "H141",
+      "email": "ANKITA.PATWARDHAN55@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;Analytics;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "MA",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Ruttva Virendrasinh Raj",
+      "roll": "H142",
+      "email": "RUTTVA.RAJ68@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "CBM",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Girish Kabra",
+      "roll": "H143",
+      "email": "GIRISH.KABRA73@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "MC_A",
+        "AI"
+      ]
+    },
+    {
+      "name": "Shreya Shivangi",
+      "roll": "H144",
+      "email": "shreya.shivangi79@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;Analytics;",
+      "subjects": [
+        "CB",
+        "MA",
+        "PRS",
+        "PS",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Ayush Kayande",
+      "roll": "H145",
+      "email": "AYUSH.KAYANDE91@nmims.in",
+      "major": "Finance",
+      "minor": "Analytics;Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "MA",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Jay Dave",
+      "roll": "H146",
+      "email": "JAY.DAVE97@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "MA",
+        "PS",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Tanishq Dahiya",
+      "roll": "H147",
+      "email": "TANISHQ.DAHIYA01@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "PS",
+        "MC_A",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Akshita Chopde",
+      "roll": "H148",
+      "email": "AKSHITA.CHOPDE19@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;Analytics;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "MA",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Chirag Tandon",
+      "roll": "H149",
+      "email": "CHIRAG.TANDON29@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "PS",
+        "MC_A",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Nachiketh N",
+      "roll": "H150",
+      "email": "NACHIKETH.N31@nmims.in",
+      "major": "Marketing",
+      "minor": "Analytics;",
+      "subjects": [
+        "CB",
+        "MA",
+        "PS",
+        "AI",
+        "DAB"
+      ]
+    },
+    {
+      "name": "Aryaman Gupta",
+      "roll": "H151",
+      "email": "ARYAMAN.GUPTA32@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;Analytics;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "MA",
+        "PS",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Yashashree Jitendra Kothawade",
+      "roll": "H153",
+      "email": "YASHASHREE.KOTHAWADE36@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;Analytics;",
+      "subjects": [
+        "CB",
+        "MA",
+        "PRS",
+        "PS",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Pragya Rastogi",
+      "roll": "H154",
+      "email": "PRAGYA.RASTOGI39@nmims.in",
+      "major": "Finance",
+      "minor": "Analytics;Strategy;Finance;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "MA",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Ojaswinee Biswal",
+      "roll": "H155",
+      "email": "OJASWINEE.BISWAL40@nmims.in",
+      "major": "Marketing",
+      "minor": "Analytics;Strategy;",
+      "subjects": [
+        "CB",
+        "MA",
+        "PRS",
+        "PS",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Uzma khan",
+      "roll": "H156",
+      "email": "UZMA.KHAN42@nmims.in",
+      "major": "Finance",
+      "minor": "Analytics;Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "FD",
+        "DAB"
+      ]
+    },
+    {
+      "name": "Mridul Arora",
+      "roll": "H157",
+      "email": "MRIDUL.ARORA43@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "PS",
+        "MC_A",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Prakhar",
+      "roll": "H158",
+      "email": "PRAKHAR46@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "MC_A",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Jahnvi Sahay",
+      "roll": "H159",
+      "email": "JAHNVI.SAHAY47@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "CBM",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Nikhar Talreja",
+      "roll": "H160",
+      "email": "NIKHAR.TALREJA48@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "MA",
+        "PS",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "S K HARRISH",
+      "roll": "H161",
+      "email": "SK.HARRISH49@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;Analytics;",
+      "subjects": [
+        "CB",
+        "MA",
+        "PS",
+        "MC_A",
+        "DAB"
+      ]
+    },
+    {
+      "name": "Saksham Gupta",
+      "roll": "H162",
+      "email": "SAKSHAM.GUPTA51@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "CBM",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Samhita Banerjee",
+      "roll": "H164",
+      "email": "SAMHITA.BANERJEE53@nmims.in",
+      "major": "Marketing",
+      "minor": "HR;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "PS",
+        "MC_A",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Rishabh Tulsian",
+      "roll": "H165",
+      "email": "RISHABH.TULSIAN54@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "MC_A",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Tharani S S",
+      "roll": "H166",
+      "email": "THARANI.SS55@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "FD",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Sraeya Balakrishnan",
+      "roll": "H167",
+      "email": "SRAEYA.BALAKRISHNAN57@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "MC_A",
+        "ENT"
+      ]
+    },
+    {
+      "name": "SIMRAN KUMARI",
+      "roll": "H168",
+      "email": "SIMRAN.KUMARI59@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "MC_A",
+        "AI"
+      ]
+    },
+    {
+      "name": "Dristi Mittal",
+      "roll": "H169",
+      "email": "DRISTI.MITTAL62@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "MA",
+        "PS",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Sanskar Tulsian",
+      "roll": "H170",
+      "email": "Tulsian.Sanskar63@nmims.in",
+      "major": "Finance",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "CBM",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Bharvi Girkar",
+      "roll": "H171",
+      "email": "Bharvi.Girkar68@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "MA",
+        "PS",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Tina Kewlani",
+      "roll": "H172",
+      "email": "Tina.Kelwani69@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "IMC",
+        "PS",
+        "MC_A",
+        "ENT"
+      ]
+    },
+    {
+      "name": "Vedant Swarnkar",
+      "roll": "H134",
+      "email": "VEDANT.SWARNKAR17@nmims.in",
+      "major": "HR",
+      "minor": "Marketing;",
+      "subjects": [
+        "CB",
+        "MC_A",
+        "LD",
+        "RS",
+        "TR"
+      ]
+    },
+    {
+      "name": "Aryan Agnihotri",
+      "roll": "H014",
+      "email": "ARYAN.AGNIHOTRI19@nmims.in",
+      "major": "Finance",
+      "minor": "HR;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_B",
+        "LD",
+        "RS"
+      ]
+    },
+    {
+      "name": "Tumuluri Vaashista Vivek",
+      "roll": "H103",
+      "email": "TUMULURIVAASHISTA.VIVEK09@nmims.in",
+      "major": "Marketing",
+      "minor": "Analytics;",
+      "subjects": [
+        "CB",
+        "MA",
+        "PRS",
+        "AI",
+        "DAB"
+      ]
+    },
+    {
+      "name": "Kurian George",
+      "roll": "H063",
+      "email": "KURIAN.GEORGE85@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "MA",
+        "PRS",
+        "PS",
+        "MC_A",
+        "AI"
+      ]
+    },
+    {
+      "name": "Sanidhya Mishra",
+      "roll": "H011",
+      "email": "SANIDHYA.MISHRA84@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "CB",
+        "PRS",
+        "PS",
+        "MC_A",
+        "AI"
+      ]
+    },
+    {
+      "name": "Akshara T Santhosh",
+      "roll": "H072",
+      "email": "AKSHARAT.SANTHOSH88@nmims.in",
+      "major": "HR",
+      "minor": "Analytics;",
+      "subjects": [
+        "MC_A",
+        "LD",
+        "RS",
+        "TR",
+        "DAB"
+      ]
+    },
+    {
+      "name": "Arjya Bose",
+      "roll": "H007",
+      "email": "ARJYA.BOSE62@nmims.in",
+      "major": "Marketing",
+      "minor": "Analytics;Strategy;",
+      "subjects": [
+        "CB",
+        "MA",
+        "PRS",
+        "PS",
+        "MC_A"
+      ]
+    },
+    {
+      "name": "Nidhi Shaw",
+      "roll": "H028",
+      "email": "NIDHI.SHAW61@nmims.in",
+      "major": "HR",
+      "minor": "Marketing;Analytics;",
+      "subjects": [
+        "MC_A",
+        "LD",
+        "RS",
+        "TR",
+        "AI"
+      ]
+    },
+    {
+      "name": "Chandrakant Narwani",
+      "roll": "80012500712",
+      "email": "CHANDRAKANTNARWANI.NARWANI12@nmims.in",
+      "major": "Marketing",
+      "minor": "Strategy;",
+      "subjects": [
+        "AFSA_A",
+        "BV_A",
+        "IAPM_A",
+        "MC_A",
+        "DAB"
+      ]
+    }
+  ],
+  "subjects": {
+    "AFSA_A": {
+      "code": "AFSA_A",
+      "name": "Advanced Financial Statement Analysis A",
+      "student_count": 38
+    },
+    "AFSA_B": {
+      "code": "AFSA_B",
+      "name": "Advanced Financial Statement Analysis B",
+      "student_count": 37
+    },
+    "BV_A": {
+      "code": "BV_A",
+      "name": "Business Valuation A",
+      "student_count": 39
+    },
+    "BV_B": {
+      "code": "BV_B",
+      "name": "Business Valuation B",
+      "student_count": 39
+    },
+    "IAPM_A": {
+      "code": "IAPM_A",
+      "name": "Investment Analysis & Portfolio Management A",
+      "student_count": 38
+    },
+    "IAPM_B": {
+      "code": "IAPM_B",
+      "name": "Investment Analysis & Portfolio Management B",
+      "student_count": 39
+    },
+    "CBM": {
+      "code": "CBM",
+      "name": "Commercial Bank Management",
+      "student_count": 23
+    },
+    "FD": {
+      "code": "FD",
+      "name": "Financial Derivative",
+      "student_count": 17
+    },
+    "CB": {
+      "code": "CB",
+      "name": "Consumer Behaviour",
+      "student_count": 64
+    },
+    "IMC": {
+      "code": "IMC",
+      "name": "Integrated Marketing Communication",
+      "student_count": 41
+    },
+    "MA": {
+      "code": "MA",
+      "name": "Marketing Analytics",
+      "student_count": 53
+    },
+    "PRS": {
+      "code": "PRS",
+      "name": "Pricing Strategy",
+      "student_count": 20
+    },
+    "PS": {
+      "code": "PS",
+      "name": "Product Strategy",
+      "student_count": 58
+    },
+    "MC_A": {
+      "code": "MC_A",
+      "name": "Management Consulting A",
+      "student_count": 68
+    },
+    "MC_B": {
+      "code": "MC_B",
+      "name": "Management Consulting B",
+      "student_count": 68
+    },
+    "ENT": {
+      "code": "ENT",
+      "name": "Entrepreneurship",
+      "student_count": 31
+    },
+    "LD": {
+      "code": "LD",
+      "name": "Learning & Development",
+      "student_count": 7
+    },
+    "RS": {
+      "code": "RS",
+      "name": "Recruitment and Selection",
+      "student_count": 4
+    },
+    "TR": {
+      "code": "TR",
+      "name": "Total Reward",
+      "student_count": 3
+    },
+    "AI": {
+      "code": "AI",
+      "name": "Artificial Intelligence for Managers",
+      "student_count": 21
+    },
+    "DAB": {
+      "code": "DAB",
+      "name": "Data Analytics for Business",
+      "student_count": 23
+    },
+    "BS": {
+      "code": "BS",
+      "name": "Business Simulation",
+      "student_count": 0
+    }
+  },
+  "timetable": [
+    {
+      "day": "Mon",
+      "time": "10:10-11:40",
+      "subject": "BV_B",
+      "professor": "Prof SP Vittal",
+      "room": "L06, 2nd floor",
+      "div": "Div B"
+    },
+    {
+      "day": "Mon",
+      "time": "11:50-1:20",
+      "subject": "BV_A",
+      "professor": "Prof SP Vittal",
+      "room": "L06, 2nd floor",
+      "div": "Div A"
+    },
+    {
+      "day": "Mon",
+      "time": "1:50-3:20",
+      "subject": "BV_B",
+      "professor": "Prof SP Vittal",
+      "room": "L06, 2nd floor",
+      "div": "Div B"
+    },
+    {
+      "day": "Mon",
+      "time": "3:30-5:00",
+      "subject": "BV_A",
+      "professor": "Prof SP Vittal",
+      "room": "L06, 2nd floor",
+      "div": "Div A"
+    },
+    {
+      "day": "Mon",
+      "time": "6:00-7:30",
+      "subject": "ENT",
+      "professor": "Dr Srividya Raghavan",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Mon",
+      "time": "8:30-10:00",
+      "subject": "PS",
+      "professor": "Prof Krishna",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Mon",
+      "time": "10:10-11:40",
+      "subject": "PS",
+      "professor": "Prof Krishna",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Mon",
+      "time": "1:50-3:20",
+      "subject": "IAPM_A",
+      "professor": "Dr Showkat Ahmad",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Mon",
+      "time": "3:30-5:00",
+      "subject": "IAPM_B",
+      "professor": "Dr Showkat Ahmad",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Tue",
+      "time": "8:30-10:00",
+      "subject": "BS",
+      "professor": "Dr Dileep Kumar",
+      "room": "L07, 2nd floor",
+      "div": "Div B"
+    },
+    {
+      "day": "Tue",
+      "time": "10:10-11:40",
+      "subject": "LD",
+      "professor": "Dr Umakanata Nayak",
+      "room": "L12, 3rd floor",
+      "div": ""
+    },
+    {
+      "day": "Tue",
+      "time": "11:50-1:20",
+      "subject": "IAPM_B",
+      "professor": "Dr Showkat Ahmad",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Tue",
+      "time": "1:50-3:20",
+      "subject": "IAPM_A",
+      "professor": "Dr Showkat Ahmad",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Tue",
+      "time": "3:30-5:00",
+      "subject": "TR",
+      "professor": "",
+      "room": "L08, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Tue",
+      "time": "1:50-3:20",
+      "subject": "TR",
+      "professor": "",
+      "room": "L08, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Tue",
+      "time": "3:30-5:00",
+      "subject": "ENT",
+      "professor": "Dr Srividya Raghavan",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Wed",
+      "time": "10:10-11:40",
+      "subject": "BS",
+      "professor": "Dr Dileep Kumar",
+      "room": "L07, 2nd floor",
+      "div": "Div C"
+    },
+    {
+      "day": "Wed",
+      "time": "11:50-1:20",
+      "subject": "MC_B",
+      "professor": "Dr Dileep Kumar",
+      "room": "L06, 2nd floor",
+      "div": "Div B"
+    },
+    {
+      "day": "Wed",
+      "time": "1:50-3:20",
+      "subject": "MC_A",
+      "professor": "Dr Dileep Kumar",
+      "room": "L06, 2nd floor",
+      "div": "Div A"
+    },
+    {
+      "day": "Wed",
+      "time": "3:30-5:00",
+      "subject": "PRS",
+      "professor": "Dr Srividya Raghavan",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Wed",
+      "time": "3:30-5:00",
+      "subject": "AFSA_B",
+      "professor": "Dr Narender Vunyale",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Wed",
+      "time": "10:10-11:40",
+      "subject": "BS",
+      "professor": "Dr Srividya Raghavan",
+      "room": "L06, 2nd floor",
+      "div": "Div A"
+    },
+    {
+      "day": "Wed",
+      "time": "11:50-1:20",
+      "subject": "AFSA_A",
+      "professor": "Dr Narender Vunyale",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Wed",
+      "time": "3:30-5:00",
+      "subject": "LD",
+      "professor": "Dr Umakanata Nayak",
+      "room": "L12, 3rd floor",
+      "div": ""
+    },
+    {
+      "day": "Thu",
+      "time": "8:30-10:00",
+      "subject": "AI",
+      "professor": "Prof Shweta",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Thu",
+      "time": "10:10-11:40",
+      "subject": "AI",
+      "professor": "Prof Shweta",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Thu",
+      "time": "11:50-1:20",
+      "subject": "MC_B",
+      "professor": "Dr Dileep Kumar",
+      "room": "L06, 2nd floor / L07, 2nd floor",
+      "div": "Div B"
+    },
+    {
+      "day": "Thu",
+      "time": "1:50-3:20",
+      "subject": "MC_A",
+      "professor": "Dr Dileep Kumar",
+      "room": "L06, 2nd floor",
+      "div": "Div A"
+    },
+    {
+      "day": "Thu",
+      "time": "3:30-5:00",
+      "subject": "PRS",
+      "professor": "Dr Srividya Raghavan",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Thu",
+      "time": "3:30-5:00",
+      "subject": "AFSA_B",
+      "professor": "Dr Narender Vunyale",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Thu",
+      "time": "6:00-7:30",
+      "subject": "RS",
+      "professor": "",
+      "room": "Hybrid",
+      "div": ""
+    },
+    {
+      "day": "Thu",
+      "time": "10:10-11:40",
+      "subject": "CBM",
+      "professor": "Prof Narender Vunyale",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Thu",
+      "time": "11:50-1:20",
+      "subject": "AFSA_A",
+      "professor": "Dr Narender Vunyale",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Fri",
+      "time": "10:10-11:40",
+      "subject": "MA",
+      "professor": "Prof Neeelima",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Fri",
+      "time": "11:50-1:20",
+      "subject": "MA",
+      "professor": "Prof Neeelima",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Fri",
+      "time": "1:50-3:20",
+      "subject": "MC_A",
+      "professor": "Dr Dileep Kumar",
+      "room": "L07, 2nd floor",
+      "div": "Div A"
+    },
+    {
+      "day": "Fri",
+      "time": "6:00-7:30",
+      "subject": "RS",
+      "professor": "",
+      "room": "Hybrid",
+      "div": ""
+    },
+    {
+      "day": "Fri",
+      "time": "10:10-11:40",
+      "subject": "CBM",
+      "professor": "Prof Narender Vunyale",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Fri",
+      "time": "11:50-1:20",
+      "subject": "CBM",
+      "professor": "Prof Narender Vunyale",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Sat",
+      "time": "10:10-11:40",
+      "subject": "IMC",
+      "professor": "Prof Suresh",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Sat",
+      "time": "11:50-1:20",
+      "subject": "IMC",
+      "professor": "Prof Suresh",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Sat",
+      "time": "1:50-3:20",
+      "subject": "CBM",
+      "professor": "Prof Murtuza Soofi",
+      "room": "L6, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Sat",
+      "time": "3:30-5:00",
+      "subject": "CBM",
+      "professor": "Prof Murtuza Soofi",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Sat",
+      "time": "10:10-11:40",
+      "subject": "DAB",
+      "professor": "Prof Neelima",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Sat",
+      "time": "11:50-1:20",
+      "subject": "DAB",
+      "professor": "Prof Neelima",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Sun",
+      "time": "10:10-11:40",
+      "subject": "PS",
+      "professor": "Prof Krishna",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Sun",
+      "time": "11:50-1:20",
+      "subject": "PS",
+      "professor": "Prof Krishna",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Sun",
+      "time": "10:10-11:40",
+      "subject": "FD",
+      "professor": "Prof. Narsimhulu",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Sun",
+      "time": "11:50-1:20",
+      "subject": "FD",
+      "professor": "Prof. Narsimhulu",
+      "room": "L07, 2nd floor",
+      "div": ""
+    }
+  ],
+  "time_slots": [
+    "8:30-10:00",
+    "10:10-11:40",
+    "11:50-1:20",
+    "1:20-1:50",
+    "1:50-3:20",
+    "3:30-5:00",
+    "3:30-5:00",
+    "6:00-7:30"
+  ],
+  "days": [
+    "Sun",
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat"
+  ]
+}

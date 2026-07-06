@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<title>NMIMS Class Companion</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f6f5f1;--surface:#fbfaf7;--border:#e0dfd9;--border-light:#edede8;--text:#4d453e;--text-muted:#9a9590;--text-light:#b4b3ad;--accent:#594c40;--accent-bg:#eae8e2;--accent-active:#d5d3cd;--radius:16px;--radius-sm:10px;--shadow-sm:0 1px 2px rgba(44,42,38,0.04);--shadow:0 2px 8px rgba(44,42,38,0.06);--shadow-md:0 4px 16px rgba(44,42,38,0.08);--font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
+.wrap{max-width:960px;margin:0 auto;padding:20px 14px;display:flex;flex-direction:column;gap:12px}
+.id-bar{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow-md)}.id-bar:focus-within{border-color:var(--text-muted);box-shadow:var(--shadow-md),0 0 0 3px var(--accent-bg)}
+.id-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.id-greeting{font-size:13px;font-weight:600;color:var(--text-light);white-space:nowrap;letter-spacing:-.01em}
+.id-select{flex:1;min-width:160px;padding:7px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;outline:none;background:var(--surface);-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%238b8a84' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;cursor:pointer;transition:border-color .12s}
+.id-select:hover{border-color:var(--text-muted)}
+.id-select:focus{border-color:var(--text-muted);box-shadow:0 0 0 3px var(--accent-bg)}
+.id-info{font-size:12px;color:var(--text-muted);min-width:0;display:flex;flex-direction:column;gap:1px;line-height:1.3}
+.id-info .id-r{display:flex;gap:3px}
+.id-info .id-l{color:var(--text-light);min-width:42px;flex-shrink:0}
+.id-info .id-v{color:var(--text);font-weight:600}
+.id-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;min-height:0}
+.id-chip{border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;box-shadow:0 1px 2px rgba(44,42,38,.06),inset 0 1px 0 rgba(255,255,255,.35)}
+.pill-group{display:flex;gap:3px;padding:3px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);box-shadow:var(--shadow);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.pill{flex-shrink:0;border:none;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:550;cursor:pointer;background:transparent;color:var(--text-muted);-webkit-tap-highlight-color:transparent;transition:all .12s;white-space:nowrap}
+.pill:hover{color:var(--text);background:var(--accent-bg)}
+.pill:active{background:var(--accent-active)}.pill.active{background:var(--accent);color:var(--surface);box-shadow:0 1px 3px rgba(44,42,38,.15)}.pill.active:hover{background:var(--accent)}.pill.active:active{background:var(--accent)}
+.pill.sm{padding:5px 12px;font-size:11px}
+.panel{display:none}
+.panel.active{display:flex;flex-direction:column;gap:12px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;box-shadow:var(--shadow);transition:box-shadow .2s}
+.sr{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.si{flex:1;min-width:150px;padding:7px 11px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;outline:none;background:var(--surface);transition:border-color .12s}
+.si:hover{border-color:var(--text-muted)}
+.si:focus{border-color:var(--text-muted);box-shadow:0 0 0 3px var(--accent-bg)}
+.sc2{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.sl{max-height:200px;overflow-y:auto;border:1px solid var(--border-light);border-radius:var(--radius-sm);background:var(--surface);-webkit-overflow-scrolling:touch;box-shadow:inset 0 1px 3px rgba(44,42,38,.04)}
+#RC .panel.active{padding-top:6px}
+.si2{display:flex;align-items:center;gap:9px;padding:7px 11px;cursor:pointer;border-bottom:1px solid var(--border-light);font-size:13px;-webkit-tap-highlight-color:transparent;transition:background .1s}
+.si2:last-child{border-bottom:none}
+.si2:hover{background:var(--accent-bg);box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}
+
+.no-r{padding:20px;text-align:center;color:var(--text-light);font-size:13px}
+#stList{margin-top:8px}
+.sb{display:flex;align-items:flex-start;gap:7px;margin-top:10px;flex-wrap:wrap;min-height:24px}
+#selLbl{font-size:12px;color:var(--text-muted);white-space:nowrap}
+.sb2{display:flex;flex-wrap:wrap;gap:10px}
+.bdg{padding:3px 10px 3px 12px;border-radius:20px;font-size:12px;font-weight:600;display:inline-flex;align-items:center;gap:5px;line-height:1.3;background:var(--accent-bg);color:var(--text)}
+.rm{cursor:pointer;font-size:14px;line-height:1;opacity:.35;transition:opacity .12s;margin-left:2px}
+.rm:hover{opacity:.7}
+.tt-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--radius-sm)}
+.tt-grid{display:grid;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
+.tt-gh{padding:8px 6px;font-size:10px;font-weight:600;color:var(--text-muted);text-align:center;border-bottom:1px solid var(--border);border-right:1px solid var(--border);background:var(--accent-bg);box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.tt-gh:last-child{border-right:none}
+.tt-gl{display:flex;align-items:center;justify-content:center;padding:4px;font-size:9px;color:var(--text-muted);text-align:center;border-right:1px solid var(--border);border-bottom:1px solid var(--border);line-height:1.2;background:var(--surface);box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.tt-gc{border-right:1px solid var(--border);border-bottom:1px solid var(--border);min-height:52px;padding:2px;background:var(--surface);transition:background .15s}
+.tt-gc:last-child{border-right:none}
+.tt-gh-lunch{padding:0;background:var(--accent-bg);box-shadow:none}
+.tt-lunch{background:var(--accent-bg);min-height:0;padding:0;box-shadow:none}
+.tt-empty{background:var(--bg);box-shadow:inset 0 1px 2px rgba(44,42,38,.03)}
+.tt-cell-flex{display:flex;flex-direction:column;height:100%;gap:2px}
+.slot{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:3px;border-radius:5px;padding:4px 6px;font-weight:600;cursor:default;line-height:1.15;overflow:hidden;font-size:9px;min-height:24px;box-shadow:0 1px 3px rgba(44,42,38,.08),inset 0 1px 0 rgba(255,255,255,.4)}
+.slot .subj{font-size:10px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.slot .det{font-size:7px;font-weight:500;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.slot.other{color:var(--text-light);font-size:8px;font-weight:500;background:transparent;flex:0 0 auto;padding:1px 0;box-shadow:none;min-height:0;line-height:1.3}
+.tt-count{font-size:10px;color:var(--text-muted)}
+.tt-legend{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.tt-legend-item{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600}
+.tt-legend-item.other{color:var(--text-light);font-size:9px;padding:2px 6px}
+.empty{text-align:center;padding:30px 16px;color:var(--text-light);font-size:13px}
+.mt{width:100%;border-collapse:collapse;font-size:12px}
+.mt th{padding:8px 6px;font-weight:600;font-size:10px;color:var(--text-muted);text-align:left;border-bottom:1px solid var(--border);background:var(--accent-bg)}
+.mt td{padding:8px 6px;border-bottom:1px solid var(--border-light);vertical-align:middle}
+.mt tr:last-child td{border-bottom:none}
+.cn{display:block;font-weight:600;font-size:12.5px}
+.fc{display:block;font-size:10px;color:var(--text-muted);margin-top:1px}
+.tb{padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;display:inline-block;margin:1px;white-space:nowrap}
+.cp{display:inline-block;padding:2px 10px;border-radius:20px;font-size:12px;font-weight:700}
+.mw{overflow-x:auto}
+.mx{border-collapse:collapse;font-size:11px;min-width:400px}
+.mx th,.mx td{padding:6px 8px;text-align:center;white-space:nowrap;font-size:11px}
+.mx .rh{font-weight:600;font-size:10px;text-align:left}
+.mx .dg{color:var(--text-light);font-size:10px}
+.mx .bl{background:transparent}
+.mx-exp{font-size:11px;color:var(--text-muted);margin-bottom:12px;line-height:1.4}
+.mx-note{font-size:10px;color:var(--text-light);margin-top:8px;text-align:center}
+.st{width:100%;border-collapse:collapse;font-size:12px}
+.st th{padding:8px 6px;font-weight:600;font-size:10px;color:var(--text-muted);text-align:left;border-bottom:1px solid var(--border);background:var(--accent-bg)}
+.st td{padding:8px 6px;border-bottom:1px solid var(--border-light);vertical-align:middle}
+.st tr:last-child td{border-bottom:none}
+.st tr.rr td{padding:0;border-bottom:none}
+.tc{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600}
+.civ{background:#e0e5ef;color:#2c3e5c}
+.cv{background:#e0ede2;color:#2a5038}
+.cvi{background:#e6e3ee;color:#3d305a}
+.bb{height:4px;background:var(--border-light);border-radius:2px;margin-top:4px;overflow:hidden}
+.bf{height:100%;border-radius:2px}
+.rt{cursor:pointer;font-size:12px;color:var(--text-muted);transition:transform .2s;display:inline-block}
+.rt.open{transform:rotate(180deg)}
+.rp{max-height:0;overflow:hidden;transition:max-height .3s;display:flex;flex-wrap:wrap;gap:3px;padding:0 6px}
+.rp.open{max-height:600px;padding:8px 6px}
+.rn{padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
+.rn.ru{color:#999896;background:#efeee9}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="id-bar">
+    <div class="id-row">
+      <span class="id-greeting">You:</span>
+      <select id="studentSelect" class="id-select" onchange="onStudentChange()">
+        <option value="">&mdash; Select a student &mdash;</option>
+      </select>
+      <div id="studentInfo" class="id-info"></div>
+    </div>
+    <div id="enrolledSubjects" class="id-chips"></div>
+  </div>
+  <div class="pill-group" id="mainNav">
+    <button class="pill active" onclick="showMainTab('tt',this)">Timetable</button>
+    <button class="pill" onclick="showMainTab('students',this)">Classmates</button>
+    <button class="pill" onclick="showMainTab('subjects',this)">All Subjects</button>
+  </div>
+  <div id="panel-tt" class="panel active">
+    <div class="pill-group">
+      <button class="pill sm active" data-range="today" onclick="setTimeRange('today',this)">Today</button>
+      <button class="pill sm" data-range="tomorrow" onclick="setTimeRange('tomorrow',this)">Tomorrow</button>
+      <button class="pill sm" data-range="week" onclick="setTimeRange('week',this)">This Week</button>
+    </div>
+    <div id="ttCount" class="tt-count"></div>
+    <div class="tt-scroll"><div class="tt-grid" id="timetable"></div></div>
+    <div id="tt-legend" class="tt-legend"></div>
+    <div id="ttNoData"></div>
+  </div>
+  <div id="panel-students" class="panel">
+    <div class="card">
+      <details id="filterDetails">
+        <summary style="font-size:11px;font-weight:600;color:var(--text-muted);cursor:pointer">Select students to highlight in rosters</summary>
+        <div style="margin-top:10px">
+          <div class="sr">
+            <input id="sIn" class="si" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search by name&hellip;" oninput="fL()" onkeydown="if(event.key==='Enter'){var e=document.getElementById('stList').querySelector('.si2');if(e)e.click()}">
+            <button class="pill sm" onclick="selAll()">All</button>
+          </div>
+          <div class="sl" id="stList"></div>
+        </div>
+      </details>
+      <div class="sb" id="selBar" style="margin-top:8px">
+        <span id="selLbl">0 selected</span>
+        <button class="pill sm" onclick="clrAll()" style="margin-left:auto">Clear</button>
+        <div id="selBdg"></div>
+      </div>
+    </div>
+    <div class="card" id="RC">
+      <div class="pill-group" id="mainTabs">
+        <button class="pill sm active" onclick="showTab('iv',this)">Trim IV</button>
+        <button class="pill sm" onclick="showTab('v',this)">Trim V</button>
+        <button class="pill sm" onclick="showTab('vi',this)">Trim VI</button>
+        <button class="pill sm" onclick="showTab('matrix',this)">Matrix</button>
+      </div>
+      <div id="panel-iv" class="panel active"></div>
+      <div id="panel-v" class="panel"></div>
+      <div id="panel-vi" class="panel"></div>
+      <div id="panel-matrix" class="panel"></div>
+    </div>
+  </div>
+  <div id="panel-subjects" class="panel">
+    <div class="card" id="RC2">
+      <div class="pill-group">
+        <button class="pill sm active" id="srtTrim" onclick="sSrt('trim',this)">By trim</button>
+        <button class="pill sm" id="srtCnt" onclick="sSrt('count',this)">By size</button>
+        <button class="pill sm" id="srtNm" onclick="sSrt('name',this)">A-Z</button>
+      </div>
+      <div id="subjResults"></div>
+    </div>
+  </div>
+</div>
+<script>
+let selectedStudent = null;
+const TIME_ORDER = ['8:30-10:00','10:10-11:40','11:50-1:20','1:20-1:50','1:50-3:20','3:30-5:00','6:00-7:30'];
+const DAY_NAMES = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const SUBJ_HUES = {};
+let ttRange = 'today';
+
+function toTitleCase(s) {
+  return s.toLowerCase().replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+}
+
+function getTodayDay() { return DAY_NAMES[(new Date().getDay()+6)%7]; }
+function getTomorrowDay() { return DAY_NAMES[(new Date().getDay()+7)%7]; }
+
+function initStudentSelect() {
+  var sel = document.getElementById('studentSelect');
+  sel.innerHTML = '<option value="">\u2014 Select a student \u2014</option>';
+  DATA.students.sort(function(a,b){return a.name.localeCompare(b.name);});
+  for (var i = 0; i < DATA.students.length; i++) {
+    var opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = toTitleCase(DATA.students[i].name) + ' (' + DATA.students[i].roll + ')';
+    sel.appendChild(opt);
+  }
+  for (var i = 0; i < DATA.students.length; i++) {
+    if (DATA.students[i].name.toLowerCase().indexOf('ronny') !== -1 || DATA.students[i].name.toLowerCase().indexOf('jacob') !== -1) {
+      sel.value = i;
+      onStudentChange();
+      return;
+    }
+  }
+}
+
+function setTimeRange(range, btn) {
+  ttRange = range;
+  var btns = document.querySelectorAll('#panel-tt .pill-group .pill');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+  if (btn) btn.classList.add('active');
+  renderTimetable();
+}
+
+function onStudentChange() {
+  var selEl = document.getElementById('studentSelect');
+  var idx = parseInt(selEl.value);
+  if (isNaN(idx)) {
+    selectedStudent = null;
+    document.getElementById('studentInfo').innerHTML = '';
+    renderTimetable();
+    renderEnrolled();
+    return;
+  }
+  selectedStudent = DATA.students[idx];
+  var s = selectedStudent;
+  document.getElementById('studentInfo').innerHTML = '<div class="id-r"><span class="id-l">Roll</span><span class="id-v">'+he(s.roll)+'</span></div><div class="id-r"><span class="id-l">Major</span><span class="id-v">'+he(s.major)+'</span></div>'+(s.minor?'<div class="id-r"><span class="id-l">Minor</span><span class="id-v">'+he(s.minor.replace(/;/g,''))+'</span></div>':'');
+  renderTimetable();
+  renderEnrolled();
+  sel={};so=[];ci=0;tog(s.name);
+}
+
+function renderEnrolled() {
+  var el = document.getElementById('enrolledSubjects');
+  if (!selectedStudent) { el.innerHTML = ''; return; }
+  var codes = selectedStudent.subjects;
+  el.innerHTML = '';
+  for (var i = 0; i < codes.length; i++) {
+    var code = codes[i];
+    var h = subjectHue(code);
+    var nm = DATA.subjects[code] ? DATA.subjects[code].name : '';
+    var chip = document.createElement('span');
+    chip.className = 'id-chip';
+    chip.style.cssText = 'background:hsl('+h+',82%,87%);color:hsl('+h+',62%,18%)';
+    chip.innerHTML = he(code) + (nm ? ' <span style="font-weight:400;opacity:.7">' + he(nm) + '</span>' : '');
+    el.appendChild(chip);
+  }
+}
+
+function subjectHue(code) {
+  if (SUBJ_HUES[code] !== undefined) return SUBJ_HUES[code];
+  var codes = Object.keys(DATA.subjects).sort();
+  var idx = codes.indexOf(code);
+  SUBJ_HUES[code] = idx < 0 ? 0 : (idx * 360 / codes.length + 10) % 360;
+  return SUBJ_HUES[code];
+}
+
+function renderTimetable() {
+  var gridEl = document.getElementById('timetable');
+  var legendEl = document.getElementById('tt-legend');
+  var countEl = document.getElementById('ttCount');
+  var noDataEl = document.getElementById('ttNoData');
+  if (!selectedStudent) {
+    gridEl.style.display = 'none';
+    legendEl.innerHTML = '';
+    countEl.textContent = '';
+    noDataEl.innerHTML = '<div class="empty">Select a student</div>';
+    return;
+  }
+  noDataEl.innerHTML = '';
+  var subjectSet = {};
+  for (var i = 0; i < selectedStudent.subjects.length; i++) subjectSet[selectedStudent.subjects[i]] = true;
+  var daysToShow;
+  if (ttRange === 'today') { daysToShow = [getTodayDay()]; }
+  else if (ttRange === 'tomorrow') { daysToShow = [getTomorrowDay()]; }
+  else { daysToShow = DAY_NAMES.slice(); }
+  var daysWithData = [];
+  for (var d = 0; d < daysToShow.length; d++) {
+    for (var e = 0; e < DATA.timetable.length; e++) {
+      if (DATA.timetable[e].day === daysToShow[d]) { daysWithData.push(daysToShow[d]); break; }
+    }
+  }
+  if (daysWithData.length === 0) {
+    gridEl.style.display = 'none';
+    legendEl.innerHTML = '';
+    countEl.textContent = 'No sessions';
+    noDataEl.innerHTML = '<div class="empty">No classes for this period</div>';
+    return;
+  }
+  gridEl.style.display = 'grid';
+  var numDays = daysWithData.length;
+  var numTimes = TIME_ORDER.length;
+  var colTmpl = '52px';
+  for (var t = 0; t < numTimes; t++) {
+    colTmpl += TIME_ORDER[t] === '1:20-1:50' ? ' 20px' : ' 1fr';
+  }
+  gridEl.style.gridTemplateColumns = colTmpl;
+  var myCount = 0;
+  for (var e = 0; e < DATA.timetable.length; e++) {
+    if (subjectSet[DATA.timetable[e].subject]) {
+      for (var d = 0; d < numDays; d++) {
+        if (DATA.timetable[e].day === daysWithData[d]) { myCount++; break; }
+      }
+    }
+  }
+  countEl.textContent = myCount + ' session' + (myCount !== 1 ? 's' : '');
+  var grid = {};
+  for (var d = 0; d < numDays; d++) {
+    grid[daysWithData[d]] = {};
+    for (var t = 0; t < numTimes; t++) {
+      grid[daysWithData[d]][TIME_ORDER[t]] = [];
+    }
+  }
+  for (var e = 0; e < DATA.timetable.length; e++) {
+    var entry = DATA.timetable[e];
+    if (grid[entry.day] && grid[entry.day][entry.time] !== undefined) {
+      grid[entry.day][entry.time].push(entry);
+    }
+  }
+  var html = '';
+  html += '<div class="tt-gh tt-time">Day</div>';
+  for (var t2 = 0; t2 < numTimes; t2++) {
+    var ts = TIME_ORDER[t2];
+    var lbl = ts === '1:20-1:50' ? '' : ts.replace('-','\u2013');
+    html += '<div class="tt-gh' + (ts === '1:20-1:50' ? ' tt-gh-lunch' : '') + '">' + lbl + '</div>';
+  }
+  for (var d = 0; d < numDays; d++) {
+    var day = daysWithData[d];
+    html += '<div class="tt-gl">' + day + '</div>';
+    for (var t = 0; t < numTimes; t++) {
+      var time = TIME_ORDER[t];
+      var isLunch = (time === '1:20-1:50');
+      if (isLunch) {
+        html += '<div class="tt-gc tt-lunch"></div>';
+        continue;
+      }
+      var entries = grid[day][time];
+      if (!entries || entries.length === 0) {
+        html += '<div class="tt-gc tt-empty"></div>';
+      } else {
+        html += '<div class="tt-gc"><div class="tt-cell-flex">';
+        for (var pass = 0; pass < 2; pass++) {
+          for (var e = 0; e < entries.length; e++) {
+            var entry = entries[e];
+            var mine = subjectSet[entry.subject];
+            if ((pass === 0 && !mine) || (pass === 1 && mine)) continue;
+            var divLabel = entry.div ? ' ' + entry.div : '';
+            if (mine) {
+              var h = subjectHue(entry.subject);
+              var subjName = DATA.subjects[entry.subject] ? DATA.subjects[entry.subject].name : '';
+              html += '<div class="slot" style="background:hsl(' + h + ',78%,85%);color:hsl(' + h + ',62%,18%)" title="' + subjName + (entry.room ? '\\n' + entry.room : '') + (entry.professor ? '\\n' + entry.professor : '') + '">';
+              html += '<span class="subj">' + entry.subject + divLabel + '</span>';
+              if (entry.room) html += '<span class="det">' + entry.room + '</span>';
+              if (entry.professor) html += '<span class="det">' + entry.professor + '</span>';
+              html += '</div>';
+            } else {
+              html += '<div class="slot other">' + entry.subject + '</div>';
+            }
+          }
+        }
+        html += '</div></div>';
+      }
+    }
+  }
+  gridEl.innerHTML = html;
+  var shown = {};
+  var lhtml = '';
+  for (var e = 0; e < DATA.timetable.length; e++) {
+    var code = DATA.timetable[e].subject;
+    if (shown[code]) continue;
+    shown[code] = true;
+    var mine = subjectSet[code];
+    var subj = DATA.subjects[code];
+    if (mine) {
+      var h = subjectHue(code);
+      lhtml += '<span class="tt-legend-item" style="background:hsl(' + h + ',78%,85%);color:hsl(' + h + ',62%,18%)">' + code + (subj ? ' ' + subj.name : '') + '</span>';
+    } else {
+      lhtml += '<span class="tt-legend-item other">' + code + '</span>';
+    }
+  }
+  legendEl.innerHTML = lhtml;
+}
+
+function enhanceTrimIV() {
+  var divMap = {
+    "Advanced Financial Statement Analysis": ["AFSA_A", "AFSA_B"],
+    "Business Valuation": ["BV_A", "BV_B"],
+    "Investment Analysis and Portfolio Management": ["IAPM_A", "IAPM_B"],
+    "Management Consulting": ["MC_A", "MC_B"]
+  };
+  var nameSubj = {};
+  for (var i = 0; i < DATA.students.length; i++) {
+    var s = DATA.students[i];
+    nameSubj[s.name] = {};
+    for (var j = 0; j < s.subjects.length; j++) nameSubj[s.name][s.subjects[j]] = true;
+  }
+  var newClasses = [];
+  for (var i = 0; i < CLASSES.iv.length; i++) {
+    var entry = CLASSES.iv[i];
+    var shortName = sN(entry.cls);
+    var codes = divMap[shortName];
+    if (codes) {
+      for (var d = 0; d < codes.length; d++) {
+        var code = codes[d];
+        var divLabel = code.slice(-1);
+        var divStudents = [];
+        for (var j = 0; j < entry.students.length; j++) {
+          var nm = entry.students[j];
+          if (nameSubj[nm] && nameSubj[nm][code]) divStudents.push(nm);
+        }
+        newClasses.push({cls: shortName + ' - ' + divLabel, students: divStudents});
+      }
+    } else {
+      newClasses.push(entry);
+    }
+  }
+  CLASSES.iv = newClasses;
+}
+
+/* DATA_INSERT_HERE */
+DATA = {"students": [{"name": "Aniket Patwari", "roll": "H001", "email": "ANIKET.PATWARI05@nmims.in", "major": "Finance", "minor": "Marketing", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "MC_B", "ENT"]}, {"name": "Heeral Tandon", "roll": "H002", "email": "HEERAL.TANDON03@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "PRS", "PS", "MC_B"]}, {"name": "Shubh Gupta", "roll": "H003", "email": "SHUBH.GUPTA31@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "FD", "MC_B"]}, {"name": "Kanishk Mehta", "roll": "H005", "email": "KANISHK.MEHTA43@nmims.in", "major": "Marketing", "minor": "HR;Strategy;", "subjects": ["CB", "IMC", "PS", "MC_B", "LD"]}, {"name": "Ishita Sinha", "roll": "H006", "email": "ISHITA.SINHA50@nmims.in", "major": "Finance", "minor": "Marketing;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "FD", "CB"]}, {"name": "Lakshmi S", "roll": "H008", "email": "LAKSHMI.S64@nmims.in", "major": "Marketing", "minor": "Analytics;Strategy;", "subjects": ["CB", "MA", "PS", "MC_B", "AI"]}, {"name": "Deepti Yendluri", "roll": "80012500077", "email": "DEEPTI.YENDLURI77@nmims.in", "major": "Finance", "minor": "Analytics;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "CBM", "MC_B"]}, {"name": "Abhishek Kumar", "roll": "H010", "email": "ABHISHEK.KUMAR83@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "MA", "PS", "MC_B"]}, {"name": "Hanima Ahuja", "roll": "H012", "email": "HANIMA.AHUJA91@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "MA", "PS", "MC_B"]}, {"name": "Dibyendu Das", "roll": "H015", "email": "DIBYENDU.DAS26@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "FD", "MC_B"]}, {"name": "Devanshi Kyal", "roll": "H016", "email": "DEVANSHI.KYAL46@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "MA", "PS", "MC_B"]}, {"name": "Mahi Kinariwala", "roll": "H017", "email": "MAHI.KINARIWALA67@nmims.in", "major": "Finance", "minor": "Strategy;Analytics;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "MC_B", "DAB"]}, {"name": "Ankit Ghoradkar", "roll": "H018", "email": "ANKIT.GHORADKAR80@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "MA", "PS", "MC_B"]}, {"name": "Hritik Kumar", "roll": "H020", "email": "HRITIK.KUMAR96@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "CBM", "MC_B"]}, {"name": "Vidhu P", "roll": "H021", "email": "VIDHU.P98@nmims.in", "major": "Marketing", "minor": "Analytics;", "subjects": ["MA", "PRS", "MC_B", "AI", "DAB"]}, {"name": "Vaishnavi Dudem", "roll": "H022", "email": "VAISHNAVI.DUDEM03@nmims.in", "major": "Finance", "minor": "Strategy ; Analytics", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "MC_B", "AI"]}, {"name": "Harshita Pradhan", "roll": "H023", "email": "HARSHITAPRADHAN.PRADHAN11@nmims.in", "major": "Finance", "minor": "Strategy;Analytics;", "subjects": ["BV_B", "IAPM_B", "CBM", "MC_B", "DAB"]}, {"name": "HARMIT SINGH", "roll": "H024", "email": "HARMIT.SINGH13@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "FD", "MC_B"]}, {"name": "Kanishka Gupta", "roll": "H026", "email": "KANISHKAGUPTA.GUPTA31@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "MA", "PS", "MC_B"]}, {"name": "Ishan Sanghavi", "roll": "H027", "email": "ISHAN.SANGHAVI46@nmims.in", "major": "Finance", "minor": "Strategy;Analytics;", "subjects": ["AFSA_B", "BV_B", "FD", "MC_B", "ENT"]}, {"name": "Savitha Sri S", "roll": "H029", "email": "SAVITHA.SRIS71@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "FD", "ENT"]}, {"name": "Aman Shahin", "roll": "H030", "email": "AMAN.SHAHIN72@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "MA", "PS", "MC_B", "AI"]}, {"name": "Rishita Ramdeo", "roll": "H031", "email": "RISHITA.RAMDEO78@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "MC_B", "ENT"]}, {"name": "Isha Jain", "roll": "H032", "email": "ISHA.JAIN88@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "MA", "PS", "MC_B"]}, {"name": "Niladri Kundu", "roll": "H033", "email": "NILADRI.KUNDU04@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "FD", "MC_B"]}, {"name": "Ayush Dutta", "roll": "H034", "email": "AYUSH.DUTTA23@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "MA", "MC_B"]}, {"name": "Swapnil Tiwari", "roll": "H035", "email": "SWAPNIL.TIWARI44@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "FD", "MC_B"]}, {"name": "Manav Malhotra", "roll": "H036", "email": "MANAV.MALHOTRA47@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "MA", "PRS", "PS", "MC_B"]}, {"name": "Insha Ali", "roll": "H037", "email": "INSHA.ALI51@nmims.in", "major": "Marketing", "minor": "Analytics;Strategy;HR;", "subjects": ["CB", "MA", "PS", "MC_B", "AI"]}, {"name": "Nihal Bibikar", "roll": "H039", "email": "NIHAL.BIBIKAR83@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "MA", "PS", "MC_B"]}, {"name": "Avantika sain", "roll": "H040", "email": "AVANTIKA.SAIN85@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "MA", "PRS", "MC_B"]}, {"name": "Aastha Saini", "roll": "H041", "email": "AASTHA.SAINI95@nmims.in", "major": "Marketing", "minor": "Analytics;", "subjects": ["CB", "MA", "PS", "MC_B", "AI"]}, {"name": "Suraj Satpute", "roll": "H042", "email": "SURAJ.SATPUTE03@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "MC_B", "ENT"]}, {"name": "Gaurav Wadhwa", "roll": "H043", "email": "GAURAV.WADHWA05@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "MA", "PS", "MC_B"]}, {"name": "SANSKAR MAHALKA", "roll": "H044", "email": "SANSKAR.MAHALKA12@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "MA", "PS", "MC_B"]}, {"name": "Antara Gupta", "roll": "H045", "email": "ANTARA.GUPTA17@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "MC_B", "ENT"]}, {"name": "Sudhanshu Chauhan", "roll": "H046", "email": "SUDHANSHU.CHAUHAN41@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "MC_B", "ENT"]}, {"name": "Masoom Singh", "roll": "H048", "email": "MASOOM.SINGH48@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "MA", "PS", "MC_B"]}, {"name": "Jyoti Bikas Das", "roll": "H049", "email": "JYOTIBIKAS.DAS56@nmims.in", "major": "Marketing", "minor": "Analytics;", "subjects": ["CB", "MA", "PRS", "PS", "MC_B"]}, {"name": "Pramiti Gupta", "roll": "H050", "email": "PRAMITI.GUPTA57@nmims.in", "major": "Marketing", "minor": "Strategy;Analytics;", "subjects": ["CB", "MA", "PS", "MC_B", "ENT"]}, {"name": "Paridhi Rungta", "roll": "H051", "email": "PARIDHI.RUNGTA65@nmims.in", "major": "Marketing", "minor": "Analytics;Strategy;", "subjects": ["CB", "MA", "PRS", "PS", "MC_B"]}, {"name": "Vishnu Vyas", "roll": "H052", "email": "VISHNU.VYAS76@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "CBM", "MC_B"]}, {"name": "Monish Das", "roll": "H053", "email": "MONISH.DAS83@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "MA", "PS", "MC_B"]}, {"name": "Naman Jain", "roll": "H054", "email": "NAMAN.JAIN85@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "MC_B", "DAB"]}, {"name": "Pratham Bagri", "roll": "H055", "email": "PRATHAM.BAGRI92@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "PS", "MC_B", "ENT"]}, {"name": "Ajay Vigneshwar A", "roll": "H174", "email": "AJAY.VIGNESHWARA497@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "MC_B", "ENT"]}, {"name": "Anannya Gupta", "roll": "H056", "email": "ANANNYA.GUPTA01@nmims.in", "major": "Finance", "minor": "Strategy;Analytics;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "MC_B", "DAB"]}, {"name": "Abhijatya Negi", "roll": "H057", "email": "ABHIJATYA.NEGI06@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "PS", "MC_B", "ENT"]}, {"name": "Ankush P. Karwa", "roll": "H058", "email": "ANKUSH.KARWA19@nmims.in", "major": "Finance", "minor": "Strategy;Analytics;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "MA", "MC_B"]}, {"name": "Raunit Raj", "roll": "H059", "email": "RAUNIT.RAJ35@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "CBM", "MC_B"]}, {"name": "Arsh Vardhan Sinha", "roll": "H060", "email": "ARSH.SINHA42@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "PS", "MC_B", "AI"]}, {"name": "Pilla Venkata Sai Tharun", "roll": "H061", "email": "PILLAVENKATA.SAITHARUN61@nmims.in", "major": "Marketing", "minor": "Analytics;Strategy;HR;", "subjects": ["CB", "IMC", "MA", "MC_B", "AI"]}, {"name": "Shreya Gupta", "roll": "H062", "email": "SHREYA.GUPTA80@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "MC_B", "ENT"]}, {"name": "Aby K Mathai", "roll": "H064", "email": "ABY.MATHAI91@nmims.in", "major": "Marketing", "minor": "Analytics;", "subjects": ["MA", "PRS", "MC_B", "AI", "DAB"]}, {"name": "Krish Siddharth Negi", "roll": "H067", "email": "KRISHSIDDHARTH.NEGI24@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "PS", "MC_B", "ENT"]}, {"name": "Amir Rahman", "roll": "H068", "email": "AMIR.RAHMAN31@nmims.in", "major": "Marketing", "minor": "Analytics;Strategy;", "subjects": ["CB", "IMC", "MA", "PS", "MC_B"]}, {"name": "Rituparna Sharma", "roll": "H069", "email": "RITUPARNA.SHARMA40@nmims.in", "major": "Marketing", "minor": "Analytics;", "subjects": ["CB", "IMC", "PS", "MC_B", "AI"]}, {"name": "Astha kejriwal", "roll": "H070", "email": "ASTHA.KEJRIWAL49@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "MC_B", "DAB"]}, {"name": "Rohit ranjan", "roll": "H073", "email": "ROHIT.RANJAN91@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "MC_B", "DAB"]}, {"name": "pratham Kamath", "roll": "H074", "email": "PRATHAM.KAMATH93@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "PRS", "PS", "MC_B"]}, {"name": "Tushita Mishra", "roll": "H075", "email": "TUSHITA.MISHRA00@nmims.in", "major": "Finance", "minor": "Analytics;Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "MA", "MC_B"]}, {"name": "Swechha Jaiswal", "roll": "H076", "email": "SWECHHA.JAISWAL01@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "MC_B", "DAB"]}, {"name": "Ashish Gupta", "roll": "H077", "email": "ASHISH.GUPTA07@nmims.in", "major": "Marketing", "minor": "Analytics;", "subjects": ["CB", "IMC", "MA", "PS", "MC_B"]}, {"name": "Jeel Shah", "roll": "H080", "email": "JEEL.SHAH21@nmims.in", "major": "Finance", "minor": "Analytics;Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "FD", "MC_B"]}, {"name": "Vishnu P S", "roll": "H081", "email": "VISHNU.PS27@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["BV_B", "IAPM_B", "CBM", "MC_B", "LD"]}, {"name": "Shraddha Randive", "roll": "H084", "email": "SHRADDHA.RANDIVE52@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "FD", "MC_B"]}, {"name": "Rohit Ramakant Patil", "roll": "H085", "email": "ROHIT.RAMAKANT78@nmims.in", "major": "Marketing", "minor": "Strategy;Analytics;", "subjects": ["CB", "MA", "PRS", "PS", "MC_B"]}, {"name": "Akella Venkata Karthik", "roll": "H086", "email": "AKELLAVENKATA.KARTHIK05@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "CBM", "MC_B"]}, {"name": "Himanshi Tanwar", "roll": "H087", "email": "HIMANSHI.TANWAR09@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "CBM", "MC_B"]}, {"name": "Pratham Goel", "roll": "H088", "email": "PRATHAM.GOEL10@nmims.in", "major": "Finance", "minor": "Strategy;Analytics;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "MC_B", "DAB"]}, {"name": "Prerna Tekade", "roll": "H089", "email": "PRERNA.TEKADE13@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "MC_A", "DAB"]}, {"name": "Kshitiz Gupta", "roll": "H090", "email": "KSHITIZ.GUPTA36@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "MC_A", "ENT"]}, {"name": "Tushar soni", "roll": "H091", "email": "TUSHAR.SONI40@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_B", "BV_B", "IAPM_B", "MA", "MC_A"]}, {"name": "SUJITH REDDY YEDULLA", "roll": "H092", "email": "SUJITHREDDY.YEDULLA65@nmims.in", "major": "Marketing", "minor": "Analytics;", "subjects": ["CB", "MA", "PRS", "AI", "DAB"]}, {"name": "Srishti Shinde", "roll": "H093", "email": "SRISHTI.SHINDE66@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "CBM", "MC_A"]}, {"name": "Shwetha R", "roll": "H095", "email": "SHWETHA.R77@nmims.in", "major": "Marketing", "minor": "Strategy;Analytics;", "subjects": ["CB", "IMC", "PS", "MC_A", "AI"]}, {"name": "Ronny Jacob", "roll": "H096", "email": "RONNY.JACOB85@nmims.in", "major": "Marketing", "minor": "Analytics;", "subjects": ["CB", "MA", "PS", "MC_A", "ENT"]}, {"name": "Prateek Gaur", "roll": "H097", "email": "PRATEEK.GAUR93@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "FD", "MC_A"]}, {"name": "Tejaswita", "roll": "H098", "email": "TEJASWITA99@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "MC_A", "DAB"]}, {"name": "Priyanshu Mittal", "roll": "H100", "email": "PRIYANSHU.MITTAL04@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "FD", "MC_A"]}, {"name": "Mahika Vasandani", "roll": "H101", "email": "MAHIKA.VASANDANI07@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "MA", "PS", "MC_A"]}, {"name": "Kishore P", "roll": "H102", "email": "KISHORE.P08@nmims.in", "major": "Finance", "minor": "Analytics;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "ENT", "AI"]}, {"name": "Anusha Heliwal", "roll": "H104", "email": "ANUSHA.HELIWAL10@nmims.in", "major": "Finance", "minor": "Strategy;Analytics;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "MC_A", "DAB"]}, {"name": "Jash Vaja", "roll": "H105", "email": "JASH.VAJA16@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "MA", "PRS", "PS", "MC_A"]}, {"name": "Koustav Jana", "roll": "H106", "email": "KOUSTAV.JANA28@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "PS", "MC_A", "ENT"]}, {"name": "Medha Jha", "roll": "H108", "email": "MEDHA.JHA38@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "CBM", "MC_A"]}, {"name": "Gaurang Maheshwari", "roll": "H110", "email": "GAURANG.MAHESHWARI44@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "CBM", "MC_A"]}, {"name": "Shrishti Mittal", "roll": "H112", "email": "SHRISHTI.MITTAL71@nmims.in", "major": "Marketing", "minor": "Marketing;Strategy;", "subjects": ["CB", "IMC", "PS", "MC_A", "ENT"]}, {"name": "Dhairya Mehta", "roll": "H113", "email": "DHAIRYA.MEHTA80@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "FD", "MC_A"]}, {"name": "Gaurav Agarwal", "roll": "H115", "email": "GAURAV.AGARWAL93@nmims.in", "major": "Marketing", "minor": "Analytics;Strategy;Finance;", "subjects": ["CB", "IMC", "MA", "PRS", "MC_A"]}, {"name": "Varun Patwary", "roll": "H116", "email": "VARUN.PATWARY97@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "CBM", "MC_A"]}, {"name": "I Dharshana", "roll": "H117", "email": "DHARSHANA.I05@nmims.in", "major": "Finance", "minor": "Analytics;Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "MC_A", "DAB"]}, {"name": "Mudit Mittal", "roll": "H118", "email": "MUDIT.MITTAL18@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "CBM", "MC_A"]}, {"name": "Umang Gupta", "roll": "H119", "email": "UMANG.GUPTA41@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "CBM", "MC_A"]}, {"name": "Aditya Chaubey", "roll": "H120", "email": "ADITYA.CHAUBEY46@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "PS", "MC_A", "ENT"]}, {"name": "Tanisha Singh", "roll": "H122", "email": "TANISHA.SINGH66@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "MC_A", "ENT"]}, {"name": "Vasu Jain", "roll": "H123", "email": "VASU.JAIN72@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["BV_A", "IAPM_A", "CBM", "FD", "MC_A"]}, {"name": "Anna Ria", "roll": "H125", "email": "ANNA.RIA88@nmims.in", "major": "Finance", "minor": "Analytics;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "FD", "DAB"]}, {"name": "Marie Aparajith Rajashankar", "roll": "H128", "email": "MARIEAPARAJITH.RAJASHANKAR42@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "MA", "PS", "MC_A", "DAB"]}, {"name": "Umang Agarwal", "roll": "H130", "email": "UMANG.AGARWAL52@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "MC_A", "ENT"]}, {"name": "Riya Malik", "roll": "H131", "email": "RIYA67@nmims.in", "major": "HR", "minor": "Marketing;", "subjects": ["CB", "IMC", "PS", "MC_A", "LD"]}, {"name": "Kritik Pillai", "roll": "H132", "email": "KRITIK.PILLAI85@nmims.in", "major": "Finance", "minor": "Strategy;Analytics;HR;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "CBM", "MC_A"]}, {"name": "Saurabh Pathak", "roll": "H133", "email": "SAURABH.PATHAK89@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "MC_A", "ENT"]}, {"name": "Preetkanwal Singh", "roll": "H135", "email": "PREETKANWAL.SINGH19@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "PRS", "PS", "MC_A", "AI"]}, {"name": "Subhashribad Lenka", "roll": "H136", "email": "SUBHASHRIBAD.LENKA20@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "CBM", "MC_A"]}, {"name": "Puru Laroia", "roll": "H138", "email": "PURU.LAROIA34@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "CBM", "MC_A"]}, {"name": "Ridhi Kothari", "roll": "H139", "email": "RIDHI.KOTHARI41@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "CBM", "MC_A"]}, {"name": "Ankita Patwardhan", "roll": "H141", "email": "ANKITA.PATWARDHAN55@nmims.in", "major": "Finance", "minor": "Strategy;Analytics;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "MA", "MC_A"]}, {"name": "Ruttva Virendrasinh Raj", "roll": "H142", "email": "RUTTVA.RAJ68@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "CBM", "MC_A"]}, {"name": "Girish Kabra", "roll": "H143", "email": "GIRISH.KABRA73@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "MC_A", "AI"]}, {"name": "Shreya Shivangi", "roll": "H144", "email": "shreya.shivangi79@nmims.in", "major": "Marketing", "minor": "Strategy;Analytics;", "subjects": ["CB", "MA", "PRS", "PS", "MC_A"]}, {"name": "Ayush Kayande", "roll": "H145", "email": "AYUSH.KAYANDE91@nmims.in", "major": "Finance", "minor": "Analytics;Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "MA", "MC_A"]}, {"name": "Jay Dave", "roll": "H146", "email": "JAY.DAVE97@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "MA", "PS", "MC_A"]}, {"name": "Tanishq Dahiya", "roll": "H147", "email": "TANISHQ.DAHIYA01@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "PS", "MC_A", "ENT"]}, {"name": "Akshita Chopde", "roll": "H148", "email": "AKSHITA.CHOPDE19@nmims.in", "major": "Finance", "minor": "Strategy;Analytics;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "MA", "MC_A"]}, {"name": "Chirag Tandon", "roll": "H149", "email": "CHIRAG.TANDON29@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "PS", "MC_A", "ENT"]}, {"name": "Nachiketh N", "roll": "H150", "email": "NACHIKETH.N31@nmims.in", "major": "Marketing", "minor": "Analytics;", "subjects": ["CB", "MA", "PS", "AI", "DAB"]}, {"name": "Aryaman Gupta", "roll": "H151", "email": "ARYAMAN.GUPTA32@nmims.in", "major": "Marketing", "minor": "Strategy;Analytics;", "subjects": ["CB", "IMC", "MA", "PS", "MC_A"]}, {"name": "Yashashree Jitendra Kothawade", "roll": "H153", "email": "YASHASHREE.KOTHAWADE36@nmims.in", "major": "Marketing", "minor": "Strategy;Analytics;", "subjects": ["CB", "MA", "PRS", "PS", "MC_A"]}, {"name": "Pragya Rastogi", "roll": "H154", "email": "PRAGYA.RASTOGI39@nmims.in", "major": "Finance", "minor": "Analytics;Strategy;Finance;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "MA", "MC_A"]}, {"name": "Ojaswinee Biswal", "roll": "H155", "email": "OJASWINEE.BISWAL40@nmims.in", "major": "Marketing", "minor": "Analytics;Strategy;", "subjects": ["CB", "MA", "PRS", "PS", "MC_A"]}, {"name": "Uzma khan", "roll": "H156", "email": "UZMA.KHAN42@nmims.in", "major": "Finance", "minor": "Analytics;Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "FD", "DAB"]}, {"name": "Mridul Arora", "roll": "H157", "email": "MRIDUL.ARORA43@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "PS", "MC_A", "ENT"]}, {"name": "Prakhar", "roll": "H158", "email": "PRAKHAR46@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "MC_A", "ENT"]}, {"name": "Jahnvi Sahay", "roll": "H159", "email": "JAHNVI.SAHAY47@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "CBM", "MC_A"]}, {"name": "Nikhar Talreja", "roll": "H160", "email": "NIKHAR.TALREJA48@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "MA", "PS", "MC_A"]}, {"name": "S K HARRISH", "roll": "H161", "email": "SK.HARRISH49@nmims.in", "major": "Marketing", "minor": "Strategy;Analytics;", "subjects": ["CB", "MA", "PS", "MC_A", "DAB"]}, {"name": "Saksham Gupta", "roll": "H162", "email": "SAKSHAM.GUPTA51@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "CBM", "MC_A"]}, {"name": "Samhita Banerjee", "roll": "H164", "email": "SAMHITA.BANERJEE53@nmims.in", "major": "Marketing", "minor": "HR;", "subjects": ["CB", "IMC", "PS", "MC_A", "ENT"]}, {"name": "Rishabh Tulsian", "roll": "H165", "email": "RISHABH.TULSIAN54@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "MC_A", "ENT"]}, {"name": "Tharani S S", "roll": "H166", "email": "THARANI.SS55@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "FD", "ENT"]}, {"name": "Sraeya Balakrishnan", "roll": "H167", "email": "SRAEYA.BALAKRISHNAN57@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "MC_A", "ENT"]}, {"name": "SIMRAN KUMARI", "roll": "H168", "email": "SIMRAN.KUMARI59@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "MC_A", "AI"]}, {"name": "Dristi Mittal", "roll": "H169", "email": "DRISTI.MITTAL62@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "MA", "PS", "MC_A"]}, {"name": "Sanskar Tulsian", "roll": "H170", "email": "Tulsian.Sanskar63@nmims.in", "major": "Finance", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "CBM", "MC_A"]}, {"name": "Bharvi Girkar", "roll": "H171", "email": "Bharvi.Girkar68@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "MA", "PS", "MC_A"]}, {"name": "Tina Kewlani", "roll": "H172", "email": "Tina.Kelwani69@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "IMC", "PS", "MC_A", "ENT"]}, {"name": "Vedant Swarnkar", "roll": "H134", "email": "VEDANT.SWARNKAR17@nmims.in", "major": "HR", "minor": "Marketing;", "subjects": ["CB", "MC_A", "LD", "RS", "TR"]}, {"name": "Aryan Agnihotri", "roll": "H014", "email": "ARYAN.AGNIHOTRI19@nmims.in", "major": "Finance", "minor": "HR;", "subjects": ["AFSA_A", "BV_A", "IAPM_B", "LD", "RS"]}, {"name": "Tumuluri Vaashista Vivek", "roll": "H103", "email": "TUMULURIVAASHISTA.VIVEK09@nmims.in", "major": "Marketing", "minor": "Analytics;", "subjects": ["CB", "MA", "PRS", "AI", "DAB"]}, {"name": "Kurian George", "roll": "H063", "email": "KURIAN.GEORGE85@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["MA", "PRS", "PS", "MC_A", "AI"]}, {"name": "Sanidhya Mishra", "roll": "H011", "email": "SANIDHYA.MISHRA84@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["CB", "PRS", "PS", "MC_A", "AI"]}, {"name": "Akshara T Santhosh", "roll": "H072", "email": "AKSHARAT.SANTHOSH88@nmims.in", "major": "HR", "minor": "Analytics;", "subjects": ["MC_A", "LD", "RS", "TR", "DAB"]}, {"name": "Arjya Bose", "roll": "H007", "email": "ARJYA.BOSE62@nmims.in", "major": "Marketing", "minor": "Analytics;Strategy;", "subjects": ["CB", "MA", "PRS", "PS", "MC_A"]}, {"name": "Nidhi Shaw", "roll": "H028", "email": "NIDHI.SHAW61@nmims.in", "major": "HR", "minor": "Marketing;Analytics;", "subjects": ["MC_A", "LD", "RS", "TR", "AI"]}, {"name": "Chandrakant Narwani", "roll": "80012500712", "email": "CHANDRAKANTNARWANI.NARWANI12@nmims.in", "major": "Marketing", "minor": "Strategy;", "subjects": ["AFSA_A", "BV_A", "IAPM_A", "MC_A", "DAB"]}], "subjects": {"AFSA_A": {"code": "AFSA_A", "name": "Advanced Financial Statement Analysis A", "student_count": 38}, "AFSA_B": {"code": "AFSA_B", "name": "Advanced Financial Statement Analysis B", "student_count": 37}, "BV_A": {"code": "BV_A", "name": "Business Valuation A", "student_count": 39}, "BV_B": {"code": "BV_B", "name": "Business Valuation B", "student_count": 39}, "IAPM_A": {"code": "IAPM_A", "name": "Investment Analysis & Portfolio Management A", "student_count": 38}, "IAPM_B": {"code": "IAPM_B", "name": "Investment Analysis & Portfolio Management B", "student_count": 39}, "CBM": {"code": "CBM", "name": "Commercial Bank Management", "student_count": 23}, "FD": {"code": "FD", "name": "Financial Derivative", "student_count": 17}, "CB": {"code": "CB", "name": "Consumer Behaviour", "student_count": 64}, "IMC": {"code": "IMC", "name": "Integrated Marketing Communication", "student_count": 41}, "MA": {"code": "MA", "name": "Marketing Analytics", "student_count": 53}, "PRS": {"code": "PRS", "name": "Pricing Strategy", "student_count": 20}, "PS": {"code": "PS", "name": "Product Strategy", "student_count": 58}, "MC_A": {"code": "MC_A", "name": "Management Consulting A", "student_count": 68}, "MC_B": {"code": "MC_B", "name": "Management Consulting B", "student_count": 68}, "ENT": {"code": "ENT", "name": "Entrepreneurship", "student_count": 31}, "LD": {"code": "LD", "name": "Learning & Development", "student_count": 7}, "RS": {"code": "RS", "name": "Recruitment and Selection", "student_count": 4}, "TR": {"code": "TR", "name": "Total Reward", "student_count": 3}, "AI": {"code": "AI", "name": "Artificial Intelligence for Managers", "student_count": 21}, "DAB": {"code": "DAB", "name": "Data Analytics for Business", "student_count": 23}, "BS": {"code": "BS", "name": "Business Simulation", "student_count": 0}}, "timetable": [{"day": "Mon", "time": "10:10-11:40", "subject": "BV_B", "professor": "Prof SP Vittal", "room": "L06, 2nd floor", "div": "Div B"}, {"day": "Mon", "time": "11:50-1:20", "subject": "BV_A", "professor": "Prof SP Vittal", "room": "L06, 2nd floor", "div": "Div A"}, {"day": "Mon", "time": "1:50-3:20", "subject": "BV_B", "professor": "Prof SP Vittal", "room": "L06, 2nd floor", "div": "Div B"}, {"day": "Mon", "time": "3:30-5:00", "subject": "BV_A", "professor": "Prof SP Vittal", "room": "L06, 2nd floor", "div": "Div A"}, {"day": "Mon", "time": "6:00-7:30", "subject": "ENT", "professor": "Dr Srividya Raghavan", "room": "L06, 2nd floor", "div": ""}, {"day": "Mon", "time": "8:30-10:00", "subject": "PS", "professor": "Prof Krishna", "room": "L07, 2nd floor", "div": ""}, {"day": "Mon", "time": "10:10-11:40", "subject": "PS", "professor": "Prof Krishna", "room": "L07, 2nd floor", "div": ""}, {"day": "Mon", "time": "1:50-3:20", "subject": "IAPM_A", "professor": "Dr Showkat Ahmad", "room": "L07, 2nd floor", "div": ""}, {"day": "Mon", "time": "3:30-5:00", "subject": "IAPM_B", "professor": "Dr Showkat Ahmad", "room": "L07, 2nd floor", "div": ""}, {"day": "Tue", "time": "8:30-10:00", "subject": "BS", "professor": "Dr Dileep Kumar", "room": "L07, 2nd floor", "div": "Div B"}, {"day": "Tue", "time": "10:10-11:40", "subject": "LD", "professor": "Dr Umakanata Nayak", "room": "L12, 3rd floor", "div": ""}, {"day": "Tue", "time": "11:50-1:20", "subject": "IAPM_B", "professor": "Dr Showkat Ahmad", "room": "L07, 2nd floor", "div": ""}, {"day": "Tue", "time": "1:50-3:20", "subject": "IAPM_A", "professor": "Dr Showkat Ahmad", "room": "L07, 2nd floor", "div": ""}, {"day": "Tue", "time": "3:30-5:00", "subject": "TR", "professor": "", "room": "L08, 2nd floor", "div": ""}, {"day": "Tue", "time": "1:50-3:20", "subject": "TR", "professor": "", "room": "L08, 2nd floor", "div": ""}, {"day": "Tue", "time": "3:30-5:00", "subject": "ENT", "professor": "Dr Srividya Raghavan", "room": "L06, 2nd floor", "div": ""}, {"day": "Wed", "time": "10:10-11:40", "subject": "BS", "professor": "Dr Dileep Kumar", "room": "L07, 2nd floor", "div": "Div C"}, {"day": "Wed", "time": "11:50-1:20", "subject": "MC_B", "professor": "Dr Dileep Kumar", "room": "L06, 2nd floor", "div": "Div B"}, {"day": "Wed", "time": "1:50-3:20", "subject": "MC_A", "professor": "Dr Dileep Kumar", "room": "L06, 2nd floor", "div": "Div A"}, {"day": "Wed", "time": "3:30-5:00", "subject": "PRS", "professor": "Dr Srividya Raghavan", "room": "L06, 2nd floor", "div": ""}, {"day": "Wed", "time": "3:30-5:00", "subject": "AFSA_B", "professor": "Dr Narender Vunyale", "room": "L07, 2nd floor", "div": ""}, {"day": "Wed", "time": "10:10-11:40", "subject": "BS", "professor": "Dr Srividya Raghavan", "room": "L06, 2nd floor", "div": "Div A"}, {"day": "Wed", "time": "11:50-1:20", "subject": "AFSA_A", "professor": "Dr Narender Vunyale", "room": "L07, 2nd floor", "div": ""}, {"day": "Wed", "time": "3:30-5:00", "subject": "LD", "professor": "Dr Umakanata Nayak", "room": "L12, 3rd floor", "div": ""}, {"day": "Thu", "time": "8:30-10:00", "subject": "AI", "professor": "Prof Shweta", "room": "L06, 2nd floor", "div": ""}, {"day": "Thu", "time": "10:10-11:40", "subject": "AI", "professor": "Prof Shweta", "room": "L06, 2nd floor", "div": ""}, {"day": "Thu", "time": "11:50-1:20", "subject": "MC_B", "professor": "Dr Dileep Kumar", "room": "L06, 2nd floor / L07, 2nd floor", "div": "Div B"}, {"day": "Thu", "time": "1:50-3:20", "subject": "MC_A", "professor": "Dr Dileep Kumar", "room": "L06, 2nd floor", "div": "Div A"}, {"day": "Thu", "time": "3:30-5:00", "subject": "PRS", "professor": "Dr Srividya Raghavan", "room": "L06, 2nd floor", "div": ""}, {"day": "Thu", "time": "3:30-5:00", "subject": "AFSA_B", "professor": "Dr Narender Vunyale", "room": "L07, 2nd floor", "div": ""}, {"day": "Thu", "time": "6:00-7:30", "subject": "RS", "professor": "", "room": "Hybrid", "div": ""}, {"day": "Thu", "time": "10:10-11:40", "subject": "CBM", "professor": "Prof Narender Vunyale", "room": "L07, 2nd floor", "div": ""}, {"day": "Thu", "time": "11:50-1:20", "subject": "AFSA_A", "professor": "Dr Narender Vunyale", "room": "L07, 2nd floor", "div": ""}, {"day": "Fri", "time": "10:10-11:40", "subject": "MA", "professor": "Prof Neeelima", "room": "L06, 2nd floor", "div": ""}, {"day": "Fri", "time": "11:50-1:20", "subject": "MA", "professor": "Prof Neeelima", "room": "L06, 2nd floor", "div": ""}, {"day": "Fri", "time": "1:50-3:20", "subject": "MC_A", "professor": "Dr Dileep Kumar", "room": "L07, 2nd floor", "div": "Div A"}, {"day": "Fri", "time": "6:00-7:30", "subject": "RS", "professor": "", "room": "Hybrid", "div": ""}, {"day": "Fri", "time": "10:10-11:40", "subject": "CBM", "professor": "Prof Narender Vunyale", "room": "L07, 2nd floor", "div": ""}, {"day": "Fri", "time": "11:50-1:20", "subject": "CBM", "professor": "Prof Narender Vunyale", "room": "L07, 2nd floor", "div": ""}, {"day": "Sat", "time": "10:10-11:40", "subject": "IMC", "professor": "Prof Suresh", "room": "L07, 2nd floor", "div": ""}, {"day": "Sat", "time": "11:50-1:20", "subject": "IMC", "professor": "Prof Suresh", "room": "L07, 2nd floor", "div": ""}, {"day": "Sat", "time": "1:50-3:20", "subject": "CBM", "professor": "Prof Murtuza Soofi", "room": "L6, 2nd floor", "div": ""}, {"day": "Sat", "time": "3:30-5:00", "subject": "CBM", "professor": "Prof Murtuza Soofi", "room": "L06, 2nd floor", "div": ""}, {"day": "Sat", "time": "10:10-11:40", "subject": "DAB", "professor": "Prof Neelima", "room": "L06, 2nd floor", "div": ""}, {"day": "Sat", "time": "11:50-1:20", "subject": "DAB", "professor": "Prof Neelima", "room": "L06, 2nd floor", "div": ""}, {"day": "Sun", "time": "10:10-11:40", "subject": "PS", "professor": "Prof Krishna", "room": "L06, 2nd floor", "div": ""}, {"day": "Sun", "time": "11:50-1:20", "subject": "PS", "professor": "Prof Krishna", "room": "L06, 2nd floor", "div": ""}, {"day": "Sun", "time": "10:10-11:40", "subject": "FD", "professor": "Prof. Narsimhulu", "room": "L07, 2nd floor", "div": ""}, {"day": "Sun", "time": "11:50-1:20", "subject": "FD", "professor": "Prof. Narsimhulu", "room": "L07, 2nd floor", "div": ""}], "time_slots": ["8:30-10:00", "10:10-11:40", "11:50-1:20", "1:20-1:50", "1:50-3:20", "3:30-5:00", "3:30-5:00", "6:00-7:30"], "days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]};
+var STUDENTS=["Aastha Saini","Abhijatya Negi","Abhishek Kumar","Aby K Mathai","Aditya Chaubey","Ajay Vigneshwar A","Akella Venkata Karthik","Akshara T Santhosh","Akshita Chopde","Aman Shahin","Amir Rahman","Anannya Gupta","Aniket Patwari","Ankit Ghoradkar","Ankita Patwardhan","Ankush P. Karwa","Anna Ria","Antara Gupta","Anusha Heliwal","Arjya Bose","Arsh Vardhan Sinha","Aryaman Gupta","Aryan Agnihotri","Ashish Gupta","Astha kejriwal","Avantika sain","Ayush Dutta","Ayush Kayande","Bharvi Girkar","Chandrakant Narwani","Chirag Tandon","Deepti Yendluri","Devanshi Kyal","Dhairya Mehta","Dibyendu Das","Dristi Mittal","Gaurang Maheshwari","Gaurav Agarwal","Gaurav Wadhwa","Girish Kabra","HARMIT SINGH","Hanima Ahuja","Harshita Pradhan","Heeral Tandon","Himanshi Tanwar","Hritik Kumar","I Dharshana","Insha Ali","Isha Jain","Ishan Sanghavi","Ishita Sinha","Jahnvi Sahay","Jash Vaja","Jay Dave","Jeel Shah","Jyoti Bikas Das","Kanishk Mehta","Kanishka Gupta","Kishore P","Koustav Jana","Krish Siddharth Negi","Kritik Pillai","Kshitiz Gupta","Kurian George","Lakshmi S","Mahi Kinariwala","Mahika Vasandani","Manav Malhotra","Marie Aparajith Rajashankar","Masoom Singh","Medha Jha","Monish Das","Mridul Arora","Mudit Mittal","Nachiketh N","Naman Jain","Nidhi Shaw","Nihal Bibikar","Nikhar Talreja","Niladri Kundu","Ojaswinee Biswal","Paridhi Rungta","Pilla Venkata Sai Tharun","Pragya Rastogi","Prakhar","Pramiti Gupta","Prateek Gaur","Pratham Bagri","Pratham Goel","Preetkanwal Singh","Prerna Tekade","Priyanshu Mittal","Puru Laroia","Raunit Raj","Ridhi Kothari","Rishabh Tulsian","Rishita Ramdeo","Rituparna Sharma","Riya Malik","Rohit Ramakant Patil","Rohit ranjan","Ronny Jacob","Ruttva Virendrasinh Raj","S K HARRISH","SANSKAR MAHALKA","SIMRAN KUMARI","SUJITH REDDY YEDULLA","Saksham Gupta","Samhita Banerjee","Sanidhya Mishra","Sanskar Tulsian","Saurabh Pathak","Savitha Sri S","Shraddha Randive","Shreya Gupta","Shreya Shivangi","Shrishti Mittal","Shubh Gupta","Shwetha R","Sraeya Balakrishnan","Srishti Shinde","Subhashribad Lenka","Sudhanshu Chauhan","Suraj Satpute","Swapnil Tiwari","Swechha Jaiswal","Tanisha Singh","Tanishq Dahiya","Tejaswita","Tharani S S","Tina Kewlani","Tumuluri Vaashista Vivek","Tushar soni","Tushita Mishra","Umang Agarwal","Umang Gupta","Uzma khan","Vaishnavi Dudem","Varun Patwary","Vasu Jain","Vedant Swarnkar","Vidhu P","Vishnu P S","Vishnu Vyas","Yashashree Jitendra Kothawade","pratham Kamath"];
+var CLASSES={"iv":[{"cls":"Advanced Financial Statement Analysis (Faculty)","students":["Saurabh Pathak","Himanshi Tanwar","Hritik Kumar","Tushita Mishra","Tushar soni","Prerna Tekade","Medha Jha","Prakhar","Ishan Sanghavi","Srishti Shinde","Rishabh Tulsian","Rishita Ramdeo","Deepti Yendluri","Vishnu Vyas","Sanskar Tulsian","Anannya Gupta","Umang Gupta","Puru Laroia","Shreya Gupta","Ayush Kayande","SIMRAN KUMARI","Aniket Patwari","Anusha Heliwal","Subhashribad Lenka","Ruttva Virendrasinh Raj","Anna Ria","Raunit Raj","Naman Jain","Jahnvi Sahay","Jeel Shah","Kritik Pillai","Prateek Gaur","Uzma khan","Aryan Agnihotri","Dibyendu Das","Sudhanshu Chauhan","Varun Patwary","Akella Venkata Karthik","Ankita Patwardhan","Saksham Gupta","Vaishnavi Dudem","Shubh Gupta","Rohit ranjan","Chandrakant Narwani","Ankush P. Karwa","Ridhi Kothari","Antara Gupta","Tharani S S","Shraddha Randive","Savitha Sri S","Pragya Rastogi","Tejaswita","Pratham Goel","I Dharshana","Gaurang Maheshwari","Priyanshu Mittal","Ayush Dutta","Astha kejriwal","Kishore P","Suraj Satpute","Ajay Vigneshwar A","Mudit Mittal","Umang Agarwal","Mahi Kinariwala","Sraeya Balakrishnan","HARMIT SINGH","Ishita Sinha","Swapnil Tiwari","Swechha Jaiswal","Akshita Chopde","Dhairya Mehta","Tanisha Singh","Niladri Kundu","Kshitiz Gupta","Girish Kabra"]},{"cls":"Business Valuation (Faculty)","students":["Hritik Kumar","Vishnu P S","Ishan Sanghavi","Vishnu Vyas","Subhashribad Lenka","Anna Ria","Prateek Gaur","Dibyendu Das","Akella Venkata Karthik","Ankita Patwardhan","Vaishnavi Dudem","Tejaswita","I Dharshana","Gaurang Maheshwari","Mudit Mittal","Umang Agarwal","Kshitiz Gupta","Girish Kabra","Srishti Shinde","Rishita Ramdeo","Deepti Yendluri","Puru Laroia","SIMRAN KUMARI","Vasu Jain","Ruttva Virendrasinh Raj","Kritik Pillai","Shraddha Randive","Ayush Dutta","Astha kejriwal","Suraj Satpute","Harshita Pradhan","Mahi Kinariwala","Ishita Sinha","Saurabh Pathak","Himanshi Tanwar","Prakhar","Pratham Goel","Umang Gupta","Aniket Patwari","Anusha Heliwal","Naman Jain","Jahnvi Sahay","Jeel Shah","Sudhanshu Chauhan","Varun Patwary","Saksham Gupta","Rohit ranjan","Chandrakant Narwani","Ridhi Kothari","Antara Gupta","Pragya Rastogi","Sraeya Balakrishnan","Akshita Chopde","Tushar soni","Tushita Mishra","Prerna Tekade","Medha Jha","Rishabh Tulsian","Sanskar Tulsian","Anannya Gupta","Shreya Gupta","Ayush Kayande","Raunit Raj","Uzma khan","Aryan Agnihotri","Shubh Gupta","Ankush P. Karwa","Tharani S S","Savitha Sri S","Priyanshu Mittal","Kishore P","Ajay Vigneshwar A","HARMIT SINGH","Swapnil Tiwari","Swechha Jaiswal","Dhairya Mehta","Tanisha Singh","Niladri Kundu"]},{"cls":"Investment Analysis and Portfolio Management (Faculty)","students":["Hritik Kumar","Vishnu P S","Vishnu Vyas","Subhashribad Lenka","Anna Ria","Prateek Gaur","Dibyendu Das","Akella Venkata Karthik","Ankita Patwardhan","Vaishnavi Dudem","Tejaswita","I Dharshana","Gaurang Maheshwari","Mudit Mittal","Umang Agarwal","Kshitiz Gupta","Girish Kabra","Srishti Shinde","Rishita Ramdeo","Deepti Yendluri","Puru Laroia","SIMRAN KUMARI","Vasu Jain","Ruttva Virendrasinh Raj","Kritik Pillai","Shraddha Randive","Ayush Dutta","Astha kejriwal","Suraj Satpute","Harshita Pradhan","Mahi Kinariwala","Ishita Sinha","Saurabh Pathak","Himanshi Tanwar","Prakhar","Pratham Goel","Umang Gupta","Aniket Patwari","Anusha Heliwal","Naman Jain","Jahnvi Sahay","Jeel Shah","Sudhanshu Chauhan","Varun Patwary","Saksham Gupta","Rohit ranjan","Chandrakant Narwani","Ridhi Kothari","Antara Gupta","Pragya Rastogi","Sraeya Balakrishnan","Akshita Chopde","Tushar soni","Tushita Mishra","Prerna Tekade","Medha Jha","Rishabh Tulsian","Sanskar Tulsian","Anannya Gupta","Shreya Gupta","Ayush Kayande","Raunit Raj","Uzma khan","Aryan Agnihotri","Shubh Gupta","Ankush P. Karwa","Tharani S S","Savitha Sri S","Priyanshu Mittal","Kishore P","Ajay Vigneshwar A","HARMIT SINGH","Swapnil Tiwari","Swechha Jaiswal","Dhairya Mehta","Tanisha Singh","Niladri Kundu"]},{"cls":"Management Consulting (Faculty)","students":["Dristi Mittal","Rohit Ramakant Patil","Hritik Kumar","Aditya Chaubey","Isha Jain","Vishnu P S","Ishan Sanghavi","Vishnu Vyas","Yashashree Jitendra Kothawade","Subhashribad Lenka","Prateek Gaur","Aryaman Gupta","Paridhi Rungta","Dibyendu Das","Akella Venkata Karthik","Ankita Patwardhan","Vaishnavi Dudem","Nidhi Shaw","Niladri Kundu","Ashish Gupta","Tejaswita","Chirag Tandon","I Dharshana","Gaurang Maheshwari","Kurian George","Monish Das","Samhita Banerjee","Hanima Ahuja","Krish Siddharth Negi","Arjya Bose","Mudit Mittal","Umang Agarwal","Shwetha R","Preetkanwal Singh","Kanishka Gupta","Tina Kewlani","Kshitiz Gupta","Pramiti Gupta","Avantika sain","Amir Rahman","Girish Kabra","S K HARRISH","Aby K Mathai","Srishti Shinde","Rishita Ramdeo","Deepti Yendluri","Pilla Venkata Sai Tharun","Puru Laroia","Nihal Bibikar","SIMRAN KUMARI","Vasu Jain","Ruttva Virendrasinh Raj","Koustav Jana","Kritik Pillai","Masoom Singh","Shraddha Randive","Ayush Dutta","Astha kejriwal","Shreya Shivangi","Suraj Satpute","Harshita Pradhan","Mahi Kinariwala","Mridul Arora","Kanishk Mehta","Saurabh Pathak","Sanidhya Mishra","Himanshi Tanwar","Gaurav Wadhwa","Prakhar","Pratham Goel","Ronny Jacob","Umang Gupta","Pratham Bagri","Jay Dave","Aniket Patwari","Anusha Heliwal","Rituparna Sharma","Heeral Tandon","Naman Jain","Jahnvi Sahay","Vidhu P","Jeel Shah","Aman Shahin","Sudhanshu Chauhan","Varun Patwary","Saksham Gupta","Vedant Swarnkar","Rohit ranjan","Akshara T Santhosh","Chandrakant Narwani","Ridhi Kothari","Antara Gupta","Tanishq Dahiya","Jyoti Bikas Das","Pragya Rastogi","Jash Vaja","Sraeya Balakrishnan","SANSKAR MAHALKA","Mahika Vasandani","Marie Aparajith Rajashankar","Akshita Chopde","Abhishek Kumar","Ankit Ghoradkar","Tushar soni","Tushita Mishra","Devanshi Kyal","Abhijatya Negi","Prerna Tekade","Medha Jha","Rishabh Tulsian","Aastha Saini","Sanskar Tulsian","Anannya Gupta","Shreya Gupta","Ayush Kayande","Raunit Raj","Riya Malik","Ojaswinee Biswal","Gaurav Agarwal","Shubh Gupta","Insha Ali","Ankush P. Karwa","Manav Malhotra","pratham Kamath","Lakshmi S","Shrishti Mittal","Arsh Vardhan Sinha","Priyanshu Mittal","Ajay Vigneshwar A","Nikhar Talreja","HARMIT SINGH","Swapnil Tiwari","Swechha Jaiswal","Dhairya Mehta","Tanisha Singh","Bharvi Girkar"]},{"cls":"Commercial Bank Management (Faculty)","students":["Himanshi Tanwar","Hritik Kumar","Vishnu P S","Medha Jha","Vishnu Vyas","Srishti Shinde","Deepti Yendluri","Sanskar Tulsian","Umang Gupta","Puru Laroia","Vasu Jain","Raunit Raj","Subhashribad Lenka","Ruttva Virendrasinh Raj","Jahnvi Sahay","Kritik Pillai","Varun Patwary","Akella Venkata Karthik","Saksham Gupta","Ridhi Kothari","Gaurang Maheshwari","Harshita Pradhan","Mudit Mittal"]},{"cls":"Financial Derivative (Faculty)","students":["Shubh Gupta","Vasu Jain","Anna Ria","Tharani S S","HARMIT SINGH","Ishita Sinha","Savitha Sri S","Ishan Sanghavi","Jeel Shah","Swapnil Tiwari","Shraddha Randive","Prateek Gaur","Uzma khan","Dhairya Mehta","Niladri Kundu","Priyanshu Mittal","Dibyendu Das"]},{"cls":"Consumer Behaviour (Faculty)","students":["Dristi Mittal","Sanidhya Mishra","Rohit Ramakant Patil","Isha Jain","Devanshi Kyal","Gaurav Wadhwa","Abhijatya Negi","Aditya Chaubey","S K HARRISH","Aastha Saini","Ronny Jacob","Pilla Venkata Sai Tharun","Yashashree Jitendra Kothawade","Tumuluri Vaashista Vivek","SUJITH REDDY YEDULLA","Pratham Bagri","Nihal Bibikar","Jay Dave","Rituparna Sharma","Heeral Tandon","Koustav Jana","Riya Malik","Ojaswinee Biswal","Aman Shahin","Aryaman Gupta","Paridhi Rungta","Gaurav Agarwal","Vedant Swarnkar","Nachiketh N","Insha Ali","Manav Malhotra","Masoom Singh","Tanishq Dahiya","pratham Kamath","Jyoti Bikas Das","Ashish Gupta","Lakshmi S","Arsh Vardhan Sinha","Shrishti Mittal","Jash Vaja","Chirag Tandon","Monish Das","Samhita Banerjee","Shreya Shivangi","Hanima Ahuja","Krish Siddharth Negi","Arjya Bose","Shwetha R","Preetkanwal Singh","Nikhar Talreja","Kanishka Gupta","Amir Rahman","Ishita Sinha","SANSKAR MAHALKA","Mahika Vasandani","Mridul Arora","Ankit Ghoradkar","Abhishek Kumar","Marie Aparajith Rajashankar","Tina Kewlani","Bharvi Girkar","Pramiti Gupta","Kanishk Mehta","Avantika sain"]},{"cls":"Integrated Marketing Communication (Faculty)","students":["Dristi Mittal","Isha Jain","Devanshi Kyal","Gaurav Wadhwa","Abhijatya Negi","Aditya Chaubey","Pilla Venkata Sai Tharun","Pratham Bagri","Nihal Bibikar","Jay Dave","Rituparna Sharma","Heeral Tandon","Koustav Jana","Riya Malik","Aryaman Gupta","Gaurav Agarwal","Masoom Singh","Tanishq Dahiya","pratham Kamath","Ashish Gupta","Arsh Vardhan Sinha","Shrishti Mittal","Chirag Tandon","Monish Das","Samhita Banerjee","Krish Siddharth Negi","Hanima Ahuja","Shwetha R","Preetkanwal Singh","Nikhar Talreja","Kanishka Gupta","Amir Rahman","SANSKAR MAHALKA","Mahika Vasandani","Mridul Arora","Ankit Ghoradkar","Abhishek Kumar","Tina Kewlani","Bharvi Girkar","Kanishk Mehta","Avantika sain"]},{"cls":"Marketing Analytics (Faculty)","students":["Dristi Mittal","Rohit Ramakant Patil","Tushar soni","Isha Jain","Devanshi Kyal","Gaurav Wadhwa","Tushita Mishra","S K HARRISH","Aby K Mathai","Aastha Saini","Ronny Jacob","Pilla Venkata Sai Tharun","Yashashree Jitendra Kothawade","Tumuluri Vaashista Vivek","SUJITH REDDY YEDULLA","Ayush Kayande","Nihal Bibikar","Jay Dave","Ojaswinee Biswal","Vidhu P","Aman Shahin","Aryaman Gupta","Paridhi Rungta","Gaurav Agarwal","Ankita Patwardhan","Nachiketh N","Insha Ali","Ankush P. Karwa","Manav Malhotra","Masoom Singh","Jyoti Bikas Das","Ashish Gupta","Lakshmi S","Pragya Rastogi","Jash Vaja","Kurian George","Ayush Dutta","Monish Das","Shreya Shivangi","Hanima Ahuja","Arjya Bose","Nikhar Talreja","Kanishka Gupta","SANSKAR MAHALKA","Mahika Vasandani","Ankit Ghoradkar","Abhishek Kumar","Marie Aparajith Rajashankar","Akshita Chopde","Bharvi Girkar","Pramiti Gupta","Amir Rahman","Avantika sain"]},{"cls":"Pricing Strategy (Faculty)","students":["Sanidhya Mishra","Rohit Ramakant Patil","Aby K Mathai","Yashashree Jitendra Kothawade","Tumuluri Vaashista Vivek","SUJITH REDDY YEDULLA","Heeral Tandon","Ojaswinee Biswal","Vidhu P","Paridhi Rungta","Gaurav Agarwal","Manav Malhotra","pratham Kamath","Jyoti Bikas Das","Jash Vaja","Kurian George","Shreya Shivangi","Arjya Bose","Preetkanwal Singh","Avantika sain"]},{"cls":"Product Strategy (Faculty)","students":["Dristi Mittal","Sanidhya Mishra","Rohit Ramakant Patil","Isha Jain","Devanshi Kyal","Gaurav Wadhwa","Abhijatya Negi","Aditya Chaubey","S K HARRISH","Aastha Saini","Ronny Jacob","Yashashree Jitendra Kothawade","Pratham Bagri","Nihal Bibikar","Jay Dave","Rituparna Sharma","Heeral Tandon","Koustav Jana","Riya Malik","Ojaswinee Biswal","Aman Shahin","Aryaman Gupta","Paridhi Rungta","Nachiketh N","Insha Ali","Manav Malhotra","Masoom Singh","Tanishq Dahiya","pratham Kamath","Jyoti Bikas Das","Ashish Gupta","Lakshmi S","Arsh Vardhan Sinha","Shrishti Mittal","Jash Vaja","Chirag Tandon","Kurian George","Monish Das","Samhita Banerjee","Shreya Shivangi","Hanima Ahuja","Krish Siddharth Negi","Arjya Bose","Shwetha R","Preetkanwal Singh","Nikhar Talreja","Kanishka Gupta","Amir Rahman","SANSKAR MAHALKA","Mahika Vasandani","Mridul Arora","Ankit Ghoradkar","Abhishek Kumar","Marie Aparajith Rajashankar","Tina Kewlani","Bharvi Girkar","Pramiti Gupta","Kanishk Mehta"]},{"cls":"Entrepreneurship (Faculty)","students":["Saurabh Pathak","Aditya Chaubey","Abhijatya Negi","Prakhar","Ishan Sanghavi","Rishita Ramdeo","Rishabh Tulsian","Ronny Jacob","Pramiti Gupta","Shreya Gupta","Pratham Bagri","Aniket Patwari","Koustav Jana","Sudhanshu Chauhan","Antara Gupta","Tharani S S","Savitha Sri S","Tanishq Dahiya","Shrishti Mittal","Chirag Tandon","Samhita Banerjee","Krish Siddharth Negi","Suraj Satpute","Kishore P","Ajay Vigneshwar A","Umang Agarwal","Sraeya Balakrishnan","Mridul Arora","Tina Kewlani","Tanisha Singh","Kshitiz Gupta"]},{"cls":"Learning & Development (Faculty)","students":["Vedant Swarnkar","Nidhi Shaw","Vishnu P S","Akshara T Santhosh","Riya Malik","Aryan Agnihotri","Kanishk Mehta"]},{"cls":"Recruitment and Selection (Faculty)","students":["Vedant Swarnkar","Nidhi Shaw","Akshara T Santhosh","Aryan Agnihotri"]},{"cls":"Total Reward (Faculty)","students":["Vedant Swarnkar","Nidhi Shaw","Akshara T Santhosh"]},{"cls":"Artificial Intelligence for Managers (Faculty)","students":["Sanidhya Mishra","Aby K Mathai","Aastha Saini","Pilla Venkata Sai Tharun","Tumuluri Vaashista Vivek","SUJITH REDDY YEDULLA","SIMRAN KUMARI","Rituparna Sharma","Vidhu P","Aman Shahin","Vaishnavi Dudem","Nachiketh N","Nidhi Shaw","Insha Ali","Lakshmi S","Arsh Vardhan Sinha","Kurian George","Kishore P","Shwetha R","Preetkanwal Singh","Girish Kabra"]},{"cls":"Data Analytics for Business (Faculty)","students":["S K HARRISH","Prerna Tekade","Aby K Mathai","Pratham Goel","Anannya Gupta","Tumuluri Vaashista Vivek","SUJITH REDDY YEDULLA","Anusha Heliwal","Anna Ria","Naman Jain","Vidhu P","Uzma khan","Rohit ranjan","Nachiketh N","Akshara T Santhosh","Chandrakant Narwani","Tejaswita","I Dharshana","Astha kejriwal","Harshita Pradhan","Mahi Kinariwala","Swechha Jaiswal","Marie Aparajith Rajashankar"]}],"v":[],"vi":[]};
+var SUBJECTS=[{"trim":"iv","trimLabel":"Trim IV","cls":"Advanced Financial Statement Analysis (Faculty)","short":"Advanced Financial Statement Analysis","faculty":"Faculty","count":75,"students":["Saurabh Pathak","Himanshi Tanwar","Hritik Kumar","Tushita Mishra","Tushar soni","Prerna Tekade","Medha Jha","Prakhar","Ishan Sanghavi","Srishti Shinde","Rishabh Tulsian","Rishita Ramdeo","Deepti Yendluri","Vishnu Vyas","Sanskar Tulsian","Anannya Gupta","Umang Gupta","Puru Laroia","Shreya Gupta","Ayush Kayande","SIMRAN KUMARI","Aniket Patwari","Anusha Heliwal","Subhashribad Lenka","Ruttva Virendrasinh Raj","Anna Ria","Raunit Raj","Naman Jain","Jahnvi Sahay","Jeel Shah","Kritik Pillai","Prateek Gaur","Uzma khan","Aryan Agnihotri","Dibyendu Das","Sudhanshu Chauhan","Varun Patwary","Akella Venkata Karthik","Ankita Patwardhan","Saksham Gupta","Vaishnavi Dudem","Shubh Gupta","Rohit ranjan","Chandrakant Narwani","Ankush P. Karwa","Ridhi Kothari","Antara Gupta","Tharani S S","Shraddha Randive","Savitha Sri S","Pragya Rastogi","Tejaswita","Pratham Goel","I Dharshana","Gaurang Maheshwari","Priyanshu Mittal","Ayush Dutta","Astha kejriwal","Kishore P","Suraj Satpute","Ajay Vigneshwar A","Mudit Mittal","Umang Agarwal","Mahi Kinariwala","Sraeya Balakrishnan","HARMIT SINGH","Ishita Sinha","Swapnil Tiwari","Swechha Jaiswal","Akshita Chopde","Dhairya Mehta","Tanisha Singh","Niladri Kundu","Kshitiz Gupta","Girish Kabra"]},{"trim":"iv","trimLabel":"Trim IV","cls":"Business Valuation (Faculty)","short":"Business Valuation","faculty":"Faculty","count":78,"students":["Hritik Kumar","Vishnu P S","Ishan Sanghavi","Vishnu Vyas","Subhashribad Lenka","Anna Ria","Prateek Gaur","Dibyendu Das","Akella Venkata Karthik","Ankita Patwardhan","Vaishnavi Dudem","Tejaswita","I Dharshana","Gaurang Maheshwari","Mudit Mittal","Umang Agarwal","Kshitiz Gupta","Girish Kabra","Srishti Shinde","Rishita Ramdeo","Deepti Yendluri","Puru Laroia","SIMRAN KUMARI","Vasu Jain","Ruttva Virendrasinh Raj","Kritik Pillai","Shraddha Randive","Ayush Dutta","Astha kejriwal","Suraj Satpute","Harshita Pradhan","Mahi Kinariwala","Ishita Sinha","Saurabh Pathak","Himanshi Tanwar","Prakhar","Pratham Goel","Umang Gupta","Aniket Patwari","Anusha Heliwal","Naman Jain","Jahnvi Sahay","Jeel Shah","Sudhanshu Chauhan","Varun Patwary","Saksham Gupta","Rohit ranjan","Chandrakant Narwani","Ridhi Kothari","Antara Gupta","Pragya Rastogi","Sraeya Balakrishnan","Akshita Chopde","Tushar soni","Tushita Mishra","Prerna Tekade","Medha Jha","Rishabh Tulsian","Sanskar Tulsian","Anannya Gupta","Shreya Gupta","Ayush Kayande","Raunit Raj","Uzma khan","Aryan Agnihotri","Shubh Gupta","Ankush P. Karwa","Tharani S S","Savitha Sri S","Priyanshu Mittal","Kishore P","Ajay Vigneshwar A","HARMIT SINGH","Swapnil Tiwari","Swechha Jaiswal","Dhairya Mehta","Tanisha Singh","Niladri Kundu"]},{"trim":"iv","trimLabel":"Trim IV","cls":"Investment Analysis and Portfolio Management (Faculty)","short":"Investment Analysis and Portfolio Management","faculty":"Faculty","count":77,"students":["Hritik Kumar","Vishnu P S","Vishnu Vyas","Subhashribad Lenka","Anna Ria","Prateek Gaur","Dibyendu Das","Akella Venkata Karthik","Ankita Patwardhan","Vaishnavi Dudem","Tejaswita","I Dharshana","Gaurang Maheshwari","Mudit Mittal","Umang Agarwal","Kshitiz Gupta","Girish Kabra","Srishti Shinde","Rishita Ramdeo","Deepti Yendluri","Puru Laroia","SIMRAN KUMARI","Vasu Jain","Ruttva Virendrasinh Raj","Kritik Pillai","Shraddha Randive","Ayush Dutta","Astha kejriwal","Suraj Satpute","Harshita Pradhan","Mahi Kinariwala","Ishita Sinha","Saurabh Pathak","Himanshi Tanwar","Prakhar","Pratham Goel","Umang Gupta","Aniket Patwari","Anusha Heliwal","Naman Jain","Jahnvi Sahay","Jeel Shah","Sudhanshu Chauhan","Varun Patwary","Saksham Gupta","Rohit ranjan","Chandrakant Narwani","Ridhi Kothari","Antara Gupta","Pragya Rastogi","Sraeya Balakrishnan","Akshita Chopde","Tushar soni","Tushita Mishra","Prerna Tekade","Medha Jha","Rishabh Tulsian","Sanskar Tulsian","Anannya Gupta","Shreya Gupta","Ayush Kayande","Raunit Raj","Uzma khan","Aryan Agnihotri","Shubh Gupta","Ankush P. Karwa","Tharani S S","Savitha Sri S","Priyanshu Mittal","Kishore P","Ajay Vigneshwar A","HARMIT SINGH","Swapnil Tiwari","Swechha Jaiswal","Dhairya Mehta","Tanisha Singh","Niladri Kundu"]},{"trim":"iv","trimLabel":"Trim IV","cls":"Management Consulting (Faculty)","short":"Management Consulting","faculty":"Faculty","count":136,"students":["Dristi Mittal","Rohit Ramakant Patil","Hritik Kumar","Aditya Chaubey","Isha Jain","Vishnu P S","Ishan Sanghavi","Vishnu Vyas","Yashashree Jitendra Kothawade","Subhashribad Lenka","Prateek Gaur","Aryaman Gupta","Paridhi Rungta","Dibyendu Das","Akella Venkata Karthik","Ankita Patwardhan","Vaishnavi Dudem","Nidhi Shaw","Niladri Kundu","Ashish Gupta","Tejaswita","Chirag Tandon","I Dharshana","Gaurang Maheshwari","Kurian George","Monish Das","Samhita Banerjee","Hanima Ahuja","Krish Siddharth Negi","Arjya Bose","Mudit Mittal","Umang Agarwal","Shwetha R","Preetkanwal Singh","Kanishka Gupta","Tina Kewlani","Kshitiz Gupta","Pramiti Gupta","Avantika sain","Amir Rahman","Girish Kabra","S K HARRISH","Aby K Mathai","Srishti Shinde","Rishita Ramdeo","Deepti Yendluri","Pilla Venkata Sai Tharun","Puru Laroia","Nihal Bibikar","SIMRAN KUMARI","Vasu Jain","Ruttva Virendrasinh Raj","Koustav Jana","Kritik Pillai","Masoom Singh","Shraddha Randive","Ayush Dutta","Astha kejriwal","Shreya Shivangi","Suraj Satpute","Harshita Pradhan","Mahi Kinariwala","Mridul Arora","Kanishk Mehta","Saurabh Pathak","Sanidhya Mishra","Himanshi Tanwar","Gaurav Wadhwa","Prakhar","Pratham Goel","Ronny Jacob","Umang Gupta","Pratham Bagri","Jay Dave","Aniket Patwari","Anusha Heliwal","Rituparna Sharma","Heeral Tandon","Naman Jain","Jahnvi Sahay","Vidhu P","Jeel Shah","Aman Shahin","Sudhanshu Chauhan","Varun Patwary","Saksham Gupta","Vedant Swarnkar","Rohit ranjan","Akshara T Santhosh","Chandrakant Narwani","Ridhi Kothari","Antara Gupta","Tanishq Dahiya","Jyoti Bikas Das","Pragya Rastogi","Jash Vaja","Sraeya Balakrishnan","SANSKAR MAHALKA","Mahika Vasandani","Marie Aparajith Rajashankar","Akshita Chopde","Abhishek Kumar","Ankit Ghoradkar","Tushar soni","Tushita Mishra","Devanshi Kyal","Abhijatya Negi","Prerna Tekade","Medha Jha","Rishabh Tulsian","Aastha Saini","Sanskar Tulsian","Anannya Gupta","Shreya Gupta","Ayush Kayande","Raunit Raj","Riya Malik","Ojaswinee Biswal","Gaurav Agarwal","Shubh Gupta","Insha Ali","Ankush P. Karwa","Manav Malhotra","pratham Kamath","Lakshmi S","Shrishti Mittal","Arsh Vardhan Sinha","Priyanshu Mittal","Ajay Vigneshwar A","Nikhar Talreja","HARMIT SINGH","Swapnil Tiwari","Swechha Jaiswal","Dhairya Mehta","Tanisha Singh","Bharvi Girkar"]},{"trim":"iv","trimLabel":"Trim IV","cls":"Commercial Bank Management (Faculty)","short":"Commercial Bank Management","faculty":"Faculty","count":23,"students":["Himanshi Tanwar","Hritik Kumar","Vishnu P S","Medha Jha","Vishnu Vyas","Srishti Shinde","Deepti Yendluri","Sanskar Tulsian","Umang Gupta","Puru Laroia","Vasu Jain","Raunit Raj","Subhashribad Lenka","Ruttva Virendrasinh Raj","Jahnvi Sahay","Kritik Pillai","Varun Patwary","Akella Venkata Karthik","Saksham Gupta","Ridhi Kothari","Gaurang Maheshwari","Harshita Pradhan","Mudit Mittal"]},{"trim":"iv","trimLabel":"Trim IV","cls":"Financial Derivative (Faculty)","short":"Financial Derivative","faculty":"Faculty","count":17,"students":["Shubh Gupta","Vasu Jain","Anna Ria","Tharani S S","HARMIT SINGH","Ishita Sinha","Savitha Sri S","Ishan Sanghavi","Jeel Shah","Swapnil Tiwari","Shraddha Randive","Prateek Gaur","Uzma khan","Dhairya Mehta","Niladri Kundu","Priyanshu Mittal","Dibyendu Das"]},{"trim":"iv","trimLabel":"Trim IV","cls":"Consumer Behaviour (Faculty)","short":"Consumer Behaviour","faculty":"Faculty","count":64,"students":["Dristi Mittal","Sanidhya Mishra","Rohit Ramakant Patil","Isha Jain","Devanshi Kyal","Gaurav Wadhwa","Abhijatya Negi","Aditya Chaubey","S K HARRISH","Aastha Saini","Ronny Jacob","Pilla Venkata Sai Tharun","Yashashree Jitendra Kothawade","Tumuluri Vaashista Vivek","SUJITH REDDY YEDULLA","Pratham Bagri","Nihal Bibikar","Jay Dave","Rituparna Sharma","Heeral Tandon","Koustav Jana","Riya Malik","Ojaswinee Biswal","Aman Shahin","Aryaman Gupta","Paridhi Rungta","Gaurav Agarwal","Vedant Swarnkar","Nachiketh N","Insha Ali","Manav Malhotra","Masoom Singh","Tanishq Dahiya","pratham Kamath","Jyoti Bikas Das","Ashish Gupta","Lakshmi S","Arsh Vardhan Sinha","Shrishti Mittal","Jash Vaja","Chirag Tandon","Monish Das","Samhita Banerjee","Shreya Shivangi","Hanima Ahuja","Krish Siddharth Negi","Arjya Bose","Shwetha R","Preetkanwal Singh","Nikhar Talreja","Kanishka Gupta","Amir Rahman","Ishita Sinha","SANSKAR MAHALKA","Mahika Vasandani","Mridul Arora","Ankit Ghoradkar","Abhishek Kumar","Marie Aparajith Rajashankar","Tina Kewlani","Bharvi Girkar","Pramiti Gupta","Kanishk Mehta","Avantika sain"]},{"trim":"iv","trimLabel":"Trim IV","cls":"Integrated Marketing Communication (Faculty)","short":"Integrated Marketing Communication","faculty":"Faculty","count":41,"students":["Dristi Mittal","Isha Jain","Devanshi Kyal","Gaurav Wadhwa","Abhijatya Negi","Aditya Chaubey","Pilla Venkata Sai Tharun","Pratham Bagri","Nihal Bibikar","Jay Dave","Rituparna Sharma","Heeral Tandon","Koustav Jana","Riya Malik","Aryaman Gupta","Gaurav Agarwal","Masoom Singh","Tanishq Dahiya","pratham Kamath","Ashish Gupta","Arsh Vardhan Sinha","Shrishti Mittal","Chirag Tandon","Monish Das","Samhita Banerjee","Krish Siddharth Negi","Hanima Ahuja","Shwetha R","Preetkanwal Singh","Nikhar Talreja","Kanishka Gupta","Amir Rahman","SANSKAR MAHALKA","Mahika Vasandani","Mridul Arora","Ankit Ghoradkar","Abhishek Kumar","Tina Kewlani","Bharvi Girkar","Kanishk Mehta","Avantika sain"]},{"trim":"iv","trimLabel":"Trim IV","cls":"Marketing Analytics (Faculty)","short":"Marketing Analytics","faculty":"Faculty","count":53,"students":["Dristi Mittal","Rohit Ramakant Patil","Tushar soni","Isha Jain","Devanshi Kyal","Gaurav Wadhwa","Tushita Mishra","S K HARRISH","Aby K Mathai","Aastha Saini","Ronny Jacob","Pilla Venkata Sai Tharun","Yashashree Jitendra Kothawade","Tumuluri Vaashista Vivek","SUJITH REDDY YEDULLA","Ayush Kayande","Nihal Bibikar","Jay Dave","Ojaswinee Biswal","Vidhu P","Aman Shahin","Aryaman Gupta","Paridhi Rungta","Gaurav Agarwal","Ankita Patwardhan","Nachiketh N","Insha Ali","Ankush P. Karwa","Manav Malhotra","Masoom Singh","Jyoti Bikas Das","Ashish Gupta","Lakshmi S","Pragya Rastogi","Jash Vaja","Kurian George","Ayush Dutta","Monish Das","Shreya Shivangi","Hanima Ahuja","Arjya Bose","Nikhar Talreja","Kanishka Gupta","SANSKAR MAHALKA","Mahika Vasandani","Ankit Ghoradkar","Abhishek Kumar","Marie Aparajith Rajashankar","Akshita Chopde","Bharvi Girkar","Pramiti Gupta","Amir Rahman","Avantika sain"]},{"trim":"iv","trimLabel":"Trim IV","cls":"Pricing Strategy (Faculty)","short":"Pricing Strategy","faculty":"Faculty","count":20,"students":["Sanidhya Mishra","Rohit Ramakant Patil","Aby K Mathai","Yashashree Jitendra Kothawade","Tumuluri Vaashista Vivek","SUJITH REDDY YEDULLA","Heeral Tandon","Ojaswinee Biswal","Vidhu P","Paridhi Rungta","Gaurav Agarwal","Manav Malhotra","pratham Kamath","Jyoti Bikas Das","Jash Vaja","Kurian George","Shreya Shivangi","Arjya Bose","Preetkanwal Singh","Avantika sain"]},{"trim":"iv","trimLabel":"Trim IV","cls":"Product Strategy (Faculty)","short":"Product Strategy","faculty":"Faculty","count":58,"students":["Dristi Mittal","Sanidhya Mishra","Rohit Ramakant Patil","Isha Jain","Devanshi Kyal","Gaurav Wadhwa","Abhijatya Negi","Aditya Chaubey","S K HARRISH","Aastha Saini","Ronny Jacob","Yashashree Jitendra Kothawade","Pratham Bagri","Nihal Bibikar","Jay Dave","Rituparna Sharma","Heeral Tandon","Koustav Jana","Riya Malik","Ojaswinee Biswal","Aman Shahin","Aryaman Gupta","Paridhi Rungta","Nachiketh N","Insha Ali","Manav Malhotra","Masoom Singh","Tanishq Dahiya","pratham Kamath","Jyoti Bikas Das","Ashish Gupta","Lakshmi S","Arsh Vardhan Sinha","Shrishti Mittal","Jash Vaja","Chirag Tandon","Kurian George","Monish Das","Samhita Banerjee","Shreya Shivangi","Hanima Ahuja","Krish Siddharth Negi","Arjya Bose","Shwetha R","Preetkanwal Singh","Nikhar Talreja","Kanishka Gupta","Amir Rahman","SANSKAR MAHALKA","Mahika Vasandani","Mridul Arora","Ankit Ghoradkar","Abhishek Kumar","Marie Aparajith Rajashankar","Tina Kewlani","Bharvi Girkar","Pramiti Gupta","Kanishk Mehta"]},{"trim":"iv","trimLabel":"Trim IV","cls":"Entrepreneurship (Faculty)","short":"Entrepreneurship","faculty":"Faculty","count":31,"students":["Saurabh Pathak","Aditya Chaubey","Abhijatya Negi","Prakhar","Ishan Sanghavi","Rishita Ramdeo","Rishabh Tulsian","Ronny Jacob","Pramiti Gupta","Shreya Gupta","Pratham Bagri","Aniket Patwari","Koustav Jana","Sudhanshu Chauhan","Antara Gupta","Tharani S S","Savitha Sri S","Tanishq Dahiya","Shrishti Mittal","Chirag Tandon","Samhita Banerjee","Krish Siddharth Negi","Suraj Satpute","Kishore P","Ajay Vigneshwar A","Umang Agarwal","Sraeya Balakrishnan","Mridul Arora","Tina Kewlani","Tanisha Singh","Kshitiz Gupta"]},{"trim":"iv","trimLabel":"Trim IV","cls":"Learning & Development (Faculty)","short":"Learning & Development","faculty":"Faculty","count":7,"students":["Vedant Swarnkar","Nidhi Shaw","Vishnu P S","Akshara T Santhosh","Riya Malik","Aryan Agnihotri","Kanishk Mehta"]},{"trim":"iv","trimLabel":"Trim IV","cls":"Recruitment and Selection (Faculty)","short":"Recruitment and Selection","faculty":"Faculty","count":4,"students":["Vedant Swarnkar","Nidhi Shaw","Akshara T Santhosh","Aryan Agnihotri"]},{"trim":"iv","trimLabel":"Trim IV","cls":"Total Reward (Faculty)","short":"Total Reward","faculty":"Faculty","count":3,"students":["Vedant Swarnkar","Nidhi Shaw","Akshara T Santhosh"]},{"trim":"iv","trimLabel":"Trim IV","cls":"Artificial Intelligence for Managers (Faculty)","short":"Artificial Intelligence for Managers","faculty":"Faculty","count":21,"students":["Sanidhya Mishra","Aby K Mathai","Aastha Saini","Pilla Venkata Sai Tharun","Tumuluri Vaashista Vivek","SUJITH REDDY YEDULLA","SIMRAN KUMARI","Rituparna Sharma","Vidhu P","Aman Shahin","Vaishnavi Dudem","Nachiketh N","Nidhi Shaw","Insha Ali","Lakshmi S","Arsh Vardhan Sinha","Kurian George","Kishore P","Shwetha R","Preetkanwal Singh","Girish Kabra"]},{"trim":"iv","trimLabel":"Trim IV","cls":"Data Analytics for Business (Faculty)","short":"Data Analytics for Business","faculty":"Faculty","count":23,"students":["S K HARRISH","Prerna Tekade","Aby K Mathai","Pratham Goel","Anannya Gupta","Tumuluri Vaashista Vivek","SUJITH REDDY YEDULLA","Anusha Heliwal","Anna Ria","Naman Jain","Vidhu P","Uzma khan","Rohit ranjan","Nachiketh N","Akshara T Santhosh","Chandrakant Narwani","Tejaswita","I Dharshana","Astha kejriwal","Harshita Pradhan","Mahi Kinariwala","Swechha Jaiswal","Marie Aparajith Rajashankar"]}];
+var MX=136;
+var PAL=[["#DBEAFE","#1E40AF","#1E40AF"],["#DCFCE7","#166534","#166534"],["#FEF3C7","#92400E","#B45309"],["#EDE9FE","#4C1D95","#6D28D9"],["#FFE4E6","#9F1239","#BE123C"],["#CCFBF1","#134E4A","#0F766E"],["#FEE2E2","#991B1B","#DC2626"],["#E0F2FE","#0C4A6E","#0369A1"],["#F3E8FF","#581C87","#7E22CE"],["#ECFCCB","#365314","#4D7C0F"],["#FFF7ED","#7C2D12","#EA580C"],["#FCE7F3","#831843","#BE185D"]];
+var sel={},so=[],ci=0,q='',sq='',ss='trim',at='iv';
+var ni={};for(var _=0;_<STUDENTS.length;_++)ni[STUDENTS[_]]=_;
+function hs(n){return Object.prototype.hasOwnProperty.call(sel,n);}
+function gc(n){var u=[12,28,42,56,70,84],h=u[ni[n]%u.length];return ['hsl('+h+',82%,85%)','hsl('+h+',62%,18%)','hsl('+h+',62%,18%)'];}
+function ti(i){tog(STUDENTS[i]);document.getElementById('sIn').blur();}
+function he(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function sN(c){return c.replace(/\s*[-\u2013]\s*(Dr\.?|Prof\.?|New|Visiting|New\/Visiting)[\s\S]*$/i,'').replace(/\s*\([^)]*\)/i,'').trim();}
+function fN(c){var m=c.match(/[-\u2013(]\s*((Dr\.?|Prof\.?|New[\/\s]*Visiting Faculty|New Faculty|Visiting Faculty)[\s\S]+)/i);return m?m[1].replace(/\s*\)\s*$/,'').trim():'';}
+function dN(name){
+  var p=name.trim().split(' '),f=p[0],cl=false;
+  for(var k in sel){if(!Object.prototype.hasOwnProperty.call(sel,k))continue;if(k!==name&&k.trim().split(' ')[0]===f){cl=true;break;}}
+  if(!cl)return f;
+  var li=p.length>1?p[p.length-1][0]+'.':''
+  var lb=li?f+' '+li:f;var c2=false;
+  for(var k in sel){if(!Object.prototype.hasOwnProperty.call(sel,k))continue;if(k===name)continue;
+    var pp=k.trim().split(' ');var pi=pp.length>1?pp[pp.length-1][0]+'.':''
+    if(pp[0]===f&&pp[0]+' '+pi===lb){c2=true;break;}}
+  return c2?name:lb;}
+function rL(){
+  var el=document.getElementById('stList'),qq=q.toLowerCase(),o=[],f=0;
+  for(var i=0;i<STUDENTS.length;i++){
+    var n=STUDENTS[i];
+    if(qq&&n.toLowerCase().indexOf(qq)===-1)continue;
+    f++;var s=hs(n);
+    if(s){
+      var c=gc(n),subs='',sd=null;
+      for(var si=0;si<DATA.students.length;si++){if(DATA.students[si].name===n){sd=DATA.students[si];break;}}
+      if(sd&&sd.subjects){
+        for(var si=0;si<sd.subjects.length;si++){
+          var co=sd.subjects[si],h2=subjectHue(co),sn2=DATA.subjects[co]?DATA.subjects[co].name:'';
+          subs+='<span style="display:inline-block;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:600;background:hsl('+h2+',82%,87%);color:hsl('+h2+',62%,18%);margin:1px">'+he(co)+'</span>';}}
+      o.push('<div class="si2" onclick="ti('+i+')"><div style="font-weight:600;flex-shrink:0">'+he(n)+'</div>'+(subs?'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-left:auto;justify-content:flex-end">'+subs+'</div>':'')+'</div>');}
+    else{o.push('<div class="si2" onclick="ti('+i+')">'+he(n)+'</div>');}}
+  if(!f)o.push('<div class="no-r">No students found.</div>');
+  el.innerHTML=o.join('');}
+function rB(){
+  var lb=document.getElementById('selLbl'),be=document.getElementById('selBdg'),ca=document.getElementById('caBtn');
+  lb.textContent=so.length+' selected';
+  if(ca)ca.style.display=so.length?'inline':'none';
+  var o=[];for(var i=0;i<so.length;i++){var nm=so[i],ix=ni[nm];
+    o.push('<span class="bdg">'+he(nm)+'<span class="rm" onclick="ti('+ix+')">&#215;</span></span>');}
+  be.innerHTML=o.join('');}
+function rT(tk){
+  var p=document.getElementById('panel-'+tk);
+  if(!selectedStudent){
+    p.innerHTML='<div class="empty">Select a student from the top bar to see their classmates.</div>';
+    return;}
+  var a=CLASSES[tk];
+  if(!a||!a.length){
+    p.innerHTML='<div class="empty">No class data for this trimester yet.</div>';
+    return;}
+  var name=selectedStudent.name,matched=[];
+  for(var i=0;i<a.length;i++){var cls=a[i];
+    for(var j=0;j<cls.students.length;j++){if(cls.students[j]===name){matched.push(cls);break;}}}
+  if(!matched.length){
+    p.innerHTML='<div class="empty">'+he(name)+' is not enrolled in any subjects this trimester.</div>';
+    return;}
+  var html='',seen={};
+  for(var i=0;i<matched.length;i++){var cls=matched[i],students=cls.students,dn=cls.cls;
+    var label=dn.replace(/\s*\([^)]*\)/,''),fac=fN(dn);
+    html+='<div class="card">';
+    html+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap">';
+    html+='<span style="font-weight:650;font-size:13px;letter-spacing:-.01em">'+he(label)+'</span>';
+    html+='<span style="font-size:11px;color:var(--text-muted)">'+students.length+' classmate'+(students.length!==1?'s':'')+'</span>';
+    if(fac){html+='<span style="font-size:11px;color:var(--text-light);margin-left:auto">'+he(fac)+'</span>';}
+    html+='</div><div style="display:flex;flex-wrap:wrap;gap:4px">';
+    for(var k=0;k<students.length;k++){var sn=students[k],isMe=(sn===name);
+      if(isMe){html+='<span class="tb" style="background:var(--accent);color:var(--surface)">'+he(sn)+'</span>';}
+      else if(hs(sn)){var c=gc(sn);html+='<span class="tb" style="background:'+c[0]+';color:'+c[1]+'">'+he(sn)+'</span>';}
+      else{html+='<span class="tb" style="background:var(--accent-bg);color:var(--text-light)">'+he(sn)+'</span>';}}
+    html+='</div></div>';}
+  p.innerHTML=html;}
+function rMx(){
+  var p=document.getElementById('panel-matrix'),n=so.length;
+  var exp='<div class="mx-exp"><strong>How to read this:</strong> Each cell shows how many elective classes two students share across all three trims. Darker blue = more classes in common. Use it to spot which pairs have the most overlap &mdash; useful for knowing who you&#39;ll be sitting with the most.</div>';
+  if(n<2){p.innerHTML=exp+'<div class="empty">Select at least 2 students to see the overlap matrix.</div>';return;}
+  if(n>15){p.innerHTML=exp+'<div class="empty">Select 15 or fewer students to display the matrix.</div>';return;}
+  var cnt=[];for(var i=0;i<n;i++){cnt.push([]);for(var j=0;j<n;j++)cnt[i].push(0);}
+  var tr=['iv','v','vi'];
+  for(var t=0;t<tr.length;t++){var a=CLASSES[tr[t]];
+    for(var ci2=0;ci2<a.length;ci2++){var ic=[];
+      for(var si=0;si<n;si++){for(var ss2=0;ss2<a[ci2].students.length;ss2++){
+        if(a[ci2].students[ss2]===so[si]){ic.push(si);break;}}}
+      for(var aa=0;aa<ic.length;aa++){for(var bb=aa+1;bb<ic.length;bb++){
+        cnt[ic[aa]][ic[bb]]++;cnt[ic[bb]][ic[aa]]++;}}}
+  var mx2=1;for(var i=0;i<n;i++)for(var j=0;j<n;j++){if(i!==j&&cnt[i][j]>mx2)mx2=cnt[i][j];}
+  var o=['<div class="mw"><table class="mx"><tr><th></th>'];
+  for(var j=0;j<n;j++){
+    var c=gc(so[j]);
+    o.push('<th style="color:'+c[1]+';background:'+c[0]+';border-radius:4px;padding:5px 8px">'+he(dN(so[j]))+'</th>');}
+  o.push('</tr>');
+  for(var i=0;i<n;i++){
+    var rc=gc(so[i]);
+    o.push('<tr><th class="rh" style="color:'+rc[1]+';background:'+rc[0]+';border-radius:4px">'+he(dN(so[i]))+'</th>');
+    for(var j=0;j<n;j++){
+      if(i===j){o.push('<td class="dg">&#8212;</td>');}
+      else if(j<i){o.push('<td class="bl"></td>');}
+      else{var v=cnt[i][j];
+        var al=v===0?0:0.15+(v/mx2)*0.70;
+        var bg=v===0?'var(--accent-bg)':'rgba(44,62,80,'+al.toFixed(2)+')';
+        var tc=al>0.45?'#fff':'var(--text)';
+        o.push('<td style="background:'+bg+';color:'+tc+';border-radius:4px">'+( v===0?'0':v)+'</td>');}}
+    o.push('</tr>');}
+  o.push('</table></div>');
+  o.push('<div class="mx-note">Upper triangle only &mdash; the table is symmetric. Each number is shared classes across Trim IV + V + VI combined.</div>');
+  p.innerHTML=exp+o.join('');}}
+function rSu(){
+  var p=document.getElementById('subjResults'),qq=sq.toLowerCase(),list=[];
+  for(var i=0;i<SUBJECTS.length;i++){var s=SUBJECTS[i];
+    if(!qq||s.short.toLowerCase().indexOf(qq)!==-1||s.faculty.toLowerCase().indexOf(qq)!==-1)list.push(s);}
+  var to={iv:0,v:1,vi:2};
+  if(ss==='count')list.sort(function(a,b){return b.count-a.count;});
+  else if(ss==='name')list.sort(function(a,b){return a.short<b.short?-1:a.short>b.short?1:0;});
+  else list.sort(function(a,b){return to[a.trim]-to[b.trim]||(a.short<b.short?-1:a.short>b.short?1:0);});
+  if(!list.length){p.innerHTML='<div class="empty">No subjects found.</div>';return;}
+  var o=['<table class="st"><tr><th style="width:40%">Class</th><th style="width:65px">Trim</th><th style="width:85px;text-align:right">Students</th><th style="width:50px;text-align:center">Roster</th></tr>'];
+  for(var i=0;i<list.length;i++){var s=list[i];
+    var bw=Math.round((s.count/MX)*100);
+    var bc=s.trim==='iv'?'#b0c4d8':s.trim==='v'?'#a0c8a8':'#c0b4d8';
+    var cc=s.trim==='iv'?'civ':s.trim==='v'?'cv':'cvi';
+    o.push('<tr><td><span class="cn" style="font-size:12.5px">'+he(s.short)+'</span><span class="fc">'+he(s.faculty)+'</span></td>');
+    o.push('<td><span class="tc '+cc+'">'+s.trimLabel+'</span></td>');
+    o.push('<td style="text-align:right"><strong>'+s.count+'</strong><div class="bb"><div class="bf" style="width:'+bw+'%;background:'+bc+'"></div></div></td>');
+    o.push('<td style="text-align:center"><span class="rt" onclick="tR(\'rp'+i+'\')">&#9660;</span></td></tr>');
+    o.push('<tr class="rr"><td colspan="4"><div id="rp'+i+'" class="rp">');
+    for(var jj=0;jj<s.students.length;jj++){var sn=s.students[jj];
+      if(hs(sn)){var sc2=gc(sn);o.push('<span class="rn" style="background:'+sc2[0]+';color:'+sc2[1]+'">'+he(sn)+'</span>');}
+      else{o.push('<span class="rn ru">'+he(sn)+'</span>');}}
+    o.push('</div></td></tr>');}
+  o.push('</table>');p.innerHTML=o.join('');}
+function tR(id){var e=document.getElementById(id);if(e)e.classList.toggle('open');}
+function showMainTab(id, btn) {
+  var tabs = document.getElementById('mainNav').children;
+  for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+  btn.classList.add('active');
+  ['tt','students','subjects'].forEach(function(pid) {
+    var el = document.getElementById('panel-'+pid);
+    if (el) el.classList.toggle('active', pid === id);
+  });
+  if (id === 'subjects') rSu();
+}
+function showTab(id,btn){
+  var rc=document.getElementById('RC');
+  var ps=rc.getElementsByClassName('panel');
+  for(var i=0;i<ps.length;i++)ps[i].classList.remove('active');
+  var tbs=document.getElementById('mainTabs').children;
+  for(var i=0;i<tbs.length;i++)tbs[i].classList.remove('active');
+  document.getElementById('panel-'+id).classList.add('active');
+  btn.classList.add('active');at=id;
+  if(id==='matrix')rMx();}
+function sFlt(v){sq=v;rSu();}
+function sSrt(v,btn){ss=v;
+  document.getElementById('srtTrim').classList.remove('active');
+  document.getElementById('srtCnt').classList.remove('active');
+  document.getElementById('srtNm').classList.remove('active');
+  btn.classList.add('active');rSu();}
+function fL(){q=document.getElementById('sIn').value;rL();}
+function selAll(){sel={};so=[];ci=0;for(var i=0;i<STUDENTS.length;i++){sel[STUDENTS[i]]=i%PAL.length;so.push(STUDENTS[i]);}ci=STUDENTS.length;rAll();}
+function clrAll(){sel={};so=[];ci=0;rAll();}
+function tog(name){
+  if(hs(name)){delete sel[name];
+    for(var i=0;i<so.length;i++){if(so[i]===name){so.splice(i,1);break;}}
+    var ns={};for(var i=0;i<so.length;i++)ns[so[i]]=i;sel=ns;ci=so.length;}
+  else{sel[name]=ci%PAL.length;so.push(name);ci++;}
+  rAll();}
+function rAll(){rL();rB();rT('iv');rT('v');rT('vi');
+  if(at==='matrix')rMx();
+  var sp=document.getElementById('panel-subjects');
+  if(sp&&sp.classList.contains('active'))rSu();}
+enhanceTrimIV();initStudentSelect();
+rL();rB();rT('iv');rT('v');rT('vi');
+</script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+import json, re
+from collections import OrderedDict
+import openpyxl
+
+STUDENT_LIST = "/Users/ronnyjacob/Downloads/Division wise List- Trimester IV.xlsx"
+TIMETABLE   = "/Users/ronnyjacob/Downloads/6.07.2026 to 12.07.2026.xlsx"
+OUTPUT      = "data.json"
+
+# ─── Subject name mappings ───────────────────────────────────────────────
+SUBJECT_NAMES = {
+    "AFSA_A": "Advanced Financial Statement Analysis A",
+    "AFSA_B": "Advanced Financial Statement Analysis B",
+    "BV_A":   "Business Valuation A",
+    "BV_B":   "Business Valuation B",
+    "IAPM_A": "Investment Analysis & Portfolio Management A",
+    "IAPM_B": "Investment Analysis & Portfolio Management B",
+    "CBM":    "Commercial Bank Management",
+    "FD":     "Financial Derivative",
+    "CB":     "Consumer Behaviour",
+    "IMC":    "Integrated Marketing Communication",
+    "MA":     "Marketing Analytics",
+    "PRS":    "Pricing Strategy",
+    "PS":     "Product Strategy",
+    "MC_A":   "Management Consulting A",
+    "MC_B":   "Management Consulting B",
+    "ENT":    "Entrepreneurship",
+    "LD":     "Learning & Development",
+    "RS":     "Recruitment and Selection",
+    "TR":     "Total Reward",
+    "AI":     "Artificial Intelligence for Managers",
+    "DAB":    "Data Analytics for Business",
+    "BS":     "Business Simulation",
+}
+
+TIME_LABELS = OrderedDict([
+    (2, "8:30-10:00"),
+    (3, "10:10-11:40"),
+    (4, "11:50-1:20"),
+    (5, "1:20-1:50"),
+    (6, "1:50-3:20"),
+    (7, "3:30-5:00"),
+    (8, "3:30-5:00"),
+    (9, "6:00-7:30"),
+])
+
+TIMETABLE_SUBJECT_MAP = {
+    "MC-Div B":     ("MC_B", "Div B"),
+    "MC-Div A":     ("MC_A", "Div A"),
+    "MC_Div B":     ("MC_B", "Div B"),
+    "MC_Div A":     ("MC_A", "Div A"),
+    "Pricing Strategy": ("PRS", None),
+    "AFSA-Div B":   ("AFSA_B", "Div B"),
+    "AFSA-Div A":   ("AFSA_A", "Div A"),
+    "AFSA_A":       ("AFSA_A", None),
+    "AFSA_B":       ("AFSA_B", None),
+    "L & D":        ("LD", None),
+    "AIM":          ("AI", None),
+    "R& S":         ("RS", None),
+    "MA":           ("MA", None),
+    "CBM":          ("CBM", None),
+    "Integrated Marketing Communication": ("IMC", None),
+    "Integrated Marketing": ("IMC", None),
+    "CB":           ("CB", None),
+    "DAB":          ("DAB", None),
+    "Product Strategy": ("PS", None),
+    "Financial Derivatives": ("FD", None),
+    "BV_Div B":     ("BV_B", "Div B"),
+    "BV_Div A":     ("BV_A", "Div A"),
+    "IAPM_A":       ("IAPM_A", None),
+    "IAPM_B":       ("IAPM_B", None),
+    "BS Div A":     ("BS", "Div A"),
+    "BS Div B":     ("BS", "Div B"),
+    "BS Div C":     ("BS", "Div C"),
+    "Total Rewards": ("TR", None),
+    "Entrepreneurship": ("ENT", None),
+}
+
+def normalize(s):
+    return re.sub(r'\s+', ' ', s).strip()
+
+def normalize_subject(s):
+    s = re.sub(r'\s*_\s*', '_', s)
+    return re.sub(r'\s+', ' ', s).strip()
+
+def parse_timetable():
+    wb = openpyxl.load_workbook(TIMETABLE)
+    ws = wb['06.07.2026']
+
+    days_rows = [
+        ("Mon", 3, 4), ("Tue", 5, 6), ("Wed", 7, 8),
+        ("Thu", 9, 10), ("Fri", 11, 12), ("Sat", 13, 14), ("Sun", 15, 16)
+    ]
+    timetable = []
+
+    for day_name, r1, r2 in days_rows:
+        for row_idx in (r1, r2):
+            for col_idx in range(2, ws.max_column + 1):
+                if col_idx == 5:
+                    continue
+                cell = ws.cell(row=row_idx, column=col_idx)
+                raw = cell.value
+                if not raw:
+                    continue
+                raw_lines = [l.strip() for l in str(raw).split('\n') if l.strip()]
+                lines = [normalize(l) for l in raw_lines]
+                if not lines:
+                    continue
+                time_label = TIME_LABELS.get(col_idx, f"col_{col_idx}")
+                if not lines:
+                    continue
+
+                subject_text = normalize_subject(lines[0])
+                alt_text = None
+                used_lines = 1
+                if len(lines) > 1 and not lines[1].startswith('L') and lines[1] != 'Hybrid':
+                    alt_text = normalize_subject(subject_text + ' ' + lines[1])
+
+                match = None
+                for key, (code, div) in TIMETABLE_SUBJECT_MAP.items():
+                    key_norm = normalize_subject(key)
+                    if subject_text.startswith(key_norm) or key_norm.startswith(subject_text):
+                        match = (code, div)
+                        break
+                    if alt_text and (alt_text.startswith(key_norm) or key_norm.startswith(alt_text)):
+                        match = (code, div)
+                        used_lines = 2
+                        break
+
+                if not match:
+                    continue
+
+                code, div = match
+                remaining = lines[used_lines:]
+                room = ''
+                professor = ''
+                for line in remaining:
+                    if line == 'Hybrid':
+                        room = 'Hybrid'
+                    elif re.match(r'^L\d', line):
+                        if room:
+                            room += ' / ' + line
+                        else:
+                            room = line
+                    elif 'Prof' in line or 'Dr' in line:
+                        if not professor:
+                            professor = line
+                entry = {
+                    "day": day_name,
+                    "time": time_label,
+                    "subject": code,
+                    "professor": professor or "",
+                    "room": room or "",
+                    "div": div or "",
+                }
+                existing = None
+                for e in timetable:
+                    if (e["day"] == entry["day"] and e["time"] == entry["time"]
+                            and e["subject"] == entry["subject"]
+                            and e["professor"] == entry["professor"]
+                            and e["room"] == entry["room"]):
+                        existing = e
+                        break
+                if not existing:
+                    timetable.append(entry)
+
+    return timetable
+
+NON_STUDENT_PATTERNS = ['placements', 'faculty', 'division', 'total', 'sub total']
+
+def parse_students():
+    wb = openpyxl.load_workbook(STUDENT_LIST)
+    ws = wb['List ']
+
+    headers = [str(c.value).strip() if c.value else '' for c in ws[1]]
+    subject_cols = []
+    for i, h in enumerate(headers):
+        if h in SUBJECT_NAMES:
+            subject_cols.append((i, h))
+
+    students = []
+    for row in ws.iter_rows(min_row=2, values_only=True):
+        if not row[1]:
+            continue
+        # Skip the header row itself
+        if normalize(str(row[1])).lower() == 'name':
+            continue
+
+        raw_name = normalize(str(row[1]))
+        roll     = normalize(str(row[5])) if row[5] else ''
+        major    = normalize(str(row[7])) if row[7] else ''
+        minor    = normalize(str(row[8])).replace('\xa0', '').strip() if row[8] else ''
+
+        # Normalize roll to Hxxx format if it starts with H
+        if roll.startswith('H'):
+            digits = re.sub(r'[^0-9]', '', roll)
+            if digits:
+                roll = 'H' + digits.zfill(3)
+
+        # Detect non-student rows (e.g. "Placements Hyd") — data is shifted right
+        if any(p in raw_name.lower() for p in NON_STUDENT_PATTERNS) and row[4]:
+            name  = normalize(str(row[4]))
+            email = normalize(str(row[6])) if row[6] else ''
+        else:
+            # Prefer Name2 (col E) over Name (col B) — it has corrected names
+            name  = normalize(str(row[4])) if row[4] else raw_name
+            email = normalize(str(row[0])) if row[0] else ''
+
+        subjects = []
+        for col_idx, code in subject_cols:
+            val = str(row[col_idx]).strip().upper() if col_idx < len(row) and row[col_idx] else 'NO'
+            if val == 'YES':
+                subjects.append(code)
+
+        students.append({
+            "name": name,
+            "roll": roll,
+            "email": email,
+            "major": major,
+            "minor": minor,
+            "subjects": subjects,
+        })
+
+    return students
+
+def main():
+    students = parse_students()
+    timetable = parse_timetable()
+
+    subjects = {}
+    for code, full in SUBJECT_NAMES.items():
+        students_in_subject = [s for s in students if code in s["subjects"]]
+        subjects[code] = {
+            "code": code,
+            "name": full,
+            "student_count": len(students_in_subject),
+        }
+
+    data = {
+        "students": students,
+        "subjects": subjects,
+        "timetable": timetable,
+        "time_slots": list(TIME_LABELS.values()),
+        "days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    }
+
+    with open(OUTPUT, 'w') as f:
+        json.dump(data, f, indent=2)
+    print(f"✅ Wrote {OUTPUT}")
+    print(f"   Students: {len(students)}")
+    print(f"   Subjects: {len(subjects)}")
+    print(f"   Timetable entries: {len(timetable)}")
+
+    # ─── Regenerate index.html with embedded data ───
+    INDEX_HTML = "index.html"
+    data_json = json.dumps(data)
+    with open(INDEX_HTML) as f:
+        html = f.read()
+
+    marker = "/* DATA_INSERT_HERE */"
+    if marker not in html:
+        print(f"❌ Marker '{marker}' not found in {INDEX_HTML}")
+        return
+
+    before, after = html.split(marker, 1)
+    # Skip everything until `var STUDENTS` — that's where real JS starts
+    lines = after.split('\n')
+    real_start = len(lines)
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+        if stripped.startswith('var STUDENTS'):
+            real_start = i
+            break
+    after = '\n'.join(lines[real_start:])
+
+    init_code = '\n'
+    new_html = before + marker + f"\nDATA = {data_json};" + init_code + after
+
+    with open(INDEX_HTML, 'w') as f:
+        f.write(new_html)
+    print(f"✅ Updated {INDEX_HTML}")
+
+if __name__ == '__main__':
+    main()
