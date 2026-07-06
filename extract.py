@@ -1,10 +1,23 @@
 import json, re
 from collections import OrderedDict
+from datetime import datetime
 import openpyxl
 
 STUDENT_LIST = "/Users/ronnyjacob/Downloads/Division wise List- Trimester IV.xlsx"
 TIMETABLE   = "/Users/ronnyjacob/Downloads/6.07.2026 to 12.07.2026.xlsx"
 OUTPUT      = "data.json"
+
+# ─── Extract date range from TIMETABLE filename ────────────────────────────
+DATE_RANGE = ""
+mt = re.search(r'(\d+)\.(\d+)\.(\d+)\s*to\s*(\d+)\.(\d+)\.(\d+)', TIMETABLE)
+if mt:
+    d1, m1, y1, d2, m2, y2 = mt.groups()
+    fmt = "%d.%m.%Y"
+    dt_from = datetime.strptime(f"{d1}.{m1}.{y1}", fmt)
+    dt_to   = datetime.strptime(f"{d2}.{m2}.{y2}", fmt)
+    DATE_RANGE = dt_from.strftime("%a %-d %b") + " – " + dt_to.strftime("%a %-d %b %Y")
+else:
+    DATE_RANGE = ""
 
 # ─── Subject name mappings ───────────────────────────────────────────────
 SUBJECT_NAMES = {
@@ -241,6 +254,7 @@ def main():
         "timetable": timetable,
         "time_slots": list(TIME_LABELS.values()),
         "days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        "date_range": DATE_RANGE,
     }
 
     with open(OUTPUT, 'w') as f:
