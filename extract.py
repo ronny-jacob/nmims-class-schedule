@@ -96,6 +96,16 @@ def normalize_subject(s):
     s = re.sub(r'\s*_\s*', '_', s)
     return re.sub(r'\s+', ' ', s).strip()
 
+def match_subject(text, key):
+    if text.startswith(key):
+        return True
+    if key.startswith(text):
+        if len(text) == len(key):
+            return True
+        nxt = key[len(text)]
+        return not nxt.isalnum()
+    return False
+
 def parse_timetable():
     wb = openpyxl.load_workbook(TIMETABLE)
     ws = wb['06.07.2026']
@@ -132,10 +142,10 @@ def parse_timetable():
                 match = None
                 for key, (code, div) in TIMETABLE_SUBJECT_MAP.items():
                     key_norm = normalize_subject(key)
-                    if subject_text.startswith(key_norm) or key_norm.startswith(subject_text):
+                    if match_subject(subject_text, key_norm):
                         match = (code, div)
                         break
-                    if alt_text and (alt_text.startswith(key_norm) or key_norm.startswith(alt_text)):
+                    if alt_text and (match_subject(alt_text, key_norm)):
                         match = (code, div)
                         used_lines = 2
                         break
