@@ -197,13 +197,6 @@ function initStudentSelect() {
     opt.textContent = toTitleCase(DATA.students[i].name) + ' (' + DATA.students[i].roll + ')';
     sel.appendChild(opt);
   }
-  for (var i = 0; i < DATA.students.length; i++) {
-    if (DATA.students[i].name.toLowerCase().indexOf('ronny') !== -1 || DATA.students[i].name.toLowerCase().indexOf('jacob') !== -1) {
-      sel.value = i;
-      onStudentChange();
-      return;
-    }
-  }
 }
 
 function setTimeRange(range, btn) {
@@ -294,7 +287,7 @@ function renderTimetable() {
   var numTimes = TIME_ORDER.length;
   var colTmpl = '52px';
   for (var t = 0; t < numTimes; t++) {
-    colTmpl += TIME_ORDER[t] === '1:20-1:50' ? ' 20px' : ' 1fr';
+    colTmpl += TIME_ORDER[t] === '1:20-1:50' ? ' 20px' : ' minmax(72px, 1fr)';
   }
   gridEl.style.gridTemplateColumns = colTmpl;
   var myCount = 0;
