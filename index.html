@@ -72,6 +72,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .tt-legend{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
 .tt-legend-item{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600}
 .tt-legend-item.other{color:var(--text-light);font-size:9px;padding:2px 6px}
+.tt-note{font-size:10px;color:var(--text-muted);line-height:1.3;width:100%;margin-top:2px}
 .empty{text-align:center;padding:30px 16px;color:var(--text-light);font-size:13px}
 .mt{width:100%;border-collapse:collapse;font-size:12px}
 .mt th{padding:8px 6px;font-weight:600;font-size:10px;color:var(--text-muted);text-align:left;border-bottom:1px solid var(--border);background:var(--accent-bg)}
@@ -436,7 +437,7 @@ function renderTimetable() {
       lhtml += '<span class="tt-legend-item other">' + code + '</span>';
     }
   }
-  legendEl.innerHTML = lhtml;
+  legendEl.innerHTML = lhtml + '<div class="tt-note">Every class happening this week. The colourful ones are your subjects &mdash; the grey ones are other sections.</div>';
 }
 
 function enhanceTrimIV() {
