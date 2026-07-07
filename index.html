@@ -437,7 +437,7 @@ function renderTimetable() {
       lhtml += '<span class="tt-legend-item other">' + code + '</span>';
     }
   }
-  legendEl.innerHTML = lhtml + '<div class="tt-note">The highlighted classes are your subjects for this week.</div>';
+  legendEl.innerHTML = '<div class="tt-note">The highlighted classes below are your subjects for this week.</div>' + lhtml;
 }
 
 function enhanceTrimIV() {
