@@ -19,6 +19,16 @@ def parse_date_range(filepath):
         return dt_from.strftime("%a %-d %b") + " – " + dt_to.strftime("%a %-d %b %Y")
     return ""
 
+def get_week_iso(filepath):
+    mt = re.search(r'(\d+)\.(\d+)\.(\d+)\s*to\s*(\d+)\.(\d+)\.(\d+)', filepath)
+    if mt:
+        d1, m1, y1, d2, m2, y2 = mt.groups()
+        fmt = "%d.%m.%Y"
+        dt_from = datetime.strptime(f"{d1}.{m1}.{y1}", fmt)
+        dt_to   = datetime.strptime(f"{d2}.{m2}.{y2}", fmt)
+        return (dt_from.strftime("%Y-%m-%d"), dt_to.strftime("%Y-%m-%d"))
+    return ("", "")
+
 # ─── Subject name mappings ───────────────────────────────────────────────
 SUBJECT_NAMES = {
     "AFSA_A": "Advanced Financial Statement Analysis A",
@@ -304,13 +314,17 @@ def main():
     students = parse_students()
     timetable = parse_timetable(TIMETABLE)
     date_range = parse_date_range(TIMETABLE)
+    week_start, week_end = get_week_iso(TIMETABLE)
 
     timetable_next = []
     date_range_next = ""
+    week_start_next = ""
+    week_end_next = ""
     if os.path.exists(TIMETABLE_NEXT):
         try:
             timetable_next = parse_timetable(TIMETABLE_NEXT)
             date_range_next = parse_date_range(TIMETABLE_NEXT)
+            week_start_next, week_end_next = get_week_iso(TIMETABLE_NEXT)
         except Exception as e:
             print(f"⚠️ Could not parse next week's timetable: {e}")
 
@@ -332,6 +346,10 @@ def main():
         "days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
         "date_range": date_range,
         "date_range_next": date_range_next,
+        "week_start": week_start,
+        "week_end": week_end,
+        "week_start_next": week_start_next,
+        "week_end_next": week_end_next,
     }
 
     with open(OUTPUT, 'w') as f:
