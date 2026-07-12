@@ -2828,6 +2828,376 @@
       "div": ""
     }
   ],
+  "timetable_next": [
+    {
+      "day": "Mon",
+      "time": "10:10-11:40",
+      "subject": "BV_B",
+      "professor": "Prof SP Vittal",
+      "room": "L06, 2nd floor",
+      "div": "Div B"
+    },
+    {
+      "day": "Mon",
+      "time": "11:50-1:20",
+      "subject": "BV_A",
+      "professor": "Prof SP Vittal",
+      "room": "L06, 2nd floor",
+      "div": "Div A"
+    },
+    {
+      "day": "Mon",
+      "time": "1:50-3:20",
+      "subject": "BV_B",
+      "professor": "Prof SP Vittal",
+      "room": "L06, 2nd floor",
+      "div": "Div B"
+    },
+    {
+      "day": "Mon",
+      "time": "3:30-5:00",
+      "subject": "BV_A",
+      "professor": "Prof SP Vittal",
+      "room": "L06, 2nd floor",
+      "div": "Div A"
+    },
+    {
+      "day": "Mon",
+      "time": "6:00-7:30",
+      "subject": "ENT",
+      "professor": "Dr Srividya Raghavan",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Mon",
+      "time": "1:50-3:20",
+      "subject": "IAPM_A",
+      "professor": "Dr Showkat Ahmad",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Mon",
+      "time": "3:30-5:00",
+      "subject": "IAPM_B",
+      "professor": "Dr Showkat Ahmad",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Tue",
+      "time": "8:30-10:00",
+      "subject": "BS",
+      "professor": "Dr Dileep Kumar",
+      "room": "L07, 2nd floor",
+      "div": "Div B"
+    },
+    {
+      "day": "Tue",
+      "time": "10:10-11:40",
+      "subject": "LD",
+      "professor": "Dr Umakanata Nayak",
+      "room": "L12, 3rd floor",
+      "div": ""
+    },
+    {
+      "day": "Tue",
+      "time": "11:50-1:20",
+      "subject": "IAPM_B",
+      "professor": "Dr Showkat Ahmad",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Tue",
+      "time": "1:50-3:20",
+      "subject": "IAPM_A",
+      "professor": "Dr Showkat Ahmad",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Tue",
+      "time": "3:30-5:00",
+      "subject": "TR",
+      "professor": "",
+      "room": "L08, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Tue",
+      "time": "1:50-3:20",
+      "subject": "TR",
+      "professor": "",
+      "room": "L08, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Tue",
+      "time": "3:30-5:00",
+      "subject": "ENT",
+      "professor": "Dr Srividya Raghavan",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Wed",
+      "time": "10:10-11:40",
+      "subject": "BS",
+      "professor": "Dr Dileep Kumar",
+      "room": "L07, 2nd floor",
+      "div": "Div C"
+    },
+    {
+      "day": "Wed",
+      "time": "11:50-1:20",
+      "subject": "MC_B",
+      "professor": "Dr Dileep Kumar",
+      "room": "L06, 2nd floor",
+      "div": "Div B"
+    },
+    {
+      "day": "Wed",
+      "time": "1:50-3:20",
+      "subject": "MC_A",
+      "professor": "Dr Dileep Kumar",
+      "room": "L06, 2nd floor",
+      "div": "Div A"
+    },
+    {
+      "day": "Wed",
+      "time": "3:30-5:00",
+      "subject": "PRS",
+      "professor": "Dr Srividya Raghavan",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Wed",
+      "time": "3:30-5:00",
+      "subject": "AFSA_B",
+      "professor": "Dr Narender Vunyale",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Wed",
+      "time": "10:10-11:40",
+      "subject": "BS",
+      "professor": "Dr Srividya Raghavan",
+      "room": "L06, 2nd floor",
+      "div": "Div A"
+    },
+    {
+      "day": "Wed",
+      "time": "11:50-1:20",
+      "subject": "AFSA_A",
+      "professor": "Dr Narender Vunyale",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Wed",
+      "time": "3:30-5:00",
+      "subject": "LD",
+      "professor": "Dr Umakanata Nayak",
+      "room": "L12, 3rd floor",
+      "div": ""
+    },
+    {
+      "day": "Thu",
+      "time": "8:30-10:00",
+      "subject": "AI",
+      "professor": "Prof Shweta",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Thu",
+      "time": "10:10-11:40",
+      "subject": "AI",
+      "professor": "Prof Shweta",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Thu",
+      "time": "11:50-1:20",
+      "subject": "MC_B",
+      "professor": "Dr Dileep Kumar",
+      "room": "L06, 2nd floor / L07, 2nd floor",
+      "div": "Div B"
+    },
+    {
+      "day": "Thu",
+      "time": "1:50-3:20",
+      "subject": "MC_A",
+      "professor": "Dr Dileep Kumar",
+      "room": "L06, 2nd floor",
+      "div": "Div A"
+    },
+    {
+      "day": "Thu",
+      "time": "3:30-5:00",
+      "subject": "PRS",
+      "professor": "Dr Srividya Raghavan",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Thu",
+      "time": "3:30-5:00",
+      "subject": "AFSA_B",
+      "professor": "Dr Narender Vunyale",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Thu",
+      "time": "6:00-7:30",
+      "subject": "RS",
+      "professor": "",
+      "room": "Hybrid",
+      "div": ""
+    },
+    {
+      "day": "Thu",
+      "time": "10:10-11:40",
+      "subject": "CBM",
+      "professor": "Prof Narender Vunyale",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Thu",
+      "time": "11:50-1:20",
+      "subject": "AFSA_A",
+      "professor": "Dr Narender Vunyale",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Fri",
+      "time": "10:10-11:40",
+      "subject": "MA",
+      "professor": "Prof Neeelima",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Fri",
+      "time": "11:50-1:20",
+      "subject": "MA",
+      "professor": "Prof Neeelima",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Fri",
+      "time": "6:00-7:30",
+      "subject": "RS",
+      "professor": "",
+      "room": "Hybrid",
+      "div": ""
+    },
+    {
+      "day": "Fri",
+      "time": "10:10-11:40",
+      "subject": "CBM",
+      "professor": "Prof Narender Vunyale",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Fri",
+      "time": "11:50-1:20",
+      "subject": "CBM",
+      "professor": "Prof Narender Vunyale",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Sat",
+      "time": "10:10-11:40",
+      "subject": "IMC",
+      "professor": "Prof Suresh",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Sat",
+      "time": "11:50-1:20",
+      "subject": "IMC",
+      "professor": "Prof Suresh",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Sat",
+      "time": "1:50-3:20",
+      "subject": "CB",
+      "professor": "Prof Murtuza Soofi",
+      "room": "L6, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Sat",
+      "time": "3:30-5:00",
+      "subject": "CB",
+      "professor": "Prof Murtuza Soofi",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Sat",
+      "time": "10:10-11:40",
+      "subject": "DAB",
+      "professor": "Prof Neelima",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Sat",
+      "time": "11:50-1:20",
+      "subject": "DAB",
+      "professor": "Prof Neelima",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Sun",
+      "time": "10:10-11:40",
+      "subject": "PS",
+      "professor": "Prof Krishna",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Sun",
+      "time": "11:50-1:20",
+      "subject": "PS",
+      "professor": "Prof Krishna",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Sun",
+      "time": "10:10-11:40",
+      "subject": "FD",
+      "professor": "Prof. Narsimhulu",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Sun",
+      "time": "11:50-1:20",
+      "subject": "FD",
+      "professor": "Prof. Narsimhulu",
+      "room": "L07, 2nd floor",
+      "div": ""
+    }
+  ],
   "time_slots": [
     "8:30-10:00",
     "10:10-11:40",
@@ -2847,5 +3217,6 @@
     "Fri",
     "Sat"
   ],
-  "date_range": "Mon 6 Jul \u2013 Sun 12 Jul 2026"
+  "date_range": "Mon 6 Jul \u2013 Sun 12 Jul 2026",
+  "date_range_next": "Mon 13 Jul \u2013 Sun 19 Jul 2026"
 }

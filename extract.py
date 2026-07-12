@@ -1,24 +1,23 @@
-import json, re
+import json, re, os
 from collections import OrderedDict
 from datetime import datetime
 import openpyxl
 
 STUDENT_LIST = "/Users/ronnyjacob/Downloads/Division wise List- Trimester IV.xlsx"
 LAST_YEAR_LIST = "/Users/ronnyjacob/Documents/First Year Division list.xlsx"
-TIMETABLE   = "/Users/ronnyjacob/Downloads/6.07.2026 to 12.07.2026.xlsx"
-OUTPUT      = "data.json"
+TIMETABLE    = "/Users/ronnyjacob/Downloads/6.07.2026 to 12.07.2026.xlsx"
+TIMETABLE_NEXT = "/Users/ronnyjacob/Downloads/13.07.2026 to 19.07.2026.xlsx"
+OUTPUT       = "data.json"
 
-# ─── Extract date range from TIMETABLE filename ────────────────────────────
-DATE_RANGE = ""
-mt = re.search(r'(\d+)\.(\d+)\.(\d+)\s*to\s*(\d+)\.(\d+)\.(\d+)', TIMETABLE)
-if mt:
-    d1, m1, y1, d2, m2, y2 = mt.groups()
-    fmt = "%d.%m.%Y"
-    dt_from = datetime.strptime(f"{d1}.{m1}.{y1}", fmt)
-    dt_to   = datetime.strptime(f"{d2}.{m2}.{y2}", fmt)
-    DATE_RANGE = dt_from.strftime("%a %-d %b") + " – " + dt_to.strftime("%a %-d %b %Y")
-else:
-    DATE_RANGE = ""
+def parse_date_range(filepath):
+    mt = re.search(r'(\d+)\.(\d+)\.(\d+)\s*to\s*(\d+)\.(\d+)\.(\d+)', filepath)
+    if mt:
+        d1, m1, y1, d2, m2, y2 = mt.groups()
+        fmt = "%d.%m.%Y"
+        dt_from = datetime.strptime(f"{d1}.{m1}.{y1}", fmt)
+        dt_to   = datetime.strptime(f"{d2}.{m2}.{y2}", fmt)
+        return dt_from.strftime("%a %-d %b") + " – " + dt_to.strftime("%a %-d %b %Y")
+    return ""
 
 # ─── Subject name mappings ───────────────────────────────────────────────
 SUBJECT_NAMES = {
@@ -106,9 +105,18 @@ def match_subject(text, key):
         return not nxt.isalnum()
     return False
 
-def parse_timetable():
-    wb = openpyxl.load_workbook(TIMETABLE)
-    ws = wb['06.07.2026']
+def parse_timetable(filepath):
+    wb = openpyxl.load_workbook(filepath)
+    # Extract sheet name from the start date in filename
+    mt = re.search(r'(\d+)\.(\d+)\.(\d+)\s*to', filepath)
+    if mt:
+        d, m, y = mt.groups()
+        sheet_name = f"{int(d):02d}.{int(m):02d}.{y}"
+        if sheet_name not in wb.sheetnames:
+            sheet_name = wb.sheetnames[0]
+    else:
+        sheet_name = wb.sheetnames[0]
+    ws = wb[sheet_name]
 
     days_rows = [
         ("Mon", 3, 4), ("Tue", 5, 6), ("Wed", 7, 8),
@@ -294,7 +302,17 @@ def parse_students():
 
 def main():
     students = parse_students()
-    timetable = parse_timetable()
+    timetable = parse_timetable(TIMETABLE)
+    date_range = parse_date_range(TIMETABLE)
+
+    timetable_next = []
+    date_range_next = ""
+    if os.path.exists(TIMETABLE_NEXT):
+        try:
+            timetable_next = parse_timetable(TIMETABLE_NEXT)
+            date_range_next = parse_date_range(TIMETABLE_NEXT)
+        except Exception as e:
+            print(f"⚠️ Could not parse next week's timetable: {e}")
 
     subjects = {}
     for code, full in SUBJECT_NAMES.items():
@@ -309,9 +327,11 @@ def main():
         "students": students,
         "subjects": subjects,
         "timetable": timetable,
+        "timetable_next": timetable_next,
         "time_slots": list(TIME_LABELS.values()),
         "days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-        "date_range": DATE_RANGE,
+        "date_range": date_range,
+        "date_range_next": date_range_next,
     }
 
     with open(OUTPUT, 'w') as f:
@@ -320,6 +340,8 @@ def main():
     print(f"   Students: {len(students)}")
     print(f"   Subjects: {len(subjects)}")
     print(f"   Timetable entries: {len(timetable)}")
+    if timetable_next:
+        print(f"   Next week entries: {len(timetable_next)}")
 
     # ─── Regenerate index.html with embedded data ───
     INDEX_HTML = "index.html"
