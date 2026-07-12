@@ -135,14 +135,11 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     <button class="pill" onclick="showMainTab('subjects',this)">All Subjects</button>
   </div>
   <div id="panel-tt" class="panel active">
-    <div class="pill-group" id="ttWeekGroup">
-      <button class="pill sm active" onclick="setTtWeek('this',this)">This Wk</button>
-      <button class="pill sm" onclick="setTtWeek('next',this)">Next Wk</button>
-    </div>
     <div class="pill-group">
       <button class="pill sm active" data-range="today" onclick="setTimeRange('today',this)">Today</button>
       <button class="pill sm" data-range="tomorrow" onclick="setTimeRange('tomorrow',this)">Tomorrow</button>
       <button class="pill sm" data-range="week" onclick="setTimeRange('week',this)">This Week</button>
+      <button class="pill sm" data-range="next" onclick="setTimeRange('next',this)">Next Week</button>
     </div>
     <div id="ttCount" class="tt-count"></div>
     <div class="tt-scroll"><div class="tt-grid" id="timetable"></div></div>
@@ -197,7 +194,6 @@ const TIME_ORDER = ['8:30-10:00','10:10-11:40','11:50-1:20','1:20-1:50','1:50-3:
 const DAY_NAMES = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 const SUBJ_HUES = {};
 let ttRange = 'today';
-let ttWeek = 'this';
 
 function toTitleCase(s) {
   return s.toLowerCase().replace(/\b\w/g, function(c) { return c.toUpperCase(); });
@@ -212,21 +208,8 @@ function initStudentSelect() {
 
 function setTimeRange(range, btn) {
   ttRange = range;
-  var btns = document.querySelectorAll('#panel-tt > .pill-group .pill[data-range]');
+  var btns = document.querySelectorAll('#panel-tt .pill-group .pill');
   for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
-  if (btn) btn.classList.add('active');
-  renderTimetable();
-}
-
-function setTtWeek(week, btn) {
-  ttWeek = week;
-  var btns = document.querySelectorAll('#panel-tt > .pill-group .pill');
-  // Only toggle the first pill-group (this/next week buttons)
-  var grp = document.getElementById('ttWeekGroup');
-  if (grp) {
-    var pills = grp.querySelectorAll('.pill');
-    for (var i = 0; i < pills.length; i++) pills[i].classList.remove('active');
-  }
   if (btn) btn.classList.add('active');
   renderTimetable();
 }
@@ -343,17 +326,17 @@ function renderTimetable() {
     noDataEl.innerHTML = '<div class="empty">Select a student</div>';
     return;
   }
-  var ttData = (ttWeek === 'next' && DATA.timetable_next && DATA.timetable_next.length) ? DATA.timetable_next : null;
-  if (ttWeek === 'next' && !ttData) {
+  var ttData = (ttRange === 'next' && DATA.timetable_next && DATA.timetable_next.length) ? DATA.timetable_next : null;
+  if (ttRange === 'next' && !ttData) {
     gridEl.style.display = 'none';
     legendEl.innerHTML = '';
     countEl.textContent = '';
     noDataEl.innerHTML = '<div class="empty">Not available yet &mdash; will be updated on Saturday</div>';
     return;
   }
-  if (ttWeek === 'next') ttData = DATA.timetable_next;
+  if (ttRange === 'next') ttData = DATA.timetable_next;
   else ttData = DATA.timetable;
-  var ttDateRange = (ttWeek === 'next' && DATA.date_range_next) ? DATA.date_range_next : DATA.date_range;
+  var ttDateRange = (ttRange === 'next' && DATA.date_range_next) ? DATA.date_range_next : DATA.date_range;
   noDataEl.innerHTML = '';
   var subjectSet = {};
   for (var i = 0; i < selectedStudent.subjects.length; i++) subjectSet[selectedStudent.subjects[i]] = true;
@@ -466,7 +449,7 @@ function renderTimetable() {
       lhtml += '<span class="tt-legend-item other">' + code + '</span>';
     }
   }
-  var wkLabel = ttWeek === 'next' ? 'next week' : 'this week';
+  var wkLabel = ttRange === 'next' ? 'next week' : 'this week';
   legendEl.innerHTML = '<div class="tt-note">The highlighted classes are your subjects for ' + wkLabel + '.</div>' + lhtml;
 }
 
