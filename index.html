@@ -199,14 +199,13 @@ const ANALYTICS_URL = 'https://script.google.com/macros/s/AKfycbznsKjmM4YUlHuX50
 function trackAnalytics(name, roll) {
   if (!ANALYTICS_URL) return;
   try {
-    var data = JSON.stringify({
-      name: name,
-      roll: roll,
-      timestamp: new Date().toISOString(),
-      userAgent: navigator.userAgent,
-      referrer: document.referrer || ''
-    });
-    fetch(ANALYTICS_URL, {method: 'POST', mode: 'no-cors', body: data}).catch(function(){});
+    var params =
+      '?name=' + encodeURIComponent(name) +
+      '&roll=' + encodeURIComponent(roll) +
+      '&ts=' + encodeURIComponent(new Date().toISOString()) +
+      '&ua=' + encodeURIComponent(navigator.userAgent) +
+      '&ref=' + encodeURIComponent(document.referrer || '');
+    new Image().src = ANALYTICS_URL + params;
   } catch(e) {}
 }
 
