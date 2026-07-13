@@ -314,6 +314,28 @@ function subjectHue(code) {
   return SUBJ_HUES[code];
 }
 
+function todayISO() {
+  var d = new Date();
+  return d.getFullYear() + '-' +
+    String(d.getMonth() + 1).padStart(2, '0') + '-' +
+    String(d.getDate()).padStart(2, '0');
+}
+
+function getWeekForDate(iso) {
+  if (iso >= DATA.week_start && iso <= DATA.week_end && DATA.timetable && DATA.timetable.length)
+    return { idx: 0, data: DATA.timetable, range: DATA.date_range, label: 'this week' };
+  if (DATA.week_start_next && iso >= DATA.week_start_next && iso <= DATA.week_end_next &&
+      DATA.timetable_next && DATA.timetable_next.length)
+    return { idx: 1, data: DATA.timetable_next, range: DATA.date_range_next, label: 'this week' };
+  return null;
+}
+
+function getNextWeek(idx) {
+  if (idx === 0 && DATA.timetable_next && DATA.timetable_next.length)
+    return { idx: 1, data: DATA.timetable_next, range: DATA.date_range_next, label: 'next week' };
+  return null;
+}
+
 function resolveTtData(range) {
   if (range === 'today' || range === 'tomorrow') {
     var now = new Date();
@@ -321,19 +343,16 @@ function resolveTtData(range) {
     var iso = now.getFullYear() + '-' +
       String(now.getMonth() + 1).padStart(2, '0') + '-' +
       String(now.getDate()).padStart(2, '0');
-    if (iso <= DATA.week_end && DATA.timetable && DATA.timetable.length)
-      return { data: DATA.timetable, range: DATA.date_range, label: 'this week' };
-    if (DATA.week_start_next && iso >= DATA.week_start_next && iso <= DATA.week_end_next &&
-        DATA.timetable_next && DATA.timetable_next.length)
-      return { data: DATA.timetable_next, range: DATA.date_range_next, label: 'next week' };
-    return null;
+    return getWeekForDate(iso);
+  }
+  if (range === 'week') {
+    return getWeekForDate(todayISO());
   }
   if (range === 'next') {
-    if (DATA.timetable_next && DATA.timetable_next.length)
-      return { data: DATA.timetable_next, range: DATA.date_range_next, label: 'next week' };
-    return null;
+    var current = getWeekForDate(todayISO());
+    return current ? getNextWeek(current.idx) : null;
   }
-  return { data: DATA.timetable, range: DATA.date_range, label: 'this week' };
+  return null;
 }
 
 function renderTimetable() {
