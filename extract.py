@@ -230,6 +230,7 @@ def parse_students():
                         'name': normalize(str(name)),
                         'roll': normalize(str(roll)) if roll else '',
                         'div': f'Div {div_name[-1]}' if div_name else '',
+                        'gender': normalize(str(gender)) if gender else '',
                     }
     except FileNotFoundError:
         ly_students = {}
@@ -287,6 +288,8 @@ def parse_students():
             if digits:
                 roll = 'H' + digits.zfill(3)
 
+        gender = ly_students[sap]['gender'] if sap and sap in ly_students else ''
+
         subjects = []
         for col_idx, code in subject_cols:
             val = str(row[col_idx]).strip().upper() if col_idx < len(row) and row[col_idx] else 'NO'
@@ -299,6 +302,7 @@ def parse_students():
             "email": email,
             "major": major,
             "minor": minor,
+            "gender": gender,
             "subjects": subjects,
             "bs_div": bs_div,
         })
