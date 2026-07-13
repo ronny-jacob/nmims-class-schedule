@@ -206,7 +206,7 @@ function trackAnalytics(name, roll) {
       userAgent: navigator.userAgent,
       referrer: document.referrer || ''
     });
-    navigator.sendBeacon(ANALYTICS_URL, data);
+    fetch(ANALYTICS_URL, {method: 'POST', mode: 'no-cors', body: data}).catch(function(){});
   } catch(e) {}
 }
 
