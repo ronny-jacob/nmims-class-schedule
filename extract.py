@@ -122,6 +122,15 @@ def parse_time_labels_from_sheet(ws):
             labels[col_idx] = prev
     return labels
 
+def dedupe_consecutive(lst):
+    if not lst:
+        return lst
+    result = [lst[0]]
+    for item in lst[1:]:
+        if item != result[-1]:
+            result.append(item)
+    return result
+
 def match_subject(text, key):
     if text.startswith(key):
         return True
@@ -361,13 +370,13 @@ def main():
 
     wb_now = openpyxl.load_workbook(TIMETABLE)
     ws_now = wb_now[[s for s in wb_now.sheetnames if re.match(r'\d+\.\d+\.\d{4}', s)][0]]
-    time_slots = list(parse_time_labels_from_sheet(ws_now).values())
+    time_slots = dedupe_consecutive(list(parse_time_labels_from_sheet(ws_now).values()))
     time_slots_next = []
     if os.path.exists(TIMETABLE_NEXT):
         try:
             wb_nxt = openpyxl.load_workbook(TIMETABLE_NEXT)
             ws_nxt = wb_nxt[[s for s in wb_nxt.sheetnames if re.match(r'\d+\.\d+\.\d{4}', s)][0]]
-            time_slots_next = list(parse_time_labels_from_sheet(ws_nxt).values())
+            time_slots_next = dedupe_consecutive(list(parse_time_labels_from_sheet(ws_nxt).values()))
         except Exception:
             pass
 
