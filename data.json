@@ -2992,7 +2992,7 @@
     },
     {
       "day": "Mon",
-      "time": "1:50-3:20",
+      "time": "2:00-3:30",
       "subject": "BV_B",
       "professor": "Prof SP Vittal",
       "room": "L06, 2nd floor",
@@ -3000,7 +3000,7 @@
     },
     {
       "day": "Mon",
-      "time": "3:30-5:00",
+      "time": "3:40-5:10",
       "subject": "BV_A",
       "professor": "Prof SP Vittal",
       "room": "L06, 2nd floor",
@@ -3016,7 +3016,7 @@
     },
     {
       "day": "Mon",
-      "time": "1:50-3:20",
+      "time": "2:00-3:30",
       "subject": "IAPM_A",
       "professor": "Dr Showkat Ahmad",
       "room": "L07, 2nd floor",
@@ -3024,7 +3024,7 @@
     },
     {
       "day": "Mon",
-      "time": "3:30-5:00",
+      "time": "3:40-5:10",
       "subject": "IAPM_B",
       "professor": "Dr Showkat Ahmad",
       "room": "L07, 2nd floor",
@@ -3056,7 +3056,7 @@
     },
     {
       "day": "Tue",
-      "time": "1:50-3:20",
+      "time": "2:00-3:30",
       "subject": "IAPM_A",
       "professor": "Dr Showkat Ahmad",
       "room": "L07, 2nd floor",
@@ -3064,7 +3064,7 @@
     },
     {
       "day": "Tue",
-      "time": "3:30-5:00",
+      "time": "3:40-5:10",
       "subject": "TR",
       "professor": "",
       "room": "L08, 2nd floor",
@@ -3072,7 +3072,7 @@
     },
     {
       "day": "Tue",
-      "time": "1:50-3:20",
+      "time": "2:00-3:30",
       "subject": "TR",
       "professor": "",
       "room": "L08, 2nd floor",
@@ -3080,7 +3080,7 @@
     },
     {
       "day": "Tue",
-      "time": "3:30-5:00",
+      "time": "3:40-5:10",
       "subject": "ENT",
       "professor": "Dr Srividya Raghavan",
       "room": "L06, 2nd floor",
@@ -3104,7 +3104,7 @@
     },
     {
       "day": "Wed",
-      "time": "1:50-3:20",
+      "time": "2:00-3:30",
       "subject": "MC_A",
       "professor": "Dr Dileep Kumar",
       "room": "L06, 2nd floor",
@@ -3112,7 +3112,7 @@
     },
     {
       "day": "Wed",
-      "time": "3:30-5:00",
+      "time": "3:40-5:10",
       "subject": "PRS",
       "professor": "Dr Srividya Raghavan",
       "room": "L06, 2nd floor",
@@ -3120,7 +3120,7 @@
     },
     {
       "day": "Wed",
-      "time": "3:30-5:00",
+      "time": "3:40-5:10",
       "subject": "AFSA_B",
       "professor": "Dr Narender Vunyale",
       "room": "L07, 2nd floor",
@@ -3144,7 +3144,7 @@
     },
     {
       "day": "Wed",
-      "time": "3:30-5:00",
+      "time": "3:40-5:10",
       "subject": "LD",
       "professor": "Dr Umakanata Nayak",
       "room": "L12, 3rd floor",
@@ -3176,7 +3176,7 @@
     },
     {
       "day": "Thu",
-      "time": "1:50-3:20",
+      "time": "2:00-3:30",
       "subject": "MC_A",
       "professor": "Dr Dileep Kumar",
       "room": "L06, 2nd floor",
@@ -3184,7 +3184,7 @@
     },
     {
       "day": "Thu",
-      "time": "3:30-5:00",
+      "time": "3:40-5:10",
       "subject": "PRS",
       "professor": "Dr Srividya Raghavan",
       "room": "L06, 2nd floor",
@@ -3192,7 +3192,7 @@
     },
     {
       "day": "Thu",
-      "time": "3:30-5:00",
+      "time": "3:40-5:10",
       "subject": "AFSA_B",
       "professor": "Dr Narender Vunyale",
       "room": "L07, 2nd floor",
@@ -3280,7 +3280,7 @@
     },
     {
       "day": "Sat",
-      "time": "1:50-3:20",
+      "time": "2:00-3:30",
       "subject": "CB",
       "professor": "Prof Murtuza Soofi",
       "room": "L6, 2nd floor",
@@ -3288,7 +3288,7 @@
     },
     {
       "day": "Sat",
-      "time": "3:30-5:00",
+      "time": "3:40-5:10",
       "subject": "CB",
       "professor": "Prof Murtuza Soofi",
       "room": "L06, 2nd floor",
@@ -3351,6 +3351,16 @@
     "1:50-3:20",
     "3:30-5:00",
     "3:30-5:00",
+    "6:00-7:30"
+  ],
+  "time_slots_next": [
+    "8:30-10:00",
+    "10:10-11:40",
+    "11:50-1:20",
+    "1:20-1:50",
+    "2:00-3:30",
+    "3:40-5:10",
+    "3:40-5:10",
     "6:00-7:30"
   ],
   "days": [

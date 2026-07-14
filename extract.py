@@ -105,6 +105,23 @@ def normalize_subject(s):
     s = re.sub(r'\s*_\s*', '_', s)
     return re.sub(r'\s+', ' ', s).strip()
 
+def parse_time_labels_from_sheet(ws):
+    labels = OrderedDict()
+    prev = ''
+    for col_idx in range(2, ws.max_column + 1):
+        cell = ws.cell(row=2, column=col_idx)
+        if cell and cell.value:
+            raw = normalize(str(cell.value))
+            raw = re.sub(r'\s*[ap]m\s*', '', raw, flags=re.I)
+            raw = re.sub(r'^0(\d)', r'\1', raw)
+            raw = re.sub(r'(\s)0(\d)', r'\1\2', raw)
+            raw = re.sub(r'\s*-\s*', '-', raw)
+            labels[col_idx] = raw
+            prev = raw
+        elif prev:
+            labels[col_idx] = prev
+    return labels
+
 def match_subject(text, key):
     if text.startswith(key):
         return True
@@ -127,6 +144,7 @@ def parse_timetable(filepath):
     else:
         sheet_name = wb.sheetnames[0]
     ws = wb[sheet_name]
+    time_labels = parse_time_labels_from_sheet(ws)
 
     days_rows = [
         ("Mon", 3, 4), ("Tue", 5, 6), ("Wed", 7, 8),
@@ -147,7 +165,7 @@ def parse_timetable(filepath):
                 lines = [normalize(l) for l in raw_lines]
                 if not lines:
                     continue
-                time_label = TIME_LABELS.get(col_idx, f"col_{col_idx}")
+                time_label = time_labels.get(col_idx, "?")
                 if not lines:
                     continue
 
@@ -341,12 +359,25 @@ def main():
             "student_count": len(students_in_subject),
         }
 
+    wb_now = openpyxl.load_workbook(TIMETABLE)
+    ws_now = wb_now[[s for s in wb_now.sheetnames if re.match(r'\d+\.\d+\.\d{4}', s)][0]]
+    time_slots = list(parse_time_labels_from_sheet(ws_now).values())
+    time_slots_next = []
+    if os.path.exists(TIMETABLE_NEXT):
+        try:
+            wb_nxt = openpyxl.load_workbook(TIMETABLE_NEXT)
+            ws_nxt = wb_nxt[[s for s in wb_nxt.sheetnames if re.match(r'\d+\.\d+\.\d{4}', s)][0]]
+            time_slots_next = list(parse_time_labels_from_sheet(ws_nxt).values())
+        except Exception:
+            pass
+
     data = {
         "students": students,
         "subjects": subjects,
         "timetable": timetable,
         "timetable_next": timetable_next,
-        "time_slots": list(TIME_LABELS.values()),
+        "time_slots": time_slots,
+        "time_slots_next": time_slots_next,
         "days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
         "date_range": date_range,
         "date_range_next": date_range_next,
