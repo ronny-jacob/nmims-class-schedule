@@ -514,8 +514,7 @@ function renderTimetable() {
               }
               html += '</div>';
             } else {
-              var firstLine = entry.raw_text ? entry.raw_text.split('\n')[0] : entry.subject;
-              html += '<div class="slot other">' + firstLine + '</div>';
+              html += '<div class="slot other">' + entry.subject + '</div>';
             }
           }
         }
