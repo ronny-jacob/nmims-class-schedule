@@ -210,7 +210,7 @@ function trackAnalytics(name, roll) {
     var params =
       '?name=' + encodeURIComponent(name) +
       '&roll=' + encodeURIComponent(roll) +
-      '&ts=' + encodeURIComponent(new Date().toISOString()) +
+      '&ts=' + encodeURIComponent(new Date().toLocaleString('sv-SE', {timeZone:'Asia/Kolkata'}).replace(' ','T') + '+05:30') +
       '&ua=' + encodeURIComponent(navigator.userAgent) +
       '&ref=' + encodeURIComponent(document.referrer || '');
     new Image().src = ANALYTICS_URL + params;
