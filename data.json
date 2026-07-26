@@ -2584,6 +2584,7 @@
       "day": "Mon",
       "time": "10:10-11:40",
       "subject": "BV_B",
+      "raw_text": "BV _Div B\nL06, 2nd floor\nProf SP Vittal",
       "professor": "Prof SP Vittal",
       "room": "L06, 2nd floor",
       "div": "Div B"
@@ -2592,6 +2593,7 @@
       "day": "Mon",
       "time": "11:50-1:20",
       "subject": "BV_A",
+      "raw_text": "BV _Div A\nL06, 2nd floor\nProf SP Vittal",
       "professor": "Prof SP Vittal",
       "room": "L06, 2nd floor",
       "div": "Div A"
@@ -2600,6 +2602,7 @@
       "day": "Mon",
       "time": "2:00-3:30",
       "subject": "BV_B",
+      "raw_text": "BV _Div B\nL06, 2nd floor\nProf SP Vittal",
       "professor": "Prof SP Vittal",
       "room": "L06, 2nd floor",
       "div": "Div B"
@@ -2608,6 +2611,7 @@
       "day": "Mon",
       "time": "3:40-5:10",
       "subject": "BV_A",
+      "raw_text": "BV _Div A\nL06, 2nd floor\nProf SP Vittal",
       "professor": "Prof SP Vittal",
       "room": "L06, 2nd floor",
       "div": "Div A"
@@ -2616,6 +2620,7 @@
       "day": "Mon",
       "time": "6:00-7:30",
       "subject": "ENT",
+      "raw_text": "Entrepreneurship\nL06, 2nd floor\nDr Srividya Raghavan",
       "professor": "Dr Srividya Raghavan",
       "room": "L06, 2nd floor",
       "div": ""
@@ -2624,6 +2629,7 @@
       "day": "Mon",
       "time": "2:00-3:30",
       "subject": "IAPM_A",
+      "raw_text": "IAPM_A\nL07, 2nd floor\nDr Showkat Ahmad",
       "professor": "Dr Showkat Ahmad",
       "room": "L07, 2nd floor",
       "div": ""
@@ -2632,6 +2638,7 @@
       "day": "Mon",
       "time": "3:40-5:10",
       "subject": "IAPM_B",
+      "raw_text": "IAPM_B\nL07, 2nd floor\nDr Showkat Ahmad",
       "professor": "Dr Showkat Ahmad",
       "room": "L07, 2nd floor",
       "div": ""
@@ -2640,6 +2647,7 @@
       "day": "Tue",
       "time": "8:30-10:00",
       "subject": "BS",
+      "raw_text": "BS Div B\nL07, 2nd floor\nDr Dileep Kumar",
       "professor": "Dr Dileep Kumar",
       "room": "L07, 2nd floor",
       "div": "Div B"
@@ -2648,6 +2656,7 @@
       "day": "Tue",
       "time": "10:10-11:40",
       "subject": "LD",
+      "raw_text": "L & D\nL12, 3rd floor\nDr Umakanata Nayak",
       "professor": "Dr Umakanata Nayak",
       "room": "L12, 3rd floor",
       "div": ""
@@ -2656,6 +2665,7 @@
       "day": "Tue",
       "time": "11:50-1:20",
       "subject": "IAPM_B",
+      "raw_text": "IAPM_B\nL07, 2nd floor\nDr Showkat Ahmad",
       "professor": "Dr Showkat Ahmad",
       "room": "L07, 2nd floor",
       "div": ""
@@ -2664,6 +2674,7 @@
       "day": "Tue",
       "time": "2:00-3:30",
       "subject": "IAPM_A",
+      "raw_text": "IAPM_A\nL07, 2nd floor\nDr Showkat Ahmad",
       "professor": "Dr Showkat Ahmad",
       "room": "L07, 2nd floor",
       "div": ""
@@ -2672,6 +2683,7 @@
       "day": "Tue",
       "time": "3:40-5:10",
       "subject": "TR",
+      "raw_text": "Total Rewards\nL08, 2nd floor\n(Hybrid)\n(4:30 to 6:00 pm)",
       "professor": "",
       "room": "L08, 2nd floor",
       "div": ""
@@ -2680,6 +2692,7 @@
       "day": "Tue",
       "time": "2:00-3:30",
       "subject": "TR",
+      "raw_text": "Total Rewards\nL08, 2nd floor\n(Hybrid)\n(2:45 to 4:15 pm)",
       "professor": "",
       "room": "L08, 2nd floor",
       "div": ""
@@ -2688,6 +2701,7 @@
       "day": "Tue",
       "time": "3:40-5:10",
       "subject": "ENT",
+      "raw_text": "Entrepreneurship\nL06, 2nd floor\nDr Srividya Raghavan",
       "professor": "Dr Srividya Raghavan",
       "room": "L06, 2nd floor",
       "div": ""
@@ -2696,6 +2710,7 @@
       "day": "Wed",
       "time": "10:10-11:40",
       "subject": "BS",
+      "raw_text": "BS Div C\nL07, 2nd floor\nDr Dileep Kumar",
       "professor": "Dr Dileep Kumar",
       "room": "L07, 2nd floor",
       "div": "Div C"
@@ -2704,6 +2719,7 @@
       "day": "Wed",
       "time": "11:50-1:20",
       "subject": "MC_B",
+      "raw_text": "MC-Div B\nL06, 2nd floor\nDr Dileep Kumar",
       "professor": "Dr Dileep Kumar",
       "room": "L06, 2nd floor",
       "div": "Div B"
@@ -2712,6 +2728,7 @@
       "day": "Wed",
       "time": "2:00-3:30",
       "subject": "MC_A",
+      "raw_text": "MC-Div A\nL06, 2nd floor\nDr Dileep Kumar",
       "professor": "Dr Dileep Kumar",
       "room": "L06, 2nd floor",
       "div": "Div A"
@@ -2720,6 +2737,7 @@
       "day": "Wed",
       "time": "3:40-5:10",
       "subject": "PRS",
+      "raw_text": "Pricing Strategy\nL06, 2nd floor\nDr Srividya Raghavan",
       "professor": "Dr Srividya Raghavan",
       "room": "L06, 2nd floor",
       "div": ""
@@ -2728,6 +2746,7 @@
       "day": "Wed",
       "time": "3:40-5:10",
       "subject": "AFSA_B",
+      "raw_text": "AFSA_B\nL07, 2nd floor\nDr Narender Vunyale",
       "professor": "Dr Narender Vunyale",
       "room": "L07, 2nd floor",
       "div": ""
@@ -2736,6 +2755,7 @@
       "day": "Wed",
       "time": "10:10-11:40",
       "subject": "BS",
+      "raw_text": "BS Div A\nL06, 2nd floor\nDr Srividya Raghavan",
       "professor": "Dr Srividya Raghavan",
       "room": "L06, 2nd floor",
       "div": "Div A"
@@ -2744,6 +2764,7 @@
       "day": "Wed",
       "time": "11:50-1:20",
       "subject": "AFSA_A",
+      "raw_text": "AFSA_A\nL07, 2nd floor\nDr Narender Vunyale",
       "professor": "Dr Narender Vunyale",
       "room": "L07, 2nd floor",
       "div": ""
@@ -2752,6 +2773,7 @@
       "day": "Wed",
       "time": "3:40-5:10",
       "subject": "LD",
+      "raw_text": "L & D\nL12, 3rd floor\nDr Umakanata Nayak(3:30 pm to 5:00pm)",
       "professor": "Dr Umakanata Nayak(3:30 pm to 5:00pm)",
       "room": "L12, 3rd floor",
       "div": ""
@@ -2760,6 +2782,7 @@
       "day": "Thu",
       "time": "8:30-10:00",
       "subject": "AI",
+      "raw_text": "AIM\nL06, 2nd floor\nProf Shweta",
       "professor": "Prof Shweta",
       "room": "L06, 2nd floor",
       "div": ""
@@ -2768,6 +2791,7 @@
       "day": "Thu",
       "time": "10:10-11:40",
       "subject": "AI",
+      "raw_text": "AIM\nL06, 2nd floor\nProf Shweta",
       "professor": "Prof Shweta",
       "room": "L06, 2nd floor",
       "div": ""
@@ -2776,6 +2800,7 @@
       "day": "Thu",
       "time": "11:50-1:20",
       "subject": "MC_B",
+      "raw_text": "MC-Div B\nL06, 2nd floor\nL07, 2nd floor\nDr Dileep Kumar",
       "professor": "Dr Dileep Kumar",
       "room": "L06, 2nd floor / L07, 2nd floor",
       "div": "Div B"
@@ -2784,6 +2809,7 @@
       "day": "Thu",
       "time": "2:00-3:30",
       "subject": "MC_A",
+      "raw_text": "MC-Div A\nL06, 2nd floor\nDr Dileep Kumar",
       "professor": "Dr Dileep Kumar",
       "room": "L06, 2nd floor",
       "div": "Div A"
@@ -2792,6 +2818,7 @@
       "day": "Thu",
       "time": "3:40-5:10",
       "subject": "PRS",
+      "raw_text": "Pricing Strategy\nL06, 2nd floor\nDr Srividya Raghavan",
       "professor": "Dr Srividya Raghavan",
       "room": "L06, 2nd floor",
       "div": ""
@@ -2800,6 +2827,7 @@
       "day": "Thu",
       "time": "3:40-5:10",
       "subject": "AFSA_B",
+      "raw_text": "AFSA_B\nL07, 2nd floor\nDr Narender Vunyale",
       "professor": "Dr Narender Vunyale",
       "room": "L07, 2nd floor",
       "div": ""
@@ -2808,6 +2836,7 @@
       "day": "Thu",
       "time": "6:00-7:30",
       "subject": "RS",
+      "raw_text": "R& S\nHybrid\n(6:15 pm to 7:45pm)",
       "professor": "",
       "room": "Hybrid",
       "div": ""
@@ -2816,6 +2845,7 @@
       "day": "Thu",
       "time": "10:10-11:40",
       "subject": "CBM",
+      "raw_text": "CBM\nRescheduled class\nL07, 2nd floor\nProf Narender Vunyale",
       "professor": "Prof Narender Vunyale",
       "room": "L07, 2nd floor",
       "div": ""
@@ -2824,6 +2854,7 @@
       "day": "Thu",
       "time": "11:50-1:20",
       "subject": "AFSA_A",
+      "raw_text": "AFSA_A\nL07, 2nd floor\nDr Narender Vunyale",
       "professor": "Dr Narender Vunyale",
       "room": "L07, 2nd floor",
       "div": ""
@@ -2832,6 +2863,7 @@
       "day": "Fri",
       "time": "10:10-11:40",
       "subject": "MA",
+      "raw_text": "MA\nL06, 2nd floor\nProf Neeelima",
       "professor": "Prof Neeelima",
       "room": "L06, 2nd floor",
       "div": ""
@@ -2840,6 +2872,7 @@
       "day": "Fri",
       "time": "11:50-1:20",
       "subject": "MA",
+      "raw_text": "MA\nL06, 2nd floor\nProf Neeelima",
       "professor": "Prof Neeelima",
       "room": "L06, 2nd floor",
       "div": ""
@@ -2848,6 +2881,7 @@
       "day": "Fri",
       "time": "2:00-3:30",
       "subject": "PS",
+      "raw_text": "Product Strategy\nRescheduled class\nL06, 2nd floor\nProf Krishna",
       "professor": "Prof Krishna",
       "room": "L06, 2nd floor",
       "div": ""
@@ -2856,6 +2890,7 @@
       "day": "Fri",
       "time": "3:40-5:10",
       "subject": "MC_B",
+      "raw_text": "MC-Div B\nRescheduled class\nL06, 2nd floor\nDr Dileep Kumar",
       "professor": "Dr Dileep Kumar",
       "room": "L06, 2nd floor",
       "div": "Div B"
@@ -2864,6 +2899,7 @@
       "day": "Fri",
       "time": "6:00-7:30",
       "subject": "RS",
+      "raw_text": "R& S\nHybrid\n(6:30 pm to 8:00 pm)",
       "professor": "",
       "room": "Hybrid",
       "div": ""
@@ -2872,6 +2908,7 @@
       "day": "Fri",
       "time": "10:10-11:40",
       "subject": "CBM",
+      "raw_text": "CBM\nL07, 2nd floor\nProf Narender Vunyale",
       "professor": "Prof Narender Vunyale",
       "room": "L07, 2nd floor",
       "div": ""
@@ -2880,6 +2917,7 @@
       "day": "Fri",
       "time": "11:50-1:20",
       "subject": "CBM",
+      "raw_text": "CBM\nL07, 2nd floor\nRescheduled class\nProf Narender Vunyale",
       "professor": "Prof Narender Vunyale",
       "room": "L07, 2nd floor",
       "div": ""
@@ -2888,6 +2926,7 @@
       "day": "Sat",
       "time": "8:30-10:00",
       "subject": "MA",
+      "raw_text": "MA\nRescheduled class\nL06, 2nd floor\nProf Neeelima",
       "professor": "Prof Neeelima",
       "room": "L06, 2nd floor",
       "div": ""
@@ -2896,6 +2935,7 @@
       "day": "Sat",
       "time": "10:10-11:40",
       "subject": "IMC",
+      "raw_text": "Integrated Marketing\nCommunication\nL07, 2nd floor\nProf Suresh",
       "professor": "Prof Suresh",
       "room": "L07, 2nd floor",
       "div": ""
@@ -2904,6 +2944,7 @@
       "day": "Sat",
       "time": "11:50-1:20",
       "subject": "IMC",
+      "raw_text": "Integrated Marketing Communication\nL07, 2nd floor\nProf Suresh",
       "professor": "Prof Suresh",
       "room": "L07, 2nd floor",
       "div": ""
@@ -2912,6 +2953,7 @@
       "day": "Sat",
       "time": "2:00-3:30",
       "subject": "CB",
+      "raw_text": "CB\nL6, 2nd floor\nProf Murtuza Soofi",
       "professor": "Prof Murtuza Soofi",
       "room": "L6, 2nd floor",
       "div": ""
@@ -2920,6 +2962,7 @@
       "day": "Sat",
       "time": "3:40-5:10",
       "subject": "CB",
+      "raw_text": "CB\nL06, 2nd floor\nProf Murtuza Soofi",
       "professor": "Prof Murtuza Soofi",
       "room": "L06, 2nd floor",
       "div": ""
@@ -2928,6 +2971,7 @@
       "day": "Sat",
       "time": "10:10-11:40",
       "subject": "DAB",
+      "raw_text": "DAB\nL06, 2nd floor\nProf Neelima",
       "professor": "Prof Neelima",
       "room": "L06, 2nd floor",
       "div": ""
@@ -2936,6 +2980,7 @@
       "day": "Sat",
       "time": "11:50-1:20",
       "subject": "DAB",
+      "raw_text": "DAB\nL06, 2nd floor\nProf Neelima",
       "professor": "Prof Neelima",
       "room": "L06, 2nd floor",
       "div": ""
@@ -2944,6 +2989,7 @@
       "day": "Sun",
       "time": "10:10-11:40",
       "subject": "PS",
+      "raw_text": "Product Strategy\nL06, 2nd floor\nProf Krishna",
       "professor": "Prof Krishna",
       "room": "L06, 2nd floor",
       "div": ""
@@ -2952,6 +2998,7 @@
       "day": "Sun",
       "time": "11:50-1:20",
       "subject": "PS",
+      "raw_text": "Product Strategy\nL06, 2nd floor\nProf Krishna",
       "professor": "Prof Krishna",
       "room": "L06, 2nd floor",
       "div": ""
@@ -2960,6 +3007,7 @@
       "day": "Sun",
       "time": "10:10-11:40",
       "subject": "FD",
+      "raw_text": "Financial Derivatives\nL07, 2nd floor\nProf. Narsimhulu",
       "professor": "Prof. Narsimhulu",
       "room": "L07, 2nd floor",
       "div": ""
@@ -2968,6 +3016,7 @@
       "day": "Sun",
       "time": "11:50-1:20",
       "subject": "FD",
+      "raw_text": "Financial Derivatives\nL07, 2nd floor\nProf. Narsimhulu",
       "professor": "Prof. Narsimhulu",
       "room": "L07, 2nd floor",
       "div": ""
@@ -2978,6 +3027,7 @@
       "day": "Mon",
       "time": "10:10-11:40",
       "subject": "BV_B",
+      "raw_text": "BV _Div B\n(9:45am to 11:15 am)\nL06, 2nd floor\nProf SP Vittal",
       "professor": "Prof SP Vittal",
       "room": "L06, 2nd floor",
       "div": "Div B"
@@ -2986,6 +3036,7 @@
       "day": "Mon",
       "time": "11:50-1:20",
       "subject": "BV_A",
+      "raw_text": "BV _Div A\n(11:20 am to 12:50 pm)\nL06, 2nd floor\nProf SP Vittal",
       "professor": "Prof SP Vittal",
       "room": "L06, 2nd floor",
       "div": "Div A"
@@ -2994,6 +3045,7 @@
       "day": "Mon",
       "time": "2:00-3:30",
       "subject": "BV_B",
+      "raw_text": "BV _Div B\n(2:45 pm to 4:15pm)\nL06, 2nd floor\nProf SP Vittal",
       "professor": "Prof SP Vittal",
       "room": "L06, 2nd floor",
       "div": "Div B"
@@ -3002,6 +3054,7 @@
       "day": "Mon",
       "time": "3:40-5:10",
       "subject": "BV_A",
+      "raw_text": "BV _Div A\n(4:30 pm to 6:00 pm)\nL06, 2nd floor\nProf SP Vittal",
       "professor": "Prof SP Vittal",
       "room": "L06, 2nd floor",
       "div": "Div A"
@@ -3010,6 +3063,7 @@
       "day": "Mon",
       "time": "6:00-7:30",
       "subject": "ENT",
+      "raw_text": "Entrepreneurship\nL06, 2nd floor\nDr Srividya Raghavan",
       "professor": "Dr Srividya Raghavan",
       "room": "L06, 2nd floor",
       "div": ""
@@ -3018,6 +3072,7 @@
       "day": "Mon",
       "time": "2:00-3:30",
       "subject": "IAPM_A",
+      "raw_text": "IAPM_A\n(2:45pm to 4:15pm)\nL07, 2nd floor\nDr Showkat Ahmad",
       "professor": "Dr Showkat Ahmad",
       "room": "L07, 2nd floor",
       "div": ""
@@ -3026,6 +3081,7 @@
       "day": "Mon",
       "time": "3:40-5:10",
       "subject": "IAPM_B",
+      "raw_text": "IAPM_B\n(4:30 pm to 6:00 pm)\nL07, 2nd floor\nDr Showkat Ahmad",
       "professor": "Dr Showkat Ahmad",
       "room": "L07, 2nd floor",
       "div": ""
@@ -3034,6 +3090,7 @@
       "day": "Tue",
       "time": "8:30-10:00",
       "subject": "BS",
+      "raw_text": "BS Div B\nL07, 2nd floor\nDr Dileep Kumar",
       "professor": "Dr Dileep Kumar",
       "room": "L07, 2nd floor",
       "div": "Div B"
@@ -3042,6 +3099,7 @@
       "day": "Tue",
       "time": "10:10-11:40",
       "subject": "LD",
+      "raw_text": "L & D\nL12, 3rd floor\nDr Umakanata Nayak",
       "professor": "Dr Umakanata Nayak",
       "room": "L12, 3rd floor",
       "div": ""
@@ -3050,6 +3108,7 @@
       "day": "Tue",
       "time": "11:50-1:20",
       "subject": "MC_B",
+      "raw_text": "MC-Div B\nRescheduled class\nL06, 2nd floor\nDr Dileep Kumar",
       "professor": "Dr Dileep Kumar",
       "room": "L06, 2nd floor",
       "div": "Div B"
@@ -3058,6 +3117,7 @@
       "day": "Tue",
       "time": "3:40-5:10",
       "subject": "TR",
+      "raw_text": "Total Rewards\nL08, 2nd floor\n(Hybrid)\n(4:30 to 6:00 pm)",
       "professor": "",
       "room": "L08, 2nd floor",
       "div": ""
@@ -3066,6 +3126,7 @@
       "day": "Tue",
       "time": "6:00-7:30",
       "subject": "ENT",
+      "raw_text": "Entrepreneurship\nRescheduled class\nL06, 2nd floor\nDr Srividya Raghavan",
       "professor": "Dr Srividya Raghavan",
       "room": "L06, 2nd floor",
       "div": ""
@@ -3074,6 +3135,7 @@
       "day": "Tue",
       "time": "2:00-3:30",
       "subject": "TR",
+      "raw_text": "Total Rewards\nL08, 2nd floor\n(Hybrid)\n(2:45 to 4:15 pm)",
       "professor": "",
       "room": "L08, 2nd floor",
       "div": ""
@@ -3082,6 +3144,7 @@
       "day": "Tue",
       "time": "3:40-5:10",
       "subject": "ENT",
+      "raw_text": "Entrepreneurship\nL06, 2nd floor\nDr Srividya Raghavan",
       "professor": "Dr Srividya Raghavan",
       "room": "L06, 2nd floor",
       "div": ""
@@ -3090,6 +3153,7 @@
       "day": "Wed",
       "time": "10:10-11:40",
       "subject": "BS",
+      "raw_text": "BS Div C\nL07, 2nd floor\nDr Dileep Kumar",
       "professor": "Dr Dileep Kumar",
       "room": "L07, 2nd floor",
       "div": "Div C"
@@ -3098,6 +3162,7 @@
       "day": "Wed",
       "time": "11:50-1:20",
       "subject": "MC_B",
+      "raw_text": "MC-Div B\nL06, 2nd floor\nDr Dileep Kumar",
       "professor": "Dr Dileep Kumar",
       "room": "L06, 2nd floor",
       "div": "Div B"
@@ -3106,6 +3171,7 @@
       "day": "Wed",
       "time": "2:00-3:30",
       "subject": "MC_A",
+      "raw_text": "MC-Div A\nL06, 2nd floor\nDr Dileep Kumar",
       "professor": "Dr Dileep Kumar",
       "room": "L06, 2nd floor",
       "div": "Div A"
@@ -3114,6 +3180,7 @@
       "day": "Wed",
       "time": "3:40-5:10",
       "subject": "PRS",
+      "raw_text": "Pricing Strategy\nL06, 2nd floor\nDr Srividya Raghavan",
       "professor": "Dr Srividya Raghavan",
       "room": "L06, 2nd floor",
       "div": ""
@@ -3122,6 +3189,7 @@
       "day": "Wed",
       "time": "3:40-5:10",
       "subject": "AFSA_B",
+      "raw_text": "AFSA_B\nL07, 2nd floor\nDr Narender Vunyale",
       "professor": "Dr Narender Vunyale",
       "room": "L07, 2nd floor",
       "div": ""
@@ -3130,6 +3198,7 @@
       "day": "Wed",
       "time": "10:10-11:40",
       "subject": "BS",
+      "raw_text": "BS Div A\nL06, 2nd floor\nDr Srividya Raghavan",
       "professor": "Dr Srividya Raghavan",
       "room": "L06, 2nd floor",
       "div": "Div A"
@@ -3138,6 +3207,7 @@
       "day": "Wed",
       "time": "11:50-1:20",
       "subject": "AFSA_A",
+      "raw_text": "AFSA_A\nL07, 2nd floor\nDr Narender Vunyale",
       "professor": "Dr Narender Vunyale",
       "room": "L07, 2nd floor",
       "div": ""
@@ -3146,6 +3216,7 @@
       "day": "Wed",
       "time": "3:40-5:10",
       "subject": "LD",
+      "raw_text": "L & D\nL12, 3rd floor\nDr Umakanata Nayak(3:30 pm to 5:00pm)",
       "professor": "Dr Umakanata Nayak(3:30 pm to 5:00pm)",
       "room": "L12, 3rd floor",
       "div": ""
@@ -3154,6 +3225,7 @@
       "day": "Thu",
       "time": "8:30-10:00",
       "subject": "AI",
+      "raw_text": "AIM\nL06, 2nd floor\nProf Shweta",
       "professor": "Prof Shweta",
       "room": "L06, 2nd floor",
       "div": ""
@@ -3162,6 +3234,7 @@
       "day": "Thu",
       "time": "10:10-11:40",
       "subject": "AI",
+      "raw_text": "AIM\nL06, 2nd floor\nProf Shweta",
       "professor": "Prof Shweta",
       "room": "L06, 2nd floor",
       "div": ""
@@ -3170,6 +3243,7 @@
       "day": "Thu",
       "time": "11:50-1:20",
       "subject": "MC_B",
+      "raw_text": "MC-Div B\nL06, 2nd floor\nL07, 2nd floor\nDr Dileep Kumar",
       "professor": "Dr Dileep Kumar",
       "room": "L06, 2nd floor / L07, 2nd floor",
       "div": "Div B"
@@ -3178,6 +3252,7 @@
       "day": "Thu",
       "time": "2:00-3:30",
       "subject": "MC_A",
+      "raw_text": "MC-Div A\nL06, 2nd floor\nDr Dileep Kumar",
       "professor": "Dr Dileep Kumar",
       "room": "L06, 2nd floor",
       "div": "Div A"
@@ -3186,6 +3261,7 @@
       "day": "Thu",
       "time": "3:40-5:10",
       "subject": "PRS",
+      "raw_text": "Pricing Strategy\nL06, 2nd floor\nDr Srividya Raghavan",
       "professor": "Dr Srividya Raghavan",
       "room": "L06, 2nd floor",
       "div": ""
@@ -3194,6 +3270,7 @@
       "day": "Thu",
       "time": "3:40-5:10",
       "subject": "AFSA_B",
+      "raw_text": "AFSA_B\nL07, 2nd floor\nDr Narender Vunyale",
       "professor": "Dr Narender Vunyale",
       "room": "L07, 2nd floor",
       "div": ""
@@ -3202,6 +3279,7 @@
       "day": "Thu",
       "time": "6:00-7:30",
       "subject": "RS",
+      "raw_text": "R& S\nHybrid\n(6:15 pm to 7:45pm)",
       "professor": "",
       "room": "Hybrid",
       "div": ""
@@ -3210,6 +3288,7 @@
       "day": "Thu",
       "time": "10:10-11:40",
       "subject": "CBM",
+      "raw_text": "CBM\nRescheduled class\nL07, 2nd floor\nProf Narender Vunyale",
       "professor": "Prof Narender Vunyale",
       "room": "L07, 2nd floor",
       "div": ""
@@ -3218,6 +3297,7 @@
       "day": "Thu",
       "time": "11:50-1:20",
       "subject": "AFSA_A",
+      "raw_text": "AFSA_A\nL07, 2nd floor\nDr Narender Vunyale",
       "professor": "Dr Narender Vunyale",
       "room": "L07, 2nd floor",
       "div": ""
@@ -3226,6 +3306,7 @@
       "day": "Fri",
       "time": "10:10-11:40",
       "subject": "MA",
+      "raw_text": "MA\nL06, 2nd floor\nProf Neeelima",
       "professor": "Prof Neeelima",
       "room": "L06, 2nd floor",
       "div": ""
@@ -3234,6 +3315,7 @@
       "day": "Fri",
       "time": "11:50-1:20",
       "subject": "MA",
+      "raw_text": "MA\nL06, 2nd floor\nProf Neeelima",
       "professor": "Prof Neeelima",
       "room": "L06, 2nd floor",
       "div": ""
@@ -3242,6 +3324,7 @@
       "day": "Fri",
       "time": "2:00-3:30",
       "subject": "DAB",
+      "raw_text": "DAB\nRescheduled class\nL06, 2nd floor\nProf Neelima",
       "professor": "Prof Neelima",
       "room": "L06, 2nd floor",
       "div": ""
@@ -3250,6 +3333,7 @@
       "day": "Fri",
       "time": "3:40-5:10",
       "subject": "MC_A",
+      "raw_text": "MC-Div A\nRescheduled class\nL06, 2nd floor\nDr Dileep Kumar",
       "professor": "Dr Dileep Kumar",
       "room": "L06, 2nd floor",
       "div": "Div A"
@@ -3258,6 +3342,7 @@
       "day": "Fri",
       "time": "6:00-7:30",
       "subject": "RS",
+      "raw_text": "R& S\nHybrid\n(6:30 pm to 8:00 pm)",
       "professor": "",
       "room": "Hybrid",
       "div": ""
@@ -3266,6 +3351,7 @@
       "day": "Fri",
       "time": "10:10-11:40",
       "subject": "CBM",
+      "raw_text": "CBM\nL07, 2nd floor\nProf Narender Vunyale",
       "professor": "Prof Narender Vunyale",
       "room": "L07, 2nd floor",
       "div": ""
@@ -3274,6 +3360,7 @@
       "day": "Fri",
       "time": "11:50-1:20",
       "subject": "CBM",
+      "raw_text": "CBM\nL07, 2nd floor\nRescheduled class\nProf Narender Vunyale",
       "professor": "Prof Narender Vunyale",
       "room": "L07, 2nd floor",
       "div": ""
@@ -3282,6 +3369,7 @@
       "day": "Sat",
       "time": "8:30-10:00",
       "subject": "MA",
+      "raw_text": "MA\nRescheduled class\nL06, 2nd floor\nProf Neeelima",
       "professor": "Prof Neeelima",
       "room": "L06, 2nd floor",
       "div": ""
@@ -3290,6 +3378,7 @@
       "day": "Sat",
       "time": "10:10-11:40",
       "subject": "IMC",
+      "raw_text": "Integrated Marketing\nCommunication\nL07, 2nd floor\nProf Suresh",
       "professor": "Prof Suresh",
       "room": "L07, 2nd floor",
       "div": ""
@@ -3298,6 +3387,7 @@
       "day": "Sat",
       "time": "11:50-1:20",
       "subject": "IMC",
+      "raw_text": "Integrated Marketing Communication\nL07, 2nd floor\nProf Suresh",
       "professor": "Prof Suresh",
       "room": "L07, 2nd floor",
       "div": ""
@@ -3306,6 +3396,7 @@
       "day": "Sat",
       "time": "2:00-3:30",
       "subject": "CB",
+      "raw_text": "CB\nL6, 2nd floor\nProf Murtuza Soofi",
       "professor": "Prof Murtuza Soofi",
       "room": "L6, 2nd floor",
       "div": ""
@@ -3314,6 +3405,7 @@
       "day": "Sat",
       "time": "3:40-5:10",
       "subject": "CB",
+      "raw_text": "CB\nL06, 2nd floor\nProf Murtuza Soofi",
       "professor": "Prof Murtuza Soofi",
       "room": "L06, 2nd floor",
       "div": ""
@@ -3322,6 +3414,7 @@
       "day": "Sat",
       "time": "10:10-11:40",
       "subject": "DAB",
+      "raw_text": "DAB\nL06, 2nd floor\nProf Neelima",
       "professor": "Prof Neelima",
       "room": "L06, 2nd floor",
       "div": ""
@@ -3330,6 +3423,7 @@
       "day": "Sat",
       "time": "11:50-1:20",
       "subject": "DAB",
+      "raw_text": "DAB\nL06, 2nd floor\nProf Neelima",
       "professor": "Prof Neelima",
       "room": "L06, 2nd floor",
       "div": ""
@@ -3338,6 +3432,7 @@
       "day": "Sun",
       "time": "10:10-11:40",
       "subject": "PS",
+      "raw_text": "Product Strategy\nL06, 2nd floor\nProf Krishna",
       "professor": "Prof Krishna",
       "room": "L06, 2nd floor",
       "div": ""
@@ -3346,6 +3441,7 @@
       "day": "Sun",
       "time": "11:50-1:20",
       "subject": "PS",
+      "raw_text": "Product Strategy\nL06, 2nd floor\nProf Krishna",
       "professor": "Prof Krishna",
       "room": "L06, 2nd floor",
       "div": ""
@@ -3354,6 +3450,7 @@
       "day": "Sun",
       "time": "10:10-11:40",
       "subject": "FD",
+      "raw_text": "Financial Derivatives\nL07, 2nd floor\nProf. Narsimhulu",
       "professor": "Prof. Narsimhulu",
       "room": "L07, 2nd floor",
       "div": ""
@@ -3362,6 +3459,7 @@
       "day": "Sun",
       "time": "11:50-1:20",
       "subject": "FD",
+      "raw_text": "Financial Derivatives\nL07, 2nd floor\nProf. Narsimhulu",
       "professor": "Prof. Narsimhulu",
       "room": "L07, 2nd floor",
       "div": ""

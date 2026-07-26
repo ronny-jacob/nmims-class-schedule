@@ -217,6 +217,7 @@ def parse_timetable(filepath):
                     "day": day_name,
                     "time": time_label,
                     "subject": code,
+                    "raw_text": '\n'.join(lines),
                     "professor": professor or "",
                     "room": room or "",
                     "div": div or "",
