@@ -57,7 +57,9 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .tt-grid{display:grid;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;background:var(--surface);box-shadow:var(--shadow);min-width:600px}
 .tt-gh{padding:8px 6px;font-size:10px;font-weight:600;color:var(--text-muted);text-align:center;border-bottom:1px solid var(--border);border-right:1px solid var(--border);background:var(--accent-bg);box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
 .tt-gh:last-child{border-right:none}
-.tt-gl{display:flex;align-items:center;justify-content:center;padding:4px;font-size:9px;color:var(--text-muted);text-align:center;border-right:1px solid var(--border);border-bottom:1px solid var(--border);line-height:1.2;background:var(--surface);box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.tt-gl{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4px 2px;color:var(--text-muted);text-align:center;border-right:1px solid var(--border);border-bottom:1px solid var(--border);line-height:1.1;background:var(--surface);box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.tt-gl-day{font-size:9px;font-weight:600}
+.tt-gl-date{font-size:14px;font-weight:700;letter-spacing:-.5px}
 .tt-gc{border-right:1px solid var(--border);border-bottom:1px solid var(--border);min-height:52px;padding:2px;background:var(--surface);transition:background .15s}
 .tt-gc:last-child{border-right:none}
 .tt-gh-lunch{padding:0;background:var(--accent-bg);box-shadow:none}
@@ -68,7 +70,11 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .slot .subj{font-size:10px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .slot .det{font-size:7px;font-weight:500;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .slot.other{color:var(--text-light);font-size:8px;font-weight:500;background:transparent;flex:0 0 auto;padding:1px 0;box-shadow:none;min-height:0;line-height:1.3}
-.tt-count{font-size:10px;color:var(--text-muted)}
+.tt-count{display:flex;align-items:center;gap:12px;margin-bottom:6px;font-size:10px;color:var(--text-muted)}
+.cal-hdr{display:flex;align-items:center;gap:8px;background:var(--accent-bg);padding:6px 14px;border-radius:8px}
+.cal-hdr-ico{font-size:16px;line-height:1}
+.cal-hdr-txt{font-size:15px;font-weight:700;letter-spacing:-.3px;color:var(--text)}
+.cal-sessions{font-size:10px;color:var(--text-muted);white-space:nowrap}
 .tt-legend{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
 .tt-legend-item{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600}
 .tt-legend-item.other{color:var(--text-light);font-size:9px;padding:2px 6px}
@@ -342,16 +348,16 @@ function todayISO() {
 
 function getWeekForDate(iso) {
   if (iso >= DATA.week_start && iso <= DATA.week_end && DATA.timetable && DATA.timetable.length)
-    return { idx: 0, data: DATA.timetable, range: DATA.date_range, label: 'this week' };
+    return { idx: 0, data: DATA.timetable, range: DATA.date_range, label: 'this week', weekStart: DATA.week_start };
   if (DATA.week_start_next && iso >= DATA.week_start_next && iso <= DATA.week_end_next &&
       DATA.timetable_next && DATA.timetable_next.length)
-    return { idx: 1, data: DATA.timetable_next, range: DATA.date_range_next, label: 'this week' };
+    return { idx: 1, data: DATA.timetable_next, range: DATA.date_range_next, label: 'this week', weekStart: DATA.week_start_next };
   return null;
 }
 
 function getNextWeek(idx) {
   if (idx === 0 && DATA.timetable_next && DATA.timetable_next.length)
-    return { idx: 1, data: DATA.timetable_next, range: DATA.date_range_next, label: 'next week' };
+    return { idx: 1, data: DATA.timetable_next, range: DATA.date_range_next, label: 'next week', weekStart: DATA.week_start_next };
   return null;
 }
 
@@ -374,6 +380,36 @@ function resolveTtData(range) {
   return null;
 }
 
+function getDayNumbers(weekStart) {
+  if (!weekStart) return {};
+  var p = weekStart.split('-');
+  var mon = new Date(+p[0], +p[1]-1, +p[2]);
+  var dn = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  var nums = {};
+  for (var i = 0; i < 7; i++) {
+    var d = new Date(mon);
+    d.setDate(mon.getDate() + i);
+    nums[dn[i]] = d.getDate();
+  }
+  return nums;
+}
+
+function formatCalHeader(weekStart) {
+  if (!weekStart) return '';
+  var p = weekStart.split('-');
+  var d = new Date(+p[0], +p[1]-1, +p[2]);
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var month = months[d.getMonth()];
+  var year = d.getFullYear();
+  var end = new Date(d);
+  end.setDate(d.getDate() + 6);
+  var endDay = end.getDate();
+  var endMonth = months[end.getMonth()];
+  var startDay = d.getDate();
+  var range = month + ' ' + startDay + ' \u2013 ' + (endMonth !== month ? endMonth + ' ' : '') + endDay + ', ' + year;
+  return '<div class="cal-hdr"><span class="cal-hdr-ico">\uD83D\uDCC5</span><span class="cal-hdr-txt">' + range + '</span></div>';
+}
+
 function renderTimetable() {
   var gridEl = document.getElementById('timetable');
   var legendEl = document.getElementById('tt-legend');
@@ -382,7 +418,7 @@ function renderTimetable() {
   if (!selectedStudent) {
     gridEl.style.display = 'none';
     legendEl.innerHTML = '';
-    countEl.textContent = '';
+    countEl.innerHTML = '';
     noDataEl.innerHTML = '<div class="empty">Select a student</div>';
     return;
   }
@@ -390,12 +426,14 @@ function renderTimetable() {
   if (!resolved) {
     gridEl.style.display = 'none';
     legendEl.innerHTML = '';
-    countEl.textContent = '';
+    countEl.innerHTML = '';
     noDataEl.innerHTML = '<div class="empty">' + (ttRange === 'next' ? 'Not available yet &mdash; will be updated on Saturday' : 'No classes for this period') + '</div>';
     return;
   }
   var ttData = resolved.data;
   var ttDateRange = resolved.range;
+  var wkStart = resolved.weekStart;
+  var dayNums = getDayNumbers(wkStart);
   var wkLabel = resolved.label;
   var TIME_ORDER = getTimeSlotsForWeek(resolved);
   noDataEl.innerHTML = '';
@@ -435,7 +473,7 @@ function renderTimetable() {
       }
     }
   }
-  countEl.textContent = myCount + ' session' + (myCount !== 1 ? 's' : '') + (ttDateRange ? '  ·  ' + ttDateRange : '');
+  countEl.innerHTML = formatCalHeader(wkStart) + '<span class="cal-sessions">' + myCount + ' session' + (myCount !== 1 ? 's' : '') + '</span>';
   var grid = {};
   for (var d = 0; d < numDays; d++) {
     grid[daysWithData[d]] = {};
@@ -458,7 +496,7 @@ function renderTimetable() {
   }
   for (var d = 0; d < numDays; d++) {
     var day = daysWithData[d];
-    html += '<div class="tt-gl">' + day + '</div>';
+    html += '<div class="tt-gl"><span class="tt-gl-day">' + day + '</span><span class="tt-gl-date">' + (dayNums[day] || '') + '</span></div>';
     for (var t = 0; t < numTimes; t++) {
       var time = TIME_ORDER[t];
       var isLunch = (time === '1:20-1:50');
