@@ -57,9 +57,9 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .tt-grid{display:grid;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;background:var(--surface);box-shadow:var(--shadow);min-width:600px}
 .tt-gh{padding:8px 6px;font-size:10px;font-weight:600;color:var(--text-muted);text-align:center;border-bottom:1px solid var(--border);border-right:1px solid var(--border);background:var(--accent-bg);box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
 .tt-gh:last-child{border-right:none}
-.tt-gl{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4px 2px;color:var(--text-muted);text-align:center;border-right:1px solid var(--border);border-bottom:1px solid var(--border);line-height:1.1;background:var(--surface);box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
-.tt-gl-day{font-size:9px;font-weight:600}
-.tt-gl-date{font-size:14px;font-weight:700;letter-spacing:-.5px}
+.tt-gl{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 2px 5px;color:var(--text-muted);text-align:center;border-right:1px solid var(--border);border-bottom:1px solid var(--border);line-height:1.15;background:var(--surface);box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.tt-gl-day{font-size:8.5px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted)}
+.tt-gl-date{font-size:15px;font-weight:500;color:var(--text);margin-top:1px;font-variant-numeric:tabular-nums}
 .tt-gc{border-right:1px solid var(--border);border-bottom:1px solid var(--border);min-height:52px;padding:2px;background:var(--surface);transition:background .15s}
 .tt-gc:last-child{border-right:none}
 .tt-gh-lunch{padding:0;background:var(--accent-bg);box-shadow:none}
@@ -70,11 +70,12 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .slot .subj{font-size:10px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .slot .det{font-size:7px;font-weight:500;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .slot.other{color:var(--text-light);font-size:8px;font-weight:500;background:transparent;flex:0 0 auto;padding:1px 0;box-shadow:none;min-height:0;line-height:1.3}
-.tt-count{display:flex;align-items:center;gap:12px;margin-bottom:6px;font-size:10px;color:var(--text-muted)}
-.cal-hdr{display:flex;align-items:center;gap:8px;background:var(--accent-bg);padding:6px 14px;border-radius:8px}
-.cal-hdr-ico{font-size:16px;line-height:1}
-.cal-hdr-txt{font-size:15px;font-weight:700;letter-spacing:-.3px;color:var(--text)}
-.cal-sessions{font-size:10px;color:var(--text-muted);white-space:nowrap}
+.tt-count{display:flex;align-items:baseline;gap:10px;margin-bottom:8px}
+.cal-hdr{display:flex;flex-direction:column;gap:1px}
+.cal-hdr-month{font-size:14px;font-weight:600;letter-spacing:-.02em;color:var(--text);line-height:1.2}
+.cal-hdr-sub{font-size:11px;font-weight:400;color:var(--text-muted);letter-spacing:.01em}
+.cal-hdr-sub em{font-style:normal;color:var(--text)}
+.cal-sessions{font-size:11px;font-weight:400;color:var(--text-muted);margin-left:auto;white-space:nowrap;font-variant-numeric:tabular-nums}
 .tt-legend{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
 .tt-legend-item{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600}
 .tt-legend-item.other{color:var(--text-light);font-size:9px;padding:2px 6px}
@@ -397,17 +398,20 @@ function getDayNumbers(weekStart) {
 function formatCalHeader(weekStart) {
   if (!weekStart) return '';
   var p = weekStart.split('-');
-  var d = new Date(+p[0], +p[1]-1, +p[2]);
-  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  var month = months[d.getMonth()];
-  var year = d.getFullYear();
-  var end = new Date(d);
-  end.setDate(d.getDate() + 6);
+  var start = new Date(+p[0], +p[1]-1, +p[2]);
+  var end = new Date(start);
+  end.setDate(start.getDate() + 6);
+  var mn = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var sm = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var sy = start.getFullYear();
+  var smn = mn[start.getMonth()];
+  var emn = mn[end.getMonth()];
+  var monthYr = (smn === emn && sy === end.getFullYear())
+    ? smn + ' ' + sy : sm[start.getMonth()] + ' \u2013 ' + sm[end.getMonth()] + ' ' + sy;
+  var startDay = start.getDate();
   var endDay = end.getDate();
-  var endMonth = months[end.getMonth()];
-  var startDay = d.getDate();
-  var range = month + ' ' + startDay + ' \u2013 ' + (endMonth !== month ? endMonth + ' ' : '') + endDay + ', ' + year;
-  return '<div class="cal-hdr"><span class="cal-hdr-ico">\uD83D\uDCC5</span><span class="cal-hdr-txt">' + range + '</span></div>';
+  var range = sm[start.getMonth()] + ' ' + startDay + ' \u2013 ' + (end.getMonth() !== start.getMonth() ? sm[end.getMonth()] + ' ' : '') + endDay;
+  return '<div class="cal-hdr"><div class="cal-hdr-month">' + monthYr + '</div><div class="cal-hdr-sub">Week of <em>' + range + '</em></div></div>';
 }
 
 function renderTimetable() {
