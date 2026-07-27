@@ -416,7 +416,7 @@ function renderTimetable() {
     document.querySelector('#panel-tt .pill-group').style.display = 'none';
     gridEl.style.display = 'none';
     legendEl.style.display = 'none';
-    countEl.innerHTML = '<div style="padding:40px 0;font-size:22px;font-weight:600;color:var(--text);line-height:1.4;text-align:center">Please check the timetable in the mail.<br>There are certain discrepancies at the moment</div>';
+    countEl.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 200px);font-size:22px;font-weight:600;color:var(--text);line-height:1.4;text-align:center">Please check the timetable in the mail.<br>There are certain discrepancies at the moment</div>';
     noDataEl.innerHTML = '';
     return;
   }
