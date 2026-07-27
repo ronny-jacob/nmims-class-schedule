@@ -193,6 +193,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
   </div>
 </div>
 <script>
+const SHOW_TIMETABLE = false;
 let selectedStudent = null;
 function getTimeSlotsForWeek(resolved) {
   if (!resolved) return DATA.time_slots || [];
@@ -411,6 +412,14 @@ function renderTimetable() {
   var legendEl = document.getElementById('tt-legend');
   var countEl = document.getElementById('ttCount');
   var noDataEl = document.getElementById('ttNoData');
+  if (!SHOW_TIMETABLE) {
+    document.querySelector('#panel-tt .pill-group').style.display = 'none';
+    gridEl.style.display = 'none';
+    legendEl.style.display = 'none';
+    countEl.innerHTML = '<div style="padding:20px 0;font-size:13px;color:var(--text-muted);line-height:1.5">Please check the timetable in the mail. There are certain discrepancies at the moment</div>';
+    noDataEl.innerHTML = '';
+    return;
+  }
   if (!selectedStudent) {
     gridEl.style.display = 'none';
     legendEl.innerHTML = '';
