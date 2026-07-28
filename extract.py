@@ -55,17 +55,6 @@ SUBJECT_NAMES = {
     "BS":     "Business Simulation",
 }
 
-TIME_LABELS = OrderedDict([
-    (2, "8:30-10:00"),
-    (3, "10:10-11:40"),
-    (4, "11:50-1:20"),
-    (5, "1:20-1:50"),
-    (6, "1:50-3:20"),
-    (7, "3:30-5:00"),
-    (8, "3:30-5:00"),
-    (9, "6:00-7:30"),
-])
-
 TIMETABLE_SUBJECT_MAP = {
     "MC-Div B":     ("MC_B", "Div B"),
     "MC-Div A":     ("MC_A", "Div A"),
@@ -98,12 +87,11 @@ TIMETABLE_SUBJECT_MAP = {
     "Entrepreneurship": ("ENT", None),
 }
 
-def normalize(s):
-    return re.sub(r'\s+', ' ', s).strip()
-
-def normalize_subject(s):
-    s = re.sub(r'\s*_\s*', '_', s)
-    return re.sub(r'\s+', ' ', s).strip()
+def normalize(s, underscores=False):
+    s = re.sub(r'\s+', ' ', s).strip()
+    if underscores:
+        s = re.sub(r'\s*_\s*', '_', s)
+    return s
 
 def parse_time_labels_from_sheet(ws):
     labels = OrderedDict()
@@ -164,29 +152,28 @@ def parse_timetable(filepath):
     for day_name, r1, r2 in days_rows:
         for row_idx in (r1, r2):
             for col_idx in range(2, ws.max_column + 1):
-                if col_idx == 5:
-                    continue
                 cell = ws.cell(row=row_idx, column=col_idx)
                 raw = cell.value
                 if not raw:
                     continue
                 raw_lines = [l.strip() for l in str(raw).split('\n') if l.strip()]
+                # Skip decorative cells like vertical LUNCH BREAK text
+                if all(len(l) <= 1 for l in raw_lines):
+                    continue
                 lines = [normalize(l) for l in raw_lines]
                 if not lines:
                     continue
                 time_label = time_labels.get(col_idx, "?")
-                if not lines:
-                    continue
 
-                subject_text = normalize_subject(lines[0])
+                subject_text = normalize(lines[0], underscores=True)
                 alt_text = None
                 used_lines = 1
                 if len(lines) > 1 and not lines[1].startswith('L') and lines[1] != 'Hybrid':
-                    alt_text = normalize_subject(subject_text + ' ' + lines[1])
+                    alt_text = normalize(subject_text + ' ' + lines[1], underscores=True)
 
                 match = None
                 for key, (code, div) in TIMETABLE_SUBJECT_MAP.items():
-                    key_norm = normalize_subject(key)
+                    key_norm = normalize(key, underscores=True)
                     if match_subject(subject_text, key_norm):
                         match = (code, div)
                         break
@@ -344,9 +331,16 @@ def parse_students():
 
 def main():
     students = parse_students()
-    timetable = parse_timetable(TIMETABLE)
-    date_range = parse_date_range(TIMETABLE)
-    week_start, week_end = get_week_iso(TIMETABLE)
+    try:
+        timetable = parse_timetable(TIMETABLE)
+        date_range = parse_date_range(TIMETABLE)
+        week_start, week_end = get_week_iso(TIMETABLE)
+    except Exception as e:
+        print(f"❌ Could not parse timetable: {e}")
+        timetable = []
+        date_range = ""
+        week_start = ""
+        week_end = ""
 
     timetable_next = []
     date_range_next = ""

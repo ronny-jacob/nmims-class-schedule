@@ -126,7 +126,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     <div class="id-row">
       <span class="id-greeting">You:</span>
       <div style="position:relative;flex:1;min-width:160px">
-        <input id="studentSelect" class="id-select" type="text" placeholder="Search your name&hellip;" autocomplete="off" oninput="onStudentInput()" onkeydown="onStudentKeydown(event)" onblur="onStudentBlur()" onfocus="onStudentFocus()">
+        <input id="studentSelect" class="id-select" type="text" placeholder="Search your name&hellip;" autocomplete="off" oninput="onStudentInput()" onkeydown="onStudentKeydown(event)" onblur="onStudentBlur(event)" onfocus="onStudentFocus()">
         <div id="studentDropdown" class="sd"></div>
       </div>
       <div id="studentInfo" class="id-info"></div>
@@ -193,7 +193,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
   </div>
 </div>
 <script>
-const SHOW_TIMETABLE = false;
+const SHOW_TIMETABLE = new URLSearchParams(window.location.search).has('tt');
 let selectedStudent = null;
 function getTimeSlotsForWeek(resolved) {
   if (!resolved) return DATA.time_slots || [];
@@ -215,7 +215,7 @@ function trackAnalytics(name, roll) {
       '&ua=' + encodeURIComponent(navigator.userAgent) +
       '&ref=' + encodeURIComponent(document.referrer || '');
     new Image().src = ANALYTICS_URL + params;
-  } catch(e) {}
+  } catch(e) { console.warn('Analytics failed:', e); }
 }
 
 function toTitleCase(s) {
@@ -283,8 +283,11 @@ function onStudentKeydown(e) {
   }
 }
 
-function onStudentBlur() {
-  setTimeout(function() { document.getElementById('studentDropdown').classList.remove('open'); }, 200);
+function onStudentBlur(e) {
+  var dd = document.getElementById('studentDropdown');
+  if (!e || !dd.contains(e.relatedTarget)) {
+    dd.classList.remove('open');
+  }
 }
 
 function onStudentFocus() {
