@@ -5,8 +5,8 @@ import openpyxl
 
 STUDENT_LIST = "/Users/ronnyjacob/Downloads/Division wise List- Trimester IV.xlsx"
 LAST_YEAR_LIST = "/Users/ronnyjacob/Documents/First Year Division list.xlsx"
-TIMETABLE    = "/Users/ronnyjacob/Downloads/20.07.2026 to 26.07.2026.xlsx"
-TIMETABLE_NEXT = "/Users/ronnyjacob/Downloads/27.07.2026 to 02.08.2026.xlsx"
+TIMETABLE    = "/Users/ronnyjacob/Downloads/27.07.2026 to 02.08.2026 (2).xlsx"
+TIMETABLE_NEXT = ""
 OUTPUT       = "data.json"
 
 def parse_date_range(filepath):
