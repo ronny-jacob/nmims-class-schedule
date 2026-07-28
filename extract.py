@@ -391,6 +391,15 @@ def main():
         "week_end_next": week_end_next,
     }
 
+    # Read last_updated metadata if available (written by check_mail.py)
+    last_updated_path = os.path.join(os.path.dirname(__file__), "last_updated.json")
+    if os.path.exists(last_updated_path):
+        try:
+            with open(last_updated_path) as f:
+                data["last_updated"] = json.load(f)
+        except Exception:
+            pass
+
     with open(OUTPUT, 'w') as f:
         json.dump(data, f, indent=2)
     print(f"✅ Wrote {OUTPUT}")

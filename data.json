@@ -2984,5 +2984,11 @@
   "week_start": "2026-07-27",
   "week_end": "2026-08-02",
   "week_start_next": "",
-  "week_end_next": ""
+  "week_end_next": "",
+  "last_updated": {
+    "sender": "manual update",
+    "received_at": "",
+    "subject": "",
+    "updated_at": ""
+  }
 }
