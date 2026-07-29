@@ -45,10 +45,10 @@ def search_timetable_mail():
         return None
 
     msg_ids = ids[0].split()
-    msg_ids.reverse()  # oldest first, so the last one is the newest
+    msg_ids.reverse()  # newest first
 
     best = None
-    for uid in reversed(msg_ids):
+    for uid in msg_ids:
         status, data = mail.fetch(uid, "(RFC822)")
         if status != "OK":
             continue
@@ -179,8 +179,9 @@ def main():
 
     is_timetable, sender, received_label, subject, att_name, att_content = result
 
-    # Build path — save in Downloads folder
-    new_path = os.path.join(os.path.dirname(TIMETABLE_DIR), att_name)
+    # Build path — save in repo's downloads/ directory
+    os.makedirs(os.path.join(TIMETABLE_DIR, "downloads"), exist_ok=True)
+    new_path = os.path.join(TIMETABLE_DIR, "downloads", att_name)
 
     existing_hash = file_hash(new_path)
     new_hash = hashlib.sha256(att_content).hexdigest()
