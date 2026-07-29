@@ -1,0 +1,33 @@
+name: Check Timetable Email
+
+on:
+  schedule:
+    # Every hour from 6 AM to 11 PM IST (UTC 0:30 – 17:30)
+    - cron: '30 0-17 * * 0-5'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install requests openpyxl
+
+      - name: Check inbox and update
+        env:
+          MS_AUTHORITY: ${{ secrets.MS_AUTHORITY }}
+          MS_CLIENT_ID: ${{ secrets.MS_CLIENT_ID }}
+          MS_REFRESH_TOKEN: ${{ secrets.MS_REFRESH_TOKEN }}
+          MS_USER_EMAIL: ${{ secrets.MS_USER_EMAIL }}
+        run: python check_mail.py
