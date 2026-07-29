@@ -1,3 +1,5 @@
 *.xls
 *.xlsx
 *.xlsm
+*.pyc
+__pycache__/

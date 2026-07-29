@@ -21,13 +21,14 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install dependencies
-        run: pip install requests openpyxl
+      - name: Configure git
+        run: |
+          git config user.name "Timetable Bot"
+          git config user.email "bot@nmims-class-schedule"
 
       - name: Check inbox and update
         env:
-          MS_AUTHORITY: ${{ secrets.MS_AUTHORITY }}
-          MS_CLIENT_ID: ${{ secrets.MS_CLIENT_ID }}
-          MS_REFRESH_TOKEN: ${{ secrets.MS_REFRESH_TOKEN }}
-          MS_USER_EMAIL: ${{ secrets.MS_USER_EMAIL }}
+          IMAP_USER: ${{ secrets.IMAP_USER }}
+          IMAP_PASS: ${{ secrets.IMAP_PASS }}
+          IMAP_LOOKBACK_DAYS: ${{ secrets.IMAP_LOOKBACK_DAYS }}
         run: python check_mail.py
