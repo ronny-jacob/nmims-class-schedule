@@ -1,5 +1,7 @@
-*.xls
-*.xlsx
-*.xlsm
 *.pyc
 __pycache__/
+*.xlsx
+!downloads/*.xlsx
+!sources/*.xlsx
+sources/Division wise List- Trimester IV.xlsx
+sources/First Year Division list.xlsx

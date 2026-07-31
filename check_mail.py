@@ -166,6 +166,38 @@ def ist_now():
     return ist.strftime("%I:%M %p IST on %d %b %Y").lstrip("0").replace(" 0", " ")
 
 
+def parse_file_dates(name):
+    """Extract the start date (dd.mm.yyyy) from a timetable filename."""
+    m = TIMETABLE_PATTERN.search(name or "")
+    if not m:
+        return None
+    start_str = m.group(0).split("to", 1)[0].strip()
+    try:
+        return datetime.strptime(start_str, "%d.%m.%Y").date()
+    except ValueError:
+        return None
+
+
+def monday_of(d):
+    return d - timedelta(days=d.weekday())
+
+
+def read_extract():
+    path = os.path.join(TIMETABLE_DIR, "extract.py")
+    with open(path) as f:
+        src = f.read()
+    cur = re.search(r'^TIMETABLE\s*=\s*"([^"]*)"', src, re.M)
+    cur_next = re.search(r'^TIMETABLE_NEXT\s*=\s*"([^"]*)"', src, re.M)
+    return path, src, (cur.group(1) if cur else ""), (cur_next.group(1) if cur_next else "")
+
+
+def week_of_path(p):
+    if not p:
+        return None
+    start = parse_file_dates(os.path.basename(p))
+    return monday_of(start) if start else None
+
+
 def main():
     missing = [v for v in ["IMAP_USER", "IMAP_PASS"] if not os.getenv(v)]
     if missing:
@@ -184,27 +216,53 @@ def main():
     os.makedirs(os.path.join(TIMETABLE_DIR, "downloads"), exist_ok=True)
     new_path = os.path.join(TIMETABLE_DIR, "downloads", att_name)
 
-    existing_hash = file_hash(new_path)
-    new_hash = hashlib.sha256(att_content).hexdigest()
-    if new_hash == existing_hash:
-        print(f"ℹ️ {att_name} unchanged — no update needed")
-        return
-
     with open(new_path, "wb") as f:
         f.write(att_content)
     print(f"💾 Saved: {new_path}")
+    new_rel = os.path.relpath(new_path, TIMETABLE_DIR)
 
-    # Update extract.py to point to new file
-    extract_path = os.path.join(TIMETABLE_DIR, "extract.py")
-    with open(extract_path) as f:
-        src = f.read()
+    # Decide slot based on week: current week -> TIMETABLE, future -> TIMETABLE_NEXT
+    today = datetime.now(timezone.utc).date()
+    this_week = monday_of(today)
+    new_week = week_of_path(new_path)
 
-    new_abs = new_path
-    src = re.sub(r'^TIMETABLE\s*=.*', f'TIMETABLE    = "{new_abs}"', src, count=1)
-    src = re.sub(r'^TIMETABLE_NEXT\s*=.*', 'TIMETABLE_NEXT = ""', src, count=1)
+    extract_path, src, cur, cur_next = read_extract()
+    new_src = src
+    new_slot = None
+    promoted = False
 
-    with open(extract_path, "w") as f:
-        f.write(src)
+    if new_week:
+        if new_week < this_week:
+            print(f"ℹ️ {att_name} is for a past week — saved but not wired in")
+            return
+        # Promote TIMETABLE_NEXT to TIMETABLE when its week becomes current/latest
+        nw = week_of_path(cur_next)
+        cw = week_of_path(cur)
+        if nw and nw <= this_week and (cw is None or nw > cw):
+            new_src = re.sub(r'^TIMETABLE\s*=\s*"[^"]*"', f'TIMETABLE    = "{cur_next}"', new_src, count=1, flags=re.M)
+            new_src = re.sub(r'^TIMETABLE_NEXT\s*=\s*"[^"]*"', 'TIMETABLE_NEXT = ""', new_src, count=1, flags=re.M)
+            promoted = True
+            print(f"♻️ Promoted {cur_next} to current timetable")
+        new_slot = "TIMETABLE_NEXT" if new_week > this_week else "TIMETABLE"
+    else:
+        new_slot = "TIMETABLE"
+
+    if new_slot == "TIMETABLE":
+        new_src = re.sub(r'^TIMETABLE\s*=\s*"[^"]*"', f'TIMETABLE    = "{new_rel}"', new_src, count=1, flags=re.M)
+    elif new_slot == "TIMETABLE_NEXT":
+        new_src = re.sub(r'^TIMETABLE_NEXT\s*=\s*"[^"]*"', f'TIMETABLE_NEXT = "{new_rel}"', new_src, count=1, flags=re.M)
+
+    src_changed = new_src != src
+    if src_changed:
+        with open(extract_path, "w") as f:
+            f.write(new_src)
+        print(f"🔧 Updated extract.py ({new_slot or 'promotion'})")
+
+    existing_hash = file_hash(new_path)
+    new_hash = hashlib.sha256(att_content).hexdigest()
+    if new_hash == existing_hash and not src_changed:
+        print(f"ℹ️ {att_name} unchanged — no update needed")
+        return
 
     rebuild_and_commit(new_path, sender, received_label, subject)
 

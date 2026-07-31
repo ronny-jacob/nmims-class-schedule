@@ -3,13 +3,25 @@ from collections import OrderedDict
 from datetime import datetime
 import openpyxl
 
-STUDENT_LIST = "/Users/ronnyjacob/Downloads/Division wise List- Trimester IV.xlsx"
-LAST_YEAR_LIST = "/Users/ronnyjacob/Documents/First Year Division list.xlsx"
-TIMETABLE    = "/Users/ronnyjacob/Downloads/27.07.2026 to 02.08.2026 (2).xlsx"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+def src(name):
+    return os.path.join(BASE_DIR, "sources", name)
+def resolve(p):
+    if not p:
+        return p
+    return p if os.path.isabs(p) else os.path.join(BASE_DIR, p)
+
+STUDENT_LIST = src("Division wise List- Trimester IV.xlsx")
+LAST_YEAR_LIST = src("First Year Division list.xlsx")
+TIMETABLE    = "sources/27.07.2026 to 02.08.2026 (2).xlsx"
 TIMETABLE_NEXT = ""
-FOOD_MENU    = "/Users/ronnyjacob/Downloads/April & May 2026..xlsx"
+FOOD_MENU    = "sources/April & May 2026..xlsx"
 FOOD_MENU_ANCHOR = "2026-03-30"
 OUTPUT       = "data.json"
+
+TIMETABLE = resolve(TIMETABLE)
+TIMETABLE_NEXT = resolve(TIMETABLE_NEXT)
+FOOD_MENU = resolve(FOOD_MENU)
 
 FOOD_MEALS = [
     {"key": "breakfast", "label": "Breakfast", "time": "8:00 To 9:30"},

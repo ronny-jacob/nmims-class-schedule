@@ -24,6 +24,16 @@ jobs:
       - name: Install dependencies
         run: pip install openpyxl
 
+      - name: Materialize roster files from secrets
+        env:
+          STUDENT_LIST_B64: ${{ secrets.STUDENT_LIST_B64 }}
+          LAST_YEAR_LIST_B64: ${{ secrets.LAST_YEAR_LIST_B64 }}
+        run: |
+          mkdir -p sources
+          echo "$STUDENT_LIST_B64" | base64 -d > "sources/Division wise List- Trimester IV.xlsx"
+          echo "$LAST_YEAR_LIST_B64" | base64 -d > "sources/First Year Division list.xlsx"
+          ls -la sources/
+
       - name: Configure git
         run: |
           git config user.name "Timetable Bot"
