@@ -341,6 +341,13 @@ function selectStudentAuto(el) {
   renderTimetable();
   renderEnrolled();
   document.getElementById('studentDropdown').classList.remove('open');
+  var nav = document.getElementById('mainNav');
+  for (var ni = 0; ni < nav.children.length; ni++) {
+    if (nav.children[ni].getAttribute('onclick').indexOf("'tt'") !== -1) {
+      showMainTab('tt', nav.children[ni]);
+      break;
+    }
+  }
   sel={};so=[];ci=0;tog(s.name);
 }
 
