@@ -7,7 +7,20 @@ STUDENT_LIST = "/Users/ronnyjacob/Downloads/Division wise List- Trimester IV.xls
 LAST_YEAR_LIST = "/Users/ronnyjacob/Documents/First Year Division list.xlsx"
 TIMETABLE    = "/Users/ronnyjacob/Downloads/27.07.2026 to 02.08.2026 (2).xlsx"
 TIMETABLE_NEXT = ""
+FOOD_MENU    = "/Users/ronnyjacob/Downloads/April & May 2026..xlsx"
+FOOD_MENU_ANCHOR = "2026-03-30"
 OUTPUT       = "data.json"
+
+FOOD_MEALS = [
+    {"key": "breakfast", "label": "Breakfast", "time": "8:00 To 9:30"},
+    {"key": "lunch",     "label": "Lunch",     "time": "12:30 To 2:30"},
+    {"key": "snacks",    "label": "Snacks",    "time": "5:30 To 6:30"},
+    {"key": "dinner",    "label": "Dinner",    "time": "8:00 To 9:30"},
+]
+FOOD_DAY_KEYS = {
+    'MON': 'Mon', 'TUE': 'Tue', 'WED': 'Wed', 'THU': 'Thu',
+    'FRI': 'Fri', 'SAT': 'Sat', 'SUN': 'Sun',
+}
 
 def parse_date_range(filepath):
     mt = re.search(r'(\d+)\.(\d+)\.(\d+)\s*to\s*(\d+)\.(\d+)\.(\d+)', filepath)
@@ -222,6 +235,35 @@ def parse_timetable(filepath):
 
     return timetable
 
+def parse_food_menu(filepath):
+    """Read the food menu xlsx → {week1: {day: {meal: text}}, week2: {...}}."""
+    wb = openpyxl.load_workbook(filepath, data_only=True)
+    ws = wb["Table 1"] if "Table 1" in wb.sheetnames else wb[wb.sheetnames[0]]
+
+    menu = {"week1": OrderedDict(), "week2": OrderedDict()}
+    current = menu["week1"]
+
+    for row in ws.iter_rows(min_row=1, values_only=True):
+        day_key = row[0]
+        if not day_key:
+            continue
+        first = normalize(str(day_key))
+        if first.lower().startswith('2nd'):
+            current = menu["week2"]
+            continue
+        day_short = FOOD_DAY_KEYS.get(first[:3].upper())
+        if day_short is None:
+            continue
+        entry = OrderedDict()
+        for i, meal in enumerate(FOOD_MEALS):
+            raw = row[1 + i] if 1 + i < len(row) else None
+            text = normalize(str(raw)) if raw is not None else ""
+            text = text.replace('\xa0', ' ').strip()
+            entry[meal["key"]] = text
+        current[day_short] = entry
+
+    return menu
+
 NON_STUDENT_PATTERNS = ['placements', 'faculty', 'division', 'total', 'sub total']
 EXCLUDED_NAMES = ['Abhijatya Negi']
 BS_DIV_OVERRIDE = {
@@ -375,6 +417,13 @@ def main():
         except Exception:
             pass
 
+    food_menu = {}
+    if os.path.exists(FOOD_MENU):
+        try:
+            food_menu = parse_food_menu(FOOD_MENU)
+        except Exception as e:
+            print(f"⚠️ Could not parse food menu: {e}")
+
     data = {
         "students": students,
         "subjects": subjects,
@@ -382,6 +431,9 @@ def main():
         "timetable_next": timetable_next,
         "time_slots": time_slots,
         "time_slots_next": time_slots_next,
+        "food_menu": food_menu,
+        "food_meals": FOOD_MEALS,
+        "food_menu_anchor": FOOD_MENU_ANCHOR,
         "days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
         "date_range": date_range,
         "date_range_next": date_range_next,
@@ -408,6 +460,7 @@ def main():
     print(f"   Timetable entries: {len(timetable)}")
     if timetable_next:
         print(f"   Next week entries: {len(timetable_next)}")
+    print(f"   Food menu weeks: {len(food_menu)}")
 
     # ─── Regenerate index.html with embedded data ───
     INDEX_HTML = "index.html"
