@@ -3,7 +3,8 @@ from datetime import datetime, timezone, timedelta
 from email.header import decode_header
 
 # ─── Config ───────────────────────────────────────────────────────────
-IMAP_SERVER   = os.getenv("IMAP_SERVER", "outlook.office365.com")
+# Outlook forwards timetable emails to Gmail, so we poll Gmail via IMAP.
+IMAP_SERVER   = os.getenv("IMAP_SERVER", "imap.gmail.com")
 IMAP_USER     = os.getenv("IMAP_USER", "")
 IMAP_PASS     = os.getenv("IMAP_PASS", "")
 LOOKBACK_DAYS = int(os.getenv("IMAP_LOOKBACK_DAYS", "7"))
