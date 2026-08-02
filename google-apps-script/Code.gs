@@ -9,6 +9,17 @@ function getOrCreateSheet_(name) {
 }
 
 function doGet(e) {
+  // Page open events go to a dedicated sheet
+  if (e.parameter.evt === 'pageview' || e.parameter.name === '__page_view__') {
+    var views = getOrCreateSheet_('Page Views');
+    views.appendRow([
+      e.parameter.ts || new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+      e.parameter.ua || '',
+      e.parameter.ref || ''
+    ]);
+    return ContentService.createTextOutput('ok');
+  }
+
   // Button-click easter egg events go to a dedicated sheet
   if (e.parameter.evt === 'click' || e.parameter.name === '__do_not_click__') {
     var clicks = getOrCreateSheet_('Button Clicks');
