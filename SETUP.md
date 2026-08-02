@@ -67,6 +67,28 @@ Once the secrets are added, GitHub Actions will run it automatically every hour
 7. If new: saves file, runs `extract.py`, commits & pushes to GitHub
 8. Site shows "Updated from [sender] on [date] at [time] IST"
 
+## Step 6 — Auto-deploy the Analytics Apps Script (optional)
+
+The analytics web app (logging button clicks / page views to Google Sheets) is
+kept in `google-apps-script/Code.gs`. Instead of pasting & redeploying manually,
+a GitHub Action deploys it automatically on every push to that folder.
+
+1. Authorize `clasp` **as the account that owns the analytics project** (found in
+   the Apps Script editor's Project Settings):
+   ```bash
+   npm i -g @google/clasp && clasp login
+   ```
+2. Enable the Apps Script API for that account at
+   https://script.google.com/home/usersettings
+3. Add the secrets (from your terminal):
+   ```bash
+   base64 -i ~/.clasprc.json | tr -d '\n' | gh secret set CLASP_CREDS
+   gh secret set CLASP_SCRIPT_ID "<Script ID from Project Settings>"
+   gh secret set CLASP_DEPLOYMENT_ID "<deployment ID from the /exec URL>"
+   ```
+4. Push any change to `google-apps-script/`, or run the `deploy-apps-script`
+   workflow manually from the Actions tab. A new version is deployed to the same URL.
+
 ## Testing
 
 Run the script manually to verify everything works:
