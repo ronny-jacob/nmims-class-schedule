@@ -27,10 +27,16 @@ function now_() {
   return new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
 }
 
+function listSheetsDebug() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  return ss.getSheets().map(function (sh) {
+    return sh.getName();
+  });
+}
+
 function doGet(e) {
   // Page open events
-  if (e.parameter.evt === 'pageview' || e.parameter.name === '__page_view__') {
-    var views = ensureSheet_('Page Views', ['Timestamp', 'User Agent', 'Referrer']);
+  if (e.parameter.evt === 'pageview' || e.parameter.name === '__page_view__') {    var views = ensureSheet_('Page Views', ['Timestamp', 'User Agent', 'Referrer']);
     prepend_(views, [e.parameter.ts || now_(), e.parameter.ua || '', e.parameter.ref || '']);
     return ContentService.createTextOutput('ok');
   }
