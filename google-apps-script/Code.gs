@@ -23,8 +23,20 @@ function prepend_(sh, values) {
   sh.getRange(2, 1, 1, values.length).setValues([values]);
 }
 
-function now_() {
-  return new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+function formatTs_(ts) {
+  var d = ts ? new Date(ts) : new Date();
+  if (isNaN(d.getTime())) d = new Date();
+  var parts = {};
+  new Intl.DateTimeFormat('en-IN', {
+    timeZone: 'Asia/Kolkata',
+    day: '2-digit', month: '2-digit', year: '2-digit',
+    hour: '2-digit', minute: '2-digit', second: '2-digit',
+    hour12: true
+  }).formatToParts(d).forEach(function(p) {
+    if (p.type !== 'literal') parts[p.type] = p.value;
+  });
+  return parts.day + '/' + parts.month + '/' + parts.year +
+    ' ' + parts.hour + ':' + parts.minute + ':' + parts.second + ' ' + parts.dayPeriod.toUpperCase();
 }
 
 function doGet(e) {
@@ -35,7 +47,7 @@ function doGet(e) {
   var name = p.name || '';
   var roll = p.roll || '';
   var extra = p.extra || '';
-  var ts = p.ts || now_();
+  var ts = formatTs_(p.ts);
   var ua = p.ua || '';
   var ref = p.ref || '';
 
