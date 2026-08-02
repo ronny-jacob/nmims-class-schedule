@@ -40,4 +40,4 @@ jobs:
         run: |
           version=$(clasp version "auto $(date -u +%Y-%m-%dT%H:%M:%SZ)" | grep -oE '[0-9]+' | head -1)
           echo "version created: $version"
-          clasp deploy --deploymentId "$CLASP_DEPLOYMENT_ID" --version "$version" --description "auto $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          clasp deploy --deploymentId "$CLASP_DEPLOYMENT_ID" --versionNumber "$version" --description "auto $(date -u +%Y-%m-%dT%H:%M:%SZ)"
