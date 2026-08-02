@@ -23,7 +23,7 @@ jobs:
       - name: Write project config
         working-directory: google-apps-script
         run: |
-          echo "${{ secrets.CLASP_SCRIPT_ID }}" > .clasp.json
+          echo '{"scriptId":"${{ secrets.CLASP_SCRIPT_ID }}"}' > .clasp.json
           cat .clasp.json
 
       - name: Install clasp
