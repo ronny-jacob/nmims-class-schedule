@@ -6,10 +6,15 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
-      - name: Test fresh analytics URL from GitHub IP
+      - name: Test all three deployments with fresh URLs from GitHub IP
         run: |
-          URL='https://script.google.com/macros/s/AKfycbzFmuXe6S8gNjjAvx7ZRm_sBXj1NXnr2BeLrXi9U-zT7M_zIdipJAeJx3W-ayTfhCXe/exec'
-          echo "=== fresh sid URL (from GitHub IP) ==="
-          curl -s -m 30 -D - -o /dev/null "$URL?sid=github-probe-$(date +%s)" 2>/dev/null | grep -i -E '^HTTP|^location' | cut -c1-100
-          echo "=== cached debug URL (from GitHub IP) ==="
-          curl -s -m 30 -D - -o /dev/null "$URL?debug=sheets" 2>/dev/null | grep -i -E '^HTTP' | cut -c1-100
+          D1='https://script.google.com/macros/s/AKfycbyAsUPv-F6T-n6GZnH92GlQc5g2Yrita3m4L9CQIg09/exec'
+          D2='https://script.google.com/macros/s/AKfycbznsKjmM4YUlHuX50Cu9dH4LV1oyaQLX4sOd10j5tvKwSoiZ0cCtfP9UWLiGMiqgZSGBg/exec'
+          D3='https://script.google.com/macros/s/AKfycbzFmuXe6S8gNjjAvx7ZRm_sBXj1NXnr2BeLrXi9U-zT7M_zIdipJAeJx3W-ayTfhCXe/exec'
+          for name in D1 D2 D3; do
+            U=$(eval echo \$$name)
+            printf '%s fresh:  ' "$name"
+            curl -s -m 30 -D - -o /dev/null "$U?sid=probe-$(date +%s)" 2>/dev/null | grep -i '^HTTP' | tr -d '\r'
+            printf '%s bare:   ' "$name"
+            curl -s -m 30 -D - -o /dev/null "$U" 2>/dev/null | grep -i '^HTTP' | tr -d '\r'
+          done
