@@ -291,7 +291,7 @@ function trackAnalytics(name, roll, extra, evt) {
   if (!ANALYTICS_URL) return;
   try {
     var params =
-      '?sid=' + encodeURIComponent(SESSION_ID) +
+      '?s=' + encodeURIComponent(SESSION_ID) +
       '&name=' + encodeURIComponent(name) +
       '&roll=' + encodeURIComponent(roll) +
       '&ts=' + encodeURIComponent(new Date().toLocaleString('sv-SE', {timeZone:'Asia/Kolkata'}).replace(' ','T') + '+05:30') +

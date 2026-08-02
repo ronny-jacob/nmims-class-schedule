@@ -30,21 +30,7 @@ function now_() {
 function doGet(e) {
   var p = e.parameter;
 
-  if (p.debug === 'sheets') {
-    var out = [];
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
-    var sheets = ss.getSheets();
-    for (var i = 0; i < sheets.length; i++) {
-      var sh = sheets[i];
-      var last = sh.getLastRow();
-      var rows = last > 1 ? sh.getRange(1, 1, Math.min(last, 6), sh.getLastColumn()).getValues() : [];
-      out.push('SHEET: ' + sh.getName() + ' (rows=' + last + ', cols=' + sh.getLastColumn() + ')');
-      for (var r = 0; r < rows.length; r++) out.push('  ' + rows[r].join(' | '));
-    }
-    return ContentService.createTextOutput(out.join('\n'));
-  }
-
-  var sid = p.sid || '';
+  var sid = p.s || '';
   var evt = p.evt || '';
   var name = p.name || '';
   var roll = p.roll || '';
@@ -79,16 +65,4 @@ function doGet(e) {
 function logActivity_(sid, ts, evt, name, roll, extra, ua, ref) {
   var log = ensureSheet_('Activity Log', ['Session ID', 'Timestamp', 'Event', 'Name', 'Roll', 'Extra', 'User Agent', 'Referrer']);
   prepend_(log, [sid, ts, evt, name, roll, extra, ua, ref]);
-}
-
-function debugListSheets() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sheets = ss.getSheets();
-  var out = [];
-  for (var i = 0; i < sheets.length; i++) {
-    var sh = sheets[i];
-    var last = sh.getLastRow();
-    out.push('SHEET: ' + sh.getName() + ' (rows=' + last + ', cols=' + sh.getLastColumn() + ')');
-  }
-  return out.join('\n');
 }
