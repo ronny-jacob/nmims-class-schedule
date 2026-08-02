@@ -1,0 +1,15 @@
+name: Probe Throttle
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test fresh analytics URL from GitHub IP
+        run: |
+          URL='https://script.google.com/macros/s/AKfycbzFmuXe6S8gNjjAvx7ZRm_sBXj1NXnr2BeLrXi9U-zT7M_zIdipJAeJx3W-ayTfhCXe/exec'
+          echo "=== fresh sid URL (from GitHub IP) ==="
+          curl -s -m 30 -D - -o /dev/null "$URL?sid=github-probe-$(date +%s)" 2>/dev/null | grep -i -E '^HTTP|^location' | cut -c1-100
+          echo "=== cached debug URL (from GitHub IP) ==="
+          curl -s -m 30 -D - -o /dev/null "$URL?debug=sheets" 2>/dev/null | grep -i -E '^HTTP' | cut -c1-100
