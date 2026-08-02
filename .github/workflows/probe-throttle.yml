@@ -12,10 +12,17 @@ jobs:
           D2='https://script.google.com/macros/s/AKfycbznsKjmM4YUlHuX50Cu9dH4LV1oyaQLX4sOd10j5tvKwSoiZ0cCtfP9UWLiGMiqgZSGBg/exec'
           D3='https://script.google.com/macros/s/AKfycbzFmuXe6S8gNjjAvx7ZRm_sBXj1NXnr2BeLrXi9U-zT7M_zIdipJAeJx3W-ayTfhCXe/exec'
           NEW='https://script.google.com/macros/s/AKfycbz2cmE192Z_GD6eBgOKPCtORy-sGPCP-py6gsQZEl91aKzB9Tx-bh1ZpEyCRLSNyr8pJw/exec'
-          for name in D1 D2 D3 NEW; do
-            U=$(eval echo \$$name)
-            printf '%s fresh:  ' "$name"
-            curl -s -m 30 -D - -o /dev/null "$U?sid=probe-$(date +%s)" 2>/dev/null | grep -i '^HTTP' | tr -d '\r'
-            printf '%s bare:   ' "$name"
-            curl -s -m 30 -D - -o /dev/null "$U" 2>/dev/null | grep -i '^HTTP' | tr -d '\r'
-          done
+          echo "=== throwaway NEW project: sid vs other param names ==="
+          printf 'NEW ?sid=   -> '
+          curl -s -m 30 -D - -o /dev/null "$NEW?sid=zzz" 2>/dev/null | grep -i '^HTTP' | tr -d '\r'
+          printf 'NEW ?x=    -> '
+          curl -s -m 30 -D - -o /dev/null "$NEW?x=zzz" 2>/dev/null | grep -i '^HTTP' | tr -d '\r'
+          printf 'NEW ?sess= -> '
+          curl -s -m 30 -D - -o /dev/null "$NEW?sess=zzz" 2>/dev/null | grep -i '^HTTP' | tr -d '\r'
+          printf 'NEW ?sid=UUID -> '
+          curl -s -m 30 -D - -o /dev/null "$NEW?sid=9426c60d-a8b6-4be7-89c3-9e59e4dcd488" 2>/dev/null | grep -i '^HTTP' | tr -d '\r'
+          echo "=== real deployment D3: sid vs other ==="
+          printf 'D3 ?x=     -> '
+          curl -s -m 30 -D - -o /dev/null "$D3?x=zzz" 2>/dev/null | grep -i '^HTTP' | tr -d '\r'
+          printf 'D3 ?sess=  -> '
+          curl -s -m 30 -D - -o /dev/null "$D3?sess=zzz" 2>/dev/null | grep -i '^HTTP' | tr -d '\r'
