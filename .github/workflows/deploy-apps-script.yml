@@ -1,0 +1,43 @@
+name: Deploy Apps Script
+
+on:
+  push:
+    paths:
+      - 'google-apps-script/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Restore clasp credentials
+        run: |
+          echo "${{ secrets.CLASP_CREDS }}" | base64 -d > "$HOME/.clasprc.json"
+
+      - name: Write project config
+        working-directory: google-apps-script
+        run: |
+          echo "${{ secrets.CLASP_SCRIPT_ID }}" > .clasp.json
+          cat .clasp.json
+
+      - name: Install clasp
+        run: npm install -g @google/clasp
+
+      - name: Push code
+        working-directory: google-apps-script
+        run: clasp push -f
+
+      - name: Deploy new version (same URL)
+        working-directory: google-apps-script
+        env:
+          CLASP_DEPLOYMENT_ID: ${{ secrets.CLASP_DEPLOYMENT_ID }}
+        run: |
+          version=$(clasp version "auto $(date -u +%Y-%m-%dT%H:%M:%SZ)")
+          echo "version created: $version"
+          clasp deploy --deploymentId "$CLASP_DEPLOYMENT_ID" --version "$version" --description "auto $(date -u +%Y-%m-%dT%H:%M:%SZ)"
