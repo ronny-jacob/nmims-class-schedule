@@ -28,12 +28,6 @@ function now_() {
 }
 
 function doGet(e) {
-  // TEMP DEBUG: list sheet names
-  if (e.parameter.debug === 'sheets') {
-    var dbg = SpreadsheetApp.getActiveSpreadsheet().getSheets().map(function (sh) { return sh.getName(); });
-    return ContentService.createTextOutput(JSON.stringify(dbg));
-  }
-
   // Page open events
   if (e.parameter.evt === 'pageview' || e.parameter.name === '__page_view__') {    var views = ensureSheet_('Page Views', ['Timestamp', 'User Agent', 'Referrer']);
     prepend_(views, [e.parameter.ts || now_(), e.parameter.ua || '', e.parameter.ref || '']);
