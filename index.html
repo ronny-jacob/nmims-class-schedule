@@ -268,11 +268,31 @@ let ttRange = 'today';
 let foodRange = 'today';
 const ANALYTICS_URL = 'https://script.google.com/macros/s/AKfycbzFmuXe6S8gNjjAvx7ZRm_sBXj1NXnr2BeLrXi9U-zT7M_zIdipJAeJx3W-ayTfhCXe/exec';
 
+var SESSION_ID = (function() {
+  function gen() {
+    var s = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
+    return s.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0;
+      var v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+  try {
+    var existing = sessionStorage.getItem('tt_session');
+    if (!existing) {
+      existing = gen();
+      sessionStorage.setItem('tt_session', existing);
+    }
+    return existing;
+  } catch (e) { return gen(); }
+})();
+
 function trackAnalytics(name, roll, extra, evt) {
   if (!ANALYTICS_URL) return;
   try {
     var params =
-      '?name=' + encodeURIComponent(name) +
+      '?sid=' + encodeURIComponent(SESSION_ID) +
+      '&name=' + encodeURIComponent(name) +
       '&roll=' + encodeURIComponent(roll) +
       '&ts=' + encodeURIComponent(new Date().toLocaleString('sv-SE', {timeZone:'Asia/Kolkata'}).replace(' ','T') + '+05:30') +
       '&ua=' + encodeURIComponent(navigator.userAgent) +
@@ -302,9 +322,16 @@ function setTimeRange(range, btn) {
   renderTimetable();
 }
 
+var searchLogTimer = null;
 function onStudentInput() {
   var input = document.getElementById('studentSelect');
   var val = input.value.trim().toLowerCase();
+  if (searchLogTimer) clearTimeout(searchLogTimer);
+  if (val) {
+    searchLogTimer = setTimeout(function() {
+      trackAnalytics('', '', val, 'search');
+    }, 900);
+  }
   var dd = document.getElementById('studentDropdown');
   if (!val) { dd.classList.remove('open'); return; }
   var matched = [];
@@ -372,7 +399,7 @@ function selectStudentAuto(el) {
   var s = matched[mi];
   if (!s) return;
   selectedStudent = s;
-  trackAnalytics(s.name, s.roll);
+  trackAnalytics(s.name, s.roll, '', 'select');
   document.getElementById('studentSelect').value = s.name;
   document.getElementById('studentInfo').innerHTML = '<div class="id-r"><span class="id-l">Roll</span><span class="id-v">'+he(s.roll)+'</span></div><div class="id-r"><span class="id-l">Major</span><span class="id-v">'+he(s.major)+'</span></div>'+(s.minor?'<div class="id-r"><span class="id-l">Minor</span><span class="id-v">'+he(s.minor.replace(/;/g,''))+'</span></div>':'');
   renderTimetable();

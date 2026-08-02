@@ -28,27 +28,41 @@ function now_() {
 }
 
 function doGet(e) {
+  var p = e.parameter;
+
+  var sid = p.sid || '';
+  var evt = p.evt || '';
+  var name = p.name || '';
+  var roll = p.roll || '';
+  var extra = p.extra || '';
+  var ts = p.ts || now_();
+  var ua = p.ua || '';
+  var ref = p.ref || '';
+
   // Page open events
-  if (e.parameter.evt === 'pageview' || e.parameter.name === '__page_view__') {    var views = ensureSheet_('Page Views', ['Timestamp', 'User Agent', 'Referrer']);
-    prepend_(views, [e.parameter.ts || now_(), e.parameter.ua || '', e.parameter.ref || '']);
+  if (evt === 'pageview' || name === '__page_view__') {
+    logActivity_(sid, ts, 'pageview', '', '', '', ua, ref);
     return ContentService.createTextOutput('ok');
   }
 
   // Button-click easter egg events
-  if (e.parameter.evt === 'click' || e.parameter.name === '__do_not_click__') {
-    var clicks = ensureSheet_('Button Clicks', ['Timestamp', 'Message']);
-    prepend_(clicks, [e.parameter.ts || now_(), e.parameter.extra || '']);
+  if (evt === 'click' || name === '__do_not_click__') {
+    logActivity_(sid, ts, 'click', '', '', extra, ua, ref);
     return ContentService.createTextOutput('ok');
   }
 
-  // Student access logging -> fixed "Access Log" sheet (no more getActiveSheet())
-  var access = ensureSheet_('Access Log', ['Name', 'Roll', 'Timestamp', 'User Agent', 'Referrer']);
-  prepend_(access, [
-    e.parameter.name || '',
-    e.parameter.roll || '',
-    e.parameter.ts || now_(),
-    e.parameter.ua || '',
-    e.parameter.ref || ''
-  ]);
+  // Name search events
+  if (evt === 'search') {
+    logActivity_(sid, ts, 'search', '', '', extra, ua, ref);
+    return ContentService.createTextOutput('ok');
+  }
+
+  // Student selection / access logging
+  logActivity_(sid, ts, 'select', name, roll, extra, ua, ref);
   return ContentService.createTextOutput('ok');
+}
+
+function logActivity_(sid, ts, evt, name, roll, extra, ua, ref) {
+  var log = ensureSheet_('Activity Log', ['Session ID', 'Timestamp', 'Event', 'Name', 'Roll', 'Extra', 'User Agent', 'Referrer']);
+  prepend_(log, [sid, ts, evt, name, roll, extra, ua, ref]);
 }
