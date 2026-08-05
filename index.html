@@ -959,72 +959,10 @@ function setFoodRange(range, btn) {
   btn.classList.add('active');
   renderFoodMenu();
 }
-function getMenuWeekForDate(d) {
-  var ap = (DATA.food_menu_anchor || '2026-03-30').split('-');
-  var anchorMs = Date.UTC(+ap[0], +ap[1]-1, +ap[2]);
-  var diff = Math.floor((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - anchorMs) / 86400000);
-  return Math.floor(diff / 7) % 2 === 0 ? 'week1' : 'week2';
-}
-function formatFoodDayHeader(d) {
-  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  return days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()];
-}
 function renderFoodMenu() {
   var view = document.getElementById('foodView');
   if (!view) return;
-  var fm = DATA.food_menu || {};
-  if (!fm.week1 || !DATA.food_meals || !DATA.food_meals.length) {
-    view.innerHTML = '<div class="empty">Food menu not available</div>';
-    return;
-  }
-  var html = '';
-  if (foodRange === 'today' || foodRange === 'tomorrow') {
-    var now = new Date();
-    if (foodRange === 'tomorrow') now.setDate(now.getDate() + 1);
-    var weekKey = getMenuWeekForDate(now);
-    var week = fm[weekKey] || {};
-    var dayKey = DAY_NAMES[(now.getDay() + 6) % 7];
-    var row = week[dayKey];
-    html += '<div class="fm-single-wrap"><div class="fm-single">';
-    html += '<div class="fm-single-hdr">' + formatFoodDayHeader(now) +
-            '<span class="fm-single-sub">' + (weekKey === 'week1' ? '1st' : '2nd') + ' week menu</span></div>';
-    if (!row) {
-      html += '<div class="fm-meal fm-meal-none">No menu listed for this day</div>';
-    } else {
-      for (var m = 0; m < DATA.food_meals.length; m++) {
-        var meal = DATA.food_meals[m];
-        var text = row[meal.key] || '';
-        html += '<div class="fm-meal"><div class="fm-meal-head"><span class="fm-meal-label">' + he(meal.label) +
-                '</span><span class="fm-meal-time">' + he(meal.time) + '</span></div>' +
-                '<div class="fm-meal-text">' + (text ? he(text) : '&mdash;') + '</div></div>';
-      }
-    }
-    html += '</div></div>';
-  } else {
-    var week = fm[foodRange] || {};
-    html += '<div class="tt-scroll"><div class="tt-grid fm-grid">';
-    html += '<div class="tt-gh" style="min-width:64px">Day</div>';
-    for (var m2 = 0; m2 < DATA.food_meals.length; m2++) {
-      var meal2 = DATA.food_meals[m2];
-      html += '<div class="tt-gh fm-hdr">' + he(meal2.label) + '<span class="fm-time">' + he(meal2.time) + '</span></div>';
-    }
-    for (var d = 0; d < 7; d++) {
-      var day = DAY_NAMES[d];
-      var row2 = week[day];
-      html += '<div class="tt-gl fm-day">' + day + '</div>';
-      if (!row2) {
-        for (var m3 = 0; m3 < DATA.food_meals.length; m3++) html += '<div class="tt-gc tt-empty"></div>';
-        continue;
-      }
-      for (var m4 = 0; m4 < DATA.food_meals.length; m4++) {
-        var text2 = row2[DATA.food_meals[m4].key] || '';
-        html += '<div class="tt-gc fm-cell">' + (text2 ? he(text2) : '&mdash;') + '</div>';
-      }
-    }
-    html += '</div></div>';
-  }
-  view.innerHTML = html;
+  view.innerHTML = '<div class="empty">The food menu has changed and the new one has not been received yet. It will appear here once it is updated.</div>';
 }
 function showTab(id,btn){
   var rc=document.getElementById('RC');
