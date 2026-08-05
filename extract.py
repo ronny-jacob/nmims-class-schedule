@@ -15,8 +15,8 @@ STUDENT_LIST = src("Division wise List- Trimester IV.xlsx")
 LAST_YEAR_LIST = src("First Year Division list.xlsx")
 TIMETABLE    = "downloads/03.08.2026 to 9.08.2026.xlsx"
 TIMETABLE_NEXT = ""
-FOOD_MENU    = "sources/April & May 2026..xlsx"
-FOOD_MENU_ANCHOR = "2026-03-30"
+FOOD_MENU    = "sources/August-Sept Menu Updated.xlsx"
+FOOD_MENU_ANCHOR = "2026-08-03"
 OUTPUT       = "data.json"
 
 TIMETABLE = resolve(TIMETABLE)
