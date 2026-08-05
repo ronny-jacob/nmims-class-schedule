@@ -95,6 +95,14 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .fm-meal-text{font-size:12.5px;line-height:1.5;color:var(--text)}
 .fm-meal-none{color:var(--text-muted);font-size:12px}
 .empty{text-align:center;padding:30px 16px;color:var(--text-light);font-size:13px}
+.fm-fun{display:flex;flex-direction:column;gap:18px;align-items:center;text-align:center}
+.fm-fun-txt{font-size:13px;line-height:1.6;color:var(--text)}
+.fm-fun-txt b{color:var(--accent);font-weight:700}
+.fm-marquee{overflow:hidden;width:100%;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--accent-bg);border-radius:var(--radius-sm);-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.fm-track{display:flex;align-items:center;gap:26px;width:max-content;animation:fm-scroll 22s linear infinite;padding:12px 0}
+.fm-track:hover{animation-play-state:paused}
+@keyframes fm-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.fm-icon{flex-shrink:0;width:64px;height:64px;filter:drop-shadow(0 2px 4px rgba(44,42,38,.08))}
 .mt{width:100%;border-collapse:collapse;font-size:12px}
 .mt th{padding:8px 6px;font-weight:600;font-size:10px;color:var(--text-muted);text-align:left;border-bottom:1px solid var(--border);background:var(--accent-bg)}
 .mt td{padding:8px 6px;border-bottom:1px solid var(--border-light);vertical-align:middle}
@@ -962,7 +970,17 @@ function setFoodRange(range, btn) {
 function renderFoodMenu() {
   var view = document.getElementById('foodView');
   if (!view) return;
-  view.innerHTML = '<div class="empty">The food menu has changed and the new one has not been received yet. It will appear here once it is updated.</div>';
+  var pizza = '<svg class="fm-icon" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="28" fill="#e0a052"/><circle cx="32" cy="32" r="22" fill="#f2c879"/><circle cx="24" cy="26" r="5" fill="#b5533f"/><circle cx="38" cy="22" r="4.5" fill="#b5533f"/><circle cx="40" cy="38" r="5" fill="#b5533f"/><circle cx="26" cy="40" r="4.5" fill="#7c9c5c"/><circle cx="32" cy="32" r="2" fill="#7c9c5c"/></svg>';
+  var burger = '<svg class="fm-icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M8 28 Q8 14 32 14 Q56 14 56 28 Z" fill="#d99a4e"/><ellipse cx="32" cy="28" rx="24" ry="5" fill="#e0a052"/><rect x="10" y="28" width="44" height="9" rx="3" fill="#f3e3bd"/><rect x="8" y="33" width="48" height="7" rx="3" fill="#7c9c5c"/><rect x="10" y="40" width="44" height="9" rx="3" fill="#8a5a3b"/><rect x="12" y="49" width="40" height="6" rx="3" fill="#e0a052"/><circle cx="20" cy="20" r="1.8" fill="#f6ecd6"/><circle cx="32" cy="18" r="1.8" fill="#f6ecd6"/><circle cx="44" cy="20" r="1.8" fill="#f6ecd6"/></svg>';
+  var unit = pizza + burger + burger + pizza;
+  var items = '';
+  for (var i = 0; i < 4; i++) items += unit;
+  view.innerHTML =
+    '<div class="fm-fun">' +
+      '<div class="fm-fun-txt">The new food menu is still <b>in the oven</b> &mdash; we haven\'t received it yet.<br>' +
+      'Until it\'s ready, help yourself to some <b>burgers</b> and <b>pizza</b>! &#127828;&#127839;</div>' +
+      '<div class="fm-marquee"><div class="fm-track">' + items + items + '</div></div>' +
+    '</div>';
 }
 function showTab(id,btn){
   var rc=document.getElementById('RC');
