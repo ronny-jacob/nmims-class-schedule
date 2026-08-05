@@ -970,11 +970,12 @@ function setFoodRange(range, btn) {
 function renderFoodMenu() {
   var view = document.getElementById('foodView');
   if (!view) return;
-  var pair = getFoodPair();
-  var unit = pair.join('');
+  var idx = Math.floor(Date.now() / (20 * 60 * 1000)) % FOOD_PAIRS.length;
+  var keys = FOOD_PAIRS[idx];
+  var unit = foodIcon(keys[0]) + foodIcon(keys[1]);
   var items = '';
   for (var i = 0; i < 4; i++) items += unit;
-  var names = pair[0].getAttribute('data-name') + ' and ' + pair[1].getAttribute('data-name');
+  var names = keyName(keys[0]) + ' and ' + keyName(keys[1]);
   view.innerHTML =
     '<div class="fm-fun">' +
       '<div class="fm-fun-txt">The new food menu is still <b>in the oven</b> &mdash; we haven\'t received it yet.<br>' +
@@ -994,9 +995,8 @@ var FOOD_PAIRS = [
   ['pavBhaji', 'thali']
 ];
 
-function getFoodPair() {
-  var idx = Math.floor(Date.now() / (20 * 60 * 1000)) % FOOD_PAIRS.length;
-  return FOOD_PAIRS[idx].map(foodIcon);
+function keyName(key) {
+  return FOOD_ICON_NAMES[key] || key;
 }
 
 var FOOD_ICON_SVGS = {
@@ -1020,6 +1020,24 @@ var FOOD_ICON_SVGS = {
 function foodIcon(key) {
   return FOOD_ICON_SVGS[key] || FOOD_ICON_SVGS.pizzaSlice;
 }
+
+var FOOD_ICON_NAMES = {
+  pizzaSlice: 'pizza',
+  burger: 'hamburgers',
+  samosa: 'samosas',
+  vadaPav: 'vada pav',
+  fries: 'french fries',
+  momos: 'momos',
+  dosa: 'dosa',
+  pavBhaji: 'pav bhaji',
+  paniPuri: 'pani puri',
+  jalebi: 'jalebi',
+  maggi: 'maggi noodles',
+  sandwich: 'sandwiches',
+  choleBhature: 'chole bhature',
+  kulfi: 'kulfi',
+  thali: 'a classic thali'
+};
 function showTab(id,btn){
   var rc=document.getElementById('RC');
   var ps=rc.getElementsByClassName('panel');
