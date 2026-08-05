@@ -100,7 +100,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .fm-fun-txt b{color:var(--accent);font-weight:700}
 .fm-marquee{overflow:hidden;width:100%;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--accent-bg);border-radius:var(--radius-sm);-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
 .fm-track{display:flex;align-items:center;gap:26px;width:max-content;animation:fm-scroll 22s linear infinite;padding:12px 0}
-.fm-track:hover{animation-play-state:paused}
+@media(hover:hover){.fm-track:hover{animation-play-state:paused}}
 @keyframes fm-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .fm-icon{flex-shrink:0;width:64px;height:64px;filter:drop-shadow(0 2px 4px rgba(44,42,38,.08))}
 .mt{width:100%;border-collapse:collapse;font-size:12px}
