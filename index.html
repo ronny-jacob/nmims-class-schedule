@@ -1038,7 +1038,7 @@ function fmInit(){
   fmT.addEventListener('pointercancel',up);
   fmT.addEventListener('lostpointercapture',up);
   var last=performance.now();
-  var spd=120;
+  var spd=60;
   function tick(now){
     var dt=(now-last)/1000;last=now;
     half=fmT.scrollWidth/2;
