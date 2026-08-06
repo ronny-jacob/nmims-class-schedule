@@ -1,0 +1,64 @@
+{
+  "announcements": [
+    {
+      "company": "Oxane Partners",
+      "role": "Senior Analyst - Portfolio Management Group",
+      "announced_on": "2026-07-10",
+      "names": ["Ishita Sinha", "Vasu Jain", "Karthik Akella"]
+    },
+    {
+      "company": "Ironsides Advisory",
+      "role": "Associate Consultant - FDD",
+      "announced_on": "2026-07-14",
+      "names": ["Umang Gupta", "Naman Jain"]
+    },
+    {
+      "company": "Wells Fargo",
+      "role": "PPO",
+      "announced_on": "2026-07-17",
+      "names": ["Medha Jha", "Saksham Gupta", {"name": "Darshana I", "roster": "I Dharshana"}]
+    },
+    {
+      "company": "Verity Knowledge Solutions",
+      "role": "PPO",
+      "announced_on": "2026-07-21",
+      "names": ["Shreya Gupta"]
+    },
+    {
+      "company": "NetElixir",
+      "role": "PPO",
+      "announced_on": "2026-07-24",
+      "names": ["Arsh Sinha"]
+    },
+    {
+      "company": "EPAM Systems",
+      "role": "PPO",
+      "announced_on": "2026-07-28",
+      "names": ["Jyoti Bikas Das", "Tina Kewlani", "Heeral Tandon"]
+    },
+    {
+      "company": "Crisil",
+      "role": "PPO",
+      "announced_on": "2026-07-31",
+      "names": ["Swechha Jaiswal", {"name": "Tharini S S", "roster": "Tharani S S"}]
+    },
+    {
+      "company": "EY",
+      "role": "PPO",
+      "announced_on": "2026-08-03",
+      "names": ["Pilla Venkata Sai Tharun", "Yendluri Deepti Chowdary"]
+    },
+    {
+      "company": "Oxane Partners",
+      "role": "PPO",
+      "announced_on": "2026-08-01",
+      "names": ["Sudhanshu Chauhan", "Ayush Dutta", "Dibyendu Das"]
+    },
+    {
+      "company": "Wipro",
+      "role": "PPO",
+      "announced_on": "2026-08-06",
+      "names": ["Shwetha R"]
+    }
+  ]
+}

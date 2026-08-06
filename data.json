@@ -3174,6 +3174,135 @@
     }
   ],
   "food_menu_anchor": "2026-08-03",
+  "placements": [
+    {
+      "name": "Ishita Sinha",
+      "company": "Oxane Partners",
+      "date": "2026-07-10",
+      "roster": null
+    },
+    {
+      "name": "Vasu Jain",
+      "company": "Oxane Partners",
+      "date": "2026-07-10",
+      "roster": null
+    },
+    {
+      "name": "Karthik Akella",
+      "company": "Oxane Partners",
+      "date": "2026-07-10",
+      "roster": null
+    },
+    {
+      "name": "Umang Gupta",
+      "company": "Ironsides Advisory",
+      "date": "2026-07-14",
+      "roster": null
+    },
+    {
+      "name": "Naman Jain",
+      "company": "Ironsides Advisory",
+      "date": "2026-07-14",
+      "roster": null
+    },
+    {
+      "name": "Medha Jha",
+      "company": "Wells Fargo",
+      "date": "2026-07-17",
+      "roster": null
+    },
+    {
+      "name": "Saksham Gupta",
+      "company": "Wells Fargo",
+      "date": "2026-07-17",
+      "roster": null
+    },
+    {
+      "name": "Darshana I",
+      "company": "Wells Fargo",
+      "date": "2026-07-17",
+      "roster": "I Dharshana"
+    },
+    {
+      "name": "Shreya Gupta",
+      "company": "Verity Knowledge Solutions",
+      "date": "2026-07-21",
+      "roster": null
+    },
+    {
+      "name": "Arsh Sinha",
+      "company": "NetElixir",
+      "date": "2026-07-24",
+      "roster": null
+    },
+    {
+      "name": "Jyoti Bikas Das",
+      "company": "EPAM Systems",
+      "date": "2026-07-28",
+      "roster": null
+    },
+    {
+      "name": "Tina Kewlani",
+      "company": "EPAM Systems",
+      "date": "2026-07-28",
+      "roster": null
+    },
+    {
+      "name": "Heeral Tandon",
+      "company": "EPAM Systems",
+      "date": "2026-07-28",
+      "roster": null
+    },
+    {
+      "name": "Swechha Jaiswal",
+      "company": "Crisil",
+      "date": "2026-07-31",
+      "roster": null
+    },
+    {
+      "name": "Tharini S S",
+      "company": "Crisil",
+      "date": "2026-07-31",
+      "roster": "Tharani S S"
+    },
+    {
+      "name": "Pilla Venkata Sai Tharun",
+      "company": "EY",
+      "date": "2026-08-03",
+      "roster": null
+    },
+    {
+      "name": "Yendluri Deepti Chowdary",
+      "company": "EY",
+      "date": "2026-08-03",
+      "roster": null
+    },
+    {
+      "name": "Sudhanshu Chauhan",
+      "company": "Oxane Partners",
+      "date": "2026-08-01",
+      "roster": null
+    },
+    {
+      "name": "Ayush Dutta",
+      "company": "Oxane Partners",
+      "date": "2026-08-01",
+      "roster": null
+    },
+    {
+      "name": "Dibyendu Das",
+      "company": "Oxane Partners",
+      "date": "2026-08-01",
+      "roster": null
+    },
+    {
+      "name": "Shwetha R",
+      "company": "Wipro",
+      "date": "2026-08-06",
+      "roster": null
+    }
+  ],
+  "placements_window_days": 2,
   "days": [
     "Sun",
     "Mon",

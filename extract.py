@@ -1,6 +1,6 @@
 import json, re, os
 from collections import OrderedDict
-from datetime import datetime
+from datetime import datetime, timedelta
 import openpyxl
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -17,7 +17,9 @@ TIMETABLE    = "downloads/03.08.2026 to 9.08.2026.xlsx"
 TIMETABLE_NEXT = ""
 FOOD_MENU    = "sources/August-Sept Menu Updated.xlsx"
 FOOD_MENU_ANCHOR = "2026-08-03"
+PLACEMENTS   = "sources/placements.json"
 OUTPUT       = "data.json"
+PLACEMENT_WINDOW_DAYS = 2
 
 TIMETABLE = resolve(TIMETABLE)
 TIMETABLE_NEXT = resolve(TIMETABLE_NEXT)
@@ -383,6 +385,45 @@ def parse_students():
 
     return students
 
+def parse_placements():
+    """Flatten placements.json → [{name, company, date}] (in the 2-day window)."""
+    placements = []
+    try:
+        with open(PLACEMENTS) as f:
+            raw = json.load(f)
+    except FileNotFoundError:
+        return placements
+    except Exception as e:
+        print(f"⚠️ Could not parse placements: {e}")
+        return placements
+
+    today = datetime.now().date()
+    window_start = today - timedelta(days=PLACEMENT_WINDOW_DAYS)
+
+    for a in raw.get("announcements", []):
+        company = str(a.get("company", "")).strip()
+        date_str = str(a.get("announced_on", "")).strip()
+        try:
+            announced = datetime.strptime(date_str, "%Y-%m-%d").date()
+        except Exception:
+            announced = None
+        for name in a.get("names", []):
+            roster_name = None
+            if isinstance(name, dict):
+                nm = str(name.get("name", "")).strip()
+                roster_name = str(name.get("roster", "")).strip() or None
+            else:
+                nm = str(name).strip()
+            if not nm:
+                continue
+            placements.append({
+                "name": nm,
+                "company": company,
+                "date": date_str,
+                "roster": roster_name,
+            })
+    return placements
+
 def main():
     students = parse_students()
     try:
@@ -436,6 +477,8 @@ def main():
         except Exception as e:
             print(f"⚠️ Could not parse food menu: {e}")
 
+    placements = parse_placements()
+
     data = {
         "students": students,
         "subjects": subjects,
@@ -446,6 +489,8 @@ def main():
         "food_menu": food_menu,
         "food_meals": FOOD_MEALS,
         "food_menu_anchor": FOOD_MENU_ANCHOR,
+        "placements": placements,
+        "placements_window_days": PLACEMENT_WINDOW_DAYS,
         "days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
         "date_range": date_range,
         "date_range_next": date_range_next,
@@ -473,6 +518,7 @@ def main():
     if timetable_next:
         print(f"   Next week entries: {len(timetable_next)}")
     print(f"   Food menu weeks: {len(food_menu)}")
+    print(f"   Placements: {len(placements)}")
 
     # ─── Regenerate index.html with embedded data ───
     INDEX_HTML = "index.html"
