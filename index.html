@@ -1425,6 +1425,13 @@ function syncOverlayViewport_(){
   if (!o) return;
   o.style.top = '0';
   o.style.height = (window.innerHeight || 800) + 'px';
+  if (window.visualViewport) {
+    var vv = window.visualViewport;
+    var kbH = (window.innerHeight || 800) - (vv.offsetTop + vv.height);
+    if (kbH < 0) kbH = 0;
+    o.style.paddingBottom = Math.max(kbH, 0) + 'px';
+    o.style.boxSizing = 'border-box';
+  }
 }
 var suggestTextTimer = null;
 function suggestTextInput(){
