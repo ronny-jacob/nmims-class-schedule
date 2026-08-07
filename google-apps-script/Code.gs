@@ -69,6 +69,12 @@ function doGet(e) {
     return ContentService.createTextOutput('ok');
   }
 
+  // Suggestion box submissions
+  if (evt === 'suggest') {
+    logSuggestion_(sid, ts, name, roll, extra, ua, ref);
+    return ContentService.createTextOutput('ok');
+  }
+
   // Student selection / access logging
   logActivity_(sid, ts, 'select', name, roll, extra, ua, ref);
   return ContentService.createTextOutput('ok');
@@ -77,4 +83,9 @@ function doGet(e) {
 function logActivity_(sid, ts, evt, name, roll, extra, ua, ref) {
   var log = ensureSheet_('Activity Log', ['Session ID', 'Timestamp', 'Event', 'Name', 'Roll', 'Extra', 'User Agent', 'Referrer']);
   prepend_(log, [sid, ts, evt, name, roll, extra, ua, ref]);
+}
+
+function logSuggestion_(sid, ts, name, roll, text, ua, ref) {
+  var sheet = ensureSheet_('Suggestions', ['Session ID', 'Timestamp', 'Name', 'Roll', 'Suggestion', 'User Agent', 'Referrer']);
+  prepend_(sheet, [sid, ts, name, roll, text, ua, ref]);
 }
