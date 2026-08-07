@@ -1398,6 +1398,8 @@ renderFoodMenu();
 buildCelebration();
 /* ── Suggestion box ─────────────────────────────── */
 var sfSubmitted = false;
+var sfBlockedWait = false;
+var sfCooldownTimer = null;
 function openSuggestion() {
   var o = document.getElementById('suggestOverlay');
   var t = document.getElementById('suggestText');
@@ -1407,6 +1409,8 @@ function openSuggestion() {
   t.value = '';
   document.getElementById('suggestSend').disabled = true;
   sfSubmitted = false;
+  sfBlockedWait = false;
+  if (sfCooldownTimer) { clearInterval(sfCooldownTimer); sfCooldownTimer = null; }
   document.body.classList.add('modal-open');
   o.classList.add('open');
   setTimeout(function(){ t.focus(); }, 60);
@@ -1422,11 +1426,12 @@ function trackSuggestionOpen_(){
 function trackSuggestionCancel_(){
   try {
     var name = (selectedStudent && selectedStudent.name) ? selectedStudent.name : '';
-    trackAnalytics(name, '', '', 'suggest_cancel');
+    trackAnalytics(name, '', '', sfBlockedWait ? 'suggest_cancel_cooldown' : 'suggest_cancel');
   } catch(e){}
 }
 function closeSuggestion(){
   if (!sfSubmitted) trackSuggestionCancel_();
+  if (sfCooldownTimer) { clearInterval(sfCooldownTimer); sfCooldownTimer = null; }
   document.getElementById('suggestOverlay').classList.remove('open');
   document.body.classList.remove('modal-open');
 }
@@ -1469,20 +1474,47 @@ function attachSuggestionListeners(){
 function cooldownLeft_(){
   var last = 0;
   try { last = Number(sessionStorage.getItem('sf_last') || 0); } catch(e){}
-  var left = 60 - Math.floor((Date.now() - last) / 1000);
+  var left = 30 - Math.floor((Date.now() - last) / 1000);
   return left > 0 ? left : 0;
 }
 function showNote_(m){ var x = document.getElementById('suggestNote'); x.style.display = 'block'; x.textContent = m; }
 function hideNote_(){ document.getElementById('suggestNote').style.display = 'none'; }
 function showError_(m){ var x = document.getElementById('suggestError'); x.style.display = 'block'; x.textContent = m; }
 function hideError_(){ document.getElementById('suggestError').style.display = 'none'; }
+function showCount_(left){
+  var x = document.getElementById('suggestError');
+  x.style.display = 'block';
+  x.textContent = "You\u2019ve just sent one. Can send again in " + left + "s.";
+}
+function startCooldownTick_(){
+  if (sfCooldownTimer) clearInterval(sfCooldownTimer);
+  sfCooldownTimer = setInterval(function(){
+    var cd = cooldownLeft_();
+    if (cd <= 0) {
+      clearInterval(sfCooldownTimer);
+      sfCooldownTimer = null;
+      sfBlockedWait = false;
+      hideError_();
+      suggestTextInput();
+    } else {
+      showCount_(cd);
+    }
+  }, 1000);
+  showCount_(cooldownLeft_());
+  suggestTextInput();
+}
 function sendSuggestion(){
   var t = document.getElementById('suggestText');
   var n = document.getElementById('suggestName');
   var text = String(t.value || '').trim();
   if (text.length < 3) return;
   var cd = cooldownLeft_();
-  if (cd > 0) { showError_("You've just sent one. Try again in " + cd + "s."); return; }
+  if (cd > 0) {
+    sfBlockedWait = true;
+    document.getElementById('suggestSend').disabled = true;
+    startCooldownTick_();
+    return;
+  }
   try { sessionStorage.setItem('sf_last', String(Date.now())); } catch(e){}
   var name = String(n.value || '').trim();
   trackAnalytics(name, '', text, 'suggest');

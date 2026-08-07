@@ -81,6 +81,12 @@ function doGet(e) {
     return ContentService.createTextOutput('ok');
   }
 
+  // Suggestion box closed while blocked by the send cooldown
+  if (evt === 'suggest_cancel_cooldown') {
+    logSuggestion_(sid, ts, name, roll, '[closed during send cooldown]', ua, ref);
+    return ContentService.createTextOutput('ok');
+  }
+
   // Suggestion box submissions
   if (evt === 'suggest') {
     logSuggestion_(sid, ts, name, roll, extra, ua, ref);
