@@ -1,0 +1,47 @@
+name: Deploy Mail Watch
+
+on:
+  push:
+    paths:
+      - 'mail-watch/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Restore clasp credentials
+        run: |
+          echo "${{ secrets.CLASP_CREDS }}" | base64 -d > "$HOME/.clasprc.json"
+
+      - name: Write project config
+        working-directory: mail-watch
+        run: |
+          echo '{"scriptId":"${{ secrets.MAIL_WATCH_CLASP_SCRIPT_ID }}"}' > .clasp.json
+          cat .clasp.json
+
+      - name: Install clasp
+        run: npm install -g @google/clasp
+
+      - name: Push code
+        working-directory: mail-watch
+        run: clasp push -f
+
+      - name: Deploy new version
+        working-directory: mail-watch
+        env:
+          MAIL_WATCH_CLASP_DEPLOYMENT_ID: ${{ secrets.MAIL_WATCH_CLASP_DEPLOYMENT_ID }}
+        run: |
+          version=$(clasp version "auto $(date -u +%Y-%m-%dT%H:%M:%SZ)" | grep -oE '[0-9]+' | head -1)
+          echo "version created: $version"
+          if [ -n "$MAIL_WATCH_CLASP_DEPLOYMENT_ID" ]; then
+            clasp deploy --deploymentId "$MAIL_WATCH_CLASP_DEPLOYMENT_ID" --versionNumber "$version" --description "auto $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          else
+            echo "No MAIL_WATCH_CLASP_DEPLOYMENT_ID set — skipping deploy."
+          fi

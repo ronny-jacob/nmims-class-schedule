@@ -2,8 +2,10 @@ name: Check Timetable Email
 
 on:
   schedule:
-    # Every hour from 6 AM to 11 PM IST (UTC 0:30 – 17:30)
-    - cron: '30 0-17 * * 0-5'
+    # Hourly Weekdays 8 AM to 11 PM IST (UTC 2:30 – 17:30), skips 12 AM–8 AM
+    - cron: '30 2-17 * * 1-5'
+    # Saturday safety net (the every-minute Apps Script drives real-time checks)
+    - cron: '30 2-17 * * 6'
   workflow_dispatch:
 
 permissions:
