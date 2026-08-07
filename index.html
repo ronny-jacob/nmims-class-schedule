@@ -1522,7 +1522,7 @@ function sendSuggestion(){
   hideError_();
   showNote_('Got it. Thanks for the idea!');
   document.getElementById('suggestSend').disabled = true;
-  setTimeout(function(){ closeSuggestion(); }, 1400);
+  setTimeout(function(){ closeSuggestion(); }, 2000);
 }
 attachSuggestionListeners();
 document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeSuggestion(); });
