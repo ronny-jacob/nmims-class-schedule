@@ -1211,20 +1211,20 @@ function shortPlaceName(name, all){
   }
   return lb;
 }
-var celebInner = null, celebPos = 0, celebLoop = 0, celebAuto = true, celebRaf = null, celebVel = 110, celebHold = 0;function celebWrap_(p){
-  if (celebLoop <= 0) return 0;
-  var m = p % celebLoop;
-  if (m < 0) m += celebLoop;
-  return m;
-}
-function celebFrame_(ts){
-  if (!celebInner) return;
-  if (celebHold > 0) { celebHold--; celebLast_ = ts; celebInner.style.transform = 'translate3d(' + (-celebPos) + 'px,0,0)'; celebRaf = requestAnimationFrame(celebFrame_); return; }
-  if (celebAuto) celebPos = celebWrap_(celebPos + celebVel * (ts - (celebLast_ || ts)) / 1000);
-  celebLast_ = ts;
-  celebInner.style.transform = 'translate3d(' + (-celebPos) + 'px,0,0)';
-  celebRaf = requestAnimationFrame(celebFrame_);
+var celebInner = null, celebPos = 0, celebLoop = 0, celebAuto = true, celebRaf = null, celebVel = 110, celebHold = 0, celebShift = 0;function celebWrap_(p){
+   if (celebLoop <= 0) return 0;
+   var m = p % celebLoop;
+   if (m < 0) m += celebLoop;
+   return m;
  }
+ function celebFrame_(ts){
+   if (!celebInner) return;
+   if (celebHold > 0) { celebHold--; celebLast_ = ts; celebInner.style.transform = 'translate3d(' + (celebShift - celebPos) + 'px,0,0)'; celebRaf = requestAnimationFrame(celebFrame_); return; }
+   if (celebAuto) celebPos = celebWrap_(celebPos + celebVel * (ts - (celebLast_ || ts)) / 1000);
+   celebLast_ = ts;
+   celebInner.style.transform = 'translate3d(' + (celebShift - celebPos) + 'px,0,0)';
+   celebRaf = requestAnimationFrame(celebFrame_);
+  }
 var celebLast_ = 0;
 function celebDown_(e){
   celebAuto = false;
@@ -1275,6 +1275,7 @@ function buildCelebration(){
   var halfW = inner.getBoundingClientRect().width / 2;
   celebInner = inner;
   celebLoop = halfW;
+  celebShift = track.clientWidth || banner.clientWidth || window.innerWidth;
   celebPos = 0;
   celebAuto = true;
   celebVel = Math.max(24, Math.min(55, window.innerWidth / 26));
@@ -1290,7 +1291,7 @@ function buildCelebration(){
   } else {
     celebAuto = false;
     celebPos = 0;
-    inner.style.transform = 'translate3d(0,0,0)';
+    inner.style.transform = 'translate3d(' + celebShift + 'px,0,0)';
   }
   banner.classList.add('show');
   ceBombard_();
