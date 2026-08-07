@@ -148,6 +148,41 @@ To deploy `mail-watch/` automatically on push (like the analytics script):
 > Note: the trigger still needs to be installed once (step 6). The workflow only
 > deploys the CODE; it does not install the time trigger.
 
+## Step 8 — Staging site (test changes before going live)
+
+A duplicate site at **`https://ronny-jacob.github.io/nmims-class-schedule-staging/`**
+(separate repo `ronny-jacob/nmims-class-schedule-staging`) exists so you can
+make and verify changes without touching the live site.
+
+**Workflow**
+1. Clone the staging repo, make your edits there, push to its `main`.
+2. The staging repo auto-deploys its own Pages site (`deploy-pages.yml`).
+   Preview your changes at the staging URL.
+3. When happy, promote to production from the staging clone:
+   ```bash
+   ./promote.sh            # push current branch -> production main
+   ```
+4. Production Pages deploys automatically on the push. Done.
+
+**How the two repos differ**
+- Both publish Pages on push to `main` (`deploy-pages.yml`).
+- Only the **production** repo runs the operational workflows: the timetable
+  mail check (`check-timetable.yml`), analytics Apps Script deploy
+  (`deploy-apps-script.yml`), and the mail watcher deploy
+  (`deploy-mail-watch.yml`). They are gated with
+  `if: github.repository == 'ronny-jacob/nmims-class-schedule'`, so staging
+  never writes timetable/mail changes — it stays a clean preview.
+- The production-only secrets (`IMAP_*`, roster lists, clasp IDs, PATs) do not
+  need to exist on staging.
+
+**Create/refresh the staging repo (one-time)**
+```bash
+gh repo create ronny-jacob/nmims-class-schedule-staging --public
+git remote add staging https://github.com/ronny-jacob/nmims-class-schedule-staging.git
+git push staging main
+gh api -X POST repos/ronny-jacob/nmims-class-schedule-staging/pages -f build_type=workflow
+```
+
 ## Testing
 
 Run the script manually to verify everything works:

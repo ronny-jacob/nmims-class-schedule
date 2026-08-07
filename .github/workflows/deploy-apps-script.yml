@@ -8,6 +8,7 @@ on:
 
 jobs:
   deploy:
+    if: github.repository == 'ronny-jacob/nmims-class-schedule'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
