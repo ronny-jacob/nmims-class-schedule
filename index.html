@@ -231,6 +231,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .sf-btn .sf-arr{margin-left:auto;font-size:12px;color:var(--suggest)}
 .sf-overlay{position:fixed;left:0;right:0;top:0;height:100vh;height:100dvh;z-index:80;background:rgba(40,36,32,.38);display:flex;align-items:center;justify-content:center;padding:18px;box-sizing:border-box;opacity:0;visibility:hidden;transition:opacity .18s ease,visibility .18s}
 .sf-overlay.open{opacity:1;visibility:visible}
+body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scrolling:auto}
 .sf-modal{width:min(380px,100%);max-height:calc(100dvh - 40px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 18px 50px rgba(20,18,15,.28);transform:translateY(12px) scale(.97);transition:transform .18s ease}
 .sf-overlay.open .sf-modal{transform:translateY(0) scale(1)}
 .sf-hd{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--suggest-line);background:var(--suggest-bg)}
@@ -1404,12 +1405,14 @@ function openSuggestion() {
   if (selectedStudent) n.value = selectedStudent.name;
   t.value = '';
   document.getElementById('suggestSend').disabled = true;
+  document.body.classList.add('modal-open');
   o.classList.add('open');
   setTimeout(function(){ t.focus(); }, 60);
   scrollOverlayIntoKeyword_();
 }
 function closeSuggestion(){
   document.getElementById('suggestOverlay').classList.remove('open');
+  document.body.classList.remove('modal-open');
 }
 function scrollOverlayIntoKeyword_(){
   setTimeout(function(){
@@ -1441,6 +1444,7 @@ function attachSuggestionListeners(){
   t.addEventListener('keydown', function(e){ if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) sendSuggestion(); });
   if (window.visualViewport) {
     window.visualViewport.addEventListener('resize', syncOverlayViewport_);
+    window.visualViewport.addEventListener('scroll', syncOverlayViewport_);
   }
 }
 function cooldownLeft_(){
