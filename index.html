@@ -220,11 +220,19 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 @media (max-width:480px){.celeb{padding:0 12px;gap:8px}.celeb.show{max-height:56px;padding:9px 12px}.celeb-item{font-size:12.5px}}
 @media (prefers-reduced-motion:reduce){.dntc-btn,.dntc-btn.hit,.dntc-dot,.dntc-petal,.dntc-petal-blow,.dntc-petal-drift,.dntc-petal-fall,.dntc-petal-spin,.dntc-petal-settle{animation:none}.dntc-punch{opacity:1;transform:none;transition:none}.dntc-toast{transition:none}.sf-btn,.sf-box{animation:none;transition:none}}
 /* ── Suggestion box ─────────────────────────────── */
-.sf-btn{position:fixed;left:16px;bottom:16px;z-index:55;display:flex;align-items:center;gap:9px;padding:11px 16px;border:1px solid var(--border);border-radius:999px;background:var(--surface);color:var(--text);font-family:var(--font);font-size:13px;font-weight:650;box-shadow:var(--shadow-md);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .15s ease,box-shadow .15s ease}
-.sf-btn .sf-slot{width:16px;height:12px;border:1.6px solid var(--text);border-radius:3px;position:relative;box-shadow:inset 0 -4px 0 -1.6px rgba(0,0,0,.08)}
-.sf-btn .sf-slot::before{content:"";position:absolute;left:-3px;top:0;width:20px;height:1.6px;background:var(--text);transform:rotate(-8deg);transform-origin:left center}
-@media(hover:hover){.sf-btn:hover{transform:translateY(-1px);box-shadow:var(--shadow-md),0 6px 18px rgba(44,42,38,.12)}}
+.sf-btn{display:flex;align-items:center;gap:14px;width:100%;box-sizing:border-box;margin-top:2px;padding:12px 16px;border:1px solid var(--border);border-radius:14px;background:var(--surface);color:var(--text);font-family:var(--font);text-align:left;box-shadow:var(--shadow);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:border-color .12s,box-shadow .15s ease,transform .12s ease}
+@media(hover:hover){.sf-btn:hover{border-color:var(--text-muted);box-shadow:var(--shadow-md)}}
 .sf-btn:active{transform:translateY(0)}
+/* mailbox / file-storage box artwork */
+.sf-mail{position:relative;flex-shrink:0;width:44px;height:40px}
+.sf-mail .sf-cube{position:absolute;left:3px;top:14px;width:26px;height:18px;border:1.6px solid var(--text);border-radius:4px;background:var(--bg);box-shadow:inset 0 -5px 0 -1.6px rgba(0,0,0,.06)}
+.sf-mail .sf-cube::before{content:"";position:absolute;left:-1px;top:0;width:30px;height:2px;background:var(--text);transform:rotate(-4deg);transform-origin:left center}
+.sf-mail .sf-slot{position:absolute;left:6px;top:7px;width:26px;height:7px;border:1.6px solid var(--text);border-radius:3px;background:var(--bg);box-shadow:inset 0 -5px 0 -1.6px rgba(0,0,0,.08)}
+.sf-mail .sf-flag{position:absolute;right:2px;top:8px;width:3px;height:13px;background:var(--accent);border-radius:2px;transform-origin:left bottom;transition:transform .2s ease}
+@media(hover:hover){.sf-btn:hover .sf-flag{transform:rotate(38deg)}}
+.sf-btn .sf-ti{font-size:13.5px;font-weight:700;color:var(--text)}
+.sf-btn .sf-su{display:block;font-size:11.5px;font-weight:500;color:var(--text-muted);margin-top:1px}
+.sf-btn .sf-arr{margin-left:auto;font-size:12px;color:var(--text-light)}
 .sf-overlay{position:fixed;inset:0;z-index:80;background:rgba(40,36,32,.38);display:flex;align-items:center;justify-content:center;padding:18px;opacity:0;visibility:hidden;transition:opacity .18s ease,visibility .18s}
 .sf-overlay.open{opacity:1;visibility:visible}
 .sf-modal{width:min(380px,100%);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 18px 50px rgba(20,18,15,.28);overflow:hidden;transform:translateY(12px) scale(.97);transition:transform .18s ease}
@@ -252,7 +260,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .sf-submit:disabled{opacity:.45;cursor:not-allowed}
 .sf-note{margin-top:10px;font-size:12px;font-weight:600;color:var(--accent);text-align:center}
 .sf-error{margin-top:10px;font-size:12px;font-weight:600;color:#c0392b;text-align:center}
-@media (max-width:480px){.sf-btn{left:12px;bottom:12px;padding:10px 14px}.sf-overlay{padding:14px}}
+@media (max-width:480px){.sf-btn{padding:10px 13px;gap:11px}.sf-overlay{padding:14px}}
 </style>
 </head>
 <body>
@@ -282,6 +290,15 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     <button class="pill" onclick="showMainTab('students',this)">Classmates</button>
     <button class="pill" onclick="showMainTab('subjects',this)">All Subjects</button>
   </div>
+  <button type="button" class="sf-btn" onclick="openSuggestion()" aria-label="Open suggestion box">
+    <span class="sf-mail">
+      <span class="sf-slot"></span>
+      <span class="sf-cube"></span>
+      <span class="sf-flag"></span>
+    </span>
+    <span><span class="sf-ti">Suggestion Box</span><span class="sf-su">Drop in a note — we read every one.</span></span>
+    <span class="sf-arr">&#9662;</span>
+  </button>
   <div id="panel-food" class="panel active">
     <div class="pill-group">
       <button class="pill sm active" onclick="setFoodRange('today',this)">Today</button>
@@ -351,7 +368,6 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
   <div class="dntc-toast-hd"><span class="dntc-toast-title" id="dntcTitle">Warning</span><button type="button" class="dntc-x" onclick="dismissDontClick()" aria-label="Dismiss">&#215;</button></div>
   <div class="dntc-toast-tx" id="dntcText"></div>
 </div>
-<button type="button" class="sf-btn" onclick="openSuggestion()" aria-label="Send a suggestion"><span class="sf-slot"></span>Suggest</button>
 <div class="sf-overlay" id="suggestOverlay" role="dialog" aria-modal="true" aria-labelledby="suggestTitle">
   <div class="sf-modal">
     <div class="sf-hd">
