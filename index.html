@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,interactive-widget=resizes-content">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
 <title>NMIMS Class Companion</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -224,13 +224,10 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 @media(hover:hover){.sf-btn:hover{border-color:var(--text-muted);box-shadow:var(--shadow-md)}}
 .sf-btn:active{transform:translateY(0)}
 /* mailbox / file-storage box artwork */
-.sf-mail{position:relative;flex-shrink:0;width:62px;height:52px}
-.sf-mail .sf-body{position:absolute;left:1px;top:10px;width:42px;height:30px;border:2px solid var(--text);border-bottom:0;border-radius:12px 12px 3px 3px;background:var(--surface);box-shadow:inset 0 -6px 0 -2px rgba(0,0,0,.05)}
-.sf-mail .sf-body::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:11px;border:2px solid var(--text);border-bottom-width:3px;border-top:0;border-radius:0 0 6px 6px;background:var(--surface)}
-.sf-mail .sf-slot{position:absolute;left:10px;top:2px;width:24px;height:7px;border:2px solid var(--text);border-radius:4px;background:var(--bg);box-shadow:inset 0 -4px 0 -2px rgba(0,0,0,.12)}
-.sf-mail .sf-flag{position:absolute;right:-2px;top:0;width:4px;height:20px;background:var(--accent);border-radius:3px;transform-origin:left bottom;transition:transform .2s ease}
-.sf-mail .sf-flag::after{content:"";position:absolute;top:2px;left:4px;width:11px;height:5px;background:var(--accent);border-radius:2px}
-@media(hover:hover){.sf-btn:hover .sf-flag{transform:rotate(-42deg)}}
+.sf-mail{flex-shrink:0;width:62px;height:50px}
+.sf-mail svg{display:block;width:100%;height:100%}
+.sf-mail .sf-flag{transform-box:fill-box;transform-origin:0 100%;transition:transform .2s ease}
+@media(hover:hover){.sf-btn:hover .sf-mail .sf-flag{transform:rotate(-38deg)}}
 .sf-btn .sf-ti{font-size:13.5px;font-weight:700;color:var(--text)}
 .sf-btn .sf-su{display:block;font-size:11.5px;font-weight:500;color:var(--text-muted);margin-top:1px}
 .sf-btn .sf-arr{margin-left:auto;font-size:12px;color:var(--text-light)}
@@ -293,9 +290,21 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
   </div>
   <button type="button" class="sf-btn" onclick="openSuggestion()" aria-label="Open suggestion box">
     <span class="sf-mail">
-      <span class="sf-body"></span>
-      <span class="sf-slot"></span>
-      <span class="sf-flag"></span>
+      <svg viewBox="0 0 64 52" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
+        <g fill="var(--surface)" stroke="var(--text)" stroke-width="2.6" stroke-linejoin="round">
+          <path d="M8 26 l22 -14 a14 14 0 0 1 13 0 l21 14 z"/>
+          <rect x="6" y="26" width="52" height="18" rx="4"/>
+        </g>
+        <rect x="6" y="26" width="52" height="6" fill="var(--bg)" stroke="var(--text)" stroke-width="2.6"/>
+        <rect x="24" y="7" width="10" height="9" rx="2.5" fill="var(--bg)" stroke="var(--text)" stroke-width="2.6"/>
+        <g class="sf-flag">
+          <rect x="52" y="6" width="7" height="4" rx="2" fill="var(--accent)"/>
+          <rect x="56" y="6" width="3.4" height="22" fill="var(--accent)"/>
+        </g>
+        <rect x="8" y="44" width="3" height="8" rx="1.5" fill="var(--text)"/>
+        <rect x="13" y="44" width="3" height="5" rx="1.5" fill="var(--text)"/>
+        <rect x="18" y="44" width="3" height="8" rx="1.5" fill="var(--text)"/>
+      </svg>
     </span>
     <span><span class="sf-ti">Suggestion Box</span><span class="sf-su">Drop in a note — we read every one.</span></span>
     <span class="sf-arr">&#9662;</span>
