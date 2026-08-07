@@ -1424,10 +1424,7 @@ function syncOverlayViewport_(){
   var o = document.getElementById('suggestOverlay');
   if (!o) return;
   o.style.top = '0';
-  if (window.visualViewport) {
-    var kbBottom = window.visualViewport.offsetTop + window.visualViewport.height;
-    o.style.height = (kbBottom + 60) + 'px';
-  }
+  o.style.height = (window.innerHeight || 800) + 'px';
 }
 var suggestTextTimer = null;
 function suggestTextInput(){
