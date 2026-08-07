@@ -1426,7 +1426,7 @@ function syncOverlayViewport_(){
   o.style.top = '0';
   if (window.visualViewport) {
     var kbBottom = window.visualViewport.offsetTop + window.visualViewport.height;
-    o.style.height = Math.max(kbBottom, 200) + 'px';
+    o.style.height = (kbBottom + 60) + 'px';
   }
 }
 var suggestTextTimer = null;
