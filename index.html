@@ -1406,9 +1406,26 @@ function openSuggestion() {
   document.getElementById('suggestSend').disabled = true;
   o.classList.add('open');
   setTimeout(function(){ t.focus(); }, 60);
+  scrollOverlayIntoKeyword_();
 }
 function closeSuggestion(){
   document.getElementById('suggestOverlay').classList.remove('open');
+}
+function scrollOverlayIntoKeyword_(){
+  setTimeout(function(){
+    var t = document.getElementById('suggestText');
+    if (t && t.scrollIntoView) { try { t.scrollIntoView({ block:'center' }); } catch(e){ t.scrollIntoView(); } }
+  }, 120);
+}
+function syncOverlayViewport_(){
+  var o = document.getElementById('suggestOverlay');
+  if (!o) return;
+  if (window.visualViewport) {
+    var kbTop = window.visualViewport.offsetTop;
+    var vh = window.visualViewport.height;
+    o.style.height = Math.max(vh, 200) + 'px';
+    o.style.top = kbTop + 'px';
+  }
 }
 var suggestTextTimer = null;
 function suggestTextInput(){
@@ -1422,6 +1439,9 @@ function attachSuggestionListeners(){
   n.addEventListener('click', function(){ suggestTextInput(); });
   document.getElementById('suggestSend').addEventListener('click', sendSuggestion);
   t.addEventListener('keydown', function(e){ if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) sendSuggestion(); });
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', syncOverlayViewport_);
+  }
 }
 function cooldownLeft_(){
   var last = 0;
