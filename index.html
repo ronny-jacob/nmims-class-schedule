@@ -1269,13 +1269,13 @@ function buildCelebration(){
   inner.innerHTML = seq;
   var w = inner.getBoundingClientRect().width;
   var trackW = track.clientWidth || banner.clientWidth || window.innerWidth;
-  var reps = Math.max(2, Math.ceil((trackW * 2) / (w || 1)));
+  var reps = Math.max(8, Math.ceil((trackW * 2) / (w || 1)));
   if (reps % 2 !== 0) reps++;
   inner.innerHTML = new Array(reps + 1).join(seq);
   var halfW = inner.getBoundingClientRect().width / 2;
   celebInner = inner;
   celebLoop = halfW;
-  celebShift = track.clientWidth || banner.clientWidth || window.innerWidth;
+  celebShift = halfW;
   celebPos = 0;
   celebAuto = true;
   celebVel = Math.max(24, Math.min(55, window.innerWidth / 26));
