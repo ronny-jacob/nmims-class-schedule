@@ -1211,7 +1211,7 @@ function shortPlaceName(name, all){
   }
   return lb;
 }
-var celebInner = null, celebPos = 0, celebLoop = 0, celebAuto = true, celebRaf = null, celebVel = 110;function celebWrap_(p){
+var celebInner = null, celebPos = 0, celebLoop = 0, celebAuto = true, celebRaf = null, celebVel = 110, celebHold = 0;function celebWrap_(p){
   if (celebLoop <= 0) return 0;
   var m = p % celebLoop;
   if (m < 0) m += celebLoop;
@@ -1219,11 +1219,12 @@ var celebInner = null, celebPos = 0, celebLoop = 0, celebAuto = true, celebRaf =
 }
 function celebFrame_(ts){
   if (!celebInner) return;
+  if (celebHold > 0) { celebHold--; celebLast_ = ts; celebInner.style.transform = 'translate3d(' + (-celebPos) + 'px,0,0)'; celebRaf = requestAnimationFrame(celebFrame_); return; }
   if (celebAuto) celebPos = celebWrap_(celebPos + celebVel * (ts - (celebLast_ || ts)) / 1000);
   celebLast_ = ts;
   celebInner.style.transform = 'translate3d(' + (-celebPos) + 'px,0,0)';
   celebRaf = requestAnimationFrame(celebFrame_);
-}
+ }
 var celebLast_ = 0;
 function celebDown_(e){
   celebAuto = false;
@@ -1284,6 +1285,7 @@ function buildCelebration(){
     track.addEventListener('pointerup', celebUp_);
     track.addEventListener('pointercancel', celebUp_);
     track.addEventListener('pointerleave', celebUp_);
+    celebHold = 45;
     celebRaf = requestAnimationFrame(celebFrame_);
   } else {
     celebAuto = false;
