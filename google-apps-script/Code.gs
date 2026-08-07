@@ -71,7 +71,13 @@ function doGet(e) {
 
   // Suggestion box opened (may not lead to a submission)
   if (evt === 'suggest_open') {
-    logSuggestion_(sid, ts, name, roll, '', ua, ref);
+    logSuggestion_(sid, ts, name, roll, '[opened]', ua, ref);
+    return ContentService.createTextOutput('ok');
+  }
+
+  // Suggestion box closed/cancelled without submitting
+  if (evt === 'suggest_cancel') {
+    logSuggestion_(sid, ts, name, roll, '[opened, closed without submitting]', ua, ref);
     return ContentService.createTextOutput('ok');
   }
 

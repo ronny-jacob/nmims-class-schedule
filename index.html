@@ -1397,6 +1397,7 @@ rL();rB();rT('iv');rT('v');rT('vi');
 renderFoodMenu();
 buildCelebration();
 /* ── Suggestion box ─────────────────────────────── */
+var sfSubmitted = false;
 function openSuggestion() {
   var o = document.getElementById('suggestOverlay');
   var t = document.getElementById('suggestText');
@@ -1405,6 +1406,7 @@ function openSuggestion() {
   if (selectedStudent) n.value = selectedStudent.name;
   t.value = '';
   document.getElementById('suggestSend').disabled = true;
+  sfSubmitted = false;
   document.body.classList.add('modal-open');
   o.classList.add('open');
   setTimeout(function(){ t.focus(); }, 60);
@@ -1413,12 +1415,18 @@ function openSuggestion() {
 }
 function trackSuggestionOpen_(){
   try {
-    var n = document.getElementById('suggestName');
-    var name = (selectedStudent && selectedStudent.name) ? selectedStudent.name : ((n && n.value) ? n.value : '');
+    var name = (selectedStudent && selectedStudent.name) ? selectedStudent.name : '';
     trackAnalytics(name, '', '', 'suggest_open');
   } catch(e){}
 }
+function trackSuggestionCancel_(){
+  try {
+    var name = (selectedStudent && selectedStudent.name) ? selectedStudent.name : '';
+    trackAnalytics(name, '', '', 'suggest_cancel');
+  } catch(e){}
+}
 function closeSuggestion(){
+  if (!sfSubmitted) trackSuggestionCancel_();
   document.getElementById('suggestOverlay').classList.remove('open');
   document.body.classList.remove('modal-open');
 }
@@ -1478,6 +1486,7 @@ function sendSuggestion(){
   try { sessionStorage.setItem('sf_last', String(Date.now())); } catch(e){}
   var name = String(n.value || '').trim();
   trackAnalytics(name, '', text, 'suggest');
+  sfSubmitted = true;
   hideError_();
   showNote_('Got it. Thanks for the idea!');
   document.getElementById('suggestSend').disabled = true;
