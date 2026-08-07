@@ -217,7 +217,6 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .celeb-burst{position:absolute;border-radius:50%;animation:celebBurst .95s cubic-bezier(.2,.7,.3,1) forwards}
 @keyframes celebBurst{0%{transform:translate(0,0) scale(.6);opacity:1}100%{transform:translate(var(--bx,0px),var(--by,0px)) scale(.2);opacity:0}}
 .celeb-fade{opacity:0!important;transition:opacity 1.2s ease}
-@media (prefers-reduced-motion:reduce){.celeb{transition:none}.celeb-track{animation:none}.celeb-confetti div{animation:none;display:none}}
 @media (max-width:480px){.celeb{padding:0 12px;gap:8px}.celeb.show{max-height:56px;padding:9px 12px}.celeb-item{font-size:12.5px}}
 @media (prefers-reduced-motion:reduce){.dntc-btn,.dntc-btn.hit,.dntc-dot,.dntc-petal,.dntc-petal-blow,.dntc-petal-drift,.dntc-petal-fall,.dntc-petal-spin,.dntc-petal-settle{animation:none}.dntc-punch{opacity:1;transform:none;transition:none}.dntc-toast{transition:none}}
 </style>
@@ -1135,8 +1134,6 @@ function ceBombard_(){
   var host = document.getElementById('celebConfetti');
   if (!host || host.__started) return;
   var colors = ['#e8b23c','#c67840','#7a9a5a','#766096','#e05a3c','#9fb86a','#c98bdb','#f0a33d'];
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduce) return;
   var n = Math.min(46, Math.max(14, Math.floor(window.innerWidth / 34)));
   var shapes = ['rib','dot','sq'];
   for (var i = 0; i < n; i++) {
@@ -1163,8 +1160,6 @@ function ceBurst_(el) {
   var r = el.getBoundingClientRect();
   var x = r.left + r.width / 2, y = r.top + r.height / 2;
   var colors = ['#e8b03c','#c67840','#7a9a5a','#766096','#e05a3c','#f0a33d'];
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduce) return;
   for (var i = 0; i < 20; i++) {
     var p = document.createElement('div');
     p.className = 'celeb-burst';
@@ -1279,20 +1274,13 @@ celebInner = inner;
   celebPos = 0;
   celebAuto = true;
   celebVel = Math.max(24, Math.min(55, window.innerWidth / 26));
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!reduce) {
-    track.addEventListener('pointerdown', celebDown_);
-    track.addEventListener('pointermove', celebMove_);
-    track.addEventListener('pointerup', celebUp_);
-    track.addEventListener('pointercancel', celebUp_);
-    track.addEventListener('pointerleave', celebUp_);
-    celebHold = 45;
-    celebRaf = requestAnimationFrame(celebFrame_);
-  } else {
-    celebAuto = false;
-    celebPos = 0;
-    inner.style.transform = 'translate3d(' + celebShift + 'px,0,0)';
-  }
+  track.addEventListener('pointerdown', celebDown_);
+  track.addEventListener('pointermove', celebMove_);
+  track.addEventListener('pointerup', celebUp_);
+  track.addEventListener('pointercancel', celebUp_);
+  track.addEventListener('pointerleave', celebUp_);
+  celebHold = 45;
+  celebRaf = requestAnimationFrame(celebFrame_);
   banner.classList.add('show');
   ceBombard_();
   if (rec.length <= 3) {
