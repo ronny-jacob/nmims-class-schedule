@@ -220,15 +220,15 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 @media (max-width:480px){.celeb{padding:0 12px;gap:8px}.celeb.show{max-height:56px;padding:9px 12px}.celeb-item{font-size:12.5px}}
 @media (prefers-reduced-motion:reduce){.dntc-btn,.dntc-btn.hit,.dntc-dot,.dntc-petal,.dntc-petal-blow,.dntc-petal-drift,.dntc-petal-fall,.dntc-petal-spin,.dntc-petal-settle{animation:none}.dntc-punch{opacity:1;transform:none;transition:none}.dntc-toast{transition:none}.sf-btn,.sf-box{animation:none;transition:none}}
 /* ── Suggestion box ─────────────────────────────── */
-.sf-btn{display:flex;align-items:center;gap:14px;width:100%;box-sizing:border-box;margin-top:2px;padding:12px 16px;border:1px solid var(--border);border-radius:14px;background:var(--surface);color:var(--text);font-family:var(--font);text-align:left;box-shadow:var(--shadow);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:border-color .12s,box-shadow .15s ease,transform .12s ease}
-@media(hover:hover){.sf-btn:hover{border-color:var(--text-muted);box-shadow:var(--shadow-md)}}
+.sf-btn{display:flex;align-items:center;gap:14px;width:100%;box-sizing:border-box;margin-top:2px;padding:12px 16px;border:1px solid var(--accent);border-radius:14px;background:linear-gradient(135deg,var(--accent-bg),rgba(90,80,66,.06));color:var(--text);font-family:var(--font);text-align:left;box-shadow:var(--shadow);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:border-color .12s,box-shadow .15s ease,transform .12s ease}
+@media(hover:hover){.sf-btn:hover{border-color:var(--accent);box-shadow:var(--shadow-md)}}
 .sf-btn:active{transform:translateY(0)}
 /* mailbox / file-storage box artwork */
-.sf-mail{flex-shrink:0;width:36px;height:36px}
+.sf-mail{flex-shrink:0;width:36px;height:36px;color:var(--accent)}
 .sf-mail svg{display:block;width:100%;height:100%}
-.sf-btn .sf-ti{font-size:13.5px;font-weight:700;color:var(--text)}
+.sf-btn .sf-ti{font-size:13.5px;font-weight:700;color:var(--accent)}
 .sf-btn .sf-su{display:block;font-size:11.5px;font-weight:500;color:var(--text-muted);margin-top:1px}
-.sf-btn .sf-arr{margin-left:auto;font-size:12px;color:var(--text-light)}
+.sf-btn .sf-arr{margin-left:auto;font-size:12px;color:var(--accent)}
 .sf-overlay{position:fixed;left:0;right:0;top:0;height:100vh;height:100dvh;z-index:80;background:rgba(40,36,32,.38);display:flex;align-items:center;justify-content:center;padding:18px;box-sizing:border-box;opacity:0;visibility:hidden;transition:opacity .18s ease,visibility .18s}
 .sf-overlay.open{opacity:1;visibility:visible}
 .sf-modal{width:min(380px,100%);max-height:calc(100dvh - 40px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 18px 50px rgba(20,18,15,.28);transform:translateY(12px) scale(.97);transition:transform .18s ease}
@@ -287,7 +287,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
   </div>
   <button type="button" class="sf-btn" onclick="openSuggestion()" aria-label="Open suggestion box">
     <span class="sf-mail">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true">
         <rect x="4" y="4.5" width="16" height="15" rx="2.5"/>
         <path d="M4 9 H13"/>
         <path d="M15.5 9 v-2.5 a2.5 2.5 0 0 1 2.5-2.5"/>
