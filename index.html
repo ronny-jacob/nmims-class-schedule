@@ -1409,6 +1409,14 @@ function openSuggestion() {
   o.classList.add('open');
   setTimeout(function(){ t.focus(); }, 60);
   scrollOverlayIntoKeyword_();
+  trackSuggestionOpen_();
+}
+function trackSuggestionOpen_(){
+  try {
+    var n = document.getElementById('suggestName');
+    var name = (selectedStudent && selectedStudent.name) ? selectedStudent.name : ((n && n.value) ? n.value : '');
+    trackAnalytics(name, '', '', 'suggest_open');
+  } catch(e){}
 }
 function closeSuggestion(){
   document.getElementById('suggestOverlay').classList.remove('open');

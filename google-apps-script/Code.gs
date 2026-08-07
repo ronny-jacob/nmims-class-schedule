@@ -69,6 +69,12 @@ function doGet(e) {
     return ContentService.createTextOutput('ok');
   }
 
+  // Suggestion box opened (may not lead to a submission)
+  if (evt === 'suggest_open') {
+    logSuggestion_(sid, ts, name, roll, '', ua, ref);
+    return ContentService.createTextOutput('ok');
+  }
+
   // Suggestion box submissions
   if (evt === 'suggest') {
     logSuggestion_(sid, ts, name, roll, extra, ua, ref);
