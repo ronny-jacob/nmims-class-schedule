@@ -1259,7 +1259,7 @@ function buildCelebration(){
     return [ce[i], ce[j]];
   }
   for (var j = 0; j < rec.length; j++) {
-    items.push('<span class="celeb-item">Congrats <b>' + he(shortPlaceName(rec[j].name, allNames)) + '</b>, on getting PPO at <em>' + he(rec[j].company) + '</em></span>');
+    items.push('<span class="celeb-item">Congrats <b>' + he(shortPlaceName(rec[j].name, allNames)) + '</b>, on securing PPO at <em>' + he(rec[j].company) + '</em></span>');
   }
   var seq = '<span class="celeb-sep">&#183;</span>' + items.join('<span class="celeb-sep">&#183;</span>');
   var inner = document.getElementById('celebInner');
@@ -1273,7 +1273,7 @@ function buildCelebration(){
     var seq2 = '';
     for (var j2 = 0; j2 < rec.length; j2++) {
       var e = pickEmojis();
-      seq2 += '<span class="celeb-sep">&#183;</span><span class="celeb-item"><i class="ce-emoji">' + e[0] + '</i> Congrats <b>' + he(shortPlaceName(rec[j2].name, allNames)) + '</b>, on getting PPO at <em>' + he(rec[j2].company) + '</em> <i class="ce-emoji">' + e[1] + '</i></span>';
+      seq2 += '<span class="celeb-sep">&#183;</span><span class="celeb-item"><i class="ce-emoji">' + e[0] + '</i> Congrats <b>' + he(shortPlaceName(rec[j2].name, allNames)) + '</b>, on securing PPO at <em>' + he(rec[j2].company) + '</em> <i class="ce-emoji">' + e[1] + '</i></span>';
     }
     full += seq2;
   }
