@@ -1259,25 +1259,18 @@ function buildCelebration(){
     return [ce[i], ce[j]];
   }
   for (var j = 0; j < rec.length; j++) {
-    items.push('<span class="celeb-item">Congrats <b>' + he(shortPlaceName(rec[j].name, allNames)) + '</b>, on securing PPO at <em>' + he(rec[j].company) + '</em></span>');
+    var e = pickEmojis();
+    items.push('<span class="celeb-sep">&#183;</span><span class="celeb-item"><i class="ce-emoji">' + e[0] + '</i> Congrats <b>' + he(shortPlaceName(rec[j].name, allNames)) + '</b>, on securing PPO at <em>' + he(rec[j].company) + '</em> <i class="ce-emoji">' + e[1] + '</i></span>');
   }
-  var seq = '<span class="celeb-sep">&#183;</span>' + items.join('<span class="celeb-sep">&#183;</span>');
+  items.push('<span class="celeb-sep">&#183;</span>');
+  var seq = items.join('');
   var inner = document.getElementById('celebInner');
   inner.innerHTML = seq;
   var w = inner.getBoundingClientRect().width;
   var trackW = track.clientWidth || banner.clientWidth || window.innerWidth;
   var reps = Math.max(2, Math.ceil((trackW * 2) / (w || 1)));
   if (reps % 2 !== 0) reps++;
-  var full = '';
-  for (var c = 0; c < reps; c++) {
-    var seq2 = '';
-    for (var j2 = 0; j2 < rec.length; j2++) {
-      var e = pickEmojis();
-      seq2 += '<span class="celeb-sep">&#183;</span><span class="celeb-item"><i class="ce-emoji">' + e[0] + '</i> Congrats <b>' + he(shortPlaceName(rec[j2].name, allNames)) + '</b>, on securing PPO at <em>' + he(rec[j2].company) + '</em> <i class="ce-emoji">' + e[1] + '</i></span>';
-    }
-    full += seq2;
-  }
-  inner.innerHTML = full;
+  inner.innerHTML = new Array(reps + 1).join(seq);
   var halfW = inner.getBoundingClientRect().width / 2;
   celebInner = inner;
   celebLoop = halfW;
