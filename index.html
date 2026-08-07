@@ -1273,9 +1273,9 @@ function buildCelebration(){
   if (reps % 2 !== 0) reps++;
   inner.innerHTML = new Array(reps + 1).join(seq);
   var halfW = inner.getBoundingClientRect().width / 2;
-  celebInner = inner;
+celebInner = inner;
   celebLoop = halfW;
-  celebShift = halfW;
+  celebShift = trackW;
   celebPos = 0;
   celebAuto = true;
   celebVel = Math.max(24, Math.min(55, window.innerWidth / 26));
