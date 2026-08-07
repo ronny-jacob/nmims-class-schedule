@@ -295,7 +295,7 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
         <line x1="7" y1="15.5" x2="13" y2="15.5"/>
       </svg>
     </span>
-    <span><span class="sf-ti">Suggestion Box</span><span class="sf-su">Drop in a note — we read every one.</span></span>
+    <span><span class="sf-ti">Suggestion Box</span><span class="sf-su">Drop in a note. We read every one.</span></span>
     <span class="sf-arr">&#9662;</span>
   </button>
   <div id="panel-food" class="panel active">
@@ -376,7 +376,7 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
         <path d="M15.5 9 v-2.5 a2.5 2.5 0 0 1 2.5-2.5"/>
         <line x1="7" y1="15.5" x2="13" y2="15.5"/>
       </svg></span>
-      <div><b id="suggestTitle">Suggestion Box</b><span>Drop in a note — we read every one.</span></div>
+      <div><b id="suggestTitle">Suggestion Box</b><span>Drop in a note. We read every one.</span></div>
       <button type="button" class="sf-x" onclick="closeSuggestion()" aria-label="Close">&#215;</button>
     </div>
     <div class="sf-bd">
@@ -1466,12 +1466,12 @@ function sendSuggestion(){
   var text = String(t.value || '').trim();
   if (text.length < 3) return;
   var cd = cooldownLeft_();
-  if (cd > 0) { showError_("You've just sent one — try again in " + cd + "s."); return; }
+  if (cd > 0) { showError_("You've just sent one. Try again in " + cd + "s."); return; }
   try { sessionStorage.setItem('sf_last', String(Date.now())); } catch(e){}
   var name = String(n.value || '').trim();
   trackAnalytics(name, '', text, 'suggest');
   hideError_();
-  showNote_('Got it — thanks for the idea!');
+  showNote_('Got it. Thanks for the idea!');
   document.getElementById('suggestSend').disabled = true;
   setTimeout(function(){ closeSuggestion(); }, 1400);
 }
