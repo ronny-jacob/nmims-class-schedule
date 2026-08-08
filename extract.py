@@ -21,6 +21,10 @@ PLACEMENTS   = "sources/placements.json"
 OUTPUT       = "data.json"
 PLACEMENT_WINDOW_DAYS = 1
 
+HOLIDAYS = {
+    "2026-08-15": "Independence Day",
+}
+
 TIMETABLE = resolve(TIMETABLE)
 TIMETABLE_NEXT = resolve(TIMETABLE_NEXT)
 FOOD_MENU = resolve(FOOD_MENU)
@@ -520,6 +524,7 @@ def main():
         "food_menu_anchor": FOOD_MENU_ANCHOR,
         "placements": placements,
         "placements_window_days": PLACEMENT_WINDOW_DAYS,
+        "holidays": HOLIDAYS,
         "days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
         "date_range": date_range,
         "date_range_next": date_range_next,

@@ -66,7 +66,6 @@ def search_timetable_mail():
         has_xlsx = False
         att_name = None
         att_content = None
-        all_xlsx = []
 
         if msg.is_multipart():
             for part in msg.walk():
@@ -78,21 +77,10 @@ def search_timetable_mail():
                 fn_decoded = decode_str(fn)
                 if not fn_decoded.lower().endswith(".xlsx"):
                     continue
-                payload = part.get_payload(decode=True)
-                all_xlsx.append((fn_decoded, len(payload) if payload else -1))
-                if not has_xlsx:
-                    has_xlsx = True
-                    att_name = fn_decoded
-                    att_content = payload
-
-        print(f"DEBUG atts for '{subject}': {all_xlsx}")
-        for part in msg.walk():
-            ct = part.get_content_type() or ""
-            fn = part.get_filename()
-            disp = part.get("Content-Disposition") or ""
-            if ct.startswith("image/") or "inline" in disp.lower():
-                sz = len(part.get_payload(decode=True) or b"")
-                print(f"  DEBUG part: {ct} fn={fn} disp={disp} size={sz}")
+                has_xlsx = True
+                att_name = fn_decoded
+                att_content = part.get_payload(decode=True)
+                break
 
         if not has_xlsx or att_content is None:
             continue

@@ -3718,6 +3718,9 @@
     }
   ],
   "placements_window_days": 1,
+  "holidays": {
+    "2026-08-15": "Independence Day"
+  },
   "days": [
     "Sun",
     "Mon",
