@@ -86,6 +86,13 @@ def search_timetable_mail():
                     att_content = payload
 
         print(f"DEBUG atts for '{subject}': {all_xlsx}")
+        for part in msg.walk():
+            ct = part.get_content_type() or ""
+            fn = part.get_filename()
+            disp = part.get("Content-Disposition") or ""
+            if ct.startswith("image/") or "inline" in disp.lower():
+                sz = len(part.get_payload(decode=True) or b"")
+                print(f"  DEBUG part: {ct} fn={fn} disp={disp} size={sz}")
 
         if not has_xlsx or att_content is None:
             continue
