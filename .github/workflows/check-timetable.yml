@@ -48,3 +48,19 @@ jobs:
           IMAP_PASS: ${{ secrets.IMAP_PASS }}
           IMAP_LOOKBACK_DAYS: ${{ secrets.IMAP_LOOKBACK_DAYS }}
         run: python check_mail.py
+
+      # The bot commits with GITHUB_TOKEN, which GitHub refuses to use to
+      # trigger other workflows. Dispatch the Pages deploy explicitly so new
+      # timetables actually reach the live site (only when HEAD moved).
+      - name: Deploy updated site to Pages
+        if: success() && hashFiles('**/*') != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          HEAD_AFTER="$(git rev-parse HEAD)"
+          if [ "${HEAD_AFTER}" != "${GITHUB_SHA}" ]; then
+            echo "Bot pushed ${HEAD_AFTER}; dispatching Pages deploy"
+            gh workflow run deploy-pages.yml --repo "${GITHUB_REPOSITORY}" --ref main
+          else
+            echo "No changes pushed by bot; skipping Pages deploy"
+          fi
