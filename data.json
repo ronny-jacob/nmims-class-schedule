@@ -3302,7 +3302,7 @@
       "roster": null
     }
   ],
-  "placements_window_days": 2,
+  "placements_window_days": 1,
   "days": [
     "Sun",
     "Mon",

@@ -19,7 +19,7 @@ FOOD_MENU    = "sources/August-Sept Menu Updated.xlsx"
 FOOD_MENU_ANCHOR = "2026-08-03"
 PLACEMENTS   = "sources/placements.json"
 OUTPUT       = "data.json"
-PLACEMENT_WINDOW_DAYS = 2
+PLACEMENT_WINDOW_DAYS = 1
 
 TIMETABLE = resolve(TIMETABLE)
 TIMETABLE_NEXT = resolve(TIMETABLE_NEXT)
