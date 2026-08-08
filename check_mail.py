@@ -66,6 +66,7 @@ def search_timetable_mail():
         has_xlsx = False
         att_name = None
         att_content = None
+        all_xlsx = []
 
         if msg.is_multipart():
             for part in msg.walk():
@@ -77,10 +78,14 @@ def search_timetable_mail():
                 fn_decoded = decode_str(fn)
                 if not fn_decoded.lower().endswith(".xlsx"):
                     continue
-                has_xlsx = True
-                att_name = fn_decoded
-                att_content = part.get_payload(decode=True)
-                break
+                payload = part.get_payload(decode=True)
+                all_xlsx.append((fn_decoded, len(payload) if payload else -1))
+                if not has_xlsx:
+                    has_xlsx = True
+                    att_name = fn_decoded
+                    att_content = payload
+
+        print(f"DEBUG atts for '{subject}': {all_xlsx}")
 
         if not has_xlsx or att_content is None:
             continue
