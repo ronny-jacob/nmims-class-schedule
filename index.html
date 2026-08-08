@@ -1436,7 +1436,7 @@ function openSuggestion() {
   var t = document.getElementById('suggestText');
   var n = document.getElementById('suggestName');
   hideNote_(); hideError_();
-  if (selectedStudent) n.value = selectedStudent.name;
+  n.value = '';
   t.value = '';
   document.getElementById('suggestSend').disabled = true;
   sfSubmitted = false;
