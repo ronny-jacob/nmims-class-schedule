@@ -170,14 +170,43 @@ def parse_timetable(filepath):
     ws = wb[sheet_name]
     time_labels = parse_time_labels_from_sheet(ws)
 
-    days_rows = [
-        ("Mon", 3, 4), ("Tue", 5, 6), ("Wed", 7, 8),
-        ("Thu", 9, 10), ("Fri", 11, 12), ("Sat", 13, 14), ("Sun", 15, 16)
-    ]
+    day_labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    day_to_name = {lbl: {"Mon": "Mon", "Tue": "Tue", "Wed": "Wed", "Thu": "Thu",
+                         "Fri": "Fri", "Sat": "Sat", "Sun": "Sun"}[lbl] for lbl in day_labels}
+    day_ranges = []
+    current_day = None
+    start_row = None
+    def flush_day():
+        nonlocal current_day, start_row
+        if current_day is not None and start_row is not None:
+            day_ranges.append((day_to_name[current_day], start_row, last_row))
+    last_row = start_row
+    for row_idx in range(3, ws.max_row + 1):
+        label_cell = ws.cell(row=row_idx, column=1).value
+        if label_cell:
+            raw_label = str(label_cell).strip()
+            for lbl in day_labels:
+                if raw_label.startswith(lbl):
+                    flush_day()
+                    current_day = lbl
+                    start_row = row_idx
+                    last_row = row_idx
+                    break
+        elif current_day is not None:
+            last_row = row_idx
+    flush_day()
+
+    if not day_ranges:
+        day_ranges = [
+            ("Mon", 3, 4), ("Tue", 5, 6), ("Wed", 7, 8),
+            ("Thu", 9, 10), ("Fri", 11, 12), ("Sat", 13, 14), ("Sun", 15, 16)
+        ]
     timetable = []
 
-    for day_name, r1, r2 in days_rows:
-        for row_idx in (r1, r2):
+    for day_name, r1, r2 in day_ranges:
+        if r2 is None:
+            r2 = r1
+        for row_idx in range(r1, r2 + 1):
             for col_idx in range(2, ws.max_column + 1):
                 cell = ws.cell(row=row_idx, column=col_idx)
                 raw = cell.value
