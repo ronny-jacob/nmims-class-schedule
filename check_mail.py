@@ -100,6 +100,8 @@ def search_timetable_mail():
         except Exception:
             received_label = date_str
 
+        print(f"DEBUG candidate: {received_label} | {subject[:70]} | {att_name}")
+
         # Save best match (prefer timetable-patterned filenames)
         if best is None or (is_timetable and not best[0]):
             best = (is_timetable, from_addr, received_label, subject, att_name, att_content)
