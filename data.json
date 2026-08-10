@@ -2889,11 +2889,11 @@
     {
       "day": "Fri",
       "time": "2:00-3:30",
-      "subject": "BS",
-      "raw_text": "BS Div A\nRescheduled class\nL06, 2nd floor\nDr Srividya Raghavan",
-      "professor": "Dr Srividya Raghavan",
-      "room": "L06, 2nd floor",
-      "div": "Div A"
+      "subject": "CB",
+      "raw_text": "CB\nRescheduled class\nL7, 2nd floor\nProf Murtuza Soofi",
+      "professor": "Prof Murtuza Soofi",
+      "room": "L7, 2nd floor",
+      "div": ""
     },
     {
       "day": "Fri",
@@ -3262,6 +3262,6 @@
     "sender": "Sadashiv Bhimanna <sadashiv.bhimanna@nmims.edu>",
     "received_at": "5:26 PM IST on 8 Aug 2026",
     "subject": "Next week time table 10.08.2026 to 16.08.2026",
-    "updated_at": "2026-08-08T12:02:51.887233+00:00"
+    "updated_at": "2026-08-10T04:13:05.731288+00:00"
   }
 }
