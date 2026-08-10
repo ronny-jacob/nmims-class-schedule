@@ -103,6 +103,7 @@ def search_timetable_mail():
         # Save best match (prefer timetable-patterned filenames)
         if best is None or (is_timetable and not best[0]):
             best = (is_timetable, from_addr, received_label, subject, att_name, att_content)
+            print(f"DEBUG picked: {received_label} | {subject[:60]} | {att_name} | sha={hashlib.sha256(att_content).hexdigest()[:12]}")
 
     mail.logout()
     return best
