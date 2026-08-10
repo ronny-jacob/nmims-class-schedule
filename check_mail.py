@@ -260,7 +260,6 @@ def main():
             f.write(new_src)
         print(f"🔧 Updated extract.py ({new_slot or 'promotion'})")
 
-    existing_hash = file_hash(new_path)
     new_hash = hashlib.sha256(att_content).hexdigest()
     if new_hash == existing_hash and not src_changed:
         print(f"ℹ️ {att_name} unchanged — no update needed")
