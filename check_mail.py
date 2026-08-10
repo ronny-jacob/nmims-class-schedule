@@ -100,8 +100,6 @@ def search_timetable_mail():
         except Exception:
             received_label = date_str
 
-        print(f"DEBUG candidate: {received_label} | {subject[:70]} | {att_name}")
-
         # Save best match (prefer timetable-patterned filenames)
         if best is None or (is_timetable and not best[0]):
             best = (is_timetable, from_addr, received_label, subject, att_name, att_content)
@@ -217,6 +215,7 @@ def main():
     # Build path — save in repo's downloads/ directory
     os.makedirs(os.path.join(TIMETABLE_DIR, "downloads"), exist_ok=True)
     new_path = os.path.join(TIMETABLE_DIR, "downloads", att_name)
+    existing_hash = file_hash(new_path)
 
     with open(new_path, "wb") as f:
         f.write(att_content)
