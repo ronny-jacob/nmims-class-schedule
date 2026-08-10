@@ -103,7 +103,6 @@ def search_timetable_mail():
         # Save best match (prefer timetable-patterned filenames)
         if best is None or (is_timetable and not best[0]):
             best = (is_timetable, from_addr, received_label, subject, att_name, att_content)
-            print(f"DEBUG picked: {received_label} | {subject[:60]} | {att_name} | sha={hashlib.sha256(att_content).hexdigest()[:12]}")
 
     mail.logout()
     return best
@@ -124,16 +123,6 @@ def rebuild_and_commit(new_path, sender, received_at, subject):
     print(f"📥 New timetable: {os.path.basename(new_path)}")
     print(f"   From: {sender}, Received: {received_at}")
 
-    result = subprocess.run(
-        [sys.executable, "extract.py"],
-        capture_output=True, text=True,
-        cwd=TIMETABLE_DIR,
-    )
-    print(result.stdout)
-    if result.returncode != 0:
-        print(f"❌ extract.py failed: {result.stderr}")
-        return False
-
     last_updated = {
         "sender": sender,
         "received_at": received_at,
@@ -143,6 +132,16 @@ def rebuild_and_commit(new_path, sender, received_at, subject):
     meta_path = os.path.join(TIMETABLE_DIR, "last_updated.json")
     with open(meta_path, "w") as f:
         json.dump(last_updated, f, indent=2)
+
+    result = subprocess.run(
+        [sys.executable, "extract.py"],
+        capture_output=True, text=True,
+        cwd=TIMETABLE_DIR,
+    )
+    print(result.stdout)
+    if result.returncode != 0:
+        print(f"❌ extract.py failed: {result.stderr}")
+        return False
 
     subprocess.run(["git", "add", "-A"], cwd=TIMETABLE_DIR, capture_output=True)
     commit_msg = f"auto: timetable update from {sender}"
