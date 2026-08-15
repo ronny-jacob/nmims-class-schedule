@@ -80,22 +80,16 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .tt-legend-item.other{color:var(--text-light);font-size:9px;padding:2px 6px}
 .tt-note{font-size:10px;color:var(--text-muted);line-height:1.3;width:100%;margin-bottom:6px}
 .tt-mail-note{font-size:9px;color:var(--text-light);margin-bottom:4px;line-height:1.3;text-align:center}
-.fac-item{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);box-shadow:var(--shadow-sm);margin-bottom:8px;overflow:hidden}
+.fac-item{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);box-shadow:var(--shadow-sm);margin-bottom:6px;overflow:hidden}
 .fac-head{width:100%;display:flex;align-items:center;gap:8px;padding:10px 12px;border:none;background:var(--surface);cursor:pointer;font-family:var(--font);font-size:13px;font-weight:600;color:var(--text);text-align:left;-webkit-tap-highlight-color:transparent;transition:background .12s}
 @media(hover:hover){.fac-head:hover{background:var(--accent-bg)}}
+.fac-head.open{background:var(--accent-bg)}
 .fac-name{flex:1;min-width:0}
 .fac-count{font-size:10px;font-weight:600;color:var(--text-muted);white-space:nowrap}
 .fac-body{max-height:0;overflow:hidden;transition:max-height .32s ease}
-.fac-body.open{max-height:2000px}
-.fac-day{display:flex;align-items:baseline;gap:6px;padding:7px 12px 3px;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted)}
-.fac-day:first-child{padding-top:9px}
-.fac-day-date{font-size:11px;font-weight:500;color:var(--text-light);text-transform:none;letter-spacing:0}
-.fac-sess{display:flex;align-items:center;gap:8px;padding:6px 12px}
-.fac-sess + .fac-sess{border-top:1px solid var(--border-light)}
-.fac-time{font-size:11px;font-weight:600;color:var(--text);white-space:nowrap;width:64px;flex-shrink:0;font-variant-numeric:tabular-nums}
-.fac-sess-subj{font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px;white-space:nowrap}
-.fac-sess-det{font-size:11px;color:var(--text-muted);min-width:0}
-.fac-hol{padding:6px 12px;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-light);background:repeating-linear-gradient(45deg,var(--bg) 0 8px,rgba(44,42,38,.03) 8px 16px)}
+.fac-body.open{max-height:3000px}
+.fac-body.open .tt-scroll{border-top:1px solid var(--border-light)}
+.fac-hint{font-size:10px;color:var(--text-light);text-align:center;margin-bottom:4px}
 .fm-grid{grid-template-columns:64px repeat(4,minmax(150px,1fr));min-width:660px}
 .fm-hdr{display:flex;flex-direction:column;gap:2px;line-height:1.2}
 .fm-time{font-size:8.5px;font-weight:500;color:var(--text-light)}
@@ -346,6 +340,7 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
     <div class="sr">
       <input id="facSearch" class="si" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search faculty&hellip;" oninput="renderFacultyTimetable()">
     </div>
+    <div class="fac-hint">Select a faculty member to see when they are occupied this week.</div>
     <div id="facCount" class="tt-count"></div>
     <div id="facMailNote" class="tt-mail-note"></div>
     <div id="facultyList"></div>
@@ -910,7 +905,7 @@ function renderFacultyTimetable() {
   for (var i2 = 0; i2 < names.length; i2++) {
     if (!q || names[i2].toLowerCase().indexOf(q) !== -1) matched.push(names[i2]);
   }
-  countEl.innerHTML = formatCalHeader(wk.weekStart) + '<span class="cal-sessions">' + matched.length + ' faculty' + (matched.length !== 1 ? '' : '') + '</span>';
+  countEl.innerHTML = formatCalHeader(wk.weekStart) + '<span class="cal-sessions">' + matched.length + ' faculty</span>';
   if (DATA.last_updated && DATA.last_updated.sender !== 'manual update' && DATA.last_updated.received_at) {
     noteEl.innerHTML = 'Updated from <strong>' + he(DATA.last_updated.sender) + '</strong> on ' + he(DATA.last_updated.received_at);
   } else {
@@ -926,32 +921,116 @@ function renderFacultyTimetable() {
     var entries = facMap[fName];
     var cnt = entries.length;
     var facId = 'facItem' + m;
-    var days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-    html += '<div class="fac-item"><button class="fac-head" type="button" onclick="toggleFacItem(\'' + facId + '\')" aria-expanded="false"><span class="fac-name">' + he(fName) + '</span><span class="fac-count">' + cnt + ' session' + (cnt !== 1 ? 's' : '') + '</span><span class="rt">&#9660;</span></button><div class="fac-body" id="' + facId + '">';
-    for (var d = 0; d < days.length; d++) {
-      var day = days[d];
-      var dayEntries = [];
-      for (var e = 0; e < entries.length; e++) { if (entries[e].day === day) dayEntries.push(entries[e]); }
-      if (!dayEntries.length) continue;
-      var hol = weekISOs[day] && holidays[weekISOs[day]];
-      html += '<div class="fac-day"><span class="fac-day-lbl">' + day + '</span><span class="fac-day-date">' + (dayNums[day] || '') + '</span></div>';
-      if (hol) { html += '<div class="fac-hol">' + he(hol) + '</div>'; }
-      for (var e2 = 0; e2 < dayEntries.length; e2++) {
-        var sl = dayEntries[e2];
-        var h = subjectHue(sl.subject);
-        html += '<div class="fac-sess"><span class="fac-time">' + sl.time.replace('-', '\u2013') + '</span><span class="fac-sess-subj" style="background:hsl(' + h + ',82%,87%);color:hsl(' + h + ',62%,18%)">' + he(sl.subject) + '</span><span class="fac-sess-det">' + he(sl.room) + (sl.div ? ' &middot; ' + he(sl.div) : '') + '</span></div>';
-      }
-    }
-    html += '</div></div>';
+    html += '<div class="fac-item"><button class="fac-head" type="button" onclick="toggleFacItem(\'' + facId + '\')" aria-expanded="false"><span class="fac-name">' + he(fName) + '</span><span class="fac-count">' + cnt + ' session' + (cnt !== 1 ? 's' : '') + '</span><span class="rt">&#9660;</span></button><div class="fac-body" id="' + facId + '"></div></div>';
   }
   listEl.innerHTML = html;
 }
+
+function facGridHtml(entries, wk, dayNums, weekISOs, holidays, TIME_ORDER) {
+  var grid = {};
+  var days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  for (var d = 0; d < days.length; d++) {
+    grid[days[d]] = {};
+    for (var t = 0; t < TIME_ORDER.length; t++) grid[days[d]][TIME_ORDER[t]] = [];
+  }
+  for (var e = 0; e < entries.length; e++) {
+    var en = entries[e];
+    if (grid[en.day] && grid[en.day][en.time] !== undefined) grid[en.day][en.time].push(en);
+  }
+  var numTimes = TIME_ORDER.length;
+  var colTmpl = '52px';
+  for (var t = 0; t < numTimes; t++) colTmpl += ' minmax(72px, 1fr)';
+  var holidayName = {};
+  var daysWithData = [];
+  for (var d = 0; d < days.length; d++) {
+    var day = days[d];
+    var hasData = false;
+    for (var t = 0; t < numTimes; t++) { if (grid[day][TIME_ORDER[t]].length) { hasData = true; break; } }
+    if (hasData || (weekISOs[day] && holidays[weekISOs[day]])) {
+      daysWithData.push(day);
+      if (weekISOs[day] && holidays[weekISOs[day]]) holidayName[day] = holidays[weekISOs[day]];
+    }
+  }
+  if (!daysWithData.length) return '<div class="empty">No sessions.</div>';
+  var numDays = daysWithData.length;
+  var html = '<div class="tt-scroll"><div class="tt-grid" style="grid-template-columns:' + colTmpl + '">';
+  html += '<div class="tt-gh tt-time">Day</div>';
+  for (var t = 0; t < numTimes; t++) {
+    var ts = TIME_ORDER[t];
+    html += '<div class="tt-gh">' + ts.replace('-','\u2013') + '</div>';
+  }
+  for (var d = 0; d < numDays; d++) {
+    var day = daysWithData[d];
+    html += '<div class="tt-gl"><span class="tt-gl-day">' + day + '</span><span class="tt-gl-date">' + (dayNums[day] || '') + '</span></div>';
+    if (holidayName[day]) {
+      html += '<div class="tt-gc tt-holiday" style="grid-column:2 / span ' + numTimes + '">' + he(holidayName[day]) + '</div>';
+      continue;
+    }
+    for (var t = 0; t < numTimes; t++) {
+      var time = TIME_ORDER[t];
+      var slotEntries = grid[day][time];
+      if (!slotEntries || slotEntries.length === 0) {
+        html += '<div class="tt-gc tt-empty"></div>';
+      } else {
+        html += '<div class="tt-gc"><div class="tt-cell-flex">';
+        for (var e = 0; e < slotEntries.length; e++) {
+          var sl = slotEntries[e];
+          var h = subjectHue(sl.subject);
+          var rawLines = sl.raw_text ? sl.raw_text.split('\n') : [sl.subject];
+          html += '<div class="slot" style="background:hsl(' + h + ',78%,85%);color:hsl(' + h + ',62%,18%)" title="' + (DATA.subjects[sl.subject] ? DATA.subjects[sl.subject].name : sl.subject) + '">';
+          for (var ri = 0; ri < rawLines.length; ri++) {
+            html += '<span class="' + (ri === 0 ? 'subj' : 'det') + '">' + he(rawLines[ri]) + '</span>';
+          }
+          html += '</div>';
+        }
+        html += '</div></div>';
+      }
+    }
+  }
+  html += '</div></div>';
+  return html;
+}
+
+var facOpenId = '';
 function toggleFacItem(id) {
   var el = document.getElementById(id);
   if (!el) return;
-  var open = el.classList.toggle('open');
+  if (facOpenId && facOpenId !== id) {
+    var prev = document.getElementById(facOpenId);
+    if (prev) {
+      prev.classList.remove('open');
+      var prevHead = prev.parentNode.querySelector('.fac-head');
+      if (prevHead) {
+        prevHead.setAttribute('aria-expanded', 'false');
+        prevHead.classList.remove('open');
+      }
+      prev.innerHTML = '';
+    }
+  }
+  var opening = !el.classList.contains('open');
+  el.classList.toggle('open');
   var head = el.parentNode.querySelector('.fac-head');
-  if (head) head.setAttribute('aria-expanded', open ? 'true' : 'false');
+  if (head) {
+    head.setAttribute('aria-expanded', opening ? 'true' : 'false');
+    head.classList.toggle('open', opening);
+  }
+  if (opening) {
+    facOpenId = id;
+    var wk = getFacWeek();
+    var dayNums = getDayNumbers(wk.weekStart);
+    var weekISOs = getWeekISOs(wk.weekStart);
+    var holidays = DATA.holidays || {};
+    var TIME_ORDER = wk.slots && wk.slots.length ? wk.slots : DATA.time_slots;
+    var fName = head ? head.querySelector('.fac-name').textContent : '';
+    var entries = [];
+    for (var i = 0; i < wk.data.length; i++) {
+      if (facGroupLabel(wk.data[i]) === fName) entries.push(wk.data[i]);
+    }
+    el.innerHTML = facGridHtml(entries, wk, dayNums, weekISOs, holidays, TIME_ORDER);
+  } else {
+    facOpenId = '';
+    el.innerHTML = '';
+  }
 }
 
 
