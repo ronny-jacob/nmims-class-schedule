@@ -92,7 +92,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .fac-range{display:flex;gap:3px;padding:8px 10px 6px;border-bottom:1px solid var(--border-light)}
 .fac-range .pill{border:none;background:transparent;box-shadow:none;border-radius:7px;padding:4px 12px;font-size:11px}
 .fac-range .pill.active{background:var(--accent);color:var(--surface);box-shadow:0 1px 3px rgba(44,42,38,.15)}
-.fac-range .fac-dates{margin-left:auto;font-size:11px;color:var(--text-muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.fac-range .fac-dates{font-size:11px;color:var(--text-muted);white-space:nowrap;font-variant-numeric:tabular-nums;align-self:center;margin-right:6px}
 .fac-hint{font-size:10px;color:var(--text-light);text-align:center;margin-bottom:4px}
 .fm-grid{grid-template-columns:64px repeat(4,minmax(150px,1fr));min-width:660px}
 .fm-hdr{display:flex;flex-direction:column;gap:2px;line-height:1.2}
@@ -934,9 +934,9 @@ function renderFacultyTimetable() {
 function facDropHtml(fName) {
   var wk = getFacWeek();
   var html = '<div class="fac-range">';
+  html += '<span class="fac-dates">' + (wk && wk.weekStart ? formatWeekRangeShort(wk.weekStart) : '') + '</span>';
   html += '<button class="pill sm' + (facRange === 'week' ? ' active' : '') + '" type="button" onclick="setFacDropRange(\'week\',this)">This Week</button>';
   html += '<button class="pill sm' + (facRange === 'next' ? ' active' : '') + '" type="button" onclick="setFacDropRange(\'next\',this)">Next Week</button>';
-  html += '<span class="fac-dates">' + (wk && wk.weekStart ? formatWeekRangeShort(wk.weekStart) : '') + '</span>';
   html += '</div>';
   if (!wk || !wk.data || !wk.data.length) {
     html += '<div class="empty">' + (facRange === 'next' ? 'Not available yet &mdash; will be updated on Saturday' : 'No sessions this week.') + '</div>';
