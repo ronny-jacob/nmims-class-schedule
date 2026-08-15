@@ -13,7 +13,15 @@ function ensureSheet_(name, headers) {
     sh.insertRowBefore(1);
     sh.getRange(1, 1, 1, headers.length).setValues([headers]);
     sh.setFrozenRows(1);
+    return sh;
   }
+  // Append any header columns added after the sheet was created
+  var existing = sh.getRange(1, 1, 1, sh.getLastColumn() || 1).getValues()[0];
+  var add = [];
+  for (var i = 0; i < headers.length; i++) {
+    if (existing.indexOf(headers[i]) === -1) add.push(headers[i]);
+  }
+  if (add.length) sh.getRange(1, (sh.getLastColumn() || 0) + 1, 1, add.length).setValues([add]);
   return sh;
 }
 
@@ -43,6 +51,7 @@ function doGet(e) {
   var p = e.parameter;
 
   var sid = p.s || '';
+  var did = p.d || '';
   var evt = p.evt || '';
   var name = p.name || '';
   var roll = p.roll || '';
@@ -53,19 +62,26 @@ function doGet(e) {
 
   // Page open events
   if (evt === 'pageview' || name === '__page_view__') {
-    logActivity_(sid, ts, 'pageview', '', '', '', ua, ref);
+    logActivity_(sid, did, ts, 'pageview', '', '', '', ua, ref);
     return ContentService.createTextOutput('ok');
   }
 
   // Button-click easter egg events
   if (evt === 'click' || name === '__do_not_click__') {
-    logActivity_(sid, ts, 'click', '', '', extra, ua, ref);
+    logActivity_(sid, did, ts, 'click', '', '', extra, ua, ref);
     return ContentService.createTextOutput('ok');
   }
 
   // Name search events
   if (evt === 'search') {
-    logActivity_(sid, ts, 'search', '', '', extra, ua, ref);
+    logActivity_(sid, did, ts, 'search', '', '', extra, ua, ref);
+    return ContentService.createTextOutput('ok');
+  }
+
+  // PWA install events
+  if (evt === 'install' || evt === 'installed' || evt === 'install_dismissed' ||
+      evt === 'install_guide' || evt === 'installed_open') {
+    logActivity_(sid, did, ts, evt, '', '', extra, ua, ref);
     return ContentService.createTextOutput('ok');
   }
 
@@ -93,14 +109,20 @@ function doGet(e) {
     return ContentService.createTextOutput('ok');
   }
 
+  // Custom events (e.g. fac_week) keep their real type instead of collapsing into 'select'
+  if (evt && evt !== 'select') {
+    logActivity_(sid, did, ts, evt, name, roll, extra, ua, ref);
+    return ContentService.createTextOutput('ok');
+  }
+
   // Student selection / access logging
-  logActivity_(sid, ts, 'select', name, roll, extra, ua, ref);
+  logActivity_(sid, did, ts, 'select', name, roll, extra, ua, ref);
   return ContentService.createTextOutput('ok');
 }
 
-function logActivity_(sid, ts, evt, name, roll, extra, ua, ref) {
-  var log = ensureSheet_('Activity Log', ['Session ID', 'Timestamp', 'Event', 'Name', 'Roll', 'Extra', 'User Agent', 'Referrer']);
-  prepend_(log, [sid, ts, evt, name, roll, extra, ua, ref]);
+function logActivity_(sid, did, ts, evt, name, roll, extra, ua, ref) {
+  var log = ensureSheet_('Activity Log', ['Session ID', 'Device', 'Timestamp', 'Event', 'Name', 'Roll', 'Extra', 'User Agent', 'Referrer']);
+  prepend_(log, [sid, did, ts, evt, name, roll, extra, ua, ref]);
 }
 
 function logSuggestion_(sid, ts, name, roll, text, ua, ref) {

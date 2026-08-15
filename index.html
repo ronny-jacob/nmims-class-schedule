@@ -493,11 +493,29 @@ var SESSION_ID = (function() {
   } catch (e) { return gen(); }
 })();
 
+var DEVICE_ID = (function() {
+  try {
+    var existing = localStorage.getItem('tt_device');
+    if (!existing) {
+      existing = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0;
+        var v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+      localStorage.setItem('tt_device', existing);
+    }
+    return existing;
+  } catch (e) {
+    return 'unknown';
+  }
+})();
+
 function trackAnalytics(name, roll, extra, evt) {
   if (!ANALYTICS_URL) return;
   try {
     var params =
       '?s=' + encodeURIComponent(SESSION_ID) +
+      '&d=' + encodeURIComponent(DEVICE_ID) +
       '&name=' + encodeURIComponent(name) +
       '&roll=' + encodeURIComponent(roll) +
       '&ts=' + encodeURIComponent(new Date().toLocaleString('sv-SE', {timeZone:'Asia/Kolkata'}).replace(' ','T') + '+05:30') +
@@ -1875,6 +1893,17 @@ window.addEventListener('load', function() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js').catch(function(){});
   }
+  if (alreadyInstalled()) {
+    try {
+      var today = new Date().toISOString().slice(0,10);
+      if (localStorage.getItem('tt_open_last') !== today) {
+        localStorage.setItem('tt_open_last', today);
+        trackAnalytics('', '', '', 'installed_open');
+      }
+    } catch (e) {
+      trackAnalytics('', '', '', 'installed_open');
+    }
+  }
   if (isIOS) showInstallBtn();
 });
 function onInstallClick() {
@@ -1890,6 +1919,7 @@ function onInstallClick() {
       hideInstallBtn();
       trackAnalytics('', '', '', 'installed');
     } else {
+      trackAnalytics('', '', '', 'install_dismissed');
       showInstallGuide();
     }
   });
