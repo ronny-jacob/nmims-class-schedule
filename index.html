@@ -963,6 +963,7 @@ function setFacDropRange(range, btn) {
   if (!openEl) return;
   var head = openEl.parentNode.querySelector('.fac-head');
   var fName = head ? head.querySelector('.fac-name').textContent : '';
+  trackAnalytics(fName, '', 'fac_week:' + range, 'fac_week');
   openEl.innerHTML = facDropHtml(fName);
 }
 
