@@ -292,7 +292,9 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
 .inst-bd ol{margin:8px 0 0 18px;display:flex;flex-direction:column;gap:8px}
 .inst-bd li::marker{font-weight:700}
 .inst-foot{display:flex;justify-content:flex-end;padding:0 16px 14px}
-@media (max-width:480px){.inst-btn{width:calc(100% - 28px);justify-content:center}}
+@media (max-width:480px){.inst-btn{left:16px;transform:none;animation-name:instPopLeft;padding:10px 16px;font-size:12.5px}}
+@keyframes instPopLeft{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (max-width:480px){.inst-btn:active{transform:scale(.97)}}
 </style>
 </head>
 <body>
