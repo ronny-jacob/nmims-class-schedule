@@ -89,6 +89,9 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .fac-body{max-height:0;overflow:hidden;transition:max-height .32s ease}
 .fac-body.open{max-height:3000px}
 .fac-body.open .tt-scroll{border-top:1px solid var(--border-light)}
+.fac-range{display:flex;gap:3px;padding:8px 10px 6px;border-bottom:1px solid var(--border-light)}
+.fac-range .pill{border:none;background:transparent;box-shadow:none;border-radius:7px;padding:4px 12px;font-size:11px}
+.fac-range .pill.active{background:var(--accent);color:var(--surface);box-shadow:0 1px 3px rgba(44,42,38,.15)}
 .fac-hint{font-size:10px;color:var(--text-light);text-align:center;margin-bottom:4px}
 .fm-grid{grid-template-columns:64px repeat(4,minmax(150px,1fr));min-width:660px}
 .fm-hdr{display:flex;flex-direction:column;gap:2px;line-height:1.2}
@@ -333,14 +336,10 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
     <div id="ttNoData"></div>
   </div>
   <div id="panel-faculty" class="panel">
-    <div class="pill-group">
-      <button class="pill sm active" data-range="week" onclick="setFacultyRange('week',this)">This Week</button>
-      <button class="pill sm" data-range="next" onclick="setFacultyRange('next',this)">Next Week</button>
-    </div>
     <div class="sr">
       <input id="facSearch" class="si" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search faculty&hellip;" oninput="renderFacultyTimetable()">
     </div>
-    <div class="fac-hint">Select a faculty member to see when they are occupied this week.</div>
+    <div class="fac-hint">Select a faculty member to see when they are occupied.</div>
     <div id="facCount" class="tt-count"></div>
     <div id="facMailNote" class="tt-mail-note"></div>
     <div id="facultyList"></div>
@@ -871,31 +870,20 @@ function getFacWeek() {
   }
   return { data: DATA.timetable, slots: DATA.time_slots || [], range: DATA.date_range, weekStart: DATA.week_start };
 }
-function setFacultyRange(range, btn) {
-  facRange = range;
-  var grp = btn.parentNode;
-  for (var i = 0; i < grp.children.length; i++) grp.children[i].classList.remove('active');
-  btn.classList.add('active');
-  renderFacultyTimetable();
-}
 function renderFacultyTimetable() {
   var listEl = document.getElementById('facultyList');
   var countEl = document.getElementById('facCount');
   var noteEl = document.getElementById('facMailNote');
   var noDataEl = document.getElementById('facNoData');
-  var wk = getFacWeek();
+  var wk = { data: DATA.timetable, slots: DATA.time_slots || [], range: DATA.date_range, weekStart: DATA.week_start };
   if (!wk.data || !wk.data.length) {
     listEl.innerHTML = '';
     countEl.innerHTML = '';
-    noDataEl.innerHTML = '<div class="empty">' + (facRange === 'next' ? 'Not available yet &mdash; will be updated on Saturday' : 'No classes for this period') + '</div>';
+    noDataEl.innerHTML = '<div class="empty">No classes for this period</div>';
     return;
   }
   noDataEl.innerHTML = '';
   var facMap = {};
-  var dayNums = getDayNumbers(wk.weekStart);
-  var weekISOs = getWeekISOs(wk.weekStart);
-  var holidays = DATA.holidays || {};
-  var TIME_ORDER = wk.slots && wk.slots.length ? wk.slots : DATA.time_slots;
   for (var i = 0; i < wk.data.length; i++) {
     var e = wk.data[i];
     var pName = facGroupLabel(e);
@@ -924,9 +912,44 @@ function renderFacultyTimetable() {
     var entries = facMap[fName];
     var cnt = entries.length;
     var facId = 'facItem' + m;
-    html += '<div class="fac-item"><button class="fac-head" type="button" onclick="toggleFacItem(\'' + facId + '\')" aria-expanded="false"><span class="fac-name">' + he(fName) + '</span><span class="fac-count">' + cnt + ' session' + (cnt !== 1 ? 's' : '') + '</span><span class="rt">&#9660;</span></button><div class="fac-body" id="' + facId + '"></div></div>';
+    var isOpen = facOpenId === facId;
+    html += '<div class="fac-item"><button class="fac-head' + (isOpen ? ' open' : '') + '" type="button" onclick="toggleFacItem(\'' + facId + '\')" aria-expanded="' + (isOpen ? 'true' : 'false') + '"><span class="fac-name">' + he(fName) + '</span><span class="fac-count">' + cnt + ' session' + (cnt !== 1 ? 's' : '') + '</span><span class="rt' + (isOpen ? ' open' : '') + '">&#9660;</span></button><div class="fac-body' + (isOpen ? ' open' : '') + '" id="' + facId + '">' + (isOpen ? facDropHtml(fName) : '') + '</div></div>';
   }
   listEl.innerHTML = html;
+}
+
+function facDropHtml(fName) {
+  var html = '<div class="fac-range">';
+  html += '<button class="pill sm' + (facRange === 'week' ? ' active' : '') + '" type="button" onclick="setFacDropRange(\'week\',this)">This Week</button>';
+  html += '<button class="pill sm' + (facRange === 'next' ? ' active' : '') + '" type="button" onclick="setFacDropRange(\'next\',this)">Next Week</button>';
+  html += '</div>';
+  var wk = getFacWeek();
+  if (!wk || !wk.data || !wk.data.length) {
+    html += '<div class="empty">' + (facRange === 'next' ? 'Not available yet &mdash; will be updated on Saturday' : 'No sessions this week.') + '</div>';
+    return html;
+  }
+  var dayNums = getDayNumbers(wk.weekStart);
+  var weekISOs = getWeekISOs(wk.weekStart);
+  var holidays = DATA.holidays || {};
+  var TIME_ORDER = wk.slots && wk.slots.length ? wk.slots : DATA.time_slots;
+  var entries = [];
+  for (var i = 0; i < wk.data.length; i++) {
+    if (facGroupLabel(wk.data[i]) === fName) entries.push(wk.data[i]);
+  }
+  html += facGridHtml(entries, wk, dayNums, weekISOs, holidays, TIME_ORDER);
+  return html;
+}
+
+function setFacDropRange(range, btn) {
+  facRange = range;
+  var grp = btn.parentNode;
+  for (var i = 0; i < grp.children.length; i++) grp.children[i].classList.remove('active');
+  btn.classList.add('active');
+  var openEl = document.getElementById(facOpenId);
+  if (!openEl) return;
+  var head = openEl.parentNode.querySelector('.fac-head');
+  var fName = head ? head.querySelector('.fac-name').textContent : '';
+  openEl.innerHTML = facDropHtml(fName);
 }
 
 function facGridHtml(entries, wk, dayNums, weekISOs, holidays, TIME_ORDER) {
@@ -1019,17 +1042,9 @@ function toggleFacItem(id) {
   }
   if (opening) {
     facOpenId = id;
-    var wk = getFacWeek();
-    var dayNums = getDayNumbers(wk.weekStart);
-    var weekISOs = getWeekISOs(wk.weekStart);
-    var holidays = DATA.holidays || {};
-    var TIME_ORDER = wk.slots && wk.slots.length ? wk.slots : DATA.time_slots;
+    facRange = 'week';
     var fName = head ? head.querySelector('.fac-name').textContent : '';
-    var entries = [];
-    for (var i = 0; i < wk.data.length; i++) {
-      if (facGroupLabel(wk.data[i]) === fName) entries.push(wk.data[i]);
-    }
-    el.innerHTML = facGridHtml(entries, wk, dayNums, weekISOs, holidays, TIME_ORDER);
+    el.innerHTML = facDropHtml(fName);
   } else {
     facOpenId = '';
     el.innerHTML = '';
