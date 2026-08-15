@@ -50,6 +50,11 @@ function formatTs_(ts) {
 function doGet(e) {
   var p = e.parameter;
 
+  // One-time repair: fix rows written with shifted columns after the Device column was added
+  if (p.repair === '1') {
+    return ContentService.createTextOutput('repaired: ' + repairActivityLog_());
+  }
+
   var sid = p.s || '';
   var did = p.d || '';
   var evt = p.evt || '';
@@ -121,11 +126,47 @@ function doGet(e) {
 }
 
 function logActivity_(sid, did, ts, evt, name, roll, extra, ua, ref) {
-  var log = ensureSheet_('Activity Log', ['Session ID', 'Device', 'Timestamp', 'Event', 'Name', 'Roll', 'Extra', 'User Agent', 'Referrer']);
-  prepend_(log, [sid, did, ts, evt, name, roll, extra, ua, ref]);
+  var log = ensureSheet_('Activity Log', ['Session ID', 'Timestamp', 'Event', 'Name', 'Roll', 'Extra', 'User Agent', 'Referrer', 'Device']);
+  prepend_(log, [sid, ts, evt, name, roll, extra, ua, ref, did]);
 }
 
 function logSuggestion_(sid, ts, name, roll, text, ua, ref) {
   var sheet = ensureSheet_('Suggestions', ['Session ID', 'Timestamp', 'Name', 'Roll', 'Suggestion', 'User Agent', 'Referrer']);
   prepend_(sheet, [sid, ts, name, roll, text, ua, ref]);
+}
+
+function repairActivityLog_() {
+  var sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Activity Log');
+  if (!sh) return 0;
+  var lastRow = sh.getLastRow();
+  if (lastRow < 2) return 0;
+  var colCount = sh.getLastColumn();
+  var range = sh.getRange(1, 1, lastRow, colCount);
+  var rows = range.getValues();
+  // Header layout: Session ID | Timestamp | Event | Name | Roll | Extra | User Agent | Referrer | Device
+  // Misplaced rows (written with Device 2nd): [sid, did, ts, evt, name, roll, extra, ua, ref]
+  // Correct layout:                                   [sid, ts, evt, name, roll, extra, ua, ref, did]
+  var fixed = [rows[0]];
+  var repaired = 0;
+  for (var r = 1; r < rows.length; r++) {
+    var row = rows[r];
+    var hasTs = /^\d{2}\/\d{2}\/\d{2}/.test(String(row[1] || ''));
+    var hasTs2 = /^\d{2}\/\d{2}\/\d{2}/.test(String(row[2] || ''));
+    if (!hasTs && hasTs2) {
+      fixed.push([
+        row[0], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[1]
+      ]);
+      repaired++;
+    } else {
+      fixed.push(row);
+    }
+  }
+  if (repaired) {
+    sh.getRange(1, 1, fixed.length, fixed[0].length).setValues(fixed);
+  }
+  return repaired;
+}
+
+function doRepair(e) {
+  return ContentService.createTextOutput('repaired: ' + repairActivityLog_());
 }
