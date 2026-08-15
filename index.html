@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
 <title>NMIMS Class Companion</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#594c40">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NMIMS CC">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#f6f5f1;--surface:#fbfaf7;--border:#e0dfd9;--border-light:#edede8;--text:#4d453e;--text-muted:#9a9590;--text-light:#b4b3ad;--accent:#594c40;--accent-bg:#eae8e2;--accent-active:#d5d3cd;--suggest:#46695f;--suggest-bg:#e5ece8;--suggest-line:#cbdcd5;--radius:16px;--radius-sm:10px;--shadow-sm:0 1px 2px rgba(44,42,38,0.04);--shadow:0 2px 8px rgba(44,42,38,0.06);--shadow-md:0 4px 16px rgba(44,42,38,0.08);--font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
@@ -272,6 +280,19 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
 .sf-note{margin-top:10px;font-size:12px;font-weight:600;color:var(--suggest);text-align:center}
 .sf-error{margin-top:10px;font-size:12px;font-weight:600;color:#c0392b;text-align:center}
 @media (max-width:480px){.sf-btn{padding:10px 13px;gap:11px}.sf-overlay{padding:14px}}
+.inst-btn{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:70;display:flex;align-items:center;gap:8px;padding:11px 20px;border:none;border-radius:999px;background:var(--accent);color:var(--surface);font-family:var(--font);font-size:13.5px;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(44,42,38,.28);-webkit-tap-highlight-color:transparent;transition:transform .15s,opacity .15s;animation:instPop .25s ease}
+.inst-btn svg{width:17px;height:17px;flex-shrink:0}
+.inst-btn:active{transform:translateX(-50%) scale(.97)}
+@keyframes instPop{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
+.inst-overlay{position:fixed;left:0;right:0;top:0;bottom:0;z-index:90;background:rgba(40,36,32,.38);display:flex;align-items:center;justify-content:center;padding:18px;box-sizing:border-box}
+.inst-modal{width:min(360px,100%);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 18px 50px rgba(20,18,15,.28)}
+.inst-hd{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border-light)}
+.inst-hd b{font-size:14px}
+.inst-bd{padding:16px;font-size:13px;line-height:1.5;color:var(--text)}
+.inst-bd ol{margin:8px 0 0 18px;display:flex;flex-direction:column;gap:8px}
+.inst-bd li::marker{font-weight:700}
+.inst-foot{display:flex;justify-content:flex-end;padding:0 16px 14px}
+@media (max-width:480px){.inst-btn{width:calc(100% - 28px);justify-content:center}}
 </style>
 </head>
 <body>
@@ -389,6 +410,24 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
   </div>
 </div>
 <button class="dntc-btn" id="dontClickBtn" type="button" onclick="onDontClick()" aria-label="Do not click"><span class="dntc-dot"></span>Do not click</button>
+<div class="inst-btn" id="instBtn" style="display:none" role="button" tabindex="0" onclick="onInstallClick()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();onInstallClick()}">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true">
+    <path d="M12 3v12"/>
+    <path d="M7 10l5 5 5-5"/>
+    <path d="M4 19h16"/>
+  </svg>
+  <span>Add to Home Screen</span>
+</div>
+<div class="inst-overlay" id="instOverlay" role="dialog" aria-modal="true" aria-labelledby="instTitle" style="display:none">
+  <div class="inst-modal">
+    <div class="inst-hd">
+      <b id="instTitle">Add to Home Screen</b>
+      <button type="button" class="sf-x" onclick="closeInstallGuide()" aria-label="Close">&#215;</button>
+    </div>
+    <div class="inst-bd" id="instBody"></div>
+    <div class="inst-foot"><button type="button" class="sf-btn-pill" onclick="closeInstallGuide()">Got it</button></div>
+  </div>
+</div>
 <div class="dntc-toast" id="dontClickToast">
   <div class="dntc-toast-hd"><span class="dntc-toast-title" id="dntcTitle">Warning</span><button type="button" class="dntc-x" onclick="dismissDontClick()" aria-label="Dismiss">&#215;</button></div>
   <div class="dntc-toast-tx" id="dntcText"></div>
@@ -1804,5 +1843,71 @@ function sendSuggestion(){
 attachSuggestionListeners();
 document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeSuggestion(); });
 trackAnalytics('__page_view__', '', '', 'pageview');
+
+var installPrompt = null;
+var installDismissed = false;
+var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
+function alreadyInstalled() {
+  return window.matchMedia('(display-mode: standalone)').matches ||
+         window.navigator.standalone === true;
+}
+function showInstallBtn() {
+  var b = document.getElementById('instBtn');
+  if (b && !installDismissed && !alreadyInstalled()) b.style.display = 'flex';
+}
+function hideInstallBtn() {
+  var b = document.getElementById('instBtn');
+  if (b) b.style.display = 'none';
+}
+window.addEventListener('beforeinstallprompt', function(e) {
+  e.preventDefault();
+  installPrompt = e;
+  showInstallBtn();
+});
+window.addEventListener('appinstalled', function() {
+  installPrompt = null;
+  hideInstallBtn();
+  trackAnalytics('', '', '', 'installed');
+});
+window.addEventListener('load', function() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').catch(function(){});
+  }
+  if (isIOS) showInstallBtn();
+});
+function onInstallClick() {
+  if (!installPrompt) {
+    showInstallGuide();
+    return;
+  }
+  trackAnalytics('', '', '', 'install');
+  installPrompt.prompt();
+  installPrompt.userChoice.then(function(choice) {
+    installPrompt = null;
+    if (choice.outcome === 'accepted') {
+      hideInstallBtn();
+      trackAnalytics('', '', '', 'installed');
+    } else {
+      showInstallGuide();
+    }
+  });
+}
+function showInstallGuide() {
+  installDismissed = true;
+  hideInstallBtn();
+  var body = document.getElementById('instBody');
+  if (isIOS) {
+    body.innerHTML = 'Add the site to your home screen so it opens like an app:<ol><li>Tap the <b>Share</b> button in Safari&rsquo;s toolbar.</li><li>Tap <b>Add to Home Screen</b>.</li><li>Tap <b>Add</b> in the top right.</li></ol>';
+  } else {
+    body.innerHTML = 'Install the site so it opens like an app:<ol><li>Open your browser&rsquo;s <b>menu</b>.</li><li>Tap <b>Install app</b> or <b>Add to Home Screen</b>.</li></ol>';
+  }
+  trackAnalytics('', '', '', 'install_guide');
+  document.getElementById('instOverlay').style.display = 'flex';
+  document.body.classList.add('modal-open');
+}
+function closeInstallGuide() {
+  document.getElementById('instOverlay').style.display = 'none';
+  document.body.classList.remove('modal-open');
+}
 </script></body>
 </html>
