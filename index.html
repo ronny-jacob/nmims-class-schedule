@@ -87,14 +87,15 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .fac-count{font-size:10px;font-weight:600;color:var(--text-muted);white-space:nowrap}
 .fac-body{max-height:0;overflow:hidden;transition:max-height .32s ease}
 .fac-body.open{max-height:2000px}
-.fac-grid{display:grid;border-top:1px solid var(--border-light);background:var(--surface);min-width:420px;overflow-x:auto}
-.fac-gh{padding:6px;font-size:10px;font-weight:600;color:var(--text-muted);text-align:center;border-right:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--accent-bg)}
-.fac-tl{text-align:left}
-.fac-gl{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:6px 4px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);min-height:52px}
-.fac-date{font-size:15px;font-weight:500;color:var(--text);font-variant-numeric:tabular-nums}
-.fac-gc{min-width:90px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:3px}
-.fac-empty{background:var(--bg)}
-.fac-hol{display:flex;align-items:center;justify-content:center;color:var(--text-light);font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:repeating-linear-gradient(45deg,var(--bg) 0 8px,rgba(44,42,38,.03) 8px 16px)}
+.fac-day{display:flex;align-items:baseline;gap:6px;padding:7px 12px 3px;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted)}
+.fac-day:first-child{padding-top:9px}
+.fac-day-date{font-size:11px;font-weight:500;color:var(--text-light);text-transform:none;letter-spacing:0}
+.fac-sess{display:flex;align-items:center;gap:8px;padding:6px 12px}
+.fac-sess + .fac-sess{border-top:1px solid var(--border-light)}
+.fac-time{font-size:11px;font-weight:600;color:var(--text);white-space:nowrap;width:64px;flex-shrink:0;font-variant-numeric:tabular-nums}
+.fac-sess-subj{font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px;white-space:nowrap}
+.fac-sess-det{font-size:11px;color:var(--text-muted);min-width:0}
+.fac-hol{padding:6px 12px;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-light);background:repeating-linear-gradient(45deg,var(--bg) 0 8px,rgba(44,42,38,.03) 8px 16px)}
 .fm-grid{grid-template-columns:64px repeat(4,minmax(150px,1fr));min-width:660px}
 .fm-hdr{display:flex;flex-direction:column;gap:2px;line-height:1.2}
 .fm-time{font-size:8.5px;font-weight:500;color:var(--text-light)}
@@ -918,45 +919,23 @@ function renderFacultyTimetable() {
     var entries = facMap[fName];
     var cnt = entries.length;
     var facId = 'facItem' + m;
-    var usedTimes = [];
-    for (var t = 0; t < TIME_ORDER.length; t++) {
-      var ts = TIME_ORDER[t];
-      for (var d = 0; d < entries.length; d++) {
-        if (entries[d].time === ts && entries[d].day) { usedTimes.push(ts); break; }
-      }
-    }
     var days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-    var cols = '64px' + usedTimes.map(function(){ return 'minmax(90px,1fr)'; }).join(' ');
-    html += '<div class="fac-item"><button class="fac-head" type="button" onclick="toggleFacItem(\'' + facId + '\')" aria-expanded="false"><span class="fac-name">' + he(fName) + '</span><span class="fac-count">' + cnt + ' session' + (cnt !== 1 ? 's' : '') + '</span><span class="rt">&#9660;</span></button><div class="fac-body" id="' + facId + '"><div class="fac-grid" style="grid-template-columns:' + cols + '">';
-    html += '<div class="fac-gh fac-tl">Day</div>';
-    for (var t3 = 0; t3 < usedTimes.length; t3++) html += '<div class="fac-gh">' + usedTimes[t3].replace('-', '\u2013') + '</div>';
+    html += '<div class="fac-item"><button class="fac-head" type="button" onclick="toggleFacItem(\'' + facId + '\')" aria-expanded="false"><span class="fac-name">' + he(fName) + '</span><span class="fac-count">' + cnt + ' session' + (cnt !== 1 ? 's' : '') + '</span><span class="rt">&#9660;</span></button><div class="fac-body" id="' + facId + '">';
     for (var d = 0; d < days.length; d++) {
       var day = days[d];
       var dayEntries = [];
       for (var e = 0; e < entries.length; e++) { if (entries[e].day === day) dayEntries.push(entries[e]); }
       if (!dayEntries.length) continue;
       var hol = weekISOs[day] && holidays[weekISOs[day]];
-      if (hol) {
-        html += '<div class="fac-gl"><span class="tt-gl-day">' + day + '</span><span class="fac-date">' + (dayNums[day] || '') + '</span></div>';
-        html += '<div class="fac-gc fac-hol" style="grid-column:2 / span ' + usedTimes.length + '">' + he(hol) + '</div>';
-        continue;
-      }
-      html += '<div class="fac-gl"><span class="tt-gl-day">' + day + '</span><span class="fac-date">' + (dayNums[day] || '') + '</span></div>';
-      for (var t2 = 0; t2 < usedTimes.length; t2++) {
-        var ts2 = usedTimes[t2];
-        var slots = [];
-        for (var e2 = 0; e2 < dayEntries.length; e2++) { if (dayEntries[e2].time === ts2) slots.push(dayEntries[e2]); }
-        if (!slots.length) { html += '<div class="fac-gc fac-empty"></div>'; continue; }
-        html += '<div class="fac-gc">';
-        for (var s = 0; s < slots.length; s++) {
-          var sl = slots[s];
-          var h = subjectHue(sl.subject);
-          html += '<div class="slot" style="background:hsl(' + h + ',82%,87%);color:hsl(' + h + ',62%,18%)"><span class="subj">' + he(sl.subject) + '</span><span class="det">' + he(sl.room) + (sl.div ? ' &middot; ' + he(sl.div) : '') + '</span></div>';
-        }
-        html += '</div>';
+      html += '<div class="fac-day"><span class="fac-day-lbl">' + day + '</span><span class="fac-day-date">' + (dayNums[day] || '') + '</span></div>';
+      if (hol) { html += '<div class="fac-hol">' + he(hol) + '</div>'; }
+      for (var e2 = 0; e2 < dayEntries.length; e2++) {
+        var sl = dayEntries[e2];
+        var h = subjectHue(sl.subject);
+        html += '<div class="fac-sess"><span class="fac-time">' + sl.time.replace('-', '\u2013') + '</span><span class="fac-sess-subj" style="background:hsl(' + h + ',82%,87%);color:hsl(' + h + ',62%,18%)">' + he(sl.subject) + '</span><span class="fac-sess-det">' + he(sl.room) + (sl.div ? ' &middot; ' + he(sl.div) : '') + '</span></div>';
       }
     }
-    html += '</div></div></div>';
+    html += '</div></div>';
   }
   listEl.innerHTML = html;
 }
