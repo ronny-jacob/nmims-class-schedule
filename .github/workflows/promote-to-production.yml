@@ -43,9 +43,3 @@ jobs:
           git merge --no-ff "${PROD_HEAD}" -m "Merge production (latest timetable updates)"
           echo "Promoting staging main → production main"
           git push prod HEAD:main
-
-      - name: Trigger production Pages deploy
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          gh workflow run deploy-pages.yml --repo ronny-jacob/nmims-class-schedule --ref main
