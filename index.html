@@ -699,7 +699,7 @@ function formatWeekRangeShort(weekStart) {
   var sd = start.getDate(), ed = end.getDate();
   var smn = sm[start.getMonth()], emn = sm[end.getMonth()];
   var dates = smn + ' ' + sd + ' \u2013 ' + (end.getMonth() !== start.getMonth() ? emn + ' ' : '') + ed;
-  return dates + ' ' + start.getFullYear();
+  return dates + ', ' + start.getFullYear();
 }
 
 function renderTimetable() {
