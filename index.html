@@ -864,8 +864,11 @@ function facGroupLabel(e) {
   return (sub ? sub.name : e.subject) + ' (faculty not listed)';
 }
 function getFacWeek() {
-  if (facRange === 'next' && DATA.timetable_next && DATA.timetable_next.length)
-    return { data: DATA.timetable_next, slots: DATA.time_slots_next || [], range: DATA.date_range_next, weekStart: DATA.week_start_next };
+  if (facRange === 'next') {
+    if (DATA.timetable_next && DATA.timetable_next.length)
+      return { data: DATA.timetable_next, slots: DATA.time_slots_next || [], range: DATA.date_range_next, weekStart: DATA.week_start_next };
+    return null;
+  }
   return { data: DATA.timetable, slots: DATA.time_slots || [], range: DATA.date_range, weekStart: DATA.week_start };
 }
 function setFacultyRange(range, btn) {
