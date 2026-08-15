@@ -1,0 +1,51 @@
+name: Promote to Production
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  promote:
+    if: github.repository == 'ronny-jacob/nmims-class-schedule-staging'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure git
+        run: |
+          git config user.name "Promote Bot"
+          git config user.email "promote@nmims-class-schedule"
+
+      - name: Merge production then push staging → production
+        env:
+          PROD_PUSH_TOKEN: ${{ secrets.PROD_PUSH_TOKEN }}
+        run: |
+          if [ -z "${PROD_PUSH_TOKEN}" ]; then
+            echo "PROD_PUSH_TOKEN not set on staging — cannot promote"
+            exit 1
+          fi
+          git remote add prod "https://x-access-token:${PROD_PUSH_TOKEN}@github.com/ronny-jacob/nmims-class-schedule.git"
+          git fetch prod main
+          PROD_HEAD="$(git rev-parse FETCH_HEAD)"
+          STAGING_HEAD="$(git rev-parse HEAD)"
+          if [ "${PROD_HEAD}" = "${STAGING_HEAD}" ]; then
+            echo "Staging and production are already identical — nothing to promote"
+            exit 0
+          fi
+          if git merge-base --is-ancestor "${STAGING_HEAD}" "${PROD_HEAD}"; then
+            echo "Production is ahead of staging — run the auto-mirror or pull first; nothing new to promote from staging"
+            exit 1
+          fi
+          git merge --no-ff "${PROD_HEAD}" -m "Merge production (latest timetable updates)"
+          echo "Promoting staging main → production main"
+          git push prod HEAD:main
+
+      - name: Trigger production Pages deploy
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run deploy-pages.yml --repo ronny-jacob/nmims-class-schedule --ref main

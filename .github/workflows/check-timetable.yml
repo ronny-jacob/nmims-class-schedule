@@ -82,4 +82,9 @@ jobs:
           fi
           echo "Bot pushed ${HEAD_AFTER}; mirroring to staging"
           git remote add staging "https://x-access-token:${STAGING_PUSH_TOKEN}@github.com/ronny-jacob/nmims-class-schedule-staging.git"
-          git push staging main
+          if git push staging main 2>push_err.txt; then
+            echo "Staging mirror pushed OK"
+          else
+            echo "Staging diverged (unpromoted edits on staging). New timetable will reach staging on next Promote."
+            cat push_err.txt
+          fi
