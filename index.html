@@ -854,12 +854,19 @@ function renderTimetable() {
 
 var facRange = 'week';
 var FACULTY_NORM = {
-  'Dr Narender Vunyale': 'Narender Vunyale',
-  'Prof Narender Vunyale': 'Narender Vunyale'
+  'Dr Narender Vunyale': 'Dr Narender Vunyale',
+  'Prof Narender Vunyale': 'Dr Narender Vunyale'
 };
 function normFacultyName(name) {
   if (!name) return '';
-  return FACULTY_NORM[name] || name;
+  var n = FACULTY_NORM[name] || name;
+  return n.replace(/\bProf\.\b/g, 'Prof').replace(/\bDr\.\b/g, 'Dr');
+}
+function facGroupLabel(e) {
+  var prof = normFacultyName(e.professor || '');
+  if (prof) return prof;
+  var sub = DATA.subjects && DATA.subjects[e.subject];
+  return (sub ? sub.name : e.subject) + ' (faculty not listed)';
 }
 function getFacWeek() {
   if (facRange === 'next' && DATA.timetable_next && DATA.timetable_next.length)
@@ -893,7 +900,7 @@ function renderFacultyTimetable() {
   var TIME_ORDER = wk.slots && wk.slots.length ? wk.slots : DATA.time_slots;
   for (var i = 0; i < wk.data.length; i++) {
     var e = wk.data[i];
-    var pName = normFacultyName(e.professor || e.subject);
+    var pName = facGroupLabel(e);
     if (!facMap[pName]) facMap[pName] = [];
     facMap[pName].push(e);
   }
