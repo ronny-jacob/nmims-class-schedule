@@ -80,6 +80,21 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .tt-legend-item.other{color:var(--text-light);font-size:9px;padding:2px 6px}
 .tt-note{font-size:10px;color:var(--text-muted);line-height:1.3;width:100%;margin-bottom:6px}
 .tt-mail-note{font-size:9px;color:var(--text-light);margin-bottom:4px;line-height:1.3;text-align:center}
+.fac-item{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);box-shadow:var(--shadow-sm);margin-bottom:8px;overflow:hidden}
+.fac-head{width:100%;display:flex;align-items:center;gap:8px;padding:10px 12px;border:none;background:var(--surface);cursor:pointer;font-family:var(--font);font-size:13px;font-weight:600;color:var(--text);text-align:left;-webkit-tap-highlight-color:transparent;transition:background .12s}
+@media(hover:hover){.fac-head:hover{background:var(--accent-bg)}}
+.fac-name{flex:1;min-width:0}
+.fac-count{font-size:10px;font-weight:600;color:var(--text-muted);white-space:nowrap}
+.fac-body{max-height:0;overflow:hidden;transition:max-height .32s ease}
+.fac-body.open{max-height:2000px}
+.fac-grid{display:grid;border-top:1px solid var(--border-light);background:var(--surface);min-width:420px;overflow-x:auto}
+.fac-gh{padding:6px;font-size:10px;font-weight:600;color:var(--text-muted);text-align:center;border-right:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--accent-bg)}
+.fac-tl{text-align:left}
+.fac-gl{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:6px 4px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);min-height:52px}
+.fac-date{font-size:15px;font-weight:500;color:var(--text);font-variant-numeric:tabular-nums}
+.fac-gc{min-width:90px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:3px}
+.fac-empty{background:var(--bg)}
+.fac-hol{display:flex;align-items:center;justify-content:center;color:var(--text-light);font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:repeating-linear-gradient(45deg,var(--bg) 0 8px,rgba(44,42,38,.03) 8px 16px)}
 .fm-grid{grid-template-columns:64px repeat(4,minmax(150px,1fr));min-width:660px}
 .fm-hdr{display:flex;flex-direction:column;gap:2px;line-height:1.2}
 .fm-time{font-size:8.5px;font-weight:500;color:var(--text-light)}
@@ -284,6 +299,7 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
   <div class="pill-group" id="mainNav">
     <button class="pill active" onclick="showMainTab('food',this)">Food Menu</button>
     <button class="pill" onclick="showMainTab('tt',this)">Timetable</button>
+    <button class="pill" onclick="showMainTab('faculty',this)">Faculty Timetable</button>
     <button class="pill" onclick="showMainTab('students',this)">Classmates</button>
     <button class="pill" onclick="showMainTab('subjects',this)">All Subjects</button>
   </div>
@@ -320,6 +336,19 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
     <div class="tt-scroll"><div class="tt-grid" id="timetable"></div></div>
     <div id="tt-legend" class="tt-legend"></div>
     <div id="ttNoData"></div>
+  </div>
+  <div id="panel-faculty" class="panel">
+    <div class="pill-group">
+      <button class="pill sm active" data-range="week" onclick="setFacultyRange('week',this)">This Week</button>
+      <button class="pill sm" data-range="next" onclick="setFacultyRange('next',this)">Next Week</button>
+    </div>
+    <div class="sr">
+      <input id="facSearch" class="si" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search faculty&hellip;" oninput="renderFacultyTimetable()">
+    </div>
+    <div id="facCount" class="tt-count"></div>
+    <div id="facMailNote" class="tt-mail-note"></div>
+    <div id="facultyList"></div>
+    <div id="facNoData"></div>
   </div>
   <div id="panel-students" class="panel">
     <div class="card">
@@ -822,6 +851,124 @@ function renderTimetable() {
   legendEl.innerHTML = '<div class="tt-note">The highlighted classes are your subjects for ' + wkLabel + '.</div>' + lhtml;
 }
 
+var facRange = 'week';
+var FACULTY_NORM = {
+  'Dr Narender Vunyale': 'Narender Vunyale',
+  'Prof Narender Vunyale': 'Narender Vunyale'
+};
+function normFacultyName(name) {
+  if (!name) return '';
+  return FACULTY_NORM[name] || name;
+}
+function getFacWeek() {
+  if (facRange === 'next' && DATA.timetable_next && DATA.timetable_next.length)
+    return { data: DATA.timetable_next, slots: DATA.time_slots_next || [], range: DATA.date_range_next, weekStart: DATA.week_start_next };
+  return { data: DATA.timetable, slots: DATA.time_slots || [], range: DATA.date_range, weekStart: DATA.week_start };
+}
+function setFacultyRange(range, btn) {
+  facRange = range;
+  var grp = btn.parentNode;
+  for (var i = 0; i < grp.children.length; i++) grp.children[i].classList.remove('active');
+  btn.classList.add('active');
+  renderFacultyTimetable();
+}
+function renderFacultyTimetable() {
+  var listEl = document.getElementById('facultyList');
+  var countEl = document.getElementById('facCount');
+  var noteEl = document.getElementById('facMailNote');
+  var noDataEl = document.getElementById('facNoData');
+  var wk = getFacWeek();
+  if (!wk.data || !wk.data.length) {
+    listEl.innerHTML = '';
+    countEl.innerHTML = '';
+    noDataEl.innerHTML = '<div class="empty">' + (facRange === 'next' ? 'Not available yet &mdash; will be updated on Saturday' : 'No classes for this period') + '</div>';
+    return;
+  }
+  noDataEl.innerHTML = '';
+  var facMap = {};
+  var dayNums = getDayNumbers(wk.weekStart);
+  var weekISOs = getWeekISOs(wk.weekStart);
+  var holidays = DATA.holidays || {};
+  var TIME_ORDER = wk.slots && wk.slots.length ? wk.slots : DATA.time_slots;
+  for (var i = 0; i < wk.data.length; i++) {
+    var e = wk.data[i];
+    var pName = normFacultyName(e.professor || e.subject);
+    if (!facMap[pName]) facMap[pName] = [];
+    facMap[pName].push(e);
+  }
+  var names = Object.keys(facMap).sort(function(a,b){ return a.localeCompare(b); });
+  var q = (document.getElementById('facSearch').value || '').trim().toLowerCase();
+  var matched = [];
+  for (var i2 = 0; i2 < names.length; i2++) {
+    if (!q || names[i2].toLowerCase().indexOf(q) !== -1) matched.push(names[i2]);
+  }
+  countEl.innerHTML = formatCalHeader(wk.weekStart) + '<span class="cal-sessions">' + matched.length + ' faculty' + (matched.length !== 1 ? '' : '') + '</span>';
+  if (DATA.last_updated && DATA.last_updated.sender !== 'manual update' && DATA.last_updated.received_at) {
+    noteEl.innerHTML = 'Updated from <strong>' + he(DATA.last_updated.sender) + '</strong> on ' + he(DATA.last_updated.received_at);
+  } else {
+    noteEl.innerHTML = '';
+  }
+  if (!matched.length) {
+    listEl.innerHTML = '<div class="empty">No faculty found.</div>';
+    return;
+  }
+  var html = '';
+  for (var m = 0; m < matched.length; m++) {
+    var fName = matched[m];
+    var entries = facMap[fName];
+    var cnt = entries.length;
+    var facId = 'facItem' + m;
+    var usedTimes = [];
+    for (var t = 0; t < TIME_ORDER.length; t++) {
+      var ts = TIME_ORDER[t];
+      for (var d = 0; d < entries.length; d++) {
+        if (entries[d].time === ts && entries[d].day) { usedTimes.push(ts); break; }
+      }
+    }
+    var days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    var cols = '64px' + usedTimes.map(function(){ return 'minmax(90px,1fr)'; }).join(' ');
+    html += '<div class="fac-item"><button class="fac-head" type="button" onclick="toggleFacItem(\'' + facId + '\')" aria-expanded="false"><span class="fac-name">' + he(fName) + '</span><span class="fac-count">' + cnt + ' session' + (cnt !== 1 ? 's' : '') + '</span><span class="rt">&#9660;</span></button><div class="fac-body" id="' + facId + '"><div class="fac-grid" style="grid-template-columns:' + cols + '">';
+    html += '<div class="fac-gh fac-tl">Day</div>';
+    for (var t3 = 0; t3 < usedTimes.length; t3++) html += '<div class="fac-gh">' + usedTimes[t3].replace('-', '\u2013') + '</div>';
+    for (var d = 0; d < days.length; d++) {
+      var day = days[d];
+      var dayEntries = [];
+      for (var e = 0; e < entries.length; e++) { if (entries[e].day === day) dayEntries.push(entries[e]); }
+      if (!dayEntries.length) continue;
+      var hol = weekISOs[day] && holidays[weekISOs[day]];
+      if (hol) {
+        html += '<div class="fac-gl"><span class="tt-gl-day">' + day + '</span><span class="fac-date">' + (dayNums[day] || '') + '</span></div>';
+        html += '<div class="fac-gc fac-hol" style="grid-column:2 / span ' + usedTimes.length + '">' + he(hol) + '</div>';
+        continue;
+      }
+      html += '<div class="fac-gl"><span class="tt-gl-day">' + day + '</span><span class="fac-date">' + (dayNums[day] || '') + '</span></div>';
+      for (var t2 = 0; t2 < usedTimes.length; t2++) {
+        var ts2 = usedTimes[t2];
+        var slots = [];
+        for (var e2 = 0; e2 < dayEntries.length; e2++) { if (dayEntries[e2].time === ts2) slots.push(dayEntries[e2]); }
+        if (!slots.length) { html += '<div class="fac-gc fac-empty"></div>'; continue; }
+        html += '<div class="fac-gc">';
+        for (var s = 0; s < slots.length; s++) {
+          var sl = slots[s];
+          var h = subjectHue(sl.subject);
+          html += '<div class="slot" style="background:hsl(' + h + ',82%,87%);color:hsl(' + h + ',62%,18%)"><span class="subj">' + he(sl.subject) + '</span><span class="det">' + he(sl.room) + (sl.div ? ' &middot; ' + he(sl.div) : '') + '</span></div>';
+        }
+        html += '</div>';
+      }
+    }
+    html += '</div></div></div>';
+  }
+  listEl.innerHTML = html;
+}
+function toggleFacItem(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var open = el.classList.toggle('open');
+  var head = el.parentNode.querySelector('.fac-head');
+  if (head) head.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+
+
 function enhanceTrimIV() {
   var divMap = {
     "Advanced Financial Statement Analysis": ["AFSA_A", "AFSA_B"],
@@ -1117,13 +1264,14 @@ function showMainTab(id, btn) {
   var tabs = document.getElementById('mainNav').children;
   for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
   btn.classList.add('active');
-  ['tt','food','students','subjects'].forEach(function(pid) {
+  ['tt','faculty','food','students','subjects'].forEach(function(pid) {
     var el = document.getElementById('panel-'+pid);
     if (el) el.classList.toggle('active', pid === id);
   });
   if (id === 'food') renderFoodMenu();
   if (id === 'subjects') rSu();
   if (id === 'tt') renderTimetable();
+  if (id === 'faculty') renderFacultyTimetable();
 }
 function setFoodRange(range, btn) {
   foodRange = range;
