@@ -65,3 +65,21 @@ jobs:
           else
             echo "No changes pushed by bot; skipping Pages deploy"
           fi
+
+      - name: Mirror update to staging
+        if: success()
+        env:
+          STAGING_PUSH_TOKEN: ${{ secrets.STAGING_PUSH_TOKEN }}
+        run: |
+          if [ -z "${STAGING_PUSH_TOKEN}" ]; then
+            echo "STAGING_PUSH_TOKEN not set — skipping staging mirror"
+            exit 0
+          fi
+          HEAD_AFTER="$(git rev-parse HEAD)"
+          if [ "${HEAD_AFTER}" = "${GITHUB_SHA}" ]; then
+            echo "No changes pushed by bot; skipping staging mirror"
+            exit 0
+          fi
+          echo "Bot pushed ${HEAD_AFTER}; mirroring to staging"
+          git remote add staging "https://x-access-token:${STAGING_PUSH_TOKEN}@github.com/ronny-jacob/nmims-class-schedule-staging.git"
+          git push staging main
