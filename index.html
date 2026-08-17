@@ -87,6 +87,29 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .tt-legend-item{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600}
 .tt-legend-item.other{color:var(--text-light);font-size:9px;padding:2px 6px}
 .tt-note{font-size:10px;color:var(--text-muted);line-height:1.3;width:100%;margin-bottom:6px}
+.free-card{margin-top:18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+.free-hdr{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.free-title{font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--text)}
+.free-sub{font-size:11px;color:var(--text-muted);margin-top:2px}
+.free-group-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.free-you-wrap{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.free-you-lbl{font-size:12px;font-weight:600;color:var(--text-muted)}
+.free-you{font-size:12px;font-weight:700;color:var(--text);padding:4px 10px;border-radius:8px;background:var(--accent-bg);border:1px solid var(--border)}
+.free-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.free-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:11.5px;font-weight:600;background:var(--accent-bg);color:var(--text);border:1px solid var(--border)}
+.free-chip-x{border:none;background:transparent;color:var(--text-muted);font-size:14px;line-height:1;cursor:pointer;padding:0 2px;-webkit-tap-highlight-color:transparent}
+@media(hover:hover){.free-chip-x:hover{color:var(--text)}}
+.free-summary{font-size:11.5px;color:var(--text-muted);margin-bottom:8px;line-height:1.5}
+.free-summary b{color:var(--text)}
+.free-ok{background:hsl(150,45%,88%);box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.free-ok .free-state{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:700;color:hsl(150,55%,22%);text-transform:uppercase;letter-spacing:.05em}
+.free-ok .free-state svg{width:9px;height:9px}
+.free-part{background:hsl(40,80%,93%)}
+.free-part .free-state{font-size:8.5px;font-weight:600;color:hsl(35,55%,28%);text-transform:uppercase;letter-spacing:.04em}
+.free-busy .free-state{font-size:8.5px;font-weight:600;color:var(--text-light);text-transform:uppercase;letter-spacing:.04em}
+.free-gc-cell{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:44px;padding:3px}
+.free-gc-tag{font-size:7.5px;font-weight:500;color:var(--text-muted);line-height:1.2;text-align:center}
+
 .tt-mail-note{font-size:9px;color:var(--text-light);margin-bottom:4px;line-height:1.3;text-align:center}
 .fac-item{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);box-shadow:var(--shadow-sm);margin-bottom:6px;overflow:hidden}
 .fac-head{width:100%;display:flex;align-items:center;gap:8px;padding:10px 12px;border:none;background:var(--surface);cursor:pointer;font-family:var(--font);font-size:13px;font-weight:600;color:var(--text);text-align:left;-webkit-tap-highlight-color:transparent;transition:background .12s}
@@ -358,6 +381,36 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
     <div class="tt-scroll"><div class="tt-grid" id="timetable"></div></div>
     <div id="tt-legend" class="tt-legend"></div>
     <div id="ttNoData"></div>
+    <div class="free-card">
+      <div class="free-hdr">
+        <div>
+          <div class="free-title">Free Together</div>
+          <div class="free-sub">When everyone is free at the same time</div>
+        </div>
+        <div class="pill-group">
+          <button class="pill sm active" onclick="setFreeRange('week',this)">This Week</button>
+          <button class="pill sm" onclick="setFreeRange('next',this)">Next Week</button>
+        </div>
+      </div>
+      <div class="free-group-row">
+        <div class="free-you-wrap">
+          <span class="free-you-lbl">You:</span>
+          <span class="free-you" id="freeYou"></span>
+        </div>
+        <div class="sr" style="flex:1">
+          <div style="position:relative;flex:1;min-width:160px">
+            <input id="freeSearch" class="si" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Add a friend&hellip;" oninput="onFreeInput()" onkeydown="onFreeKeydown(event)" onblur="onFreeBlur()" onfocus="onFreeFocus()">
+            <div id="freeDropdown" class="sd"></div>
+          </div>
+        </div>
+      </div>
+      <div id="freeChips" class="free-chips"></div>
+      <div id="freeCount" class="tt-count"></div>
+      <div id="freeSummary" class="free-summary"></div>
+      <div class="tt-scroll"><div class="tt-grid" id="freeGrid"></div></div>
+      <div id="freeLegend" class="tt-legend"></div>
+      <div id="freeNoData"></div>
+    </div>
   </div>
   <div id="panel-faculty" class="panel">
     <div class="fac-hint">Select a faculty member to see when they are occupied.</div>
@@ -762,6 +815,7 @@ function formatWeekRangeShort(weekStart) {
 }
 
 function renderTimetable() {
+  renderFreeTogether();
   var gridEl = document.getElementById('timetable');
   var legendEl = document.getElementById('tt-legend');
   var countEl = document.getElementById('ttCount');
@@ -916,6 +970,296 @@ function renderTimetable() {
     }
   }
   legendEl.innerHTML = '<div class="tt-note">The highlighted classes are your subjects for ' + wkLabel + '.</div>' + lhtml;
+}
+
+var freeRange = 'week';
+var freeGroup = [];
+var freeSearchOpen = false;
+
+function getFreeWeek() {
+  if (freeRange === 'next') {
+    if (DATA.timetable_next && DATA.timetable_next.length)
+      return { data: DATA.timetable_next, slots: DATA.time_slots_next || [], range: DATA.date_range_next, weekStart: DATA.week_start_next };
+    return null;
+  }
+  return { data: DATA.timetable, slots: DATA.time_slots || [], range: DATA.date_range, weekStart: DATA.week_start };
+}
+
+function personBusySlots(student, ttData) {
+  var busy = {};
+  if (!student || !student.subjects) return busy;
+  var subjectSet = {};
+  for (var i = 0; i < student.subjects.length; i++) subjectSet[student.subjects[i]] = true;
+  var bsDiv = student.bs_div || '';
+  for (var e = 0; e < ttData.length; e++) {
+    var entry = ttData[e];
+    if (subjectSet[entry.subject] && (entry.subject !== 'BS' || entry.div === bsDiv)) {
+      if (!busy[entry.day]) busy[entry.day] = {};
+      busy[entry.day][entry.time] = true;
+    }
+  }
+  return busy;
+}
+
+function freeGroupPeople() {
+  var people = [];
+  if (selectedStudent) people.push({ label: selectedStudent.name, data: selectedStudent, you: true });
+  for (var i = 0; i < freeGroup.length; i++) people.push({ label: freeGroup[i].name, data: freeGroup[i], you: false });
+  return people;
+}
+
+function renderFreeTogether() {
+  var gridEl = document.getElementById('freeGrid');
+  var countEl = document.getElementById('freeCount');
+  var summaryEl = document.getElementById('freeSummary');
+  var legendEl = document.getElementById('freeLegend');
+  var noDataEl = document.getElementById('freeNoData');
+  var youEl = document.getElementById('freeYou');
+  var chipsEl = document.getElementById('freeChips');
+  if (!gridEl) return;
+
+  youEl.innerHTML = selectedStudent ? he(selectedStudent.name) : '<span style="font-weight:400;opacity:.7">not selected</span>';
+
+  var people = freeGroupPeople();
+  if (!people.length) {
+    gridEl.innerHTML = '';
+    countEl.innerHTML = '';
+    summaryEl.innerHTML = '';
+    legendEl.innerHTML = '';
+    chipsEl.innerHTML = '';
+    noDataEl.innerHTML = '<div class="empty">Select yourself at the top, then add friends to see when everyone is free together.</div>';
+    return;
+  }
+  noDataEl.innerHTML = '';
+
+  var chipHtml = '';
+  for (var p = 0; p < people.length; p++) {
+    if (people[p].you) {
+      chipHtml += '<span class="free-chip">' + he(people[p].label) + '</span>';
+    } else {
+      chipHtml += '<span class="free-chip">' + he(people[p].label) + '<button type="button" class="free-chip-x" onclick="removeFreeFriend(\'' + people[p].label.replace(/'/g, "\\'") + '\')" aria-label="Remove ' + he(people[p].label) + '">&#215;</button></span>';
+    }
+  }
+  chipsEl.innerHTML = chipHtml;
+
+  var wk = getFreeWeek();
+  if (!wk) {
+    gridEl.style.display = 'none';
+    countEl.innerHTML = '';
+    summaryEl.innerHTML = '';
+    legendEl.innerHTML = '';
+    noDataEl.innerHTML = '<div class="empty">Not available yet &mdash; will be updated on Saturday</div>';
+    return;
+  }
+  gridEl.style.display = 'grid';
+  var ttData = wk.data;
+  var TIME_ORDER = wk.slots && wk.slots.length ? wk.slots : DATA.time_slots;
+  var dayNums = getDayNumbers(wk.weekStart);
+  var weekISOs = getWeekISOs(wk.weekStart);
+  var holidays = DATA.holidays || {};
+
+  var daysWithData = [];
+  for (var d = 0; d < DAY_NAMES.length; d++) {
+    var day = DAY_NAMES[d];
+    var hasData = false;
+    for (var e = 0; e < ttData.length; e++) {
+      if (ttData[e].day === day) { hasData = true; break; }
+    }
+    if (hasData || (weekISOs[day] && holidays[weekISOs[day]])) daysWithData.push(day);
+  }
+  var holidayName = {};
+  for (var d2 = 0; d2 < daysWithData.length; d2++) {
+    var day2 = daysWithData[d2];
+    if (weekISOs[day2] && holidays[weekISOs[day2]]) holidayName[day2] = holidays[weekISOs[day2]];
+  }
+  if (!daysWithData.length) {
+    countEl.innerHTML = '';
+    summaryEl.innerHTML = '';
+    legendEl.innerHTML = '';
+    noDataEl.innerHTML = '<div class="empty">No classes for this period</div>';
+    return;
+  }
+
+  var numDays = daysWithData.length;
+  var numTimes = TIME_ORDER.length;
+  var colTmpl = '52px';
+  for (var t = 0; t < numTimes; t++) colTmpl += ' minmax(72px, 1fr)';
+  gridEl.style.gridTemplateColumns = colTmpl;
+
+  var busyMaps = [];
+  for (var p2 = 0; p2 < people.length; p2++) busyMaps.push(personBusySlots(people[p2].data, ttData));
+
+  var freeSlots = {};
+  var allFreeCount = 0;
+  for (var d = 0; d < numDays; d++) {
+    freeSlots[daysWithData[d]] = [];
+    for (var t2 = 0; t2 < numTimes; t2++) {
+      var time = TIME_ORDER[t2];
+      var busyNames = [];
+      for (var p3 = 0; p3 < people.length; p3++) {
+        if (busyMaps[p3][daysWithData[d]] && busyMaps[p3][daysWithData[d]][time]) busyNames.push(people[p3].label);
+      }
+      if (busyNames.length === 0) { freeSlots[daysWithData[d]].push(time); allFreeCount++; }
+    }
+  }
+
+  countEl.innerHTML = formatCalHeader(wk.weekStart) + '<span class="cal-sessions">' + allFreeCount + ' free slot' + (allFreeCount !== 1 ? 's' : '') + ' together</span>';
+
+  var summaryParts = [];
+  for (var d3 = 0; d3 < numDays; d3++) {
+    var day3 = daysWithData[d3];
+    if (freeSlots[day3].length) {
+      var labels = [];
+      for (var t3 = 0; t3 < freeSlots[day3].length; t3++) labels.push(freeSlots[day3][t3].replace('-', '\u2013'));
+      summaryParts.push(day3 + ' ' + labels.join(', '));
+    }
+  }
+  summaryEl.innerHTML = summaryParts.length
+    ? 'Everyone is free: <b>' + he(summaryParts.join(' &middot; ')) + '</b>'
+    : 'No slot where everyone is free together this period.';
+
+  var html = '';
+  html += '<div class="tt-gh tt-time">Day</div>';
+  for (var t4 = 0; t4 < numTimes; t4++) {
+    html += '<div class="tt-gh">' + TIME_ORDER[t4].replace('-', '\u2013') + '</div>';
+  }
+  for (var d4 = 0; d4 < numDays; d4++) {
+    var day4 = daysWithData[d4];
+    html += '<div class="tt-gl"><span class="tt-gl-day">' + day4 + '</span><span class="tt-gl-date">' + (dayNums[day4] || '') + '</span></div>';
+    if (holidayName[day4]) {
+      html += '<div class="tt-gc tt-holiday" style="grid-column:2 / span ' + numTimes + '">' + he(holidayName[day4]) + '</div>';
+      continue;
+    }
+    for (var t5 = 0; t5 < numTimes; t5++) {
+      var time5 = TIME_ORDER[t5];
+      var busyN = [];
+      for (var p4 = 0; p4 < people.length; p4++) {
+        if (busyMaps[p4][day4] && busyMaps[p4][day4][time5]) busyN.push(people[p4].label);
+      }
+      var cls = 'tt-gc';
+      var content;
+      if (busyN.length === 0) {
+        cls += ' free-ok';
+        content = '<div class="free-gc-cell"><span class="free-state"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2 L4.8 9 L10 3"/></svg>Free</span></div>';
+      } else if (busyN.length < people.length) {
+        cls += ' free-part';
+        content = '<div class="free-gc-cell"><span class="free-state">Busy</span><span class="free-gc-tag">' + he(busyN.join(', ')) + '</span></div>';
+      } else {
+        cls += ' free-busy';
+        content = '<div class="free-gc-cell"><span class="free-state">Busy</span></div>';
+      }
+      html += '<div class="' + cls + '">' + content + '</div>';
+    }
+  }
+  gridEl.innerHTML = html;
+
+  var lhtml = '<span class="tt-legend-item" style="background:hsl(150,45%,88%);color:hsl(150,55%,22%)">Everyone free</span>';
+  lhtml += '<span class="tt-legend-item" style="background:hsl(40,80%,93%);color:hsl(35,55%,28%)">Some busy</span>';
+  lhtml += '<span class="tt-legend-item other">All busy</span>';
+  legendEl.innerHTML = lhtml;
+}
+
+function setFreeRange(range, btn) {
+  freeRange = range;
+  var grp = btn.parentNode;
+  for (var i = 0; i < grp.children.length; i++) grp.children[i].classList.remove('active');
+  btn.classList.add('active');
+  renderFreeTogether();
+}
+
+function addFreeFriend(name) {
+  if (!name) return;
+  for (var i = 0; i < freeGroup.length; i++) {
+    if (freeGroup[i].name === name) return;
+  }
+  if (selectedStudent && selectedStudent.name === name) return;
+  var s = null;
+  for (var j = 0; j < studentData.length; j++) {
+    if (studentData[j].name === name) { s = studentData[j]; break; }
+  }
+  if (!s) return;
+  freeGroup.push(s);
+  trackAnalytics(name, s.roll, '', 'free');
+  document.getElementById('freeSearch').value = '';
+  document.getElementById('freeDropdown').classList.remove('open');
+  freeSearchOpen = false;
+  renderFreeTogether();
+}
+
+function removeFreeFriend(name) {
+  var n = [];
+  var removed = null;
+  for (var i = 0; i < freeGroup.length; i++) {
+    if (freeGroup[i].name === name) removed = freeGroup[i];
+    else n.push(freeGroup[i]);
+  }
+  freeGroup = n;
+  if (removed) trackAnalytics(removed.name, removed.roll, '', 'free_remove');
+  renderFreeTogether();
+}
+
+function onFreeInput() {
+  var input = document.getElementById('freeSearch');
+  var val = input.value.trim().toLowerCase();
+  var dd = document.getElementById('freeDropdown');
+  if (!val) { dd.classList.remove('open'); freeSearchOpen = false; return; }
+  var excluded = {};
+  if (selectedStudent) excluded[selectedStudent.name] = true;
+  for (var i = 0; i < freeGroup.length; i++) excluded[freeGroup[i].name] = true;
+  var matched = [];
+  for (var j = 0; j < studentData.length; j++) {
+    var s = studentData[j];
+    if (excluded[s.name]) continue;
+    if (s.name.toLowerCase().indexOf(val) !== -1) matched.push(s);
+    if (matched.length >= 12) break;
+  }
+  if (!matched.length) { dd.classList.remove('open'); freeSearchOpen = false; return; }
+  var html = '';
+  for (var k = 0; k < matched.length; k++) {
+    html += '<div class="sd-item" data-fn="' + matched[k].name.replace(/"/g, '&quot;').replace(/'/g, "\\'") + '" onmousedown="addFreeFriend(this.getAttribute(\'data-fn\'))">' + he(matched[k].name) + '<span class="sd-roll">' + he(matched[k].roll) + '</span></div>';
+  }
+  dd.innerHTML = html;
+  dd.classList.add('open');
+  freeSearchOpen = true;
+}
+
+function onFreeKeydown(e) {
+  var dd = document.getElementById('freeDropdown');
+  if (!dd.classList.contains('open')) return;
+  var items = dd.querySelectorAll('.sd-item');
+  if (!items.length) return;
+  var ap = dd.querySelector('.sd-item.active');
+  var idx = -1;
+  if (ap) { for (var i = 0; i < items.length; i++) { if (items[i] === ap) { idx = i; break; } } }
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    if (ap) ap.classList.remove('active');
+    items[(idx + 1) % items.length].classList.add('active');
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    if (ap) ap.classList.remove('active');
+    items[(idx - 1 + items.length) % items.length].classList.add('active');
+  } else if (e.key === 'Enter') {
+    e.preventDefault();
+    var pick = ap || items[0];
+    if (pick) addFreeFriend(pick.getAttribute('data-fn'));
+  } else if (e.key === 'Escape') {
+    dd.classList.remove('open');
+    freeSearchOpen = false;
+  }
+}
+
+function onFreeFocus() {
+  if (document.getElementById('freeSearch').value.trim()) onFreeInput();
+}
+
+function onFreeBlur() {
+  var dd = document.getElementById('freeDropdown');
+  if (dd.classList.contains('open')) {
+    var t = dd.querySelector('.sd-item.active');
+    if (t) { dd.classList.remove('open'); freeSearchOpen = false; return; }
+  }
+  setTimeout(function() { document.getElementById('freeDropdown').classList.remove('open'); freeSearchOpen = false; }, 150);
 }
 
 var facRange = 'week';
