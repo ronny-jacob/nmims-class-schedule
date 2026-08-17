@@ -1179,7 +1179,7 @@ function addFreeFriend(name) {
   }
   if (!s) return;
   freeGroup.push(s);
-  trackAnalytics(name, s.roll, '', 'free');
+  trackAnalytics(name, s.roll, selectedStudent ? selectedStudent.name : '', 'free');
   document.getElementById('freeSearch').value = '';
   document.getElementById('freeDropdown').classList.remove('open');
   freeSearchOpen = false;
@@ -1194,7 +1194,7 @@ function removeFreeFriend(name) {
     else n.push(freeGroup[i]);
   }
   freeGroup = n;
-  if (removed) trackAnalytics(removed.name, removed.roll, '', 'free_remove');
+  if (removed) trackAnalytics(removed.name, removed.roll, selectedStudent ? selectedStudent.name : '', 'free_remove');
   renderFreeTogether();
 }
 

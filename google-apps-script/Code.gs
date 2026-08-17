@@ -114,6 +114,12 @@ function doGet(e) {
     return ContentService.createTextOutput('ok');
   }
 
+  // Free Together: friend added / removed
+  if (evt === 'free' || evt === 'free_remove') {
+    logFreeTogether_(sid, did, ts, evt, extra, name, roll, ua, ref);
+    return ContentService.createTextOutput('ok');
+  }
+
   // Custom events (e.g. fac_week) keep their real type instead of collapsing into 'select'
   if (evt && evt !== 'select') {
     logActivity_(sid, did, ts, evt, name, roll, extra, ua, ref);
@@ -128,6 +134,11 @@ function doGet(e) {
 function logActivity_(sid, did, ts, evt, name, roll, extra, ua, ref) {
   var log = ensureSheet_('Activity Log', ['Session ID', 'Timestamp', 'Event', 'Name', 'Roll', 'Extra', 'User Agent', 'Referrer', 'Device']);
   prepend_(log, [sid, ts, evt, name, roll, extra, ua, ref, did]);
+}
+
+function logFreeTogether_(sid, did, ts, evt, you, friend, roll, ua, ref) {
+  var sheet = ensureSheet_('Free Together', ['Session ID', 'Timestamp', 'Event', 'You', 'Friend', 'Roll', 'Device']);
+  prepend_(sheet, [sid, ts, evt, you, friend, roll, did]);
 }
 
 function logSuggestion_(sid, ts, name, roll, text, ua, ref) {
