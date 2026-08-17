@@ -99,8 +99,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .free-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:11.5px;font-weight:600;background:var(--accent-bg);color:var(--text);border:1px solid var(--border)}
 .free-chip-x{border:none;background:transparent;color:var(--text-muted);font-size:14px;line-height:1;cursor:pointer;padding:0 2px;-webkit-tap-highlight-color:transparent}
 @media(hover:hover){.free-chip-x:hover{color:var(--text)}}
-.free-summary{font-size:11.5px;color:var(--text-muted);margin-bottom:8px;line-height:1.5}
-.free-summary b{color:var(--text)}
+.free-hint{font-size:11.5px;color:var(--text-muted);margin-bottom:8px;line-height:1.5;text-align:center}
 .free-ok{background:hsl(150,45%,88%);box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
 .free-ok .free-state{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:700;color:hsl(150,55%,22%);text-transform:uppercase;letter-spacing:.05em}
 .free-ok .free-state svg{width:9px;height:9px}
@@ -109,6 +108,9 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .free-busy .free-state{font-size:8.5px;font-weight:600;color:var(--text-light);text-transform:uppercase;letter-spacing:.04em}
 .free-gc-cell{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:44px;padding:3px}
 .free-gc-tag{font-size:7.5px;font-weight:500;color:var(--text-muted);line-height:1.2;text-align:center}
+#freeGrid{display:none}
+#freeGrid.free-grid-show{display:grid;animation:freeReveal .4s cubic-bezier(.2,.7,.2,1)}
+@keyframes freeReveal{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
 .tt-mail-note{font-size:9px;color:var(--text-light);margin-bottom:4px;line-height:1.3;text-align:center}
 .fac-item{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);box-shadow:var(--shadow-sm);margin-bottom:6px;overflow:hidden}
@@ -406,7 +408,6 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
       </div>
       <div id="freeChips" class="free-chips"></div>
       <div id="freeCount" class="tt-count"></div>
-      <div id="freeSummary" class="free-summary"></div>
       <div class="tt-scroll"><div class="tt-grid" id="freeGrid"></div></div>
       <div id="freeLegend" class="tt-legend"></div>
       <div id="freeNoData"></div>
@@ -1011,7 +1012,6 @@ function freeGroupPeople() {
 function renderFreeTogether() {
   var gridEl = document.getElementById('freeGrid');
   var countEl = document.getElementById('freeCount');
-  var summaryEl = document.getElementById('freeSummary');
   var legendEl = document.getElementById('freeLegend');
   var noDataEl = document.getElementById('freeNoData');
   var youEl = document.getElementById('freeYou');
@@ -1022,9 +1022,9 @@ function renderFreeTogether() {
 
   var people = freeGroupPeople();
   if (!people.length) {
+    gridEl.className = 'tt-grid';
     gridEl.innerHTML = '';
     countEl.innerHTML = '';
-    summaryEl.innerHTML = '';
     legendEl.innerHTML = '';
     chipsEl.innerHTML = '';
     noDataEl.innerHTML = '<div class="empty">Select yourself at the top, then add friends to see when everyone is free together.</div>';
@@ -1042,16 +1042,24 @@ function renderFreeTogether() {
   }
   chipsEl.innerHTML = chipHtml;
 
+  if (freeGroup.length === 0) {
+    gridEl.className = 'tt-grid';
+    gridEl.innerHTML = '';
+    countEl.innerHTML = '';
+    legendEl.innerHTML = '';
+    noDataEl.innerHTML = '<div class="free-hint">Add a friend above to compare free time together.</div>';
+    return;
+  }
+
   var wk = getFreeWeek();
   if (!wk) {
-    gridEl.style.display = 'none';
+    gridEl.className = 'tt-grid';
+    gridEl.innerHTML = '';
     countEl.innerHTML = '';
-    summaryEl.innerHTML = '';
     legendEl.innerHTML = '';
     noDataEl.innerHTML = '<div class="empty">Not available yet &mdash; will be updated on Saturday</div>';
     return;
   }
-  gridEl.style.display = 'grid';
   var ttData = wk.data;
   var TIME_ORDER = wk.slots && wk.slots.length ? wk.slots : DATA.time_slots;
   var dayNums = getDayNumbers(wk.weekStart);
@@ -1073,8 +1081,9 @@ function renderFreeTogether() {
     if (weekISOs[day2] && holidays[weekISOs[day2]]) holidayName[day2] = holidays[weekISOs[day2]];
   }
   if (!daysWithData.length) {
+    gridEl.className = 'tt-grid';
+    gridEl.innerHTML = '';
     countEl.innerHTML = '';
-    summaryEl.innerHTML = '';
     legendEl.innerHTML = '';
     noDataEl.innerHTML = '<div class="empty">No classes for this period</div>';
     return;
@@ -1104,19 +1113,6 @@ function renderFreeTogether() {
   }
 
   countEl.innerHTML = formatCalHeader(wk.weekStart) + '<span class="cal-sessions">' + allFreeCount + ' free slot' + (allFreeCount !== 1 ? 's' : '') + ' together</span>';
-
-  var summaryParts = [];
-  for (var d3 = 0; d3 < numDays; d3++) {
-    var day3 = daysWithData[d3];
-    if (freeSlots[day3].length) {
-      var labels = [];
-      for (var t3 = 0; t3 < freeSlots[day3].length; t3++) labels.push(freeSlots[day3][t3].replace('-', '\u2013'));
-      summaryParts.push(day3 + ' ' + labels.join(', '));
-    }
-  }
-  summaryEl.innerHTML = summaryParts.length
-    ? 'Everyone is free: <b>' + he(summaryParts.join(' &middot; ')) + '</b>'
-    : 'No slot where everyone is free together this period.';
 
   var html = '';
   html += '<div class="tt-gh tt-time">Day</div>';
@@ -1152,6 +1148,7 @@ function renderFreeTogether() {
     }
   }
   gridEl.innerHTML = html;
+  gridEl.className = 'tt-grid free-grid-show';
 
   var lhtml = '<span class="tt-legend-item" style="background:hsl(150,45%,88%);color:hsl(150,55%,22%)">Everyone free</span>';
   lhtml += '<span class="tt-legend-item" style="background:hsl(40,80%,93%);color:hsl(35,55%,28%)">Some busy</span>';
