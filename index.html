@@ -381,7 +381,6 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
     <div id="ttCount" class="tt-count"></div>
     <div id="ttMailNote" class="tt-mail-note"></div>
     <div class="tt-scroll"><div class="tt-grid" id="timetable"></div></div>
-    <div id="tt-legend" class="tt-legend"></div>
     <div id="ttNoData"></div>
     <div class="free-card">
       <div class="free-hdr">
@@ -818,12 +817,10 @@ function formatWeekRangeShort(weekStart) {
 function renderTimetable() {
   renderFreeTogether();
   var gridEl = document.getElementById('timetable');
-  var legendEl = document.getElementById('tt-legend');
   var countEl = document.getElementById('ttCount');
   var noDataEl = document.getElementById('ttNoData');
   if (!selectedStudent) {
     gridEl.style.display = 'none';
-    legendEl.innerHTML = '';
     countEl.innerHTML = '';
     noDataEl.innerHTML = '<div class="empty">Type and select your name in the box above to see your schedule.</div>';
     return;
@@ -831,7 +828,6 @@ function renderTimetable() {
   var resolved = resolveTtData(ttRange);
   if (!resolved) {
     gridEl.style.display = 'none';
-    legendEl.innerHTML = '';
     countEl.innerHTML = '';
     noDataEl.innerHTML = '<div class="empty">' + (ttRange === 'next' ? 'Not available yet &mdash; will be updated on Saturday' : 'No classes for this period') + '</div>';
     return;
@@ -870,7 +866,6 @@ function renderTimetable() {
   }
   if (daysWithData.length === 0) {
     gridEl.style.display = 'none';
-    legendEl.innerHTML = '';
     countEl.textContent = 'No sessions';
     noDataEl.innerHTML = '<div class="empty">No classes for this period</div>';
     return;
@@ -955,22 +950,6 @@ function renderTimetable() {
     }
   }
   gridEl.innerHTML = html;
-  var shown = {};
-  var lhtml = '';
-  for (var e = 0; e < ttData.length; e++) {
-    var code = ttData[e].subject;
-    if (shown[code]) continue;
-    shown[code] = true;
-    var mine = subjectSet[code];
-    var subj = DATA.subjects[code];
-    if (mine) {
-      var h = subjectHue(code);
-      lhtml += '<span class="tt-legend-item" style="background:hsl(' + h + ',78%,85%);color:hsl(' + h + ',62%,18%)">' + code + (subj ? ' ' + subj.name : '') + '</span>';
-    } else {
-      lhtml += '<span class="tt-legend-item other">' + code + '</span>';
-    }
-  }
-  legendEl.innerHTML = '<div class="tt-note">The highlighted classes are your subjects for ' + wkLabel + '.</div>' + lhtml;
 }
 
 var freeRange = 'week';
