@@ -389,7 +389,9 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
           <div class="free-sub">When everyone is free at the same time</div>
         </div>
         <div class="pill-group">
-          <button class="pill sm active" onclick="setFreeRange('week',this)">This Week</button>
+          <button class="pill sm active" onclick="setFreeRange('today',this)">Today</button>
+          <button class="pill sm" onclick="setFreeRange('tomorrow',this)">Tomorrow</button>
+          <button class="pill sm" onclick="setFreeRange('week',this)">This Week</button>
           <button class="pill sm" onclick="setFreeRange('next',this)">Next Week</button>
         </div>
       </div>
@@ -957,6 +959,14 @@ var freeGroup = [];
 var freeSearchOpen = false;
 
 function getFreeWeek() {
+  if (freeRange === 'today' || freeRange === 'tomorrow') {
+    var now = new Date();
+    if (freeRange === 'tomorrow') now.setDate(now.getDate() + 1);
+    var iso = now.getFullYear() + '-' +
+      String(now.getMonth() + 1).padStart(2, '0') + '-' +
+      String(now.getDate()).padStart(2, '0');
+    return getWeekForDate(iso);
+  }
   if (freeRange === 'next') {
     if (DATA.timetable_next && DATA.timetable_next.length)
       return { data: DATA.timetable_next, slots: DATA.time_slots_next || [], range: DATA.date_range_next, weekStart: DATA.week_start_next };
@@ -1046,8 +1056,12 @@ function renderFreeTogether() {
   var holidays = DATA.holidays || {};
 
   var daysWithData = [];
-  for (var d = 0; d < DAY_NAMES.length; d++) {
-    var day = DAY_NAMES[d];
+  var daysToShow;
+  if (freeRange === 'today') { daysToShow = [getTodayDay()]; }
+  else if (freeRange === 'tomorrow') { daysToShow = [getTomorrowDay()]; }
+  else { daysToShow = DAY_NAMES.slice(); }
+  for (var d = 0; d < daysToShow.length; d++) {
+    var day = daysToShow[d];
     var hasData = false;
     for (var e = 0; e < ttData.length; e++) {
       if (ttData[e].day === day) { hasData = true; break; }
