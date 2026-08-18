@@ -2446,9 +2446,12 @@ function alreadyInstalled() {
   return window.matchMedia('(display-mode: standalone)').matches ||
          window.navigator.standalone === true;
 }
+var installBtnTimer = null;
 function showInstallBtn() {
   var b = document.getElementById('instBtn');
   if (b && !installDismissed && !alreadyInstalled()) b.style.display = 'flex';
+  if (installBtnTimer) clearTimeout(installBtnTimer);
+  installBtnTimer = setTimeout(hideInstallBtn, 10000);
 }
 function hideInstallBtn() {
   var b = document.getElementById('instBtn');
