@@ -87,7 +87,13 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .tt-legend-item{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600}
 .tt-legend-item.other{color:var(--text-light);font-size:9px;padding:2px 6px}
 .tt-note{font-size:10px;color:var(--text-muted);line-height:1.3;width:100%;margin-bottom:6px}
-.free-card{margin-top:18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+.free-card{margin-top:18px;background:var(--surface);border:1px solid var(--suggest-line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.free-card .exam-hd{background:linear-gradient(135deg,var(--suggest-bg),rgba(70,105,95,.04))}
+@media(hover:hover){.free-card .exam-hd:hover{background:linear-gradient(135deg,var(--suggest-bg),rgba(70,105,95,.12))}}
+.free-sub-hd{font-size:10px;color:var(--text-muted);font-weight:500}
+.free-body{padding:14px 16px 16px}
+.free-card.open .exam-body{max-height:2000px;border-top-color:var(--suggest-line)}
+.free-card .exam-hd .rt{color:var(--suggest)}
 .free-hdr{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
 .free-title-wrap{display:flex;flex-direction:column;min-width:0}
 .free-title{font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--text);white-space:nowrap}
@@ -156,12 +162,16 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .exam-sub{font-size:10.5px;font-weight:600;color:var(--text-muted);background:var(--accent-bg);border:1px solid var(--border);border-radius:7px;padding:2px 7px;line-height:1.25}
 .exam-sub.own{color:var(--suggest);background:var(--suggest-bg);border-color:var(--suggest-line);font-weight:700}
 .exam-noexam{font-size:10px;color:var(--text-light);font-style:italic}
-.exam-prompt{display:flex;align-items:flex-start;gap:9px;margin-top:10px;padding:10px 12px;background:var(--suggest-bg);border:1px solid var(--suggest-line);border-radius:var(--radius-sm);color:var(--text);font-size:12px;line-height:1.45}
-.exam-prompt::before{content:'\203A';flex-shrink:0;font-weight:800;color:var(--suggest);line-height:1.4}
-.exam-prompt b{font-weight:700;color:var(--suggest)}
+.exam-prompt{display:flex;align-items:flex-start;gap:9px;margin-top:10px;padding:10px 12px;background:#fdeeec;border:1px solid #eec4be;border-radius:var(--radius-sm);color:#7a2a1f;font-size:12px;font-weight:600;line-height:1.45}
+.exam-prompt::before{content:'\203A';flex-shrink:0;font-weight:800;color:#c64a3a;line-height:1.4}
+.exam-prompt b{font-weight:800;color:#c64a3a}
 .exam-prompt[hidden]{display:none}
-@keyframes nameAttention{0%,100%{box-shadow:0 0 0 0 rgba(180,60,40,0)}30%{box-shadow:0 0 0 3px rgba(180,60,40,.4)}70%{box-shadow:0 0 0 3px rgba(180,60,40,.4)}}
-#studentSelect.attention{animation:nameAttention .9s ease 2;border-color:#c65a40}
+@keyframes promptShake{0%,100%{transform:translateX(0)}10%{transform:translateX(-9px)}20%{transform:translateX(9px)}30%{transform:translateX(-7px)}40%{transform:translateX(7px)}50%{transform:translateX(-5px)}60%{transform:translateX(5px)}70%{transform:translateX(-3px)}80%{transform:translateX(3px)}90%{transform:translateX(-1px)}}
+.exam-prompt.shake{animation:promptShake .7s ease 2}
+@keyframes nameAttention{0%,100%{box-shadow:0 0 0 0 rgba(198,74,58,0)}25%{box-shadow:0 0 0 3px rgba(198,74,58,.45)}75%{box-shadow:0 0 0 3px rgba(198,74,58,.45)}}
+#studentSelect.attention{animation:nameAttention 1s ease 2;border-color:#c64a3a}
+.id-bar.attention{border-color:#c64a3a;background:#fdf1ef;box-shadow:0 0 0 3px rgba(198,74,58,.18)}
+.id-bar.attention .id-select{border-color:#c64a3a}
 @media (max-width:480px){
   .exam-table th{font-size:9px;padding:8px 8px 6px}
   .exam-table td{padding:6px 8px}
@@ -455,42 +465,45 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
         <tbody id="examList"></tbody>
       </table></div></div>
     </div>
-    <div class="free-card">
-      <div class="free-hdr">
-        <div class="free-title-wrap">
-          <div class="free-title">Free Together</div>
-          <div class="free-sub">When everyone is free at the same time</div>
-        </div>
-        <div class="free-you-wrap">
-          <span class="free-you-lbl">You:</span>
-          <span class="free-you" id="freeYou"></span>
-          <div class="free-you-sr" id="freeYouSr" style="display:none">
-            <div style="position:relative;flex:1;min-width:150px">
-              <input id="freeYouInput" class="si" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search your name&hellip;" oninput="onFreeYouInput()" onkeydown="onFreeYouKeydown(event)" onblur="onFreeYouBlur()" onfocus="onFreeYouFocus()">
-              <div id="freeYouDropdown" class="sd"></div>
+    <div class="exam-card free-card open" id="freeCard">
+      <button class="exam-hd" type="button" onclick="toggleFree(this)" aria-expanded="true">
+        <span class="exam-title">Free Together</span>
+        <span class="free-sub-hd">When everyone is free at the same time</span>
+        <span class="rt">&#9650;</span>
+      </button>
+      <div class="exam-body free-body">
+        <div class="free-hdr">
+          <div class="free-you-wrap">
+            <span class="free-you-lbl">You:</span>
+            <span class="free-you" id="freeYou"></span>
+            <div class="free-you-sr" id="freeYouSr" style="display:none">
+              <div style="position:relative;flex:1;min-width:150px">
+                <input id="freeYouInput" class="si" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search your name&hellip;" oninput="onFreeYouInput()" onkeydown="onFreeYouKeydown(event)" onblur="onFreeYouBlur()" onfocus="onFreeYouFocus()">
+                <div id="freeYouDropdown" class="sd"></div>
+              </div>
+            </div>
+          </div>
+          <div class="sr" style="flex:1">
+            <div style="position:relative;flex:1;min-width:160px">
+              <input id="freeSearch" class="si" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Add a friend&hellip;" oninput="onFreeInput()" onkeydown="onFreeKeydown(event)" onblur="onFreeBlur()" onfocus="onFreeFocus()">
+              <div id="freeDropdown" class="sd"></div>
             </div>
           </div>
         </div>
-        <div class="sr" style="flex:1">
-          <div style="position:relative;flex:1;min-width:160px">
-            <input id="freeSearch" class="si" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Add a friend&hellip;" oninput="onFreeInput()" onkeydown="onFreeKeydown(event)" onblur="onFreeBlur()" onfocus="onFreeFocus()">
-            <div id="freeDropdown" class="sd"></div>
+        <div id="freeChips" class="free-chips"></div>
+        <div class="free-pills">
+          <div class="pill-group">
+            <button class="pill sm active" onclick="setFreeRange('today',this)">Today</button>
+            <button class="pill sm" onclick="setFreeRange('tomorrow',this)">Tomorrow</button>
+            <button class="pill sm" onclick="setFreeRange('week',this)">This Week</button>
+            <button class="pill sm" onclick="setFreeRange('next',this)">Next Week</button>
           </div>
         </div>
+        <div id="freeCount" class="tt-count"></div>
+        <div class="tt-scroll"><div class="tt-grid" id="freeGrid"></div></div>
+        <div id="freeLegend" class="tt-legend"></div>
+        <div id="freeNoData"></div>
       </div>
-      <div id="freeChips" class="free-chips"></div>
-      <div class="free-pills">
-        <div class="pill-group">
-          <button class="pill sm active" onclick="setFreeRange('today',this)">Today</button>
-          <button class="pill sm" onclick="setFreeRange('tomorrow',this)">Tomorrow</button>
-          <button class="pill sm" onclick="setFreeRange('week',this)">This Week</button>
-          <button class="pill sm" onclick="setFreeRange('next',this)">Next Week</button>
-        </div>
-      </div>
-      <div id="freeCount" class="tt-count"></div>
-      <div class="tt-scroll"><div class="tt-grid" id="freeGrid"></div></div>
-      <div id="freeLegend" class="tt-legend"></div>
-      <div id="freeNoData"></div>
     </div>
   </div>
   <div class="inst-overlay" id="freeBusyOverlay" role="dialog" aria-modal="true" aria-labelledby="freeBusyTitle" style="display:none" onclick="if(event.target===this)closeFreeBusy()">
@@ -1156,6 +1169,17 @@ function promptForName() {
   if (prompt) {
     prompt.hidden = false;
     prompt.innerHTML = 'Select <b>your name</b> in the box above to view the exam timetable.';
+    prompt.classList.remove('shake');
+    void prompt.offsetWidth;
+    prompt.classList.add('shake');
+  }
+  var bar = document.querySelector('.id-bar');
+  if (bar) {
+    bar.classList.remove('attention');
+    void bar.offsetWidth;
+    bar.classList.add('attention');
+    if (window.__barTimer) clearTimeout(window.__barTimer);
+    window.__barTimer = setTimeout(function() { bar.classList.remove('attention'); }, 2600);
   }
   var input = document.getElementById('studentSelect');
   if (input) {
@@ -1163,8 +1187,15 @@ function promptForName() {
     void input.offsetWidth;
     input.classList.add('attention');
     if (window.__examFlashTimer) clearTimeout(window.__examFlashTimer);
-    window.__examFlashTimer = setTimeout(function() { input.classList.remove('attention'); }, 2000);
+    window.__examFlashTimer = setTimeout(function() { input.classList.remove('attention'); }, 2600);
   }
+}
+
+function toggleFree(btn) {
+  var card = btn.closest('.exam-card');
+  var open = card.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  btn.querySelector('.rt').innerHTML = open ? '&#9650;' : '&#9660;';
 }
 
 var freeRange = 'today';
@@ -2665,12 +2696,6 @@ window.addEventListener('load', function() {
     }
   }
   if (isIOS) showInstallBtn();
-  try {
-    if (localStorage.getItem('examsSeen') === '1') {
-      var eb = document.querySelector('.exam-badge');
-      if (eb) eb.style.display = 'none';
-    }
-  } catch (e) {}
 });
 function onInstallClick() {
   if (!installPrompt) {
