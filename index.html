@@ -137,6 +137,10 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 @keyframes examPulse{0%,100%{box-shadow:0 0 0 0 rgba(70,105,95,.4)}50%{box-shadow:0 0 0 5px rgba(70,105,95,0)}}
 .exam-body{max-height:0;overflow:hidden;transition:max-height .35s ease;border-top:1px solid transparent}
 .exam-card.open .exam-body{max-height:min(72vh,560px);border-top-color:var(--suggest-line)}
+.exam-tabs{display:flex;gap:3px;padding:8px 10px 6px;background:var(--surface)}
+.exam-tab{flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--accent-bg);font-family:var(--font);font-size:11.5px;font-weight:700;color:var(--text-muted);cursor:pointer;text-align:center;-webkit-tap-highlight-color:transparent;transition:background .12s,color .12s}
+@media(hover:hover){.exam-tab:hover{color:var(--text)}}
+.exam-tab.active{color:var(--suggest);background:var(--suggest-bg);border-color:var(--suggest-line)}
 .exam-scroll{max-height:min(58vh,460px);overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 .exam-table{width:100%;border-collapse:collapse;font-size:11px}
 .exam-table th{position:sticky;top:0;z-index:2;background:var(--surface);text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--text);padding:9px 12px 7px;border-bottom:1px solid var(--border)}
@@ -432,7 +436,10 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
         <span class="exam-title">End Term Exam Timetable</span>
         <span class="rt">&#9660;</span>
       </button>
-      <div class="exam-body"><div class="exam-scroll"><table class="exam-table">
+      <div class="exam-body"><div class="exam-tabs">
+        <button class="exam-tab active" type="button" data-ex="all" onclick="setExamTab('all',this)">Full Schedule</button>
+        <button class="exam-tab" type="button" data-ex="mine" onclick="setExamTab('mine',this)">Yours</button>
+      </div><div class="exam-scroll"><table class="exam-table">
         <thead><tr>
           <th class="exam-th-date">Date</th>
           <th class="exam-th-slot">Morning<small>11:00 am &ndash; 01:00 pm</small></th>
@@ -1069,6 +1076,8 @@ function examOwn(siteKey) {
   return false;
 }
 
+var examTab = 'all';
+
 function examChips(subs) {
   if (!subs || !subs.length) return '<span class="exam-noexam">No exam</span>';
   var h = '';
@@ -1082,9 +1091,11 @@ function examChips(subs) {
 function renderExams() {
   var el = document.getElementById('examList');
   if (!el) return;
+  var mine = examTab === 'mine';
+  var days = mine ? examMineOnly() : EXAMS;
   var h = '';
-  for (var i = 0; i < EXAMS.length; i++) {
-    var ex = EXAMS[i];
+  for (var i = 0; i < days.length; i++) {
+    var ex = days[i];
     var d = ex.d.split(', ');
     h += '<tr>' +
       '<td class="exam-day" title="' + he(ex.sub) + '">' + he(d[0]) + '<small>' + he(d[1]) + '</small></td>' +
@@ -1092,7 +1103,26 @@ function renderExams() {
       '<td class="exam-slot"><div class="exam-subs">' + examChips(ex.a) + '</div></td>' +
     '</tr>';
   }
-  el.innerHTML = h;
+  el.innerHTML = h || '<tr><td colspan="3" class="exam-day" style="width:auto;padding:14px 12px;text-align:center">' + (mine && !selectedStudent ? 'Select a student to see your exams.' : 'No exams for you.') + '</td></tr>';
+}
+
+function examMineOnly() {
+  if (!selectedStudent) return [];
+  var out = [];
+  for (var i = 0; i < EXAMS.length; i++) {
+    var ex = EXAMS[i];
+    var m = ex.m.filter(function(s) { return examOwn(s.k); });
+    var a = ex.a.filter(function(s) { return examOwn(s.k); });
+    if (m.length || a.length) out.push({ d: ex.d, sub: ex.sub, m: m, a: a });
+  }
+  return out;
+}
+
+function setExamTab(tab, btn) {
+  examTab = tab;
+  var tabs = btn.parentNode.querySelectorAll('.exam-tab');
+  for (var i = 0; i < tabs.length; i++) tabs[i].classList.toggle('active', tabs[i] === btn);
+  renderExams();
 }
 
 function toggleExams(btn) {
