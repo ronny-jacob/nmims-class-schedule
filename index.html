@@ -128,6 +128,29 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .free-bd-meta{font-size:11px;color:var(--text-muted);line-height:1.4;margin-top:1px}
 
 .tt-mail-note{font-size:9px;color:var(--text-light);margin-bottom:4px;line-height:1.3;text-align:center}
+.exam-card{margin-top:12px;background:var(--surface);border:1px solid var(--suggest-line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.exam-hd{width:100%;display:flex;align-items:center;gap:10px;padding:12px 14px;border:none;background:linear-gradient(135deg,var(--suggest-bg),rgba(70,105,95,.04));color:var(--text);font-family:var(--font);text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s}
+@media(hover:hover){.exam-hd:hover{background:linear-gradient(135deg,var(--suggest-bg),rgba(70,105,95,.12))}}
+.exam-hd .rt{margin-left:auto;color:var(--suggest)}
+.exam-title{font-size:13.5px;font-weight:700;color:var(--suggest)}
+.exam-badge{flex-shrink:0;font-size:8.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#fff;background:var(--suggest);border-radius:999px;padding:2px 8px;animation:examPulse 1.8s ease-in-out infinite}
+@keyframes examPulse{0%,100%{box-shadow:0 0 0 0 rgba(70,105,95,.4)}50%{box-shadow:0 0 0 5px rgba(70,105,95,0)}}
+.exam-body{max-height:0;overflow:hidden;transition:max-height .35s ease;border-top:1px solid transparent}
+.exam-card.open .exam-body{max-height:900px;border-top-color:var(--suggest-line)}
+.exam-inner{padding:6px 14px 12px}
+.exam-row{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--border-light)}
+.exam-row:last-child{border-bottom:none}
+.exam-day{flex-shrink:0;width:120px;font-size:12px;font-weight:700;color:var(--text);padding-top:2px}
+.exam-day small{display:block;font-size:10px;font-weight:500;color:var(--text-light);margin-top:1px}
+.exam-slots{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.exam-slot{display:flex;gap:8px;align-items:flex-start}
+.exam-time{flex-shrink:0;width:86px;font-size:10px;font-weight:700;color:var(--text-muted);padding-top:3px;text-transform:uppercase;letter-spacing:.02em}
+.exam-subs{flex:1;min-width:0;display:flex;flex-wrap:wrap;gap:5px}
+.exam-sub{font-size:11.5px;font-weight:600;color:var(--text-muted);background:var(--accent-bg);border:1px solid var(--border);border-radius:7px;padding:3px 8px;line-height:1.3}
+.exam-sub.own{color:var(--suggest);background:var(--suggest-bg);border-color:var(--suggest-line);font-weight:700}
+.exam-sub small{display:block;font-size:8.5px;font-weight:500;color:var(--text-light)}
+.exam-sub.own small{color:var(--suggest)}
+@media (max-width:480px){.exam-row{flex-direction:column;gap:6px}.exam-day{width:auto}.exam-time{width:74px}}
 .fac-item{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);box-shadow:var(--shadow-sm);margin-bottom:6px;overflow:hidden}
 .fac-head{width:100%;display:flex;align-items:center;gap:8px;padding:10px 12px;border:none;background:var(--surface);cursor:pointer;font-family:var(--font);font-size:13px;font-weight:600;color:var(--text);text-align:left;-webkit-tap-highlight-color:transparent;transition:background .12s}
 @media(hover:hover){.fac-head:hover{background:var(--accent-bg)}}
@@ -397,6 +420,14 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
     <div id="ttMailNote" class="tt-mail-note"></div>
     <div class="tt-scroll"><div class="tt-grid" id="timetable"></div></div>
     <div id="ttNoData"></div>
+    <div class="exam-card" id="examCard">
+      <button class="exam-hd" type="button" onclick="toggleExams(this)" aria-expanded="false">
+        <span class="exam-badge">New</span>
+        <span class="exam-title">End Term Exam Timetable</span>
+        <span class="rt">&#9660;</span>
+      </button>
+      <div class="exam-body"><div class="exam-inner" id="examList"></div></div>
+    </div>
     <div class="free-card">
       <div class="free-hdr">
         <div class="free-title-wrap">
@@ -849,6 +880,7 @@ function formatWeekRangeShort(weekStart) {
 
 function renderTimetable() {
   renderFreeTogether();
+  renderExams();
   var gridEl = document.getElementById('timetable');
   var countEl = document.getElementById('ttCount');
   var noDataEl = document.getElementById('ttNoData');
@@ -983,6 +1015,82 @@ function renderTimetable() {
     }
   }
   gridEl.innerHTML = html;
+}
+
+var EXAMS = [
+  { d: 'Thu, 24 Sep', sub: 'Thursday, 24 September 2026',
+    m: [{ n: 'Commercial Bank Management', c: '803FI0E007', k: 'CBM' }, { n: 'Global Strategic Management', c: '803BE0E012', k: null }],
+    a: [{ n: 'Financial Econometrics', c: '803FI1E001', k: null }] },
+  { d: 'Fri, 25 Sep', sub: 'Friday, 25 September 2026',
+    m: [{ n: 'Distribution Management', c: '803MK0E072', k: null }],
+    a: [{ n: 'International Business', c: '803BE0E004', k: null }, { n: 'Artificial Intelligence for Managers', c: '803AN1E002', k: 'AI' }] },
+  { d: 'Sat, 26 Sep', sub: 'Saturday, 26 September 2026',
+    m: [{ n: 'Total Rewards', c: '803HR0E034', k: 'TR' }],
+    a: [{ n: 'Learning & Development', c: '803HR0E001', k: 'LD' }] },
+  { d: 'Mon, 28 Sep', sub: 'Monday, 28 September 2026',
+    m: [{ n: 'Integrated Marketing Communication', c: '803MK0E020', k: 'IMC' }],
+    a: [{ n: 'Business Valuation', c: '803FI0E002', k: 'BV' }] },
+  { d: 'Tue, 29 Sep', sub: 'Tuesday, 29 September 2026',
+    m: [{ n: 'Pricing Strategies', c: '803MK1E001', k: 'PRS' }],
+    a: [{ n: 'Investment Analysis and Portfolio Management', c: '803FI0E005', k: 'IAPM' }] },
+  { d: 'Wed, 30 Sep', sub: 'Wednesday, 30 September 2026',
+    m: [{ n: 'Product Strategy', c: '803MK0E048', k: 'PS' }],
+    a: [{ n: 'Financial Derivatives', c: '803FI0E003', k: 'FD' }] },
+  { d: 'Thu, 1 Oct', sub: 'Thursday, 1 October 2026',
+    m: [{ n: 'Marketing Analytics', c: '803AN0E008', k: 'MA' }],
+    a: [{ n: 'Recruitment and Selection', c: '803HR1E001', k: 'RS' }] },
+  { d: 'Mon, 5 Oct', sub: 'Monday, 5 October 2026',
+    m: [{ n: 'Supply Chain Management', c: '803OP0E002', k: null }],
+    a: [{ n: 'Consumer Behaviour', c: '803MK0E003', k: 'CB' }] },
+  { d: 'Tue, 6 Oct', sub: 'Tuesday, 6 October 2026',
+    m: [{ n: 'Project Management', c: '803OP0E004', k: null }],
+    a: [{ n: 'Advanced Financial Statement Analysis', c: '803FI0E065', k: 'AFSA' }] }
+];
+
+function examOwn(siteKey) {
+  if (!siteKey || !selectedStudent) return false;
+  for (var i = 0; i < selectedStudent.subjects.length; i++) {
+    var s = selectedStudent.subjects[i];
+    if (s === siteKey || s.indexOf(siteKey + '_') === 0) return true;
+  }
+  return false;
+}
+
+function examChips(subs) {
+  if (!subs || !subs.length) return '<span class="exam-sub">No exam</span>';
+  var h = '';
+  for (var i = 0; i < subs.length; i++) {
+    var own = examOwn(subs[i].k);
+    h += '<span class="exam-sub' + (own ? ' own' : '') + '">' + he(subs[i].n) + '<small>' + he(subs[i].c) + (own ? ' \u2022 you' : '') + '</small></span>';
+  }
+  return h;
+}
+
+function renderExams() {
+  var el = document.getElementById('examList');
+  if (!el) return;
+  var h = '';
+  for (var i = 0; i < EXAMS.length; i++) {
+    var ex = EXAMS[i];
+    h += '<div class="exam-row">' +
+      '<div class="exam-day">' + he(ex.d) + '<small>' + he(ex.sub) + '</small></div>' +
+      '<div class="exam-slots">' +
+        '<div class="exam-slot"><span class="exam-time">11:00\u201313:00</span><div class="exam-subs">' + examChips(ex.m) + '</div></div>' +
+        '<div class="exam-slot"><span class="exam-time">14:00\u201316:00</span><div class="exam-subs">' + examChips(ex.a) + '</div></div>' +
+      '</div>' +
+    '</div>';
+  }
+  el.innerHTML = h;
+}
+
+function toggleExams(btn) {
+  var card = btn.closest('.exam-card');
+  var open = card.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  btn.querySelector('.rt').innerHTML = open ? '&#9650;' : '&#9660;';
+  try { localStorage.setItem('examsSeen', '1'); } catch (e) {}
+  var badge = btn.querySelector('.exam-badge');
+  if (badge) badge.style.display = 'none';
 }
 
 var freeRange = 'today';
@@ -2483,6 +2591,12 @@ window.addEventListener('load', function() {
     }
   }
   if (isIOS) showInstallBtn();
+  try {
+    if (localStorage.getItem('examsSeen') === '1') {
+      var eb = document.querySelector('.exam-badge');
+      if (eb) eb.style.display = 'none';
+    }
+  } catch (e) {}
 });
 function onInstallClick() {
   if (!installPrompt) {
