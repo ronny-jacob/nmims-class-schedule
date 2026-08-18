@@ -96,6 +96,8 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .free-you-wrap{display:flex;align-items:center;gap:6px;flex-shrink:0}
 .free-you-lbl{font-size:12px;font-weight:600;color:var(--text-muted)}
 .free-you{font-size:12px;font-weight:700;color:var(--text);padding:4px 10px;border-radius:8px;background:var(--accent-bg);border:1px solid var(--border)}
+.free-you-sr{flex:1;min-width:170px}
+.free-you-sr .si{padding:6px 10px;font-size:12.5px}
 .free-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
 .free-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:11.5px;font-weight:600;background:var(--accent-bg);color:var(--text);border:1px solid var(--border)}
 .free-chip-x{border:none;background:transparent;color:var(--text-muted);font-size:14px;line-height:1;cursor:pointer;padding:0 2px;-webkit-tap-highlight-color:transparent}
@@ -404,6 +406,12 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
         <div class="free-you-wrap">
           <span class="free-you-lbl">You:</span>
           <span class="free-you" id="freeYou"></span>
+          <div class="free-you-sr" id="freeYouSr" style="display:none">
+            <div style="position:relative;flex:1;min-width:150px">
+              <input id="freeYouInput" class="si" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search your name&hellip;" oninput="onFreeYouInput()" onkeydown="onFreeYouKeydown(event)" onblur="onFreeYouBlur()" onfocus="onFreeYouFocus()">
+              <div id="freeYouDropdown" class="sd"></div>
+            </div>
+          </div>
         </div>
         <div class="sr" style="flex:1">
           <div style="position:relative;flex:1;min-width:160px">
@@ -1142,7 +1150,9 @@ function renderFreeTogether() {
   var chipsEl = document.getElementById('freeChips');
   if (!gridEl) return;
 
-  youEl.innerHTML = selectedStudent ? he(selectedStudent.name) : '<span style="font-weight:400;opacity:.7">not selected</span>';
+  youEl.innerHTML = selectedStudent ? he(selectedStudent.name) : '';
+  var youSr = document.getElementById('freeYouSr');
+  if (youSr) youSr.style.display = selectedStudent ? 'none' : 'flex';
 
   var people = freeGroupPeople();
   if (!people.length) {
@@ -1151,7 +1161,7 @@ function renderFreeTogether() {
     countEl.innerHTML = '';
     legendEl.innerHTML = '';
     chipsEl.innerHTML = '';
-    noDataEl.innerHTML = '<div class="empty">Select yourself at the top, then add friends to see when everyone is free together.</div>';
+    noDataEl.innerHTML = '<div class="empty">Select yourself above, then add friends to see when everyone is free together.</div>';
     return;
   }
   noDataEl.innerHTML = '';
@@ -1406,6 +1416,81 @@ function onFreeBlur() {
     if (t) { dd.classList.remove('open'); freeSearchOpen = false; return; }
   }
   setTimeout(function() { document.getElementById('freeDropdown').classList.remove('open'); freeSearchOpen = false; }, 150);
+}
+
+function onFreeYouInput() {
+  var input = document.getElementById('freeYouInput');
+  var val = input.value.trim().toLowerCase();
+  var dd = document.getElementById('freeYouDropdown');
+  if (!val) { dd.classList.remove('open'); return; }
+  var matched = [];
+  for (var j = 0; j < studentData.length; j++) {
+    var s = studentData[j];
+    if (s.name.toLowerCase().indexOf(val) !== -1) matched.push(s);
+    if (matched.length >= 12) break;
+  }
+  if (!matched.length) { dd.classList.remove('open'); return; }
+  var html = '';
+  for (var k = 0; k < matched.length; k++) {
+    html += '<div class="sd-item" data-fn="' + matched[k].name.replace(/"/g, '&quot;').replace(/'/g, "\\'") + '" onmousedown="selectFreeYou(this.getAttribute(\'data-fn\'))">' + he(matched[k].name) + '<span class="sd-roll">' + he(matched[k].roll) + '</span></div>';
+  }
+  dd.innerHTML = html;
+  dd.classList.add('open');
+  dd.querySelector('.sd-item').classList.add('active');
+}
+
+function onFreeYouKeydown(e) {
+  var dd = document.getElementById('freeYouDropdown');
+  if (!dd.classList.contains('open')) return;
+  var items = dd.querySelectorAll('.sd-item');
+  if (!items.length) return;
+  var ap = dd.querySelector('.sd-item.active');
+  var idx = -1;
+  if (ap) { for (var i = 0; i < items.length; i++) { if (items[i] === ap) { idx = i; break; } } }
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    if (ap) ap.classList.remove('active');
+    items[(idx + 1) % items.length].classList.add('active');
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    if (ap) ap.classList.remove('active');
+    items[(idx - 1 + items.length) % items.length].classList.add('active');
+  } else if (e.key === 'Enter') {
+    e.preventDefault();
+    var pick = ap || items[0];
+    if (pick) selectFreeYou(pick.getAttribute('data-fn'));
+  } else if (e.key === 'Escape') {
+    dd.classList.remove('open');
+  }
+}
+
+function onFreeYouFocus() {
+  if (document.getElementById('freeYouInput').value.trim()) onFreeYouInput();
+}
+
+function onFreeYouBlur() {
+  setTimeout(function() { document.getElementById('freeYouDropdown').classList.remove('open'); }, 150);
+}
+
+function selectFreeYou(name) {
+  if (!name) return;
+  var s = null;
+  for (var j = 0; j < studentData.length; j++) {
+    if (studentData[j].name === name) { s = studentData[j]; break; }
+  }
+  if (!s) return;
+  selectedStudent = s;
+  trackAnalytics(s.name, s.roll, '', 'select');
+  var input = document.getElementById('studentSelect');
+  if (input) input.value = s.name;
+  var placed = placedMatch(s.name);
+  document.getElementById('studentInfo').innerHTML = '<div class="id-r"><span class="id-l">Roll</span><span class="id-v">'+he(s.roll)+'</span></div><div class="id-r"><span class="id-l">Major</span><span class="id-v">'+he(s.major)+'</span></div>'+(s.minor?'<div class="id-r"><span class="id-l">Minor</span><span class="id-v">'+he(s.minor.replace(/;/g,''))+'</span></div>':'')+(placed?'<div class="id-r" style="margin-top:2px"><span class="id-chip id-chip-ppo">&#127881; '+he(placed.company)+'</span></div>':'');
+  document.getElementById('studentDropdown').classList.remove('open');
+  renderTimetable();
+  renderEnrolled();
+  sel={};so=[];ci=0;tog(s.name);
+  document.getElementById('freeYouDropdown').classList.remove('open');
+  renderFreeTogether();
 }
 
 var facRange = 'week';
