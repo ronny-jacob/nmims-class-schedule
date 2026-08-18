@@ -1101,7 +1101,10 @@ function bindFreeTip() {
   document.body.appendChild(tip);
   gridEl.addEventListener('mouseover', function(e) {
     var cell = e.target.closest ? e.target.closest('[data-fbi]') : null;
-    if (!cell) return;
+    if (!cell) {
+      tip.style.display = 'none';
+      return;
+    }
     var idx = +cell.getAttribute('data-fbi');
     var det = freeBusyDetails[idx];
     if (!det) return;
