@@ -156,11 +156,12 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .exam-sub{font-size:10.5px;font-weight:600;color:var(--text-muted);background:var(--accent-bg);border:1px solid var(--border);border-radius:7px;padding:2px 7px;line-height:1.25}
 .exam-sub.own{color:var(--suggest);background:var(--suggest-bg);border-color:var(--suggest-line);font-weight:700}
 .exam-noexam{font-size:10px;color:var(--text-light);font-style:italic}
-.exam-toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 14px);transform:translateX(-50%) translateY(-12px);z-index:70;width:min(300px,calc(100vw - 32px));display:flex;align-items:center;gap:9px;background:var(--suggest);color:#fff;border-radius:14px;box-shadow:var(--shadow-md);padding:12px 14px;font-size:12.5px;font-weight:600;line-height:1.4;opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease,visibility .18s;visibility:hidden}
-.exam-toast.show{opacity:1;transform:translateX(-50%) translateY(0);visibility:visible}
-.exam-toast-ico{flex-shrink:0;font-size:15px}
-@keyframes examFlash{0%,100%{box-shadow:0 0 0 0 rgba(70,105,95,0)}50%{box-shadow:0 0 0 3px rgba(70,105,95,.45)}}
-#studentSelect.flash{animation:examFlash .5s ease 3}
+.exam-prompt{display:flex;align-items:flex-start;gap:9px;margin-top:10px;padding:10px 12px;background:var(--suggest-bg);border:1px solid var(--suggest-line);border-radius:var(--radius-sm);color:var(--text);font-size:12px;line-height:1.45}
+.exam-prompt::before{content:'\203A';flex-shrink:0;font-weight:800;color:var(--suggest);line-height:1.4}
+.exam-prompt b{font-weight:700;color:var(--suggest)}
+.exam-prompt[hidden]{display:none}
+@keyframes nameAttention{0%,100%{box-shadow:0 0 0 0 rgba(180,60,40,0)}30%{box-shadow:0 0 0 3px rgba(180,60,40,.4)}70%{box-shadow:0 0 0 3px rgba(180,60,40,.4)}}
+#studentSelect.attention{animation:nameAttention .9s ease 2;border-color:#c65a40}
 @media (max-width:480px){
   .exam-table th{font-size:9px;padding:8px 8px 6px}
   .exam-table td{padding:6px 8px}
@@ -435,6 +436,7 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
     <div id="ttMailNote" class="tt-mail-note"></div>
     <div class="tt-scroll"><div class="tt-grid" id="timetable"></div></div>
     <div id="ttNoData"></div>
+    <div id="examPrompt" class="exam-prompt" hidden></div>
     <div class="exam-card" id="examCard">
       <button class="exam-hd" type="button" onclick="toggleExams(this)" aria-expanded="false">
         <span class="exam-badge">New</span>
@@ -576,7 +578,6 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
   <div class="dntc-toast-hd"><span class="dntc-toast-title" id="dntcTitle">Warning</span><button type="button" class="dntc-x" onclick="dismissDontClick()" aria-label="Dismiss">&#215;</button></div>
   <div class="dntc-toast-tx" id="dntcText"></div>
 </div>
-<div class="exam-toast" id="examToast"><span class="exam-toast-ico">&#9733;</span><span id="examToastTx">Enter your name above to view your exam schedule.</span></div>
 <div class="sf-overlay" id="suggestOverlay" role="dialog" aria-modal="true" aria-labelledby="suggestTitle">
   <div class="sf-modal">
     <div class="sf-hd">
@@ -907,6 +908,8 @@ function formatWeekRangeShort(weekStart) {
 function renderTimetable() {
   renderFreeTogether();
   renderExams();
+  var prompt = document.getElementById('examPrompt');
+  if (prompt && selectedStudent) prompt.hidden = true;
   var gridEl = document.getElementById('timetable');
   var countEl = document.getElementById('ttCount');
   var noDataEl = document.getElementById('ttNoData');
@@ -1149,19 +1152,18 @@ function toggleExams(btn) {
 }
 
 function promptForName() {
-  var toast = document.getElementById('examToast');
-  if (toast) {
-    toast.classList.add('show');
-    if (window.__examToastTimer) clearTimeout(window.__examToastTimer);
-    window.__examToastTimer = setTimeout(function() { toast.classList.remove('show'); }, 3500);
+  var prompt = document.getElementById('examPrompt');
+  if (prompt) {
+    prompt.hidden = false;
+    prompt.innerHTML = 'Select <b>your name</b> in the box above to view the exam timetable.';
   }
   var input = document.getElementById('studentSelect');
   if (input) {
-    input.focus();
-    try { input.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) { input.scrollIntoView(); }
-    input.classList.add('flash');
+    input.classList.remove('attention');
+    void input.offsetWidth;
+    input.classList.add('attention');
     if (window.__examFlashTimer) clearTimeout(window.__examFlashTimer);
-    window.__examFlashTimer = setTimeout(function() { input.classList.remove('flash'); }, 1500);
+    window.__examFlashTimer = setTimeout(function() { input.classList.remove('attention'); }, 2000);
   }
 }
 
