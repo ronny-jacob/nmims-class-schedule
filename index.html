@@ -136,14 +136,14 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .exam-badge{flex-shrink:0;font-size:8.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#fff;background:var(--suggest);border-radius:999px;padding:2px 8px;animation:examPulse 1.8s ease-in-out infinite}
 @keyframes examPulse{0%,100%{box-shadow:0 0 0 0 rgba(70,105,95,.4)}50%{box-shadow:0 0 0 5px rgba(70,105,95,0)}}
 .exam-body{max-height:0;overflow:hidden;transition:max-height .35s ease;border-top:1px solid transparent}
-.exam-card.open .exam-body{max-height:min(72vh,560px);border-top-color:var(--suggest-line)}
+.exam-card.open .exam-body{max-height:1800px;border-top-color:var(--suggest-line)}
 .exam-tabs{display:flex;gap:3px;padding:8px 10px 6px;background:var(--surface)}
 .exam-tab{flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--accent-bg);font-family:var(--font);font-size:11.5px;font-weight:700;color:var(--text-muted);cursor:pointer;text-align:center;-webkit-tap-highlight-color:transparent;transition:background .12s,color .12s}
 @media(hover:hover){.exam-tab:hover{color:var(--text)}}
 .exam-tab.active{color:var(--suggest);background:var(--suggest-bg);border-color:var(--suggest-line)}
-.exam-scroll{max-height:min(58vh,460px);overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.exam-scroll{overflow:visible}
 .exam-table{width:100%;border-collapse:collapse;font-size:11px}
-.exam-table th{position:sticky;top:0;z-index:2;background:var(--surface);text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--text);padding:9px 12px 7px;border-bottom:1px solid var(--border)}
+.exam-table th{text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--text);padding:9px 12px 7px;border-bottom:1px solid var(--border);background:var(--surface)}
 .exam-table th small{display:block;font-weight:600;color:var(--text-light);text-transform:none;letter-spacing:0;font-size:9px;margin-top:1px}
 .exam-table td{vertical-align:top;padding:7px 12px;border-bottom:1px solid var(--border-light)}
 .exam-table tr:last-child td{border-bottom:none}
@@ -156,6 +156,11 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .exam-sub{font-size:10.5px;font-weight:600;color:var(--text-muted);background:var(--accent-bg);border:1px solid var(--border);border-radius:7px;padding:2px 7px;line-height:1.25}
 .exam-sub.own{color:var(--suggest);background:var(--suggest-bg);border-color:var(--suggest-line);font-weight:700}
 .exam-noexam{font-size:10px;color:var(--text-light);font-style:italic}
+.exam-toast{position:fixed;left:50%;bottom:76px;transform:translateX(-50%) translateY(12px);z-index:70;width:min(300px,calc(100vw - 32px));display:flex;align-items:center;gap:9px;background:var(--suggest);color:#fff;border-radius:14px;box-shadow:var(--shadow-md);padding:12px 14px;font-size:12.5px;font-weight:600;line-height:1.4;opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease,visibility .18s;visibility:hidden}
+.exam-toast.show{opacity:1;transform:translateX(-50%) translateY(0);visibility:visible}
+.exam-toast-ico{flex-shrink:0;font-size:15px}
+@keyframes examFlash{0%,100%{box-shadow:0 0 0 0 rgba(70,105,95,0)}50%{box-shadow:0 0 0 3px rgba(70,105,95,.45)}}
+#studentSelect.flash{animation:examFlash .5s ease 3}
 @media (max-width:480px){
   .exam-table th{font-size:9px;padding:8px 8px 6px}
   .exam-table td{padding:6px 8px}
@@ -571,6 +576,7 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
   <div class="dntc-toast-hd"><span class="dntc-toast-title" id="dntcTitle">Warning</span><button type="button" class="dntc-x" onclick="dismissDontClick()" aria-label="Dismiss">&#215;</button></div>
   <div class="dntc-toast-tx" id="dntcText"></div>
 </div>
+<div class="exam-toast" id="examToast"><span class="exam-toast-ico">&#9733;</span><span id="examToastTx">Enter your name above to view your exam schedule.</span></div>
 <div class="sf-overlay" id="suggestOverlay" role="dialog" aria-modal="true" aria-labelledby="suggestTitle">
   <div class="sf-modal">
     <div class="sf-hd">
@@ -1130,9 +1136,33 @@ function toggleExams(btn) {
   var open = card.classList.toggle('open');
   btn.setAttribute('aria-expanded', open ? 'true' : 'false');
   btn.querySelector('.rt').innerHTML = open ? '&#9650;' : '&#9660;';
+  if (open && !selectedStudent) {
+    card.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.querySelector('.rt').innerHTML = '&#9660;';
+    promptForName();
+    return;
+  }
   try { localStorage.setItem('examsSeen', '1'); } catch (e) {}
   var badge = btn.querySelector('.exam-badge');
   if (badge) badge.style.display = 'none';
+}
+
+function promptForName() {
+  var toast = document.getElementById('examToast');
+  if (toast) {
+    toast.classList.add('show');
+    if (window.__examToastTimer) clearTimeout(window.__examToastTimer);
+    window.__examToastTimer = setTimeout(function() { toast.classList.remove('show'); }, 3500);
+  }
+  var input = document.getElementById('studentSelect');
+  if (input) {
+    input.focus();
+    try { input.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) { input.scrollIntoView(); }
+    input.classList.add('flash');
+    if (window.__examFlashTimer) clearTimeout(window.__examFlashTimer);
+    window.__examFlashTimer = setTimeout(function() { input.classList.remove('flash'); }, 1500);
+  }
 }
 
 var freeRange = 'today';
