@@ -427,7 +427,7 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
       <div id="freeNoData"></div>
     </div>
   </div>
-  <div class="inst-overlay" id="freeBusyOverlay" role="dialog" aria-modal="true" aria-labelledby="freeBusyTitle" style="display:none">
+  <div class="inst-overlay" id="freeBusyOverlay" role="dialog" aria-modal="true" aria-labelledby="freeBusyTitle" style="display:none" onclick="if(event.target===this)closeFreeBusy()">
     <div class="inst-modal">
       <div class="inst-hd">
         <b id="freeBusyTitle">Who&rsquo;s busy now</b>
@@ -1294,6 +1294,15 @@ function renderFreeTogether() {
   lhtml += '<span class="tt-legend-item" style="background:hsl(40,75%,92%);color:hsl(35,50%,28%)">Some busy</span>';
   lhtml += '<span class="tt-legend-item" style="background:hsl(2,45%,90%);color:hsl(2,45%,32%)">All busy</span>';
   legendEl.innerHTML = lhtml;
+
+  var touchOnly = window.matchMedia && !window.matchMedia('(hover: hover)').matches;
+  var hasBusyCells = false;
+  for (var t6 = 0; t6 < freeBusyDetails.length; t6++) if (freeBusyDetails[t6].length) { hasBusyCells = true; break; }
+  if (touchOnly && hasBusyCells) {
+    noDataEl.innerHTML = '<div class="free-hint">Tap a coloured cell to see which class they&rsquo;re in.</div>';
+  } else {
+    noDataEl.innerHTML = '';
+  }
 }
 
 function setFreeRange(range, btn) {
