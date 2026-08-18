@@ -113,6 +113,17 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 #freeGrid{display:none}
 #freeGrid.free-grid-show{display:grid;animation:freeReveal .4s cubic-bezier(.2,.7,.2,1)}
 @keyframes freeReveal{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.free-tooltip{position:fixed;z-index:999;background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow-md);padding:8px 12px;max-width:280px;pointer-events:none;text-align:left;font-size:12px;line-height:1.45;color:var(--text)}
+.free-tip-name{font-weight:700;margin-top:6px}
+.free-tip-name:first-child{margin-top:0}
+.free-tip-cls{font-size:11.5px;color:var(--text);margin-top:2px}
+.free-tip-meta{font-size:10px;color:var(--text-muted);line-height:1.35}
+.free-bd-p{padding:12px 0;border-bottom:1px solid var(--border-light)}
+.free-bd-p:first-child{padding-top:0}
+.free-bd-p:last-child{border-bottom:none;padding-bottom:0}
+.free-bd-name{font-weight:700;font-size:13px}
+.free-bd-cls{font-size:12.5px;margin-top:4px;font-weight:600}
+.free-bd-meta{font-size:11px;color:var(--text-muted);line-height:1.4;margin-top:1px}
 
 .tt-mail-note{font-size:9px;color:var(--text-light);margin-bottom:4px;line-height:1.3;text-align:center}
 .fac-item{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);box-shadow:var(--shadow-sm);margin-bottom:6px;overflow:hidden}
@@ -414,6 +425,16 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
       <div class="tt-scroll"><div class="tt-grid" id="freeGrid"></div></div>
       <div id="freeLegend" class="tt-legend"></div>
       <div id="freeNoData"></div>
+    </div>
+  </div>
+  <div class="inst-overlay" id="freeBusyOverlay" role="dialog" aria-modal="true" aria-labelledby="freeBusyTitle" style="display:none">
+    <div class="inst-modal">
+      <div class="inst-hd">
+        <b id="freeBusyTitle">Who&rsquo;s busy now</b>
+        <button type="button" class="sf-x" onclick="closeFreeBusy()" aria-label="Close">&#215;</button>
+      </div>
+      <div class="inst-bd" id="freeBusyBody"></div>
+      <div class="inst-foot"><button type="button" class="sf-btn-pill" onclick="closeFreeBusy()">Got it</button></div>
     </div>
   </div>
   <div id="panel-faculty" class="panel">
@@ -959,6 +980,8 @@ function renderTimetable() {
 var freeRange = 'today';
 var freeGroup = [];
 var freeSearchOpen = false;
+var freeBusyDetails = [];
+var freeTipBound = false;
 
 function getFreeWeek() {
   if (freeRange === 'today' || freeRange === 'tomorrow') {
@@ -993,6 +1016,112 @@ function personBusySlots(student, ttData) {
   return busy;
 }
 
+function personClassesAt(student, ttData, day, time) {
+  var out = [];
+  if (!student || !student.subjects) return out;
+  var subjectSet = {};
+  for (var i = 0; i < student.subjects.length; i++) subjectSet[student.subjects[i]] = true;
+  var bsDiv = student.bs_div || '';
+  for (var e = 0; e < ttData.length; e++) {
+    var entry = ttData[e];
+    if (entry.day === day && entry.time === time &&
+        subjectSet[entry.subject] && (entry.subject !== 'BS' || entry.div === bsDiv)) {
+      out.push(entry);
+    }
+  }
+  return out;
+}
+
+function freeBusyTooltipHtml(det) {
+  var h = '';
+  for (var i = 0; i < det.length; i++) {
+    var p = det[i];
+    h += '<div class="free-tip-name">' + he(p.label) + '</div>';
+    for (var c = 0; c < p.classes.length; c++) {
+      var e = p.classes[c];
+      var subj = DATA.subjects && DATA.subjects[e.subject] ? DATA.subjects[e.subject].name : '';
+      h += '<div class="free-tip-cls">' + he(e.subject) + (subj ? ' &middot; ' + he(subj) : '') + '</div>';
+      var meta = [];
+      if (e.professor) meta.push(he(e.professor));
+      if (e.room) meta.push(he(e.room));
+      if (meta.length) h += '<div class="free-tip-meta">' + meta.join(' &middot; ') + '</div>';
+    }
+  }
+  return h;
+}
+
+function freeBusyDialogHtml(det) {
+  var h = '';
+  for (var i = 0; i < det.length; i++) {
+    var p = det[i];
+    h += '<div class="free-bd-p"><div class="free-bd-name">' + he(p.label) + '</div>';
+    if (!p.classes.length) {
+      h += '<div class="free-bd-cls">Busy</div>';
+    }
+    for (var c = 0; c < p.classes.length; c++) {
+      var e = p.classes[c];
+      var subj = DATA.subjects && DATA.subjects[e.subject] ? DATA.subjects[e.subject].name : '';
+      h += '<div class="free-bd-cls">' + he(e.subject) + (subj ? ' &middot; ' + he(subj) : '') + '</div>';
+      var meta = [];
+      if (e.professor) meta.push(he(e.professor));
+      if (e.room) meta.push(he(e.room));
+      if (meta.length) h += '<div class="free-bd-meta">' + meta.join(' &middot; ') + '</div>';
+    }
+    h += '</div>';
+  }
+  return h;
+}
+
+function showFreeBusy(idx) {
+  var det = freeBusyDetails[idx];
+  if (!det || !det.length) return;
+  document.getElementById('freeBusyBody').innerHTML = freeBusyDialogHtml(det);
+  document.getElementById('freeBusyOverlay').style.display = 'flex';
+  document.body.classList.add('modal-open');
+}
+
+function closeFreeBusy() {
+  document.getElementById('freeBusyOverlay').style.display = 'none';
+  document.body.classList.remove('modal-open');
+}
+
+function onFreeCellTap(idx) {
+  showFreeBusy(idx);
+}
+
+function bindFreeTip() {
+  var gridEl = document.getElementById('freeGrid');
+  if (!gridEl || freeTipBound) return;
+  freeTipBound = true;
+  var canHover = window.matchMedia && window.matchMedia('(hover: hover)').matches;
+  if (!canHover) return;
+  var tip = document.createElement('div');
+  tip.className = 'free-tooltip';
+  tip.style.display = 'none';
+  document.body.appendChild(tip);
+  gridEl.addEventListener('mouseover', function(e) {
+    var cell = e.target.closest ? e.target.closest('[data-fbi]') : null;
+    if (!cell) return;
+    var idx = +cell.getAttribute('data-fbi');
+    var det = freeBusyDetails[idx];
+    if (!det) return;
+    tip.innerHTML = freeBusyTooltipHtml(det);
+    tip.style.display = 'block';
+  });
+  gridEl.addEventListener('mousemove', function(e) {
+    if (tip.style.display === 'none') return;
+    var pad = 14;
+    var x = e.clientX + pad;
+    var y = e.clientY + pad;
+    var r = tip.getBoundingClientRect();
+    if (x + r.width > window.innerWidth - 8) x = e.clientX - r.width - pad;
+    if (y + r.height > window.innerHeight - 8) y = e.clientY - r.height - pad;
+    tip.style.left = x + 'px';
+    tip.style.top = y + 'px';
+  });
+  gridEl.addEventListener('mouseleave', function() { tip.style.display = 'none'; });
+}
+
 function freeGroupPeople() {
   var people = [];
   if (selectedStudent) people.push({ label: selectedStudent.name, data: selectedStudent, you: true });
@@ -1001,6 +1130,7 @@ function freeGroupPeople() {
 }
 
 function renderFreeTogether() {
+  freeBusyDetails = [];
   var gridEl = document.getElementById('freeGrid');
   var countEl = document.getElementById('freeCount');
   var legendEl = document.getElementById('freeLegend');
@@ -1132,18 +1262,30 @@ function renderFreeTogether() {
       if (busyN.length === 0) {
         cls += ' free-ok';
         content = '<div class="free-gc-cell"><span class="free-state"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2 L4.8 9 L10 3"/></svg>Free</span></div>';
-      } else if (busyN.length < people.length) {
-        cls += ' free-part';
-        content = '<div class="free-gc-cell"><span class="free-state">Busy</span><span class="free-gc-tag">' + he(busyN.join(', ')) + '</span></div>';
+        html += '<div class="' + cls + '">' + content + '</div>';
       } else {
-        cls += ' free-busy';
-        content = '<div class="free-gc-cell"><span class="free-state">Busy</span></div>';
+        var det = [];
+        for (var p5 = 0; p5 < people.length; p5++) {
+          if (busyMaps[p5][day4] && busyMaps[p5][day4][time5]) {
+            det.push({ label: people[p5].label, classes: personClassesAt(people[p5].data, ttData, day4, time5) });
+          }
+        }
+        var fbi = freeBusyDetails.length;
+        freeBusyDetails.push(det);
+        if (busyN.length < people.length) {
+          cls += ' free-part';
+          content = '<div class="free-gc-cell"><span class="free-state">Busy</span><span class="free-gc-tag">' + he(busyN.join(', ')) + '</span></div>';
+        } else {
+          cls += ' free-busy';
+          content = '<div class="free-gc-cell"><span class="free-state">Busy</span></div>';
+        }
+        html += '<div class="' + cls + '" data-fbi="' + fbi + '" role="button" tabindex="0" onclick="onFreeCellTap(' + fbi + ')" onkeydown="if(event.key===\'Enter\'){onFreeCellTap(' + fbi + ')}" aria-label="' + he(busyN.join(', ')) + ' busy">' + content + '</div>';
       }
-      html += '<div class="' + cls + '">' + content + '</div>';
     }
   }
   gridEl.innerHTML = html;
   gridEl.className = 'tt-grid free-grid-show';
+  bindFreeTip();
 
   var lhtml = '<span class="tt-legend-item" style="background:hsl(150,40%,88%);color:hsl(150,45%,22%)">Everyone free</span>';
   lhtml += '<span class="tt-legend-item" style="background:hsl(40,75%,92%);color:hsl(35,50%,28%)">Some busy</span>';
@@ -2197,7 +2339,7 @@ function sendSuggestion(){
   setTimeout(function(){ closeSuggestion(); }, 2000);
 }
 attachSuggestionListeners();
-document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeSuggestion(); });
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape') { closeSuggestion(); closeFreeBusy(); } });
 trackAnalytics('__page_view__', '', '', 'pageview');
 
 var installPrompt = null;
