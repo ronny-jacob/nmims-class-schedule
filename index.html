@@ -136,21 +136,27 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .exam-badge{flex-shrink:0;font-size:8.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#fff;background:var(--suggest);border-radius:999px;padding:2px 8px;animation:examPulse 1.8s ease-in-out infinite}
 @keyframes examPulse{0%,100%{box-shadow:0 0 0 0 rgba(70,105,95,.4)}50%{box-shadow:0 0 0 5px rgba(70,105,95,0)}}
 .exam-body{max-height:0;overflow:hidden;transition:max-height .35s ease;border-top:1px solid transparent}
-.exam-card.open .exam-body{max-height:900px;border-top-color:var(--suggest-line)}
-.exam-inner{padding:6px 14px 12px}
-.exam-row{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--border-light)}
-.exam-row:last-child{border-bottom:none}
-.exam-day{flex-shrink:0;width:120px;font-size:12px;font-weight:700;color:var(--text);padding-top:2px}
-.exam-day small{display:block;font-size:10px;font-weight:500;color:var(--text-light);margin-top:1px}
-.exam-slots{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
-.exam-slot{display:flex;gap:8px;align-items:flex-start}
-.exam-time{flex-shrink:0;width:86px;font-size:10px;font-weight:700;color:var(--text-muted);padding-top:3px;text-transform:uppercase;letter-spacing:.02em}
-.exam-subs{flex:1;min-width:0;display:flex;flex-wrap:wrap;gap:5px}
-.exam-sub{font-size:11.5px;font-weight:600;color:var(--text-muted);background:var(--accent-bg);border:1px solid var(--border);border-radius:7px;padding:3px 8px;line-height:1.3}
+.exam-card.open .exam-body{max-height:min(72vh,560px);border-top-color:var(--suggest-line)}
+.exam-scroll{max-height:min(58vh,460px);overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.exam-table{width:100%;border-collapse:collapse;font-size:11px}
+.exam-table th{position:sticky;top:0;z-index:2;background:var(--surface);text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--text);padding:9px 12px 7px;border-bottom:1px solid var(--border)}
+.exam-table th small{display:block;font-weight:600;color:var(--text-light);text-transform:none;letter-spacing:0;font-size:9px;margin-top:1px}
+.exam-table td{vertical-align:top;padding:7px 12px;border-bottom:1px solid var(--border-light)}
+.exam-table tr:last-child td{border-bottom:none}
+.exam-table th.exam-th-date{width:88px;min-width:88px;color:var(--suggest)}
+.exam-table td.exam-day{width:88px;min-width:88px;font-weight:700;color:var(--text);line-height:1.25}
+.exam-table td.exam-day small{display:block;font-size:9px;font-weight:500;color:var(--text-light);margin-top:1px}
+.exam-table th.exam-th-slot{border-left:1px solid var(--border-light)}
+.exam-table td.exam-slot{border-left:1px solid var(--border-light)}
+.exam-subs{display:flex;flex-wrap:wrap;gap:4px}
+.exam-sub{font-size:10.5px;font-weight:600;color:var(--text-muted);background:var(--accent-bg);border:1px solid var(--border);border-radius:7px;padding:2px 7px;line-height:1.25}
 .exam-sub.own{color:var(--suggest);background:var(--suggest-bg);border-color:var(--suggest-line);font-weight:700}
-.exam-sub small{display:block;font-size:8.5px;font-weight:500;color:var(--text-light)}
-.exam-sub.own small{color:var(--suggest)}
-@media (max-width:480px){.exam-row{flex-direction:column;gap:6px}.exam-day{width:auto}.exam-time{width:74px}}
+.exam-noexam{font-size:10px;color:var(--text-light);font-style:italic}
+@media (max-width:480px){
+  .exam-table th{font-size:9px;padding:8px 8px 6px}
+  .exam-table td{padding:6px 8px}
+  .exam-table th.exam-th-date,.exam-table td.exam-day{width:72px;min-width:72px}
+}
 .fac-item{border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);box-shadow:var(--shadow-sm);margin-bottom:6px;overflow:hidden}
 .fac-head{width:100%;display:flex;align-items:center;gap:8px;padding:10px 12px;border:none;background:var(--surface);cursor:pointer;font-family:var(--font);font-size:13px;font-weight:600;color:var(--text);text-align:left;-webkit-tap-highlight-color:transparent;transition:background .12s}
 @media(hover:hover){.fac-head:hover{background:var(--accent-bg)}}
@@ -426,7 +432,14 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
         <span class="exam-title">End Term Exam Timetable</span>
         <span class="rt">&#9660;</span>
       </button>
-      <div class="exam-body"><div class="exam-inner" id="examList"></div></div>
+      <div class="exam-body"><div class="exam-scroll"><table class="exam-table">
+        <thead><tr>
+          <th class="exam-th-date">Date</th>
+          <th class="exam-th-slot">Morning<small>11:00 am &ndash; 01:00 pm</small></th>
+          <th class="exam-th-slot">Afternoon<small>02:00 pm &ndash; 04:00 pm</small></th>
+        </tr></thead>
+        <tbody id="examList"></tbody>
+      </table></div></div>
     </div>
     <div class="free-card">
       <div class="free-hdr">
@@ -1057,11 +1070,11 @@ function examOwn(siteKey) {
 }
 
 function examChips(subs) {
-  if (!subs || !subs.length) return '<span class="exam-sub">No exam</span>';
+  if (!subs || !subs.length) return '<span class="exam-noexam">No exam</span>';
   var h = '';
   for (var i = 0; i < subs.length; i++) {
     var own = examOwn(subs[i].k);
-    h += '<span class="exam-sub' + (own ? ' own' : '') + '">' + he(subs[i].n) + '<small>' + he(subs[i].c) + (own ? ' \u2022 you' : '') + '</small></span>';
+    h += '<span class="exam-sub' + (own ? ' own' : '') + '" title="' + he(subs[i].c) + '">' + he(subs[i].n) + (own ? ' \u2022 you' : '') + '</span>';
   }
   return h;
 }
@@ -1072,13 +1085,12 @@ function renderExams() {
   var h = '';
   for (var i = 0; i < EXAMS.length; i++) {
     var ex = EXAMS[i];
-    h += '<div class="exam-row">' +
-      '<div class="exam-day">' + he(ex.d) + '<small>' + he(ex.sub) + '</small></div>' +
-      '<div class="exam-slots">' +
-        '<div class="exam-slot"><span class="exam-time">11:00\u201313:00</span><div class="exam-subs">' + examChips(ex.m) + '</div></div>' +
-        '<div class="exam-slot"><span class="exam-time">14:00\u201316:00</span><div class="exam-subs">' + examChips(ex.a) + '</div></div>' +
-      '</div>' +
-    '</div>';
+    var d = ex.d.split(', ');
+    h += '<tr>' +
+      '<td class="exam-day" title="' + he(ex.sub) + '">' + he(d[0]) + '<small>' + he(d[1]) + '</small></td>' +
+      '<td class="exam-slot"><div class="exam-subs">' + examChips(ex.m) + '</div></td>' +
+      '<td class="exam-slot"><div class="exam-subs">' + examChips(ex.a) + '</div></td>' +
+    '</tr>';
   }
   el.innerHTML = h;
 }
