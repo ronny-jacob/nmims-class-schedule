@@ -164,6 +164,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .exam-subs{display:flex;flex-wrap:wrap;gap:4px}
 .exam-sub{font-size:10.5px;font-weight:600;color:var(--text-muted);background:var(--accent-bg);border:1px solid var(--border);border-radius:7px;padding:2px 7px;line-height:1.25}
 .exam-sub.own{color:var(--suggest);background:var(--suggest-bg);border-color:var(--suggest-line);font-weight:700}
+.exam-you{font-size:9px;font-weight:700;vertical-align:middle}
 .exam-noexam{font-size:10px;color:var(--text-light);font-style:italic}
 .exam-prompt{display:flex;align-items:flex-start;gap:9px;margin-top:10px;padding:10px 12px;background:#fdeeec;border:1px solid #eec4be;border-radius:var(--radius-sm);color:#7a2a1f;font-size:12px;font-weight:600;line-height:1.45}
 .exam-prompt::before{content:'\203A';flex-shrink:0;font-weight:800;color:#c64a3a;line-height:1.4}
@@ -1135,7 +1136,7 @@ function examChips(subs) {
   var h = '';
   for (var i = 0; i < subs.length; i++) {
     var own = examOwn(subs[i].k);
-    h += '<span class="exam-sub' + (own ? ' own' : '') + '" title="' + he(subs[i].c) + '">' + he(subs[i].n) + (own ? ' \u2022 you' : '') + '</span>';
+    h += '<span class="exam-sub' + (own ? ' own' : '') + '" title="' + he(subs[i].c) + '">' + he(subs[i].n) + (own ? ' <span class="exam-you">YOU</span>' : '') + '</span>';
   }
   return h;
 }
