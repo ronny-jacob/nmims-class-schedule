@@ -23,6 +23,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .id-select{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;outline:none;background:var(--surface);transition:border-color .12s}
 @media(hover:hover){.id-select:hover{border-color:var(--text-muted)}}
 .id-select:focus{border-color:var(--text-muted)}
+.id-clear{position:absolute;right:5px;top:50%;transform:translateY(-50%);display:none;border:none;background:transparent;color:var(--text-muted);font-size:15px;line-height:1;cursor:pointer;padding:5px;border-radius:50%;-webkit-tap-highlight-color:transparent}
+.id-clear:active{background:var(--accent-bg)}
+.id-clear.show{display:block}
+.id-select.has-val{padding-right:26px}
 .id-info{font-size:12px;color:var(--text-muted);min-width:0;display:flex;flex-direction:column;gap:1px;line-height:1.3}
 .id-info .id-r{display:flex;gap:3px}
 .id-info .id-l{color:var(--text-light);min-width:42px;flex-shrink:0}
@@ -93,7 +97,6 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .free-sub-hd{font-size:10px;color:var(--text-muted);font-weight:500}
 .free-body{padding:14px 16px 16px}
 .free-card.open .exam-body{max-height:2000px;border-top-color:var(--suggest-line)}
-.free-card .exam-hd .rt{color:var(--suggest)}
 .free-hdr{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
 .free-title-wrap{display:flex;flex-direction:column;min-width:0}
 .free-title{font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--text);white-space:nowrap}
@@ -403,6 +406,7 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
       <span class="id-greeting">You:</span>
       <div style="position:relative;flex:1;min-width:160px">
         <input id="studentSelect" class="id-select" type="text" placeholder="Search your name&hellip;" autocomplete="off" oninput="onStudentInput()" onkeydown="onStudentKeydown(event)" onblur="onStudentBlur(event)" onfocus="onStudentFocus()">
+        <button type="button" class="id-clear" id="studentClear" onclick="clearStudent()" aria-label="Clear name">&#215;</button>
         <div id="studentDropdown" class="sd"></div>
       </div>
       <div id="studentInfo" class="id-info"></div>
@@ -454,8 +458,8 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
         <span class="rt">&#9660;</span>
       </button>
       <div class="exam-body"><div class="exam-tabs">
-        <button class="exam-tab active" type="button" data-ex="all" onclick="setExamTab('all',this)">Full Schedule</button>
-        <button class="exam-tab" type="button" data-ex="mine" onclick="setExamTab('mine',this)">Yours</button>
+        <button class="exam-tab" type="button" data-ex="all" onclick="setExamTab('all',this)">Full Schedule</button>
+        <button class="exam-tab active" type="button" data-ex="mine" onclick="setExamTab('mine',this)">Yours</button>
       </div><div class="exam-scroll"><table class="exam-table">
         <thead><tr>
           <th class="exam-th-date">Date</th>
@@ -465,13 +469,15 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
         <tbody id="examList"></tbody>
       </table></div></div>
     </div>
-    <div class="exam-card free-card open" id="freeCard">
-      <button class="exam-hd" type="button" onclick="toggleFree(this)" aria-expanded="true">
+    <div class="exam-card free-card" id="freeCard">
+      <button class="exam-hd" type="button" onclick="toggleFree(this)" aria-expanded="false">
+        <span class="exam-badge">New</span>
         <span class="exam-title">Free Together</span>
         <span class="free-sub-hd">When everyone is free at the same time</span>
-        <span class="rt">&#9650;</span>
+        <span class="rt">&#9660;</span>
       </button>
-      <div class="exam-body free-body">
+      <div class="exam-body">
+        <div class="free-body">
         <div class="free-hdr">
           <div class="free-you-wrap">
             <span class="free-you-lbl">You:</span>
@@ -503,6 +509,7 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
         <div class="tt-scroll"><div class="tt-grid" id="freeGrid"></div></div>
         <div id="freeLegend" class="tt-legend"></div>
         <div id="freeNoData"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -704,9 +711,31 @@ function setTimeRange(range, btn) {
 }
 
 var searchLogTimer = null;
+function updateStudentClear() {
+  var input = document.getElementById('studentSelect');
+  var btn = document.getElementById('studentClear');
+  var has = input.value.trim() !== '';
+  input.classList.toggle('has-val', has);
+  if (btn) btn.classList.toggle('show', has);
+}
+function clearStudent() {
+  var input = document.getElementById('studentSelect');
+  input.value = '';
+  selectedStudent = null;
+  var dd = document.getElementById('studentDropdown');
+  dd.classList.remove('open');
+  document.getElementById('studentInfo').innerHTML = '';
+  document.getElementById('enrolledSubjects').innerHTML = '';
+  freeGroup = [];
+  renderTimetable();
+  renderFreeTogether();
+  updateStudentClear();
+  input.focus();
+}
 function onStudentInput() {
   var input = document.getElementById('studentSelect');
   var val = input.value.trim().toLowerCase();
+  updateStudentClear();
   if (searchLogTimer) clearTimeout(searchLogTimer);
   if (val) {
     searchLogTimer = setTimeout(function() {
@@ -796,6 +825,7 @@ function selectStudentAuto(el) {
     }
   }
   sel={};so=[];ci=0;tog(s.name);
+  updateStudentClear();
 }
 
 function renderEnrolled() {
@@ -1098,7 +1128,7 @@ function examOwn(siteKey) {
   return false;
 }
 
-var examTab = 'all';
+var examTab = 'mine';
 
 function examChips(subs) {
   if (!subs || !subs.length) return '<span class="exam-noexam">No exam</span>';
@@ -1196,6 +1226,9 @@ function toggleFree(btn) {
   var open = card.classList.toggle('open');
   btn.setAttribute('aria-expanded', open ? 'true' : 'false');
   btn.querySelector('.rt').innerHTML = open ? '&#9650;' : '&#9660;';
+  try { localStorage.setItem('freeSeen', '1'); } catch (e) {}
+  var badge = btn.querySelector('.exam-badge');
+  if (badge) badge.style.display = 'none';
 }
 
 var freeRange = 'today';
@@ -1381,11 +1414,8 @@ function renderFreeTogether() {
 
   var chipHtml = '';
   for (var p = 0; p < people.length; p++) {
-    if (people[p].you) {
-      chipHtml += '<span class="free-chip">' + he(people[p].label) + '</span>';
-    } else {
-      chipHtml += '<span class="free-chip">' + he(people[p].label) + '<button type="button" class="free-chip-x" onclick="removeFreeFriend(\'' + people[p].label.replace(/'/g, "\\'") + '\')" aria-label="Remove ' + he(people[p].label) + '">&#215;</button></span>';
-    }
+    if (people[p].you) continue;
+    chipHtml += '<span class="free-chip">' + he(people[p].label) + '<button type="button" class="free-chip-x" onclick="removeFreeFriend(\'' + people[p].label.replace(/'/g, "\\'") + '\')" aria-label="Remove ' + he(people[p].label) + '">&#215;</button></span>';
   }
   chipsEl.innerHTML = chipHtml;
 
@@ -1696,6 +1726,7 @@ function selectFreeYou(name) {
   trackAnalytics(s.name, s.roll, '', 'select');
   var input = document.getElementById('studentSelect');
   if (input) input.value = s.name;
+  updateStudentClear();
   var placed = placedMatch(s.name);
   document.getElementById('studentInfo').innerHTML = '<div class="id-r"><span class="id-l">Roll</span><span class="id-v">'+he(s.roll)+'</span></div><div class="id-r"><span class="id-l">Major</span><span class="id-v">'+he(s.major)+'</span></div>'+(s.minor?'<div class="id-r"><span class="id-l">Minor</span><span class="id-v">'+he(s.minor.replace(/;/g,''))+'</span></div>':'')+(placed?'<div class="id-r" style="margin-top:2px"><span class="id-chip id-chip-ppo">&#127881; '+he(placed.company)+'</span></div>':'');
   document.getElementById('studentDropdown').classList.remove('open');
@@ -2681,6 +2712,7 @@ window.addEventListener('appinstalled', function() {
   trackAnalytics('', '', '', 'installed');
 });
 window.addEventListener('load', function() {
+  updateStudentClear();
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js').catch(function(){});
   }
