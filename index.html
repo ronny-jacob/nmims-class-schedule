@@ -279,6 +279,8 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 @media(hover:hover){.sd-item:hover{background:var(--accent-bg)}}
 .sd-item.active{background:var(--accent-bg)}
 .sd-roll{color:var(--text-muted);font-size:11px;margin-left:auto}
+.sd-hd{padding:5px 10px 3px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);background:var(--accent-bg);border-bottom:1px solid var(--border-light)}
+.sd-rec{color:var(--text-muted);font-size:11px;flex-shrink:0}
 .dntc-btn{position:fixed;right:16px;bottom:16px;z-index:50;display:flex;align-items:center;gap:8px;padding:12px 20px;border:none;border-radius:999px;font-family:var(--font);font-size:14px;font-weight:700;letter-spacing:.01em;color:#fff;background:linear-gradient(135deg,#ff7a45,#e8432f);cursor:pointer;-webkit-tap-highlight-color:transparent;box-shadow:0 8px 24px rgba(232,67,47,.35);animation:dntcPulse 2.4s ease-in-out infinite;transition:transform .15s ease}
 .dntc-btn .dntc-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.95);animation:dntcBlink 1.2s steps(2,start) infinite}
 @keyframes dntcPulse{0%,100%{box-shadow:0 8px 24px rgba(232,67,47,.35),0 0 0 0 rgba(232,67,47,.35)}50%{box-shadow:0 8px 24px rgba(232,67,47,.35),0 0 0 11px rgba(232,67,47,0)}}
@@ -745,14 +747,17 @@ function onStudentInput() {
   }
   var dd = document.getElementById('studentDropdown');
   if (!val) { dd.classList.remove('open'); return; }
-  var matched = [];
-  for (var i = 0; i < studentData.length; i++) {
-    if (studentData[i].name.toLowerCase().indexOf(val) !== -1) matched.push(studentData[i]);
-  }
-  if (!matched.length) { dd.classList.remove('open'); return; }
+  var results = buildStudentResults(val);
+  if (!results.recents.length && !results.rest.length) { dd.classList.remove('open'); return; }
   var html = '';
-  for (var i = 0; i < matched.length; i++) {
-    html += '<div class="sd-item" data-mi="'+i+'" onmousedown="selectStudentAuto(this)">' + he(matched[i].name) + '<span class="sd-roll">' + he(matched[i].roll) + '</span></div>';
+  for (var r = 0; r < results.recents.length; r++) {
+    html += '<div class="sd-item" data-mi="' + r + '" data-rec="1" onmousedown="selectStudentAuto(this)"><span class="sd-rec">&#8635;</span>' + he(results.recents[r].name) + '<span class="sd-roll">' + he(results.recents[r].roll) + '</span></div>';
+  }
+  if (results.recents.length && results.rest.length) {
+    html += '<div class="sd-hd">Other matches</div>';
+  }
+  for (var i = 0; i < results.rest.length; i++) {
+    html += '<div class="sd-item" data-mi="' + i + '" data-rec="0" onmousedown="selectStudentAuto(this)">' + he(results.rest[i].name) + '<span class="sd-roll">' + he(results.rest[i].roll) + '</span></div>';
   }
   dd.innerHTML = html;
   dd.classList.add('open');
@@ -799,17 +804,63 @@ function onStudentFocus() {
 
 var studentData = [];
 
+var RECENT_KEY = 'tt_recent';
+var RECENT_MAX = 6;
+function getRecentStudents() {
+  var out = [];
+  try {
+    var raw = localStorage.getItem(RECENT_KEY);
+    if (!raw) return out;
+    var names = JSON.parse(raw);
+    for (var i = 0; i < names.length; i++) {
+      for (var j = 0; j < studentData.length; j++) {
+        if (studentData[j].name === names[i]) { out.push(studentData[j]); break; }
+      }
+    }
+  } catch (e) {}
+  return out;
+}
+function recordRecentStudent(name) {
+  try {
+    var names = [];
+    var raw = localStorage.getItem(RECENT_KEY);
+    if (raw) { try { names = JSON.parse(raw); } catch (e) { names = []; } }
+    var next = [name];
+    for (var i = 0; i < names.length && next.length < RECENT_MAX; i++) {
+      if (names[i] !== name) next.push(names[i]);
+    }
+    localStorage.setItem(RECENT_KEY, JSON.stringify(next));
+  } catch (e) {}
+}
+function buildStudentResults(val) {
+  var recents = getRecentStudents();
+  var recentSet = {};
+  var recOut = [];
+  for (var i = 0; i < recents.length; i++) {
+    if (recents[i].name.toLowerCase().indexOf(val) !== -1) {
+      recentSet[recents[i].name] = true;
+      recOut.push(recents[i]);
+    }
+  }
+  var rest = [];
+  for (var j = 0; j < studentData.length; j++) {
+    if (recentSet[studentData[j].name]) continue;
+    if (studentData[j].name.toLowerCase().indexOf(val) !== -1) rest.push(studentData[j]);
+  }
+  return { recents: recOut, rest: rest };
+}
+
 function selectStudentAuto(el) {
   var mi = parseInt(el.getAttribute('data-mi'));
+  var isRec = el.getAttribute('data-rec') === '1';
   var val = document.getElementById('studentSelect').value.trim().toLowerCase();
-  var matched = [];
-  for (var i = 0; i < studentData.length; i++) {
-    if (studentData[i].name.toLowerCase().indexOf(val) !== -1) matched.push(studentData[i]);
-  }
+  var results = buildStudentResults(val);
+  var matched = isRec ? results.recents : results.rest;
   if (mi >= matched.length) return;
   var s = matched[mi];
   if (!s) return;
   selectedStudent = s;
+  recordRecentStudent(s.name);
   trackAnalytics(s.name, s.roll, '', 'select');
   document.getElementById('studentSelect').value = s.name;
   var placed = placedMatch(s.name);
@@ -1780,6 +1831,7 @@ function selectFreeYou(name) {
   }
   if (!s) return;
   selectedStudent = s;
+  recordRecentStudent(s.name);
   trackAnalytics(s.name, s.roll, '', 'select');
   var input = document.getElementById('studentSelect');
   if (input) input.value = s.name;
