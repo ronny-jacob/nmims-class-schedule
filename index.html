@@ -957,13 +957,62 @@ function renderTimetable() {
   var gridEl = document.getElementById('timetable');
   var countEl = document.getElementById('ttCount');
   var noDataEl = document.getElementById('ttNoData');
+  var resolved = resolveTtData(ttRange);
   if (!selectedStudent) {
-    gridEl.style.display = 'none';
+    var gridW = getTimeSlotsForWeek(resolved);
+    var daysToShowW;
+    if (ttRange === 'today') { daysToShowW = [getTodayDay()]; }
+    else if (ttRange === 'tomorrow') { daysToShowW = [getTomorrowDay()]; }
+    else { daysToShowW = DAY_NAMES.slice(); }
+    var daysWithDataW = [];
+    var holidaysW = DATA.holidays || {};
+    var weekISOsW = resolved ? getWeekISOs(resolved.weekStart) : {};
+    var dayNumsW = resolved ? getDayNumbers(resolved.weekStart) : {};
+    for (var dw = 0; dw < daysToShowW.length; dw++) {
+      var dayW = daysToShowW[dw];
+      var hasDataW = false;
+      if (resolved) {
+        for (var eW = 0; eW < resolved.data.length; eW++) {
+          if (resolved.data[eW].day === dayW) { hasDataW = true; break; }
+        }
+      }
+      if (hasDataW || (weekISOsW[dayW] && holidaysW[weekISOsW[dayW]])) {
+        daysWithDataW.push(dayW);
+      }
+    }
     countEl.innerHTML = '';
-    noDataEl.innerHTML = '<div class="empty">Type and select your name in the box above to see your schedule.</div>';
+    noDataEl.innerHTML = '';
+    if (!daysWithDataW.length || !gridW.length) {
+      gridEl.style.display = 'none';
+      gridEl.innerHTML = '';
+      return;
+    }
+    gridEl.style.display = 'grid';
+    var colTmplW = '52px';
+    for (var tw = 0; tw < gridW.length; tw++) colTmplW += ' minmax(72px, 1fr)';
+    gridEl.style.gridTemplateColumns = colTmplW;
+    var numTimesW = gridW.length;
+    var htmlW = '';
+    htmlW += '<div class="tt-gh tt-time">Day</div>';
+    for (var tW = 0; tW < numTimesW; tW++) {
+      var tsW = gridW[tW];
+      htmlW += '<div class="tt-gh">' + tsW.replace('-', '\u2013') + '</div>';
+    }
+    for (var dW = 0; dW < daysWithDataW.length; dW++) {
+      var dayDW = daysWithDataW[dW];
+      htmlW += '<div class="tt-gl"><span class="tt-gl-day">' + dayDW + '</span><span class="tt-gl-date">' + (dayNumsW[dayDW] || '') + '</span></div>';
+      if (weekISOsW[dayDW] && holidaysW[weekISOsW[dayDW]]) {
+        htmlW += '<div class="tt-gc tt-holiday" style="grid-column:2 / span ' + numTimesW + '">' + he(holidaysW[weekISOsW[dayDW]]) + '</div>';
+        continue;
+      }
+      for (var tW2 = 0; tW2 < numTimesW; tW2++) {
+        htmlW += '<div class="tt-gc tt-empty"></div>';
+      }
+    }
+    htmlW += '<div class="tt-gc tt-empty" style="grid-column:1 / span ' + (numTimesW + 1) + ';display:flex;align-items:center;justify-content:center;padding:16px 12px;text-align:center;color:var(--text-muted);font-size:12px">Type and select your name in the box above to see your schedule.</div>';
+    gridEl.innerHTML = htmlW;
     return;
   }
-  var resolved = resolveTtData(ttRange);
   if (!resolved) {
     gridEl.style.display = 'none';
     countEl.innerHTML = '';
@@ -1187,7 +1236,7 @@ function toggleExams(btn) {
     card.classList.remove('open');
     btn.setAttribute('aria-expanded', 'false');
     btn.querySelector('.rt').innerHTML = '&#9660;';
-    promptForName();
+    promptForName('Select <b>your name</b> in the box above to view the exam timetable.');
     return;
   }
   try { localStorage.setItem('examsSeen', '1'); } catch (e) {}
@@ -1195,11 +1244,11 @@ function toggleExams(btn) {
   if (badge) badge.style.display = 'none';
 }
 
-function promptForName() {
+function promptForName(msg) {
   var prompt = document.getElementById('examPrompt');
   if (prompt) {
     prompt.hidden = false;
-    prompt.innerHTML = 'Select <b>your name</b> in the box above to view the exam timetable.';
+    prompt.innerHTML = msg || 'Select <b>your name</b> in the box above to view the exam timetable.';
     prompt.classList.remove('shake');
     void prompt.offsetWidth;
     prompt.classList.add('shake');
@@ -1227,6 +1276,13 @@ function toggleFree(btn) {
   var open = card.classList.toggle('open');
   btn.setAttribute('aria-expanded', open ? 'true' : 'false');
   btn.querySelector('.rt').innerHTML = open ? '&#9650;' : '&#9660;';
+  if (open && !selectedStudent) {
+    card.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.querySelector('.rt').innerHTML = '&#9660;';
+    promptForName('Select <b>your name</b> in the box above to use Free Together.');
+    return;
+  }
   try { localStorage.setItem('freeSeen', '1'); } catch (e) {}
   var badge = btn.querySelector('.exam-badge');
   if (badge) badge.style.display = 'none';
