@@ -746,7 +746,18 @@ function onStudentInput() {
     }, 900);
   }
   var dd = document.getElementById('studentDropdown');
-  if (!val) { dd.classList.remove('open'); return; }
+  if (!val) {
+    var recentAll = getRecentStudents();
+    if (!recentAll.length) { dd.classList.remove('open'); return; }
+    var htmlR = '';
+    for (var rA = 0; rA < recentAll.length; rA++) {
+      htmlR += '<div class="sd-item" data-mi="' + rA + '" data-rec="1" onmousedown="selectStudentAuto(this)"><span class="sd-rec">&#8635;</span>' + he(recentAll[rA].name) + '<span class="sd-roll">' + he(recentAll[rA].roll) + '</span></div>';
+    }
+    dd.innerHTML = htmlR;
+    dd.classList.add('open');
+    dd.querySelector('.sd-item').classList.add('active');
+    return;
+  }
   var results = buildStudentResults(val);
   if (!results.recents.length && !results.rest.length) { dd.classList.remove('open'); return; }
   var html = '';
@@ -799,7 +810,7 @@ function onStudentBlur(e) {
 }
 
 function onStudentFocus() {
-  if (document.getElementById('studentSelect').value.trim()) onStudentInput();
+  onStudentInput();
 }
 
 var studentData = [];
