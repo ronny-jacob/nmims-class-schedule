@@ -1287,6 +1287,7 @@ function setExamTab(tab, btn) {
   var tabs = btn.parentNode.querySelectorAll('.exam-tab');
   for (var i = 0; i < tabs.length; i++) tabs[i].classList.toggle('active', tabs[i] === btn);
   renderExams();
+  trackAnalytics('', '', 'exam_tab:' + tab + (selectedStudent ? ' :: ' + selectedStudent.name : ''), 'exam_tab');
 }
 
 function toggleExams(btn) {
@@ -1299,11 +1300,13 @@ function toggleExams(btn) {
     btn.setAttribute('aria-expanded', 'false');
     btn.querySelector('.rt').innerHTML = '&#9660;';
     promptForName('Select <b>your name</b> in the box above to view the exam timetable.');
+    trackAnalytics('', '', '', 'exam_blocked_noname');
     return;
   }
   try { localStorage.setItem('examsSeen', '1'); } catch (e) {}
   var badge = btn.querySelector('.exam-badge');
   if (badge) badge.style.display = 'none';
+  trackAnalytics('', '', selectedStudent ? selectedStudent.name : '', open ? 'exam_open' : 'exam_close');
 }
 
 function promptForName(msg) {
