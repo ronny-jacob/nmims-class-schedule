@@ -120,6 +120,12 @@ function doGet(e) {
     return ContentService.createTextOutput('ok');
   }
 
+  // End Term Exam Timetable events go to their own sheet
+  if (evt === 'exam_open' || evt === 'exam_close' || evt === 'exam_tab' || evt === 'exam_blocked_noname') {
+    logExam_(sid, did, ts, evt, extra, ua, ref);
+    return ContentService.createTextOutput('ok');
+  }
+
   // Custom events (e.g. fac_week) keep their real type instead of collapsing into 'select'
   if (evt && evt !== 'select') {
     logActivity_(sid, did, ts, evt, name, roll, extra, ua, ref);
@@ -139,6 +145,21 @@ function logActivity_(sid, did, ts, evt, name, roll, extra, ua, ref) {
 function logFreeTogether_(sid, did, ts, evt, you, friend, roll, ua, ref) {
   var sheet = ensureSheet_('Free Together', ['Session ID', 'Timestamp', 'Event', 'You', 'Friend', 'Roll', 'Device']);
   prepend_(sheet, [sid, ts, evt, you, friend, roll, did]);
+}
+
+function logExam_(sid, did, ts, evt, extra, ua, ref) {
+  var student = '';
+  var tab = '';
+  var parts = String(extra || '').split(' :: ');
+  for (var i = 0; i < parts.length; i++) {
+    if (parts[i].indexOf('tab:') === 0) {
+      tab = parts[i].replace('tab:', '');
+    } else if (parts[i] !== '') {
+      student = parts[i];
+    }
+  }
+  var sheet = ensureSheet_('Exam Timetable', ['Session ID', 'Timestamp', 'Event', 'Student', 'Tab', 'Device']);
+  prepend_(sheet, [sid, ts, evt, student, tab, did]);
 }
 
 function logSuggestion_(sid, ts, name, roll, text, ua, ref) {
