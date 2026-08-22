@@ -14,7 +14,7 @@ def resolve(p):
 STUDENT_LIST = src("Division wise List- Trimester IV.xlsx")
 LAST_YEAR_LIST = src("First Year Division list.xlsx")
 TIMETABLE    = "downloads/17.08.2026 to 23.08.2026.xlsx"
-TIMETABLE_NEXT = ""
+TIMETABLE_NEXT = "downloads/24.08.2026 to 30.08.2026.xlsx"
 FOOD_MENU    = "sources/August-Sept Menu Updated.xlsx"
 FOOD_MENU_ANCHOR = "2026-08-03"
 PLACEMENTS   = "sources/placements.json"
