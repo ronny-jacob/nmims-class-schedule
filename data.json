@@ -2636,7 +2636,7 @@
     },
     {
       "day": "Mon",
-      "time": "3:40-5:10",
+      "time": "2:00-3:30",
       "subject": "IAPM_B",
       "raw_text": "IAPM_B\nL07, 2nd floor\nDr Showkat Ahmad",
       "professor": "Dr Showkat Ahmad",
@@ -2686,6 +2686,15 @@
       "raw_text": "Total Rewards\nL08, 2nd floor\n(Hybrid)\n(4:30 to 6:00 pm)",
       "professor": "",
       "room": "L08, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Tue",
+      "time": "10:10-11:40",
+      "subject": "PRS",
+      "raw_text": "Pricing Strategy\nRescheduled class\nL06, 2nd floor\nDr Srividya Raghavan",
+      "professor": "Dr Srividya Raghavan",
+      "room": "L06, 2nd floor",
       "div": ""
     },
     {
@@ -2786,15 +2795,6 @@
       "professor": "Dr Dileep Kumar",
       "room": "L06, 2nd floor",
       "div": "Div A"
-    },
-    {
-      "day": "Thu",
-      "time": "3:40-5:10",
-      "subject": "PRS",
-      "raw_text": "Pricing Strategy\nL06, 2nd floor\nDr Srividya Raghavan",
-      "professor": "Dr Srividya Raghavan",
-      "room": "L06, 2nd floor",
-      "div": ""
     },
     {
       "day": "Thu",
@@ -3266,8 +3266,8 @@
   "week_end_next": "",
   "last_updated": {
     "sender": "Sadashiv Bhimanna <sadashiv.bhimanna@nmims.edu>",
-    "received_at": "5:32 PM IST on 22 Aug 2026",
-    "subject": "Re: Next week time table_Trim IV",
-    "updated_at": "2026-08-24T03:31:42.028976+00:00"
+    "received_at": "2:03 PM IST on 24 Aug 2026",
+    "subject": "Revised_  time table_Trim IV",
+    "updated_at": "2026-08-24T09:13:13.956958+00:00"
   }
 }
