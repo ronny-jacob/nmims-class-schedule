@@ -2726,6 +2726,15 @@
     },
     {
       "day": "Wed",
+      "time": "11:50-1:20",
+      "subject": "MC_B",
+      "raw_text": "MC-Div B\nL06, 2nd floor\nDr Dileep Kumar",
+      "professor": "Dr Dileep Kumar",
+      "room": "L06, 2nd floor",
+      "div": "Div B"
+    },
+    {
+      "day": "Wed",
       "time": "2:00-3:30",
       "subject": "MC_A",
       "raw_text": "MC-Div A\nL06, 2nd floor\nDr Dileep Kumar",
@@ -3266,8 +3275,8 @@
   "week_end_next": "",
   "last_updated": {
     "sender": "Sadashiv Bhimanna <sadashiv.bhimanna@nmims.edu>",
-    "received_at": "2:03 PM IST on 24 Aug 2026",
-    "subject": "Revised_  time table_Trim IV",
-    "updated_at": "2026-08-24T09:13:13.956958+00:00"
+    "received_at": "10:28 AM IST on 25 Aug 2026",
+    "subject": "Revised This week time table_Trim IV",
+    "updated_at": "2026-08-25T05:05:54.822332+00:00"
   }
 }
