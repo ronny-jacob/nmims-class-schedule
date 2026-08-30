@@ -40,25 +40,35 @@ FOOD_DAY_KEYS = {
     'FRI': 'Fri', 'SAT': 'Sat', 'SUN': 'Sun',
 }
 
-def parse_date_range(filepath):
+def start_and_end_from_filepath(filepath):
+    """Derive (start, end) dates from a timetable filename.
+
+    The college sometimes misnames attachments (e.g. '31.08.2026 to 6.08.2026'
+    meaning 6 September). If the parsed end is not after the start, fall back to
+    a standard week (start + 6 days) so the app's date-window never inverts.
+    """
     mt = re.search(r'(\d+)\.(\d+)\.(\d+)\s*to\s*(\d+)\.(\d+)\.(\d+)', filepath)
-    if mt:
-        d1, m1, y1, d2, m2, y2 = mt.groups()
-        fmt = "%d.%m.%Y"
-        dt_from = datetime.strptime(f"{d1}.{m1}.{y1}", fmt)
-        dt_to   = datetime.strptime(f"{d2}.{m2}.{y2}", fmt)
-        return dt_from.strftime("%a %-d %b") + " – " + dt_to.strftime("%a %-d %b %Y")
-    return ""
+    if not mt:
+        return (None, None)
+    d1, m1, y1, d2, m2, y2 = mt.groups()
+    fmt = "%d.%m.%Y"
+    dt_from = datetime.strptime(f"{d1}.{m1}.{y1}", fmt)
+    dt_to   = datetime.strptime(f"{d2}.{m2}.{y2}", fmt)
+    if dt_to <= dt_from:
+        dt_to = dt_from + timedelta(days=6)
+    return (dt_from, dt_to)
+
+def parse_date_range(filepath):
+    dt_from, dt_to = start_and_end_from_filepath(filepath)
+    if dt_from is None:
+        return ""
+    return dt_from.strftime("%a %-d %b") + " – " + dt_to.strftime("%a %-d %b %Y")
 
 def get_week_iso(filepath):
-    mt = re.search(r'(\d+)\.(\d+)\.(\d+)\s*to\s*(\d+)\.(\d+)\.(\d+)', filepath)
-    if mt:
-        d1, m1, y1, d2, m2, y2 = mt.groups()
-        fmt = "%d.%m.%Y"
-        dt_from = datetime.strptime(f"{d1}.{m1}.{y1}", fmt)
-        dt_to   = datetime.strptime(f"{d2}.{m2}.{y2}", fmt)
-        return (dt_from.strftime("%Y-%m-%d"), dt_to.strftime("%Y-%m-%d"))
-    return ("", "")
+    dt_from, dt_to = start_and_end_from_filepath(filepath)
+    if dt_from is None:
+        return ("", "")
+    return (dt_from.strftime("%Y-%m-%d"), dt_to.strftime("%Y-%m-%d"))
 
 # ─── Subject name mappings ───────────────────────────────────────────────
 SUBJECT_NAMES = {
