@@ -3647,11 +3647,11 @@
     "Sat"
   ],
   "date_range": "Mon 24 Aug \u2013 Sun 30 Aug 2026",
-  "date_range_next": "Mon 31 Aug \u2013 Thu 6 Aug 2026",
+  "date_range_next": "Mon 31 Aug \u2013 Sun 6 Sep 2026",
   "week_start": "2026-08-24",
   "week_end": "2026-08-30",
   "week_start_next": "2026-08-31",
-  "week_end_next": "2026-08-06",
+  "week_end_next": "2026-09-06",
   "last_updated": {
     "sender": "Sadashiv Bhimanna <sadashiv.bhimanna@nmims.edu>",
     "received_at": "5:28 PM IST on 29 Aug 2026",
