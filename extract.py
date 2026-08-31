@@ -446,6 +446,7 @@ def parse_placements():
     for a in raw.get("announcements", []):
         company = str(a.get("company", "")).strip()
         date_str = str(a.get("announced_on", "")).strip()
+        ptype = str(a.get("type", "ppo")).strip().lower() or "ppo"
         try:
             announced = datetime.strptime(date_str, "%Y-%m-%d").date()
         except Exception:
@@ -464,6 +465,7 @@ def parse_placements():
                 "company": company,
                 "date": date_str,
                 "roster": roster_name,
+                "type": ptype,
             })
     return placements
 

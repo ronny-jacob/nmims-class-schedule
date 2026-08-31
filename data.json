@@ -3080,139 +3080,162 @@
       "name": "Ishita Sinha",
       "company": "Oxane Partners",
       "date": "2026-07-10",
-      "roster": null
+      "roster": null,
+      "type": "final"
     },
     {
       "name": "Vasu Jain",
       "company": "Oxane Partners",
       "date": "2026-07-10",
-      "roster": null
+      "roster": null,
+      "type": "final"
     },
     {
       "name": "Karthik Akella",
       "company": "Oxane Partners",
       "date": "2026-07-10",
-      "roster": null
+      "roster": null,
+      "type": "final"
     },
     {
       "name": "Umang Gupta",
       "company": "Ironsides Advisory",
       "date": "2026-07-14",
-      "roster": null
+      "roster": null,
+      "type": "final"
     },
     {
       "name": "Naman Jain",
       "company": "Ironsides Advisory",
       "date": "2026-07-14",
-      "roster": null
+      "roster": null,
+      "type": "final"
     },
     {
       "name": "Medha Jha",
       "company": "Wells Fargo",
       "date": "2026-07-17",
-      "roster": null
+      "roster": null,
+      "type": "ppo"
     },
     {
       "name": "Saksham Gupta",
       "company": "Wells Fargo",
       "date": "2026-07-17",
-      "roster": null
+      "roster": null,
+      "type": "ppo"
     },
     {
       "name": "Darshana I",
       "company": "Wells Fargo",
       "date": "2026-07-17",
-      "roster": "I Dharshana"
+      "roster": "I Dharshana",
+      "type": "ppo"
     },
     {
       "name": "Shreya Gupta",
       "company": "Verity Knowledge Solutions",
       "date": "2026-07-21",
-      "roster": null
+      "roster": null,
+      "type": "ppo"
     },
     {
       "name": "Arsh Sinha",
       "company": "NetElixir",
       "date": "2026-07-24",
-      "roster": null
+      "roster": null,
+      "type": "ppo"
     },
     {
       "name": "Jyoti Bikas Das",
       "company": "EPAM Systems",
       "date": "2026-07-28",
-      "roster": null
+      "roster": null,
+      "type": "ppo"
     },
     {
       "name": "Tina Kewlani",
       "company": "EPAM Systems",
       "date": "2026-07-28",
-      "roster": null
+      "roster": null,
+      "type": "ppo"
     },
     {
       "name": "Heeral Tandon",
       "company": "EPAM Systems",
       "date": "2026-07-28",
-      "roster": null
+      "roster": null,
+      "type": "ppo"
     },
     {
       "name": "Swechha Jaiswal",
       "company": "Crisil",
       "date": "2026-07-31",
-      "roster": null
+      "roster": null,
+      "type": "ppo"
     },
     {
       "name": "Tharini S S",
       "company": "Crisil",
       "date": "2026-07-31",
-      "roster": "Tharani S S"
+      "roster": "Tharani S S",
+      "type": "ppo"
     },
     {
       "name": "Pilla Venkata Sai Tharun",
       "company": "EY",
       "date": "2026-08-03",
-      "roster": null
+      "roster": null,
+      "type": "ppo"
     },
     {
       "name": "Yendluri Deepti Chowdary",
       "company": "EY",
       "date": "2026-08-03",
-      "roster": null
+      "roster": null,
+      "type": "ppo"
     },
     {
       "name": "Sudhanshu Chauhan",
       "company": "Oxane Partners",
       "date": "2026-08-01",
-      "roster": null
+      "roster": null,
+      "type": "ppo"
     },
     {
       "name": "Ayush Dutta",
       "company": "Oxane Partners",
       "date": "2026-08-01",
-      "roster": null
+      "roster": null,
+      "type": "ppo"
     },
     {
       "name": "Dibyendu Das",
       "company": "Oxane Partners",
       "date": "2026-08-01",
-      "roster": null
+      "roster": null,
+      "type": "ppo"
     },
     {
       "name": "Shwetha R",
       "company": "Wipro",
       "date": "2026-08-06",
-      "roster": null
+      "roster": null,
+      "type": "ppo"
     },
     {
       "name": "Harmit Singh",
       "company": "Arcesium",
       "date": "2026-08-18",
-      "roster": null
+      "roster": null,
+      "type": "ppo"
     },
     {
       "name": "Vaishnavi Dudem",
       "company": "Zeta Global",
       "date": "2026-08-31",
-      "roster": null
+      "roster": null,
+      "type": "final"
     }
   ],
   "placements_window_days": 1,
