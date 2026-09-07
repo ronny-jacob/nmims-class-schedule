@@ -2725,6 +2725,15 @@
       "div": ""
     },
     {
+      "day": "Wed",
+      "time": "6:00-7:30",
+      "subject": "BS",
+      "raw_text": "BS Div A\n5:30-6:00 pm\nL06, 2nd floor\nDr Srividya Raghavan",
+      "professor": "Dr Srividya Raghavan",
+      "room": "L06, 2nd floor",
+      "div": "Div A"
+    },
+    {
       "day": "Thu",
       "time": "8:30-10:00",
       "subject": "AI",
@@ -2754,11 +2763,11 @@
     {
       "day": "Thu",
       "time": "1:50-3:20",
-      "subject": "MC_A",
-      "raw_text": "MC-Div A\nL06, 2nd floor\nDr Dileep Kumar",
+      "subject": "BS",
+      "raw_text": "BS Div B\nRescheduled class\nL07, 2nd floor\nDr Dileep Kumar",
       "professor": "Dr Dileep Kumar",
-      "room": "L06, 2nd floor",
-      "div": "Div A"
+      "room": "L07, 2nd floor",
+      "div": "Div B"
     },
     {
       "day": "Thu",
@@ -2826,11 +2835,11 @@
     {
       "day": "Fri",
       "time": "1:50-3:20",
-      "subject": "MC_A",
-      "raw_text": "MC-Div A\nL07, 2nd floor\nRescheduled class\nDr Dileep Kumar",
-      "professor": "Dr Dileep Kumar",
-      "room": "L07, 2nd floor",
-      "div": "Div A"
+      "subject": "PRS",
+      "raw_text": "Pricing Strategy\nRescheduled class\nL06, 2nd floor\nDr Srividya Raghavan",
+      "professor": "Dr Srividya Raghavan",
+      "room": "L06, 2nd floor",
+      "div": ""
     },
     {
       "day": "Fri",
@@ -2852,7 +2861,7 @@
     },
     {
       "day": "Fri",
-      "time": "10:10-11:40",
+      "time": "11:50-1:20",
       "subject": "CBM",
       "raw_text": "CBM\nL07, 2nd floor\nProf Narender Vunyale",
       "professor": "Prof Narender Vunyale",
@@ -2861,10 +2870,10 @@
     },
     {
       "day": "Fri",
-      "time": "11:50-1:20",
-      "subject": "CBM",
-      "raw_text": "CBM\nL07, 2nd floor\nProf Narender Vunyale",
-      "professor": "Prof Narender Vunyale",
+      "time": "1:50-3:20",
+      "subject": "AFSA_A",
+      "raw_text": "AFSA_A\nRescheduled class\nL07, 2nd floor\nDr Narender Vunyale",
+      "professor": "Dr Narender Vunyale",
       "room": "L07, 2nd floor",
       "div": ""
     },
@@ -2919,24 +2928,6 @@
       "subject": "DAB",
       "raw_text": "DAB\nL06, 2nd floor\nProf Neelima",
       "professor": "Prof Neelima",
-      "room": "L06, 2nd floor",
-      "div": ""
-    },
-    {
-      "day": "Sun",
-      "time": "10:10-11:40",
-      "subject": "PS",
-      "raw_text": "Product Strategy\nL06, 2nd floor\nProf Krishna",
-      "professor": "Prof Krishna",
-      "room": "L06, 2nd floor",
-      "div": ""
-    },
-    {
-      "day": "Sun",
-      "time": "11:50-1:20",
-      "subject": "PS",
-      "raw_text": "Product Strategy\nL06, 2nd floor\nProf Krishna",
-      "professor": "Prof Krishna",
       "room": "L06, 2nd floor",
       "div": ""
     },
@@ -3267,8 +3258,8 @@
   "week_end_next": "",
   "last_updated": {
     "sender": "Sadashiv Bhimanna <sadashiv.bhimanna@nmims.edu>",
-    "received_at": "5:11 PM IST on 4 Sep 2026",
-    "subject": "Next week time table-7.09.2026",
-    "updated_at": "2026-09-07T07:28:59.345834+00:00"
+    "received_at": "5:45 PM IST on 7 Sep 2026",
+    "subject": "Revised_ Next week time table-7.09.2026",
+    "updated_at": "2026-09-07T13:38:48.890145+00:00"
   }
 }
