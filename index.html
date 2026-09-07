@@ -2522,7 +2522,7 @@ function ceBombard_(){
   }
   host.__started = true;
   setTimeout(function(){ host.classList.add('celeb-fade'); }, 9000);
-  setTimeout(function(){ dismissCelebration(); }, 19200);
+  setTimeout(function(){ dismissCelebration(); }, Math.max(19200, celebPassMs || 19200));
 }
 function ceBurst_(el) {
   var host = document.getElementById('celebConfetti');
@@ -2576,7 +2576,7 @@ function shortPlaceName(name, all){
   }
   return lb;
 }
-var celebInner = null, celebPos = 0, celebLoop = 0, celebAuto = true, celebRaf = null, celebVel = 110, celebHold = 0, celebShift = 0;function celebWrap_(p){
+var celebInner = null, celebPos = 0, celebLoop = 0, celebAuto = true, celebRaf = null, celebVel = 110, celebHold = 0, celebShift = 0, celebPassMs = 0;function celebWrap_(p){
    if (celebLoop <= 0) return 0;
    var m = p % celebLoop;
    if (m < 0) m += celebLoop;
@@ -2645,12 +2645,13 @@ celebInner = inner;
   celebPos = 0;
   celebAuto = true;
   celebVel = Math.max(24, Math.min(55, window.innerWidth / 26));
+  celebHold = 45;
+  celebPassMs = Math.ceil((w + trackW) / celebVel * 1000) + Math.ceil(celebHold / 60 * 1000);
   track.addEventListener('pointerdown', celebDown_);
   track.addEventListener('pointermove', celebMove_);
   track.addEventListener('pointerup', celebUp_);
   track.addEventListener('pointercancel', celebUp_);
   track.addEventListener('pointerleave', celebUp_);
-  celebHold = 45;
   celebRaf = requestAnimationFrame(celebFrame_);
   banner.classList.add('show');
   ceBombard_();
