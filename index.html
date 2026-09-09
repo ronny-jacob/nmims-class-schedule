@@ -31,13 +31,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .id-info .id-r{display:flex;gap:3px}
 .id-info .id-l{color:var(--text-light);min-width:42px;flex-shrink:0}
 .id-info .id-v{color:var(--text);font-weight:600}
-.id-metric{margin-left:auto;flex-shrink:0;font-size:11px;font-weight:600;letter-spacing:.01em;color:var(--text-muted);background:var(--accent-bg);border:1px solid var(--border-light);border-radius:999px;padding:3px 10px;white-space:nowrap;display:none}
-.id-metric .im-n{color:var(--accent);font-weight:700}
-.id-metric .im-pct{color:var(--accent);font-weight:700}
-.id-metric .im-t{color:var(--text-light);font-weight:500}
+.id-metric{margin:2px auto 0;text-align:center;font-size:11px;font-weight:600;letter-spacing:.01em;color:var(--text-muted);white-space:nowrap;display:none}
+.id-metric .im-n{color:var(--text-light);font-weight:700}
+.id-metric .im-pct{color:var(--text-light);font-weight:700}
+.id-metric .im-t{color:var(--text-muted);font-weight:500}
 .id-metric .im-rail{color:var(--border);margin:0 5px}
-.id-metric .im-f{color:var(--accent);font-weight:600}
-.id-metric .im-p{color:var(--text-light);font-weight:500}
+.id-metric .im-f{color:var(--text-light);font-weight:600}
+.id-metric .im-p{color:var(--text-light);font-weight:600}
 .id-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;min-height:0}
 .id-chip{border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;box-shadow:0 1px 2px rgba(44,42,38,.06),inset 0 1px 0 rgba(255,255,255,.35)}
 .id-chip-ppo{background:#f6e7c8;color:#8a5a14;box-shadow:0 1px 2px rgba(138,90,20,.12),inset 0 1px 0 rgba(255,255,255,.5)}
@@ -435,7 +435,6 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
         <div id="studentDropdown" class="sd"></div>
       </div>
       <div id="studentInfo" class="id-info"></div>
-      <div id="placedMetric" class="id-metric" aria-live="polite"></div>
     </div>
     <div id="enrolledSubjects" class="id-chips"></div>
   </div>
@@ -600,6 +599,7 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
       <div id="subjResults"></div>
     </div>
   </div>
+  <div id="placedMetric" class="id-metric" aria-live="polite"></div>
 </div>
 <button class="dntc-btn" id="dontClickBtn" type="button" onclick="onDontClick()" aria-label="Do not click"><span class="dntc-dot"></span>Do not click</button>
 <div class="inst-btn" id="instBtn" style="display:none" role="button" tabindex="0" onclick="onInstallClick()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();onInstallClick()}">
@@ -2711,7 +2711,7 @@ var names = {};
     var ppo = placed - finals;
     var pct = Math.round(placed / total * 100);
     m.innerHTML = '<span class="im-n">' + placed + '</span><span class="im-t">/' + total + ' placed</span><span class="im-pct">&nbsp;' + pct + '&#37;</span><span class="im-rail">&#183;</span><span class="im-p">PPO ' + ppo + '</span><span class="im-rail">&#183;</span><span class="im-f">FP ' + finals + '</span>';
-    m.style.display = 'inline-block';
+    m.style.display = 'block';
     m.title = placed + ' of ' + total + ' students placed \u2014 ' + finals + ' final placements, ' + ppo + ' via PPO';
  }
  enhanceTrimIV();initStudentSelect();
