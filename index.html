@@ -33,6 +33,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .id-info .id-v{color:var(--text);font-weight:600}
 .id-metric{margin-left:auto;flex-shrink:0;font-size:11px;font-weight:600;letter-spacing:.01em;color:var(--text-muted);background:var(--accent-bg);border:1px solid var(--border-light);border-radius:999px;padding:3px 10px;white-space:nowrap;display:none}
 .id-metric .im-n{color:var(--accent);font-weight:700}
+.id-metric .im-pct{color:var(--accent);font-weight:700}
 .id-metric .im-t{color:var(--text-light);font-weight:500}
 .id-metric .im-rail{color:var(--border);margin:0 5px}
 .id-metric .im-f{color:var(--accent);font-weight:600}
@@ -2708,7 +2709,8 @@ var names = {};
     }
     var placed = Object.keys(names).length;
     var ppo = placed - finals;
-    m.innerHTML = '<span class="im-n">' + placed + '</span><span class="im-t">/' + total + ' placed</span><span class="im-rail">&#183;</span><span class="im-f">' + finals + ' final</span><span class="im-p">&#183; ' + ppo + ' PPO</span>';
+    var pct = Math.round(placed / total * 100);
+    m.innerHTML = '<span class="im-n">' + placed + '</span><span class="im-t">/' + total + ' placed</span><span class="im-pct">&nbsp;' + pct + '&#37;</span><span class="im-rail">&#183;</span><span class="im-f">' + finals + ' final</span><span class="im-p">&#183; ' + ppo + ' PPO</span>';
     m.style.display = 'inline-block';
     m.title = placed + ' of ' + total + ' students placed \u2014 ' + finals + ' final placements, ' + ppo + ' via PPO';
  }
