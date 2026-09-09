@@ -34,6 +34,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .id-metric{margin-left:auto;flex-shrink:0;font-size:11px;font-weight:600;letter-spacing:.01em;color:var(--text-muted);background:var(--accent-bg);border:1px solid var(--border-light);border-radius:999px;padding:3px 10px;white-space:nowrap;display:none}
 .id-metric .im-n{color:var(--accent);font-weight:700}
 .id-metric .im-t{color:var(--text-light);font-weight:500}
+.id-metric .im-rail{color:var(--border);margin:0 5px}
+.id-metric .im-f{color:var(--accent);font-weight:600}
+.id-metric .im-p{color:var(--text-light);font-weight:500}
 .id-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;min-height:0}
 .id-chip{border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;box-shadow:0 1px 2px rgba(44,42,38,.06),inset 0 1px 0 rgba(255,255,255,.35)}
 .id-chip-ppo{background:#f6e7c8;color:#8a5a14;box-shadow:0 1px 2px rgba(138,90,20,.12),inset 0 1px 0 rgba(255,255,255,.5)}
@@ -2697,12 +2700,17 @@ return null;
    var pl = DATA.placements || [];
    var total = (DATA.students || []).length;
    if (!pl.length || !total) return;
-   var names = {};
-   for (var i = 0; i < pl.length; i++) names[String(pl[i].name).toLowerCase().trim()] = 1;
-   var placed = Object.keys(names).length;
-   m.innerHTML = '<span class="im-n">' + placed + '</span><span class="im-t">/' + total + ' placed</span>';
-   m.style.display = 'inline-block';
-   m.title = placed + ' of ' + total + ' students placed so far';
+var names = {};
+    var finals = 0;
+    for (var i = 0; i < pl.length; i++) {
+      names[String(pl[i].name).toLowerCase().trim()] = 1;
+      if (pl[i].type === 'final') finals++;
+    }
+    var placed = Object.keys(names).length;
+    var ppo = placed - finals;
+    m.innerHTML = '<span class="im-n">' + placed + '</span><span class="im-t">/' + total + ' placed</span><span class="im-rail">&#183;</span><span class="im-f">' + finals + ' final</span><span class="im-p">&#183; ' + ppo + ' PPO</span>';
+    m.style.display = 'inline-block';
+    m.title = placed + ' of ' + total + ' students placed \u2014 ' + finals + ' final placements, ' + ppo + ' via PPO';
  }
  enhanceTrimIV();initStudentSelect();
 rL();rB();rT('iv');rT('v');rT('vi');
