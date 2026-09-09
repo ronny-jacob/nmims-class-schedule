@@ -2710,7 +2710,7 @@ var names = {};
     var placed = Object.keys(names).length;
     var ppo = placed - finals;
     var pct = Math.round(placed / total * 100);
-    m.innerHTML = '<span class="im-n">' + placed + '</span><span class="im-t">/' + total + ' placed</span><span class="im-pct">&nbsp;' + pct + '&#37;</span><span class="im-rail">&#183;</span><span class="im-f">' + finals + ' final</span><span class="im-p">&#183; ' + ppo + ' PPO</span>';
+    m.innerHTML = '<span class="im-n">' + placed + '</span><span class="im-t">/' + total + ' placed</span><span class="im-pct">&nbsp;' + pct + '&#37;</span><span class="im-rail">&#183;</span><span class="im-p">PPO ' + ppo + '</span><span class="im-rail">&#183;</span><span class="im-f">FP ' + finals + '</span>';
     m.style.display = 'inline-block';
     m.title = placed + ' of ' + total + ' students placed \u2014 ' + finals + ' final placements, ' + ppo + ' via PPO';
  }
