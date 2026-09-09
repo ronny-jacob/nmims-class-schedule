@@ -3263,6 +3263,20 @@
       "date": "2026-09-07",
       "roster": null,
       "type": "final"
+    },
+    {
+      "name": "Ruttva Raj",
+      "company": "Invesco",
+      "date": "2026-09-09",
+      "roster": "Ruttva Virendrasinh Raj",
+      "type": "final"
+    },
+    {
+      "name": "Mahi Kinariwala",
+      "company": "Invesco",
+      "date": "2026-09-09",
+      "roster": null,
+      "type": "final"
     }
   ],
   "placements_window_days": 1,

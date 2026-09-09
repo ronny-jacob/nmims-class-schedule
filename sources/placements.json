@@ -90,6 +90,13 @@
       "type": "final",
       "announced_on": "2026-09-07",
       "names": ["Pratham Goel", "Anna Ria", "Girish Kabra", "Kritik Pillai"]
+    },
+    {
+      "company": "Invesco",
+      "role": "Final Placement",
+      "type": "final",
+      "announced_on": "2026-09-09",
+      "names": [{"name": "Ruttva Raj", "roster": "Ruttva Virendrasinh Raj"}, "Mahi Kinariwala"]
     }
   ]
 }
