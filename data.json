@@ -2950,7 +2950,53 @@
       "div": ""
     }
   ],
-  "timetable_next": [],
+  "timetable_next": [
+    {
+      "day": "Tue",
+      "time": "10:10-11:40",
+      "subject": "IMC",
+      "raw_text": "Integrated Marketing\nCommunication\nL07, 2nd floor\nProf Suresh",
+      "professor": "Prof Suresh",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Tue",
+      "time": "11:50-1:20",
+      "subject": "IMC",
+      "raw_text": "Integrated Marketing Communication\nL07, 2nd floor\nProf Suresh",
+      "professor": "Prof Suresh",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Tue",
+      "time": "3:40-5:10",
+      "subject": "ENT",
+      "raw_text": "Entrepreneurship\nL06, 2nd floor\nDr Srividya Raghavan",
+      "professor": "Dr Srividya Raghavan",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Wed",
+      "time": "10:10-11:40",
+      "subject": "IMC",
+      "raw_text": "Integrated Marketing\nCommunication\nL07, 2nd floor\nProf Suresh",
+      "professor": "Prof Suresh",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Wed",
+      "time": "11:50-1:20",
+      "subject": "IMC",
+      "raw_text": "Integrated Marketing Communication\nL07, 2nd floor\nProf Suresh",
+      "professor": "Prof Suresh",
+      "room": "L07, 2nd floor",
+      "div": ""
+    }
+  ],
   "time_slots": [
     "8:30-10:00",
     "10:10-11:40",
@@ -2960,7 +3006,15 @@
     "3:30-5:00",
     "6:00-7:30"
   ],
-  "time_slots_next": [],
+  "time_slots_next": [
+    "8:30-10:00",
+    "10:10-11:40",
+    "11:50-1:20",
+    "1:20-1:50",
+    "2:00-3:30",
+    "3:40-5:10",
+    "6:00-7:30"
+  ],
   "food_menu": {
     "week1": {
       "Mon": {
@@ -3293,15 +3347,15 @@
     "Sat"
   ],
   "date_range": "Mon 7 Sep \u2013 Fri 11 Sep 2026",
-  "date_range_next": "",
+  "date_range_next": "Mon 14 Sep \u2013 Sun 20 Sep 2026",
   "week_start": "2026-09-07",
   "week_end": "2026-09-11",
-  "week_start_next": "",
-  "week_end_next": "",
+  "week_start_next": "2026-09-14",
+  "week_end_next": "2026-09-20",
   "last_updated": {
     "sender": "Sadashiv Bhimanna <sadashiv.bhimanna@nmims.edu>",
-    "received_at": "5:45 PM IST on 7 Sep 2026",
-    "subject": "Revised_ Next week time table-7.09.2026",
-    "updated_at": "2026-09-07T13:38:48.890145+00:00"
+    "received_at": "3:54 PM IST on 12 Sep 2026",
+    "subject": "Next week time table from 15.09.2026",
+    "updated_at": "2026-09-12T11:41:47.474000+00:00"
   }
 }
