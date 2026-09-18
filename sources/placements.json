@@ -104,6 +104,20 @@
       "type": "final",
       "announced_on": "2026-09-14",
       "names": ["Jay Dave"]
+    },
+    {
+      "company": "Wipro",
+      "role": "Final Placement",
+      "type": "final",
+      "announced_on": "2026-09-18",
+      "names": ["Prerna Tekade"]
+    },
+    {
+      "company": "Policy Bazaar",
+      "role": "Final Placement",
+      "type": "final",
+      "announced_on": "2026-09-18",
+      "names": ["Samhita Banerjee"]
     }
   ]
 }
