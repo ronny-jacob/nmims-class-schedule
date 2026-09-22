@@ -5,7 +5,7 @@
       "role": "Senior Analyst - Portfolio Management Group",
       "type": "final",
       "announced_on": "2026-07-10",
-      "names": ["Ishita Sinha", "Vasu Jain", "Karthik Akella"]
+      "names": ["Ishita Sinha", "Vasu Jain", {"name": "Karthik Akella", "roster": "Akella Venkata Karthik"}]
     },
     {
       "company": "Ironsides Advisory",
@@ -33,7 +33,7 @@
       "role": "PPO",
       "type": "ppo",
       "announced_on": "2026-07-24",
-      "names": ["Arsh Sinha"]
+      "names": [{"name": "Arsh Sinha", "roster": "Arsh Vardhan Sinha"}]
     },
     {
       "company": "EPAM Systems",
@@ -54,7 +54,7 @@
       "role": "PPO",
       "type": "ppo",
       "announced_on": "2026-08-03",
-      "names": ["Pilla Venkata Sai Tharun", "Yendluri Deepti Chowdary"]
+      "names": ["Pilla Venkata Sai Tharun", {"name": "Yendluri Deepti Chowdary", "roster": "Deepti Yendluri"}]
     },
     {
       "company": "Oxane Partners",
@@ -75,7 +75,7 @@
       "role": "PPO",
       "type": "ppo",
       "announced_on": "2026-08-18",
-      "names": ["Harmit Singh"]
+      "names": [{"name": "Harmit Singh", "roster": "HARMIT SINGH"}]
     },
     {
       "company": "Zeta Global",
