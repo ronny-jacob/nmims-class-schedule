@@ -2409,60 +2409,6 @@
       "div": ""
     },
     {
-      "day": "Thu",
-      "time": "10:10-11:40",
-      "subject": "MACR",
-      "raw_text": "MACR\nL07, 2nd floor\nDr Narender Vunyale",
-      "professor": "Dr Narender Vunyale",
-      "room": "L07, 2nd floor",
-      "div": ""
-    },
-    {
-      "day": "Thu",
-      "time": "11:50-1:20",
-      "subject": "CTA_A",
-      "raw_text": "CT-A\nDr Dileep Kumar\nL06,2nd floor",
-      "professor": "Dr Dileep Kumar",
-      "room": "L06,2nd floor",
-      "div": "Div A"
-    },
-    {
-      "day": "Thu",
-      "time": "2:00-3:30",
-      "subject": "IB_A",
-      "raw_text": "IBDiv A\nDr Narender Vunyale\nL07, 2nd floor",
-      "professor": "Dr Narender Vunyale",
-      "room": "L07, 2nd floor",
-      "div": "Div A"
-    },
-    {
-      "day": "Thu",
-      "time": "2:00-3:30",
-      "subject": "CTA_B",
-      "raw_text": "CT-B\nDr Dileep Kumar\nL06,2nd floor",
-      "professor": "Dr Dileep Kumar",
-      "room": "L06,2nd floor",
-      "div": "Div B"
-    },
-    {
-      "day": "Fri",
-      "time": "10:10-11:40",
-      "subject": "WM",
-      "raw_text": "WM\nDr Showkat Ahmad\nL06, 2nd floor",
-      "professor": "Dr Showkat Ahmad",
-      "room": "L06, 2nd floor",
-      "div": ""
-    },
-    {
-      "day": "Fri",
-      "time": "11:50-1:20",
-      "subject": "WM",
-      "raw_text": "WM\nDr Showkat Ahmad\nL06, 2nd floor",
-      "professor": "Dr Showkat Ahmad",
-      "room": "L06, 2nd floor",
-      "div": ""
-    },
-    {
       "day": "Sat",
       "time": "10:10-11:40",
       "subject": "SBM_A",
@@ -4272,5 +4218,11 @@
       ]
     }
   ],
-  "mx": 69
+  "mx": 69,
+  "last_updated": {
+    "sender": "Sadashiv Bhimanna <sadashiv.bhimanna@nmims.edu>",
+    "received_at": "5:16 PM IST on 1 Oct 2026",
+    "subject": "Next week trim _V time table",
+    "updated_at": "2026-10-02T11:13:53.705590+00:00"
+  }
 }
