@@ -4,6 +4,34 @@ Your Outlook account forwards timetable emails to Gmail. A GitHub Action
 checks that Gmail inbox via IMAP every hour and auto-updates the site
 whenever a new timetable arrives.
 
+## How it works end-to-end
+
+```
+Prof emails timetable xlsx
+        ↓
+Gmail (IMAP) → check_timetable.yml
+        ↓
+check_mail.py:
+    1. IMAP-fetches the most recent timetable attachment
+    2. Saves it to downloads/<file>
+    3. Rewrites extract.py's TIMETABLE = "downloads/<file>"
+    4. Runs extract.py to regenerate data.json + index.html
+    5. Commits & pushes to main
+        ↓
+deploy_pages.yml (also runs on push):
+    - Materializes the Trim V roster from TRIM_V_STUDENT_LIST_B64
+    - Re-runs extract.py with CI=1 (refuses to fall back to manual
+      starter files — only the bot's saved downloads/ file is trusted)
+    - Runs the placements schema test
+    - Bumps the service-worker cache version
+    - Deploys to GitHub Pages
+```
+
+The mail bot is the **single source of truth** for the weekly timetable.
+`extract.py` has an empty `TIMETABLE = ""` constant by default; it gets
+populated by the bot on each successful run. CI builds fail loudly if
+no dated Trim V xlsx is in `downloads/` — that's the right state.
+
 ## Step 1 — Enable IMAP on Gmail
 
 1. Open https://mail.google.com → ⚙️ **Settings** → **See all settings**
@@ -37,10 +65,10 @@ Go to your repo → Settings → Secrets and variables → Actions → **New rep
 
 > The roster spreadsheet (which contains students' SAP IDs) is **not committed**
 > to this public repo. Instead it's stored as a base64 secret and decoded on
-> the runner before each build. Non-sensitive inputs (`sources/*.xlsx` timetables and
-> food menu) are committed directly.
+> the runner before each build. Non-sensitive inputs (e.g. the food menu
+> xlsx) are committed directly.
 
-Set the secret from the terminal:
+Set the roster secret from the terminal:
 
 ```bash
 base64 -i "/path/to/Trim-V student list.xlsx" | tr -d '\n' | gh secret set TRIM_V_STUDENT_LIST_B64
