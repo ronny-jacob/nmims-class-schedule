@@ -34,6 +34,10 @@ jobs:
         env:
           TRIM_V_STUDENT_LIST_B64: ${{ secrets.TRIM_V_STUDENT_LIST_B64 }}
         run: |
+          if [ -z "${TRIM_V_STUDENT_LIST_B64}" ]; then
+            echo "::error::TRIM_V_STUDENT_LIST_B64 secret is missing. Add it to this repo's settings (base64 of sources/Trim-V student list.xlsx)."
+            exit 1
+          fi
           mkdir -p sources
           echo "$TRIM_V_STUDENT_LIST_B64" | base64 -d > "sources/Trim-V student list.xlsx"
           ls -la sources/
