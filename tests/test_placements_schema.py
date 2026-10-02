@@ -114,10 +114,11 @@ def main() -> int:
                     f"{np}: '{display}' has unexpected characters"
                 )
 
-            candidate_names = {display}
+            candidate_names = {display.lower()}
             if roster_match:
-                candidate_names.add(roster_match)
-            if not (candidate_names & roster):
+                candidate_names.add(roster_match.lower())
+            roster_lower = {n.lower() for n in roster}
+            if not (candidate_names & roster_lower):
                 errors.append(
                     f"{np}: '{display}'"
                     + (f" (roster='{roster_match}')" if roster_match else "")

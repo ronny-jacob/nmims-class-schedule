@@ -3,5 +3,8 @@ __pycache__/
 *.xlsx
 !downloads/*.xlsx
 !sources/*.xlsx
+# Sensitive rosters — materialized from base64 secrets at CI time.
 sources/Division wise List- Trimester IV.xlsx
 sources/First Year Division list.xlsx
+sources/Trim-V student list.xlsx
+.DS_Store

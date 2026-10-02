@@ -11,11 +11,9 @@ def resolve(p):
         return p
     return p if os.path.isabs(p) else os.path.join(BASE_DIR, p)
 
-STUDENT_LIST = src("Division wise List- Trimester IV.xlsx")
-LAST_YEAR_LIST = src("First Year Division list.xlsx")
-TIMETABLE    = "downloads/14.09.2026 to 20.09.2026.xlsx"
-TIMETABLE_NEXT = ""
-FOOD_MENU    = "sources/August-Sept Menu Updated.xlsx"
+STUDENT_LIST = src("Trim-V student list.xlsx")
+TIMETABLE    = "sources/Trim V time table.xlsx"
+FOOD_MENU    = src("August-Sept Menu Updated.xlsx")
 FOOD_MENU_ANCHOR = "2026-08-03"
 PLACEMENTS   = "sources/placements.json"
 OUTPUT       = "data.json"
@@ -26,107 +24,60 @@ HOLIDAYS = {
 }
 
 TIMETABLE = resolve(TIMETABLE)
-TIMETABLE_NEXT = resolve(TIMETABLE_NEXT)
 FOOD_MENU = resolve(FOOD_MENU)
 
 FOOD_MEALS = [
     {"key": "breakfast", "label": "Breakfast", "time": "8:00 To 9:30"},
     {"key": "lunch",     "label": "Lunch",     "time": "12:30 To 2:30"},
-    {"key": "snacks",    "label": "Snacks",    "time": "5:30 To 6:30"},
+    {"key": "snacks",    "label": "Snacks",    "time": "5:30 To 6:00"},
     {"key": "dinner",    "label": "Dinner",    "time": "8:00 To 9:30"},
 ]
+
+# ─── Trim V subjects ─────────────────────────────────────────────────
+SUBJECT_NAMES = {
+    "IB_A":   "Investment Banking A",
+    "IB_B":   "Investment Banking B",
+    "IF":     "International Finance",
+    "WM":     "Wealth Management",
+    "DM":     "Digital Marketing",
+    "SBM_A":  "Strategic Brand Management A",
+    "SBM_B":  "Strategic Brand Management B",
+    "SM":     "Services Marketing",
+    "CTA_A":  "Corporate Turnaround A",
+    "CTA_B":  "Corporate Turnaround B",
+    "MACR":   "Mergers, Acquisitions and Corporate Restructuring",
+    "GS":     "Games of Strategy",
+    "PM":     "Performance Management",
+    "VA":     "Visual Analytics",
+}
+
+# Timetable cells begin with one of these prefixes.
+TIMETABLE_SUBJECT_MAP = {
+    "IB Div A":  ("IB_A",  "Div A"),
+    "IB Div B":  ("IB_B",  "Div B"),
+    "IBDiv A":   ("IB_A",  "Div A"),  # typo in source xlsx (no space)
+    "IBDiv B":   ("IB_B",  "Div B"),
+    "CT-A":      ("CTA_A", "Div A"),
+    "CT-B":      ("CTA_B", "Div B"),
+    "IF":        ("IF",    None),
+    "WM":        ("WM",    None),
+    "DM":        ("DM",    None),
+    "MACR":      ("MACR",  None),
+    "GOS":       ("GS",    None),  # subject detail sheet uses GOS, student list uses GS
+    "VA":        ("VA",    None),
+    "PM":        ("PM",    None),
+    "SM":        ("SM",    None),
+    "SBM Div A": ("SBM_A", "Div A"),
+    "SBM Div B": ("SBM_B", "Div B"),
+}
+
 FOOD_DAY_KEYS = {
     'MON': 'Mon', 'TUE': 'Tue', 'WED': 'Wed', 'THU': 'Thu',
     'FRI': 'Fri', 'SAT': 'Sat', 'SUN': 'Sun',
 }
 
-def start_and_end_from_filepath(filepath):
-    """Derive (start, end) dates from a timetable filename.
+DAY_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
-    The college sometimes misnames attachments (e.g. '31.08.2026 to 6.08.2026'
-    meaning 6 September). If the parsed end is not after the start, fall back to
-    a standard week (start + 6 days) so the app's date-window never inverts.
-    """
-    mt = re.search(r'(\d+)\.(\d+)\.(\d+)\s*to\s*(\d+)\.(\d+)\.(\d+)', filepath)
-    if not mt:
-        return (None, None)
-    d1, m1, y1, d2, m2, y2 = mt.groups()
-    fmt = "%d.%m.%Y"
-    dt_from = datetime.strptime(f"{d1}.{m1}.{y1}", fmt)
-    dt_to   = datetime.strptime(f"{d2}.{m2}.{y2}", fmt)
-    if dt_to <= dt_from:
-        dt_to = dt_from + timedelta(days=6)
-    return (dt_from, dt_to)
-
-def parse_date_range(filepath):
-    dt_from, dt_to = start_and_end_from_filepath(filepath)
-    if dt_from is None:
-        return ""
-    return dt_from.strftime("%a %-d %b") + " – " + dt_to.strftime("%a %-d %b %Y")
-
-def get_week_iso(filepath):
-    dt_from, dt_to = start_and_end_from_filepath(filepath)
-    if dt_from is None:
-        return ("", "")
-    return (dt_from.strftime("%Y-%m-%d"), dt_to.strftime("%Y-%m-%d"))
-
-# ─── Subject name mappings ───────────────────────────────────────────────
-SUBJECT_NAMES = {
-    "AFSA_A": "Advanced Financial Statement Analysis A",
-    "AFSA_B": "Advanced Financial Statement Analysis B",
-    "BV_A":   "Business Valuation A",
-    "BV_B":   "Business Valuation B",
-    "IAPM_A": "Investment Analysis & Portfolio Management A",
-    "IAPM_B": "Investment Analysis & Portfolio Management B",
-    "CBM":    "Commercial Bank Management",
-    "FD":     "Financial Derivative",
-    "CB":     "Consumer Behaviour",
-    "IMC":    "Integrated Marketing Communication",
-    "MA":     "Marketing Analytics",
-    "PRS":    "Pricing Strategy",
-    "PS":     "Product Strategy",
-    "MC_A":   "Management Consulting A",
-    "MC_B":   "Management Consulting B",
-    "ENT":    "Entrepreneurship",
-    "LD":     "Learning & Development",
-    "RS":     "Recruitment and Selection",
-    "TR":     "Total Reward",
-    "AI":     "Artificial Intelligence for Managers",
-    "DAB":    "Data Analytics for Business",
-    "BS":     "Business Simulation",
-}
-
-TIMETABLE_SUBJECT_MAP = {
-    "MC-Div B":     ("MC_B", "Div B"),
-    "MC-Div A":     ("MC_A", "Div A"),
-    "MC_Div B":     ("MC_B", "Div B"),
-    "MC_Div A":     ("MC_A", "Div A"),
-    "Pricing Strategy": ("PRS", None),
-    "AFSA-Div B":   ("AFSA_B", "Div B"),
-    "AFSA-Div A":   ("AFSA_A", "Div A"),
-    "AFSA_A":       ("AFSA_A", None),
-    "AFSA_B":       ("AFSA_B", None),
-    "L & D":        ("LD", None),
-    "AIM":          ("AI", None),
-    "R& S":         ("RS", None),
-    "MA":           ("MA", None),
-    "CBM":          ("CBM", None),
-    "Integrated Marketing Communication": ("IMC", None),
-    "Integrated Marketing": ("IMC", None),
-    "CB":           ("CB", None),
-    "DAB":          ("DAB", None),
-    "Product Strategy": ("PS", None),
-    "Financial Derivatives": ("FD", None),
-    "BV_Div B":     ("BV_B", "Div B"),
-    "BV_Div A":     ("BV_A", "Div A"),
-    "IAPM_A":       ("IAPM_A", None),
-    "IAPM_B":       ("IAPM_B", None),
-    "BS Div A":     ("BS", "Div A"),
-    "BS Div B":     ("BS", "Div B"),
-    "BS Div C":     ("BS", "Div C"),
-    "Total Rewards": ("TR", None),
-    "Entrepreneurship": ("ENT", None),
-}
 
 def normalize(s, underscores=False):
     s = re.sub(r'\s+', ' ', s).strip()
@@ -134,11 +85,13 @@ def normalize(s, underscores=False):
         s = re.sub(r'\s*_\s*', '_', s)
     return s
 
-def parse_time_labels_from_sheet(ws):
+
+def parse_time_labels_from_sheet(ws, header_row=2):
+    """Read column time labels from `header_row`. Empty cells inherit previous label."""
     labels = OrderedDict()
     prev = ''
     for col_idx in range(2, ws.max_column + 1):
-        cell = ws.cell(row=2, column=col_idx)
+        cell = ws.cell(row=header_row, column=col_idx)
         if cell and cell.value:
             raw = normalize(str(cell.value))
             raw = re.sub(r'\s*[ap]m\s*', '', raw, flags=re.I)
@@ -151,6 +104,7 @@ def parse_time_labels_from_sheet(ws):
             labels[col_idx] = prev
     return labels
 
+
 def dedupe_consecutive(lst):
     if not lst:
         return lst
@@ -160,7 +114,41 @@ def dedupe_consecutive(lst):
             result.append(item)
     return result
 
+
+def start_and_end_from_filepath(filepath):
+    """Return (start_date, end_date) parsed from a timetable filename like
+    '07.09.2026 to 13.09.2026.xlsx'. If the parsed end is not after the
+    start, fall back to start + 6 days."""
+    mt = re.search(r'(\d+)\.(\d+)\.(\d+)\s*to\s*(\d+)\.(\d+)\.(\d+)', filepath)
+    if not mt:
+        return (None, None)
+    d1, m1, y1, d2, m2, y2 = mt.groups()
+    try:
+        dt_from = datetime.strptime(f"{d1}.{m1}.{y1}", "%d.%m.%Y")
+        dt_to   = datetime.strptime(f"{d2}.{m2}.{y2}", "%d.%m.%Y")
+    except ValueError:
+        return (None, None)
+    if dt_to <= dt_from:
+        dt_to = dt_from + timedelta(days=6)
+    return (dt_from, dt_to)
+
+
+def parse_date_range(filepath):
+    dt_from, dt_to = start_and_end_from_filepath(filepath)
+    if dt_from is None:
+        return ""
+    return dt_from.strftime("%a %-d %b") + " – " + dt_to.strftime("%a %-d %b %Y")
+
+
+def get_week_iso(filepath):
+    dt_from, dt_to = start_and_end_from_filepath(filepath)
+    if dt_from is None:
+        return ("", "")
+    return (dt_from.strftime("%Y-%m-%d"), dt_to.strftime("%Y-%m-%d"))
+
+
 def match_subject(text, key):
+    """Loose prefix match ignoring case, breaking on non-alnum boundary."""
     if text.startswith(key):
         return True
     if key.startswith(text):
@@ -170,56 +158,50 @@ def match_subject(text, key):
         return not nxt.isalnum()
     return False
 
+
 def parse_timetable(filepath):
+    """Trim V single-sheet timetable (sheet 'TT', day labels in column A)."""
     wb = openpyxl.load_workbook(filepath)
-    # Extract sheet name from the start date in filename
-    mt = re.search(r'(\d+)\.(\d+)\.(\d+)\s*to', filepath)
-    if mt:
-        d, m, y = mt.groups()
-        sheet_name = f"{int(d):02d}.{int(m):02d}.{y}"
-        if sheet_name not in wb.sheetnames:
-            sheet_name = wb.sheetnames[0]
+    if 'TT' in wb.sheetnames:
+        ws = wb['TT']
     else:
-        sheet_name = wb.sheetnames[0]
-    ws = wb[sheet_name]
-    time_labels = parse_time_labels_from_sheet(ws)
+        ws = wb[wb.sheetnames[0]]
 
-    day_labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-    day_to_name = {lbl: {"Mon": "Mon", "Tue": "Tue", "Wed": "Wed", "Thu": "Thu",
-                         "Fri": "Fri", "Sat": "Sat", "Sun": "Sun"}[lbl] for lbl in day_labels}
-    day_ranges = []
-    current_day = None
-    start_row = None
-    def flush_day():
-        nonlocal current_day, start_row
-        if current_day is not None and start_row is not None:
-            day_ranges.append((day_to_name[current_day], start_row, last_row))
-    last_row = start_row
+    time_labels = parse_time_labels_from_sheet(ws, header_row=2)
+
+    # Find row ranges for each day. Day labels look like "Mon. ", "Tue. ", etc.
+    # Multi-line cells may have e.g. "Mon.\n" or just "Mon". Continuation rows
+    # have None in column A.
+    day_row_ranges = []
+    last_day = None
+    last_start = None
+    last_end = None
+
     for row_idx in range(3, ws.max_row + 1):
-        label_cell = ws.cell(row=row_idx, column=1).value
-        if label_cell:
-            raw_label = str(label_cell).strip()
-            for lbl in day_labels:
-                if raw_label.startswith(lbl):
-                    flush_day()
-                    current_day = lbl
-                    start_row = row_idx
-                    last_row = row_idx
+        v = ws.cell(row=row_idx, column=1).value
+        matched_day = None
+        if v and isinstance(v, str):
+            for d in DAY_LABELS:
+                if v.strip().startswith(d):
+                    matched_day = d
                     break
-        elif current_day is not None:
-            last_row = row_idx
-    flush_day()
+        if matched_day:
+            if last_day is not None:
+                day_row_ranges.append((last_day, last_start, last_end or last_start))
+            last_day = matched_day
+            last_start = row_idx
+            last_end = row_idx
+        elif last_day is not None:
+            last_end = row_idx
+    if last_day is not None:
+        day_row_ranges.append((last_day, last_start, last_end or last_start))
 
-    if not day_ranges:
-        day_ranges = [
-            ("Mon", 3, 4), ("Tue", 5, 6), ("Wed", 7, 8),
-            ("Thu", 9, 10), ("Fri", 11, 12), ("Sat", 13, 14), ("Sun", 15, 16)
-        ]
+    if not day_row_ranges:
+        # Fallback: assume rows 3..12, single day block.
+        day_row_ranges = [('Mon', 3, 12)]
+
     timetable = []
-
-    for day_name, r1, r2 in day_ranges:
-        if r2 is None:
-            r2 = r1
+    for day_name, r1, r2 in day_row_ranges:
         for row_idx in range(r1, r2 + 1):
             for col_idx in range(2, ws.max_column + 1):
                 cell = ws.cell(row=row_idx, column=col_idx)
@@ -227,7 +209,7 @@ def parse_timetable(filepath):
                 if not raw:
                     continue
                 raw_lines = [l.strip() for l in str(raw).split('\n') if l.strip()]
-                # Skip decorative cells like vertical LUNCH BREAK text
+                # Skip decorative cells (e.g. vertical LUNCH BREAK text)
                 if all(len(l) <= 1 for l in raw_lines):
                     continue
                 lines = [normalize(l) for l in raw_lines]
@@ -238,7 +220,10 @@ def parse_timetable(filepath):
                 subject_text = normalize(lines[0], underscores=True)
                 alt_text = None
                 used_lines = 1
-                if len(lines) > 1 and not lines[1].startswith('L') and lines[1] != 'Hybrid':
+                if (len(lines) > 1
+                        and not lines[1].startswith('L')
+                        and lines[1] != 'Hybrid'
+                        and not re.match(r'^(Dr|Prof)\b', lines[1])):
                     alt_text = normalize(subject_text + ' ' + lines[1], underscores=True)
 
                 match = None
@@ -247,7 +232,7 @@ def parse_timetable(filepath):
                     if match_subject(subject_text, key_norm):
                         match = (code, div)
                         break
-                    if alt_text and (match_subject(alt_text, key_norm)):
+                    if alt_text and match_subject(alt_text, key_norm):
                         match = (code, div)
                         used_lines = 2
                         break
@@ -262,12 +247,9 @@ def parse_timetable(filepath):
                 for line in remaining:
                     if line == 'Hybrid':
                         room = 'Hybrid'
-                    elif re.match(r'^L\d', line):
-                        if room:
-                            room += ' / ' + line
-                        else:
-                            room = line
-                    elif 'Prof' in line or 'Dr' in line:
+                    elif re.match(r'^L\s?\d', line) or re.match(r'^LR\s?\d', line):
+                        room = line
+                    elif 'Prof' in line or re.match(r'^Dr\b', line) or 'Dr ' in line:
                         if not professor:
                             professor = line
                 entry = {
@@ -281,7 +263,8 @@ def parse_timetable(filepath):
                 }
                 existing = None
                 for e in timetable:
-                    if (e["day"] == entry["day"] and e["time"] == entry["time"]
+                    if (e["day"] == entry["day"]
+                            and e["time"] == entry["time"]
                             and e["subject"] == entry["subject"]
                             and e["professor"] == entry["professor"]
                             and e["room"] == entry["room"]):
@@ -291,6 +274,7 @@ def parse_timetable(filepath):
                     timetable.append(entry)
 
     return timetable
+
 
 def parse_food_menu(filepath):
     """Read the food menu xlsx → {week1: {day: {meal: text}}, week2: {...}}."""
@@ -321,80 +305,46 @@ def parse_food_menu(filepath):
 
     return menu
 
-NON_STUDENT_PATTERNS = ['placements', 'faculty', 'division', 'total', 'sub total']
-EXCLUDED_NAMES = ['Abhijatya Negi']
-BS_DIV_OVERRIDE = {
-    'Ajay Vigneshwar A': 'Div C',
-    'Tina Kewlani': 'Div C',
-}
 
 def parse_students():
-    # Read last year's list for roll corrections and departed-student detection
-    ly_students = {}  # sap -> {name, roll, div}
-    try:
-        wb_ly = openpyxl.load_workbook(LAST_YEAR_LIST)
-        for sheet_name in wb_ly.sheetnames:
-            ws = wb_ly[sheet_name]
-            div_name = sheet_name.strip()
-            for row in ws.iter_rows(min_row=2, values_only=True):
-                sl, name, sap, roll, gender = row
-                if name and str(name).strip() and sl is not None:
-                    sap = str(sap).strip() if sap else ''
-                    ly_students[sap] = {
-                        'name': normalize(str(name)),
-                        'roll': normalize(str(roll)) if roll else '',
-                        'div': f'Div {div_name[-1]}' if div_name else '',
-                        'gender': normalize(str(gender)) if gender else '',
-                    }
-    except FileNotFoundError:
-        ly_students = {}
+    """Read Trim V roster from sources/Trim-V student list.xlsx.
 
-    # Read current Trimester IV list (primary source)
+    Layout (verified):
+      row 1: junk counts row (skip)
+      row 2: headers — Email, Name, Last modified, SAP, Name2, Roll, Email,
+                       Minor, [subject codes 9..22]
+      row 3+: student rows. Name2 is the canonical display name.
+    """
     wb = openpyxl.load_workbook(STUDENT_LIST)
-    ws = wb['List ']
+    ws = wb[wb.sheetnames[0]]
 
-    headers = [str(c.value).strip() if c.value else '' for c in ws[1]]
-    subject_cols = []
-    for i, h in enumerate(headers):
-        if h in SUBJECT_NAMES:
-            subject_cols.append((i, h))
+    headers = [str(c.value).strip() if c.value else '' for c in ws[2]]
+    subject_cols = [(i, h) for i, h in enumerate(headers) if h in SUBJECT_NAMES]
 
     students = []
-    for row in ws.iter_rows(min_row=2, values_only=True):
-        if not row[1]:
+    for row in ws.iter_rows(min_row=3, values_only=True):
+        if not any(row):
             continue
-        if normalize(str(row[1])).lower() == 'name':
+        # Trim V column map (0-indexed):
+        #   0:Email 1:Name 2:LastMod 3:SAP 4:Name2 5:Roll 7:Major 8:Minor
+        canonical = str(row[4]).strip() if row[4] else ''
+        name_caps = str(row[1]).strip() if row[1] else ''
+        if not canonical and not name_caps:
             continue
-
-        raw_name = normalize(str(row[1]))
-        roll     = normalize(str(row[5])) if row[5] else ''
-        major    = normalize(str(row[7])) if row[7] else ''
-        minor    = normalize(str(row[8])).replace('\xa0', '').strip() if row[8] else ''
-
-        # Detect non-student rows (e.g. "Placements Hyd")
-        if any(p in raw_name.lower() for p in NON_STUDENT_PATTERNS) and row[4]:
-            name  = normalize(str(row[4]))
-            email = normalize(str(row[6])) if row[6] else ''
-        else:
-            name  = normalize(str(row[4])) if row[4] else raw_name
-            email = normalize(str(row[0])) if row[0] else ''
-
-        # Get SAP ID — used only for roll correction from last year's list
-        sap = normalize(str(row[2])) if row[2] else ''
-
-        # Skip excluded students (e.g. left the college)
-        if name in EXCLUDED_NAMES:
+        # Skip purely junk rows (no canonical, no SAP, no roll)
+        sap = str(row[3]).strip() if row[3] else ''
+        roll_raw = str(row[5]).strip() if row[5] else ''
+        if not canonical and not sap and not roll_raw:
             continue
 
-        # Fix roll number if last year's list has a proper HXXX format
-        if sap and sap in ly_students and ly_students[sap]['roll'].startswith('H'):
-            roll = ly_students[sap]['roll']
-
-        # Get BS division from last year's list (which sheet they're in)
-        bs_div = ly_students[sap]['div'] if sap and sap in ly_students else ''
-        # Manual override for late-joining students not in last year's list
-        if name in BS_DIV_OVERRIDE:
-            bs_div = BS_DIV_OVERRIDE[name]
+        name = normalize(canonical) if canonical else normalize(name_caps)
+        roll = normalize(roll_raw)
+        major = normalize(str(row[7])) if row[7] else ''
+        minor = str(row[8]).replace('\xa0', ' ').strip() if row[8] else ''
+        email = normalize(str(row[6])) if row[6] else ''
+        # Trim V has no BS division. Empty placeholder kept for back-compat
+        # with index.html's rendering code paths.
+        bs_div = ''
 
         # Normalize roll to Hxxx format if it starts with H
         if roll.startswith('H'):
@@ -402,11 +352,11 @@ def parse_students():
             if digits:
                 roll = 'H' + digits.zfill(3)
 
-        gender = ly_students[sap]['gender'] if sap and sap in ly_students else ''
-
         subjects = []
         for col_idx, code in subject_cols:
-            val = str(row[col_idx]).strip().upper() if col_idx < len(row) and row[col_idx] else 'NO'
+            val = ''
+            if col_idx < len(row) and row[col_idx] is not None:
+                val = str(row[col_idx]).strip().upper()
             if val == 'YES':
                 subjects.append(code)
 
@@ -416,20 +366,16 @@ def parse_students():
             "email": email,
             "major": major,
             "minor": minor,
-            "gender": gender,
+            "gender": "",  # Trim V roster doesn't include it
             "subjects": subjects,
             "bs_div": bs_div,
         })
 
-    # BS (Business Simulation) is a common subject — add for all
-    for s in students:
-        if 'BS' not in s['subjects']:
-            s['subjects'].append('BS')
-
     return students
 
+
 def parse_placements():
-    """Flatten placements.json → [{name, company, date}] (in the 2-day window)."""
+    """Flatten placements.json → [{name, company, date, roster, type}]."""
     placements = []
     try:
         with open(PLACEMENTS) as f:
@@ -440,17 +386,10 @@ def parse_placements():
         print(f"⚠️ Could not parse placements: {e}")
         return placements
 
-    today = datetime.now().date()
-    window_start = today - timedelta(days=PLACEMENT_WINDOW_DAYS)
-
     for a in raw.get("announcements", []):
         company = str(a.get("company", "")).strip()
         date_str = str(a.get("announced_on", "")).strip()
         ptype = str(a.get("type", "ppo")).strip().lower() or "ppo"
-        try:
-            announced = datetime.strptime(date_str, "%Y-%m-%d").date()
-        except Exception:
-            announced = None
         for name in a.get("names", []):
             roster_name = None
             if isinstance(name, dict):
@@ -469,30 +408,64 @@ def parse_placements():
             })
     return placements
 
+
+def build_classes_and_subjects(students):
+    """Generate the JS CLASSES / SUBJECTS arrays from DATA.students.
+
+    Returns (classes_by_trim, subjects_array, mx_count).
+    """
+    by_trim = {"v": [], "vi": []}
+    subjects_arr = []
+    for code, full_name in SUBJECT_NAMES.items():
+        enrolled = sorted(
+            s["name"] for s in students if code in s["subjects"]
+        )
+        by_trim["v"].append({
+            "cls": full_name + " (Faculty)",
+            "students": enrolled,
+        })
+        subjects_arr.append({
+            "trim": "v",
+            "trimLabel": "Trim V",
+            "cls": full_name + " (Faculty)",
+            "short": full_name,
+            "faculty": "Faculty",
+            "count": len(enrolled),
+            "students": enrolled,
+        })
+    mx_count = max((len(c["students"]) for c in by_trim["v"]), default=0)
+    return by_trim, subjects_arr, mx_count
+
+
 def main():
     students = parse_students()
+
+    # Timetable date range. The file may or may not contain a date pattern
+    # in its name. When it does, parse it; otherwise anchor to the current
+    # week's Monday → Sunday.
+    today = datetime.now().date()
+    monday = today - timedelta(days=today.weekday())
     try:
         timetable = parse_timetable(TIMETABLE)
-        date_range = parse_date_range(TIMETABLE)
-        week_start, week_end = get_week_iso(TIMETABLE)
+        week_start_iso, week_end_iso = get_week_iso(TIMETABLE)
+        if not week_start_iso:
+            week_start_iso = monday.strftime("%Y-%m-%d")
+            week_end_iso = (monday + timedelta(days=6)).strftime("%Y-%m-%d")
+        date_range = parse_date_range(TIMETABLE) or (
+            monday.strftime("%a %-d %b") + " – "
+            + (monday + timedelta(days=6)).strftime("%a %-d %Y")
+        )
     except Exception as e:
         print(f"❌ Could not parse timetable: {e}")
         timetable = []
         date_range = ""
-        week_start = ""
-        week_end = ""
+        week_start_iso = ""
+        week_end_iso = ""
 
     timetable_next = []
     date_range_next = ""
     week_start_next = ""
     week_end_next = ""
-    if os.path.exists(TIMETABLE_NEXT):
-        try:
-            timetable_next = parse_timetable(TIMETABLE_NEXT)
-            date_range_next = parse_date_range(TIMETABLE_NEXT)
-            week_start_next, week_end_next = get_week_iso(TIMETABLE_NEXT)
-        except Exception as e:
-            print(f"⚠️ Could not parse next week's timetable: {e}")
 
     subjects = {}
     for code, full in SUBJECT_NAMES.items():
@@ -503,17 +476,14 @@ def main():
             "student_count": len(students_in_subject),
         }
 
-    wb_now = openpyxl.load_workbook(TIMETABLE)
-    ws_now = wb_now[[s for s in wb_now.sheetnames if re.match(r'\d+\.\d+\.\d{4}', s)][0]]
-    time_slots = dedupe_consecutive(list(parse_time_labels_from_sheet(ws_now).values()))
+    # Time slots from timetable sheet
+    try:
+        wb = openpyxl.load_workbook(TIMETABLE)
+        ws = wb['TT'] if 'TT' in wb.sheetnames else wb[wb.sheetnames[0]]
+        time_slots = dedupe_consecutive(list(parse_time_labels_from_sheet(ws).values()))
+    except Exception:
+        time_slots = []
     time_slots_next = []
-    if os.path.exists(TIMETABLE_NEXT):
-        try:
-            wb_nxt = openpyxl.load_workbook(TIMETABLE_NEXT)
-            ws_nxt = wb_nxt[[s for s in wb_nxt.sheetnames if re.match(r'\d+\.\d+\.\d{4}', s)][0]]
-            time_slots_next = dedupe_consecutive(list(parse_time_labels_from_sheet(ws_nxt).values()))
-        except Exception:
-            pass
 
     food_menu = {}
     if os.path.exists(FOOD_MENU):
@@ -523,6 +493,9 @@ def main():
             print(f"⚠️ Could not parse food menu: {e}")
 
     placements = parse_placements()
+
+    classes_by_trim, subjects_arr, mx_count = build_classes_and_subjects(students)
+    students_sorted = sorted(s["name"] for s in students)
 
     data = {
         "students": students,
@@ -540,10 +513,13 @@ def main():
         "days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
         "date_range": date_range,
         "date_range_next": date_range_next,
-        "week_start": week_start,
-        "week_end": week_end,
+        "week_start": week_start_iso,
+        "week_end": week_end_iso,
         "week_start_next": week_start_next,
         "week_end_next": week_end_next,
+        "classes": classes_by_trim,
+        "subjects_arr": subjects_arr,
+        "mx": mx_count,
     }
 
     # Read last_updated metadata if available (written by check_mail.py)
@@ -561,39 +537,130 @@ def main():
     print(f"   Students: {len(students)}")
     print(f"   Subjects: {len(subjects)}")
     print(f"   Timetable entries: {len(timetable)}")
-    if timetable_next:
-        print(f"   Next week entries: {len(timetable_next)}")
     print(f"   Food menu weeks: {len(food_menu)}")
     print(f"   Placements: {len(placements)}")
 
-    # ─── Regenerate index.html with embedded data ───
+    # ─── Regenerate index.html with embedded data + JS arrays ───
     INDEX_HTML = "index.html"
     data_json = json.dumps(data)
+    students_json = json.dumps(students_sorted)
+    classes_json = json.dumps(classes_by_trim)
+    subjects_arr_json = json.dumps(subjects_arr)
+
     with open(INDEX_HTML) as f:
         html = f.read()
 
-    marker = "/* DATA_INSERT_HERE */"
-    if marker not in html:
-        print(f"❌ Marker '{marker}' not found in {INDEX_HTML}")
+    markers = {
+        "DATA":   "/* DATA_INSERT_HERE */",
+        "STUDENTS": "/* STUDENTS_HERE */",
+        "CLASSES":  "/* CLASSES_HERE */",
+        "SUBJECTS": "/* SUBJECTS_HERE */",
+        "MX":      "/* MX_HERE */",
+    }
+
+    # If a previous successful run already replaced the JS-array markers,
+    # re-inject them so this run can replace them again. The generated
+    # `var STUDENTS = [..];var CLASSES = ...;` lines may sit on a single
+    # line, so we don't anchor on `^`.
+    import re as _re
+
+    def _find_top_level_close(text, start, open_ch, close_ch):
+        depth = 0
+        i = start
+        in_string = False
+        escape = False
+        while i < len(text):
+            c = text[i]
+            if in_string:
+                if escape:
+                    escape = False
+                elif c == '\\':
+                    escape = True
+                elif c == '"':
+                    in_string = False
+            else:
+                if c == '"':
+                    in_string = True
+                elif c == open_ch:
+                    depth += 1
+                elif c == close_ch:
+                    depth -= 1
+                    if depth == 0:
+                        return i
+            i += 1
+        return -1
+
+    for arr_name, open_ch, close_ch in (
+        ('STUDENTS', '[', ']'),
+        ('CLASSES',  '{', '}'),
+        ('SUBJECTS', '[', ']'),
+    ):
+        marker = markers[arr_name]
+        if marker in html:
+            continue
+        # Find "var STUDENTS = " or "var CLASSES = " etc. anywhere in the file.
+        # (No MULTILINE because of the all-on-one-line issue.)
+        token = 'var ' + arr_name + ' = '
+        idx = html.find(token)
+        if idx < 0:
+            continue
+        end = _find_top_level_close(html, idx + len(token), open_ch, close_ch)
+        if end < 0:
+            continue
+        end_idx = end + 1
+        if end_idx < len(html) and html[end_idx] == ';':
+            end_idx += 1
+        html = html[:idx] + marker + html[end_idx:]
+
+    # MX: var MX = NN;
+    if markers['MX'] not in html:
+        m = _re.search(r'var MX\s*=\s*\d+\s*;', html)
+        if m:
+            html = html[:m.start()] + markers['MX'] + html[m.end():]
+
+    for name, marker in markers.items():
+        if marker not in html:
+            print(f"❌ Marker '{marker}' not found in {INDEX_HTML}")
+            return
+
+    before, sep, after = html.partition(markers["DATA"])
+    if sep != markers["DATA"]:
+        print(f"❌ DATA marker missing")
         return
 
-    before, after = html.split(marker, 1)
-    # Skip everything until `var STUDENTS` — that's where real JS starts
-    lines = after.split('\n')
-    real_start = len(lines)
-    for i, line in enumerate(lines):
-        stripped = line.strip()
-        if stripped.startswith('var STUDENTS'):
+    # After DATA marker, skip until var STUDENTS marker line.
+    lines_after = after.split('\n')
+    real_start = len(lines_after)
+    for i, line in enumerate(lines_after):
+        if markers["STUDENTS"] in line:
             real_start = i
             break
-    after = '\n'.join(lines[real_start:])
 
-    init_code = '\n'
-    new_html = before + marker + f"\nDATA = {data_json};" + init_code + after
+    after = '\n'.join(lines_after[real_start:])
+
+    # Replace STUDENTS / CLASSES / SUBJECTS markers with generated arrays.
+    js_tail = (
+        f"var STUDENTS = {students_json};"
+        f"var CLASSES = {classes_json};"
+        f"var SUBJECTS = {subjects_arr_json};"
+        f"var MX = {mx_count};"
+    )
+    # The four markers sit on their own lines in this order in index.html.
+    for marker in (markers["STUDENTS"], markers["CLASSES"],
+                   markers["SUBJECTS"], markers["MX"]):
+        after = after.replace(marker, "", 1)
+    # Insert emitted JS arrays just after the last replacement removed
+    # (right before any remaining script code).
+    new_html = (
+        before + markers["DATA"] + f"\nDATA = {data_json};"
+        f"\n{js_tail}\n"
+        + after
+    )
 
     with open(INDEX_HTML, 'w') as f:
         f.write(new_html)
     print(f"✅ Updated {INDEX_HTML}")
+
 
 if __name__ == '__main__':
     main()

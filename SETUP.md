@@ -33,19 +33,17 @@ Go to your repo → Settings → Secrets and variables → Actions → **New rep
 | `IMAP_USER` | Your Gmail address (e.g. `you@gmail.com`) |
 | `IMAP_PASS` | The 16-character app password from Step 3 (spaces optional) |
 | `IMAP_LOOKBACK_DAYS` | `7` (how many days back to search for timetable emails) |
-| `STUDENT_LIST_B64` | Base64 of `sources/Division wise List- Trimester IV.xlsx` |
-| `LAST_YEAR_LIST_B64` | Base64 of `sources/First Year Division list.xlsx` |
+| `TRIM_V_STUDENT_LIST_B64` | Base64 of `sources/Trim-V student list.xlsx` |
 
-> The roster spreadsheets (which contain students' SAP IDs) are **not committed**
-> to this public repo. Instead they're stored as base64 secrets and decoded on the
-> runner before each build. Non-sensitive inputs (`sources/*.xlsx` timetables and
+> The roster spreadsheet (which contains students' SAP IDs) is **not committed**
+> to this public repo. Instead it's stored as a base64 secret and decoded on
+> the runner before each build. Non-sensitive inputs (`sources/*.xlsx` timetables and
 > food menu) are committed directly.
 
-Set the two base64 secrets from the terminal:
+Set the secret from the terminal:
 
 ```bash
-base64 -i "/path/to/Division wise List- Trimester IV.xlsx" | tr -d '\n' | gh secret set STUDENT_LIST_B64
-base64 -i "/path/to/First Year Division list.xlsx" | tr -d '\n' | gh secret set LAST_YEAR_LIST_B64
+base64 -i "/path/to/Trim-V student list.xlsx" | tr -d '\n' | gh secret set TRIM_V_STUDENT_LIST_B64
 ```
 
 ## Step 5 — Enable the workflow
