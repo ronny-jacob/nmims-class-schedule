@@ -1,4 +1,4 @@
-var CACHE = 'nmims-cc-v2';
+var CACHE = 'nmims-cc-v3';
 var STATIC_ASSETS = [
   './manifest.json',
   './icon-192.png',
@@ -33,6 +33,7 @@ self.addEventListener('fetch', function(e) {
   // is rebuilt every deploy, so a stale copy would hide placement/timetable
   // updates from returning visitors for up to 24h.
   if (
+    e.request.mode === 'navigate' ||
     url.pathname === '/' ||
     url.pathname.endsWith('/index.html') ||
     url.pathname.endsWith('/data.json')
