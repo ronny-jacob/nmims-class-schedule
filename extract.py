@@ -1,4 +1,4 @@
-import json, re, os
+import json, re, os, sys
 from collections import OrderedDict
 from datetime import datetime, timedelta
 import openpyxl
@@ -16,7 +16,7 @@ STUDENT_LIST = src("Trim-V student list.xlsx")
 # timetable email arrives. When empty (e.g. fresh clone, or the bot
 # hasn't run yet), fall back to the most recently dated file in
 # downloads/, then to sources/Trim V time table.xlsx (manual starter).
-TIMETABLE    = ""
+TIMETABLE    = "downloads/05.10.2026 to 11.10.2026.xlsx"
 TIMETABLE_NEXT = ""
 FOOD_MENU    = src("August-Sept Menu Updated.xlsx")
 FOOD_MENU_ANCHOR = "2026-08-03"
@@ -32,21 +32,32 @@ TIMETABLE = resolve(TIMETABLE)
 FOOD_MENU = resolve(FOOD_MENU)
 
 
+def _file_has_trim_v_layout(path):
+    """Quick sniff: does this xlsx have a 'TT' sheet (Trim V layout)?"""
+    try:
+        wb = openpyxl.load_workbook(path, read_only=True)
+    except Exception:
+        return False
+    layout = 'TT' in wb.sheetnames
+    wb.close()
+    return layout
+
+
 def pick_timetable_fallback():
     """Pick the most useful timetable when TIMETABLE is empty.
 
-    Priority order:
-    1. Trim V starter file (sources/Trim V time table.xlsx) — the layout
-       matters: dated files in downloads/ are likely Trim IV (date-named
-       sheets) and won't parse correctly under the Trim V parser.
-    2. The newest dated .xlsx in downloads/ — these are what the email bot
-       saves (dd.mm.yyyy to dd.mm.yyyy.xlsx). For Trim V weeks the bot may
-       drop these without yet committing a TIMETABLE rewrite.
-    Returns '' if nothing is available.
+    The mail bot (check_mail.py) is the production source. When it has
+    not yet written a TIMETABLE constant, we fall back to the most
+    recently dated file in downloads/ that has the Trim V layout
+    (i.e., a 'TT' sheet). That is exactly what the bot would do.
+
+    For local development (CI env var unset), we additionally allow
+    sources/Trim V time table.xlsx as a starter so a fresh clone yields a
+    runnable build without needing to invoke the bot. CI / staging /
+    production builds do NOT fall back to the manual starter.
     """
-    starter = src("Trim V time table.xlsx")
-    if os.path.isfile(starter):
-        return os.path.relpath(starter, BASE_DIR)
+    in_ci = bool(os.environ.get("CI"))
+
     downloads_dir = os.path.join(BASE_DIR, "downloads")
     pattern = re.compile(r'\d+\.\d+\.\d{4}\s*to\s*\d+\.\d+\.\d{4}')
     candidates = []
@@ -61,10 +72,17 @@ def pick_timetable_fallback():
                 mtime = os.path.getmtime(full)
             except OSError:
                 continue
-            candidates.append((mtime, os.path.relpath(full, BASE_DIR)))
+            if _file_has_trim_v_layout(full):
+                candidates.append((mtime, os.path.relpath(full, BASE_DIR)))
     if candidates:
         candidates.sort(reverse=True)
         return candidates[0][1]
+
+    if not in_ci:
+        starter = src("Trim V time table.xlsx")
+        if os.path.isfile(starter):
+            return os.path.relpath(starter, BASE_DIR)
+
     return ""
 
 FOOD_MEALS = [
@@ -484,12 +502,10 @@ def main():
 
     # Timetable source. The committed TIMETABLE constant is updated by the
     # mail bot (check_mail.py) whenever a new weekly xlsx arrives in
-    # downloads/. When that constant is empty (e.g. fresh clone, or the
-    # bot hasn't run yet on this branch), pick a fallback so the build
-    # never silently emits an empty timetable:
-    #   1. The newest dated xlsx already in downloads/ (bot may have saved
-    #      a file there without yet committing a TIMETABLE rewrite).
-    #   2. The manual starter file in sources/.
+    # downloads/. When that constant is empty we fall back to a fresh
+    # dated file in downloads/ (CI / staging / prod) or to the manual
+    # starter in sources/ (local dev only). If we end up with nothing,
+    # the build fails loudly rather than shipping an empty timetable.
     global TIMETABLE
     timetable_path = TIMETABLE
     if not timetable_path or not os.path.isfile(resolve(timetable_path) if timetable_path else ""):
@@ -497,6 +513,10 @@ def main():
         if fallback:
             timetable_path = fallback
             print(f"ℹ️ TIMETABLE unset, using fallback: {fallback}")
+        else:
+            sys.exit("❌ No timetable source. Run check_mail.py first to "
+                     "download the latest timetable email into downloads/, "
+                     "or wire extract.py's TIMETABLE constant.")
     TIMETABLE = resolve(timetable_path) if timetable_path else ""
 
     # Timetable date range. The file may or may not contain a date pattern
