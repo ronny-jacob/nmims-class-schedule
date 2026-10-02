@@ -9,7 +9,7 @@ IMAP_USER     = os.getenv("IMAP_USER", "")
 IMAP_PASS     = os.getenv("IMAP_PASS", "")
 LOOKBACK_DAYS = int(os.getenv("IMAP_LOOKBACK_DAYS", "7"))
 TIMETABLE_DIR = os.path.dirname(os.path.abspath(__file__))
-TIMETABLE_PATTERN = re.compile(r'\d{1,2}\.\d{1,2}\.\d{4}\s*to\s*\d{1,2}\.\d{1,2}\.\d{4}')
+TIMETABLE_PATTERN = re.compile(r'\d{1,2}\.\d{1,2}\.\d{4}\s*(?:to|-|–)\s*\d{1,2}\.\d{1,2}\.\d{4}')
 
 def decode_str(raw):
     """Decode email header to plain string."""
@@ -171,7 +171,7 @@ def parse_file_dates(name):
     m = TIMETABLE_PATTERN.search(name or "")
     if not m:
         return None
-    start_str = m.group(0).split("to", 1)[0].strip()
+    start_str = re.split(r'\s*(?:to|-|–)\s*', m.group(0), 1)[0].strip()
     try:
         return datetime.strptime(start_str, "%d.%m.%Y").date()
     except ValueError:

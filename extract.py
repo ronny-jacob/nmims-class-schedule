@@ -59,7 +59,7 @@ def pick_timetable_fallback():
     in_ci = bool(os.environ.get("CI"))
 
     downloads_dir = os.path.join(BASE_DIR, "downloads")
-    pattern = re.compile(r'\d+\.\d+\.\d{4}\s*to\s*\d+\.\d+\.\d{4}')
+    pattern = re.compile(r'\d+\.\d+\.\d{4}\s*(?:to|-|–)\s*\d+\.\d+\.\d{4}')
     candidates = []
     if os.path.isdir(downloads_dir):
         for name in os.listdir(downloads_dir):
@@ -176,9 +176,9 @@ def dedupe_consecutive(lst):
 
 def start_and_end_from_filepath(filepath):
     """Return (start_date, end_date) parsed from a timetable filename like
-    '07.09.2026 to 13.09.2026.xlsx'. If the parsed end is not after the
-    start, fall back to start + 6 days."""
-    mt = re.search(r'(\d+)\.(\d+)\.(\d+)\s*to\s*(\d+)\.(\d+)\.(\d+)', filepath)
+    '07.09.2026 to 13.09.2026.xlsx' or '05.10.2026-11.10.2026.xlsx'.
+    If the parsed end is not after the start, fall back to start + 6 days."""
+    mt = re.search(r'(\d+)\.(\d+)\.(\d+)\s*(?:to|-|–)\s*(\d+)\.(\d+)\.(\d+)', filepath)
     if not mt:
         return (None, None)
     d1, m1, y1, d2, m2, y2 = mt.groups()
@@ -506,14 +506,32 @@ def main():
     # dated file in downloads/ (CI / staging / prod) or to the manual
     # starter in sources/ (local dev only). If we end up with nothing,
     # the build fails loudly rather than shipping an empty timetable.
-    global TIMETABLE
+    global TIMETABLE, TIMETABLE_NEXT
+    timeline_today = datetime.now().date()
+
+    def this_week_sunday():
+        monday = timeline_today - timedelta(days=timeline_today.weekday())
+        return monday + timedelta(days=6)
+
+    def file_belongs_to_future_week(path):
+        ws, _we = get_week_iso(path)
+        return bool(ws) and ws > this_week_sunday().strftime("%Y-%m-%d")
+
     timetable_path = TIMETABLE
     if not timetable_path or not os.path.isfile(resolve(timetable_path) if timetable_path else ""):
         fallback = pick_timetable_fallback()
         if fallback:
-            timetable_path = fallback
-            print(f"ℹ️ TIMETABLE unset, using fallback: {fallback}")
-        else:
+            if file_belongs_to_future_week(fallback) and not TIMETABLE_NEXT:
+                # The newest dated file is for an upcoming week, not the
+                # current one — keep it in the NEXT slot (mirrors the mail
+                # bot, which routes future-week emails to TIMETABLE_NEXT).
+                print(f"ℹ️ TIMETABLE unset; {fallback} is a future week → "
+                      f"wired to TIMETABLE_NEXT")
+                TIMETABLE_NEXT = fallback  # already a BASE_DIR-relative path
+            else:
+                timetable_path = fallback
+                print(f"ℹ️ TIMETABLE unset, using fallback: {fallback}")
+        elif not TIMETABLE_NEXT:
             sys.exit("❌ No timetable source. Run check_mail.py first to "
                      "download the latest timetable email into downloads/, "
                      "or wire extract.py's TIMETABLE constant.")
@@ -545,6 +563,17 @@ def main():
     date_range_next = ""
     week_start_next = ""
     week_end_next = ""
+    if TIMETABLE_NEXT and os.path.isfile(resolve(TIMETABLE_NEXT)):
+        try:
+            timetable_next = parse_timetable(resolve(TIMETABLE_NEXT))
+            week_start_next, week_end_next = get_week_iso(resolve(TIMETABLE_NEXT))
+            date_range_next = parse_date_range(resolve(TIMETABLE_NEXT))
+        except Exception as e:
+            print(f"⚠️ Could not parse next week's timetable: {e}")
+            timetable_next = []
+            date_range_next = ""
+            week_start_next = ""
+            week_end_next = ""
 
     subjects = {}
     for code, full in SUBJECT_NAMES.items():
@@ -563,6 +592,13 @@ def main():
     except Exception:
         time_slots = []
     time_slots_next = []
+    if TIMETABLE_NEXT and os.path.isfile(resolve(TIMETABLE_NEXT)):
+        try:
+            wb_next = openpyxl.load_workbook(resolve(TIMETABLE_NEXT))
+            ws_next = wb_next['TT'] if 'TT' in wb_next.sheetnames else wb_next[wb_next.sheetnames[0]]
+            time_slots_next = dedupe_consecutive(list(parse_time_labels_from_sheet(ws_next).values()))
+        except Exception:
+            pass
 
     food_menu = {}
     if os.path.exists(FOOD_MENU):
@@ -616,6 +652,8 @@ def main():
     print(f"   Students: {len(students)}")
     print(f"   Subjects: {len(subjects)}")
     print(f"   Timetable entries: {len(timetable)}")
+    if timetable_next:
+        print(f"   Next week entries: {len(timetable_next)}")
     print(f"   Food menu weeks: {len(food_menu)}")
     print(f"   Placements: {len(placements)}")
 

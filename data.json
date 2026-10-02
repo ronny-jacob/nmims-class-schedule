@@ -2827,10 +2827,10 @@
     "Fri",
     "Sat"
   ],
-  "date_range": "Mon 28 Sep \u2013 Sun 4 Oct 2026",
+  "date_range": "Mon 5 Oct \u2013 Sun 11 Oct 2026",
   "date_range_next": "",
-  "week_start": "2026-09-28",
-  "week_end": "2026-10-04",
+  "week_start": "2026-10-05",
+  "week_end": "2026-10-11",
   "week_start_next": "",
   "week_end_next": "",
   "classes": {
