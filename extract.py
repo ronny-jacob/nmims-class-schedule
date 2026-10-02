@@ -137,7 +137,8 @@ def parse_date_range(filepath):
     dt_from, dt_to = start_and_end_from_filepath(filepath)
     if dt_from is None:
         return ""
-    return dt_from.strftime("%a %-d %b") + " – " + dt_to.strftime("%a %-d %b %Y")
+    return (dt_from.strftime("%a %-d %b") + " – "
+            + dt_to.strftime("%a %-d %b %Y"))
 
 
 def get_week_iso(filepath):
@@ -453,7 +454,7 @@ def main():
             week_end_iso = (monday + timedelta(days=6)).strftime("%Y-%m-%d")
         date_range = parse_date_range(TIMETABLE) or (
             monday.strftime("%a %-d %b") + " – "
-            + (monday + timedelta(days=6)).strftime("%a %-d %Y")
+            + (monday + timedelta(days=6)).strftime("%a %-d %b %Y")
         )
     except Exception as e:
         print(f"❌ Could not parse timetable: {e}")
