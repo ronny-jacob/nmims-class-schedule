@@ -30,6 +30,14 @@ jobs:
       - name: Install dependencies
         run: pip install openpyxl
 
+      - name: Materialize Trim V roster from secret
+        env:
+          TRIM_V_STUDENT_LIST_B64: ${{ secrets.TRIM_V_STUDENT_LIST_B64 }}
+        run: |
+          mkdir -p sources
+          echo "$TRIM_V_STUDENT_LIST_B64" | base64 -d > "sources/Trim-V student list.xlsx"
+          ls -la sources/
+
       # Rebuild data.json + index.html from the committed extract.py state.
       # TIMETABLE is wired by the mail bot (check-timetable.yml). We do not
       # fall back to the manual starter here — if TIMETABLE is unset and
