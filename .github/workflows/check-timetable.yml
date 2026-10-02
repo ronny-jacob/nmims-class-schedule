@@ -43,6 +43,9 @@ jobs:
           git config user.name "Timetable Bot"
           git config user.email "bot@nmims-class-schedule"
 
+      - name: Validate placements schema
+        run: python tests/test_placements_schema.py
+
       - name: Check inbox and update
         env:
           IMAP_USER: ${{ secrets.IMAP_USER }}
@@ -85,6 +88,15 @@ jobs:
           if git -c http.https://github.com/.extraheader="" push staging main 2>push_err.txt; then
             echo "Staging mirror pushed OK"
           else
-            echo "Staging diverged (unpromoted edits on staging). New timetable will reach staging on next Promote."
+            echo
+            echo "============================================================"
+            echo "  ⚠️  STAGING MIRROR FAILED — staging has diverged from"
+            echo "  ⚠️  production. This is almost always caused by unpromoted"
+            echo "  ⚠️  manual edits on staging. Either:"
+            echo "  ⚠️    (a) promote staging → production to converge, or"
+            echo "  ⚠️    (b) reset staging to origin/main on the staging clone."
+            echo "============================================================"
             cat push_err.txt
+            echo
+            echo "::warning::Staging mirror failed — staging has diverged. New timetable reaches production but NOT staging until the divergence is resolved."
           fi

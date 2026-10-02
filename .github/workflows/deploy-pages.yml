@@ -23,6 +23,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Bump SW cache version
+        run: |
+          TS="$(date -u +%Y%m%d%H%M%S)"
+          sed -i.bak -E "s|var CACHE = 'nmims-cc-v[0-9]+';|var CACHE = 'nmims-cc-v${TS}';|" sw.js
+          rm sw.js.bak
+          echo "Bumped sw.js CACHE to nmims-cc-v${TS}"
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
