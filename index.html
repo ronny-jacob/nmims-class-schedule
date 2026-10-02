@@ -295,7 +295,11 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .sd-item.active{background:var(--accent-bg)}
 .sd-roll{color:var(--text-muted);font-size:11px;margin-left:auto}
 .sd-hd{padding:5px 10px 3px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);background:var(--accent-bg);border-bottom:1px solid var(--border-light)}
+.sd-hd-rec{display:flex;align-items:center;gap:8px}
+.sd-hd-rec .sd-clr{margin-left:auto;border:none;background:none;padding:0;color:var(--accent);font-size:11px;font-weight:700;letter-spacing:.02em;cursor:pointer;text-transform:none}
 .sd-rec{color:var(--text-muted);font-size:11px;flex-shrink:0}
+.sd-x{border:none;background:none;color:var(--text-light);font-size:14px;line-height:1;cursor:pointer;padding:0 2px;margin-left:6px;flex-shrink:0}
+@media(hover:hover){.sd-x:hover{color:var(--accent)}}
 .dntc-btn{position:fixed;right:16px;bottom:16px;z-index:50;display:flex;align-items:center;gap:7px;padding:9px 15px;border:none;border-radius:999px;font-family:var(--font);font-size:12.5px;font-weight:700;letter-spacing:.01em;color:#fff;background:linear-gradient(135deg,#c97a66,#a85444);cursor:pointer;-webkit-tap-highlight-color:transparent;box-shadow:0 3px 10px rgba(168,84,68,.3);transition:transform .15s ease}
 .dntc-btn .dntc-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.9)}
 @keyframes dntcPulse{0%,100%{box-shadow:0 3px 10px rgba(168,84,68,.3),0 0 0 0 rgba(168,84,68,.2)}35%{box-shadow:0 3px 10px rgba(168,84,68,.3),0 0 0 6px rgba(168,84,68,0)}}
@@ -438,7 +442,7 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
     <div class="id-row">
       <span class="id-greeting">You:</span>
       <div style="position:relative;flex:1;min-width:160px">
-        <input id="studentSelect" class="id-select" type="text" placeholder="Search your name&hellip;" autocomplete="off" oninput="onStudentInput()" onkeydown="onStudentKeydown(event)" onblur="onStudentBlur(event)" onfocus="onStudentFocus()">
+        <input id="studentSelect" class="id-select" type="text" placeholder="Search by name or roll&hellip;" autocomplete="off" oninput="onStudentInput()" onkeydown="onStudentKeydown(event)" onblur="onStudentBlur(event)" onfocus="onStudentFocus()">
         <button type="button" class="id-clear" id="studentClear" onclick="clearStudent()" aria-label="Clear name">&#215;</button>
         <div id="studentDropdown" class="sd"></div>
       </div>
@@ -572,7 +576,7 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
         <summary style="font-size:11px;font-weight:600;color:var(--text-muted);cursor:pointer">Select students to highlight in rosters</summary>
         <div style="margin-top:10px">
           <div class="sr">
-            <input id="sIn" class="si" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search by name&hellip;" oninput="fL()" onkeydown="if(event.key==='Enter'){var e=document.getElementById('stList').querySelector('.si2');if(e)e.click()}">
+            <input id="sIn" class="si" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search by name or roll&hellip;" oninput="fL()" onkeydown="if(event.key==='Enter'){var e=document.getElementById('stList').querySelector('.si2');if(e)e.click()}">
             <button class="pill sm" onclick="selAll()">All</button>
           </div>
           <div class="sl" id="stList"></div>
@@ -780,9 +784,9 @@ function onStudentInput() {
   if (!val) {
     var recentAll = getRecentStudents();
     if (!recentAll.length) { dd.classList.remove('open'); return; }
-    var htmlR = '';
+    var htmlR = recentHeaderHtml();
     for (var rA = 0; rA < recentAll.length; rA++) {
-      htmlR += '<div class="sd-item" data-mi="' + rA + '" data-rec="1" onmousedown="selectStudentAuto(this)"><span class="sd-rec">&#8635;</span>' + he(recentAll[rA].name) + '<span class="sd-roll">' + he(recentAll[rA].roll) + '</span></div>';
+      htmlR += recentItemHtml(recentAll[rA], rA);
     }
     dd.innerHTML = htmlR;
     dd.classList.add('open');
@@ -792,8 +796,9 @@ function onStudentInput() {
   var results = buildStudentResults(val);
   if (!results.recents.length && !results.rest.length) { dd.classList.remove('open'); return; }
   var html = '';
+  if (results.recents.length) html += recentHeaderHtml();
   for (var r = 0; r < results.recents.length; r++) {
-    html += '<div class="sd-item" data-mi="' + r + '" data-rec="1" onmousedown="selectStudentAuto(this)"><span class="sd-rec">&#8635;</span>' + he(results.recents[r].name) + '<span class="sd-roll">' + he(results.recents[r].roll) + '</span></div>';
+    html += recentItemHtml(results.recents[r], r);
   }
   if (results.recents.length && results.rest.length) {
     html += '<div class="sd-hd">Other matches</div>';
@@ -874,12 +879,42 @@ function recordRecentStudent(name) {
     localStorage.setItem(RECENT_KEY, JSON.stringify(next));
   } catch (e) {}
 }
+function recentHeaderHtml() {
+  return '<div class="sd-hd sd-hd-rec"><span class="sd-rec-t">Recent</span><button type="button" class="sd-clr" onmousedown="event.stopPropagation();event.preventDefault();clearRecentStudents()">Clear all</button></div>';
+}
+function recentItemHtml(st, mi) {
+  return '<div class="sd-item" data-mi="' + mi + '" data-rec="1" onmousedown="selectStudentAuto(this)"><span class="sd-rec">&#8635;</span>' + he(st.name) + '<span class="sd-roll">' + he(st.roll) + '</span><button type="button" class="sd-x" aria-label="Remove '+he(st.name)+' from recents" data-nm="'+he(st.name)+'" onmousedown="event.stopPropagation();event.preventDefault();removeRecentStudent(this)">&#215;</button></div>';
+}
+function removeRecentStudent(btn) {
+  var nm = btn.getAttribute('data-nm');
+  try {
+    var names = [];
+    var raw = localStorage.getItem(RECENT_KEY);
+    if (raw) { try { names = JSON.parse(raw); } catch (e) { names = []; } }
+    names = names.filter(function(n) { return n !== nm; });
+    localStorage.setItem(RECENT_KEY, JSON.stringify(names));
+  } catch (e) {}
+  onStudentInput();
+}
+function clearRecentStudents() {
+  try { localStorage.removeItem(RECENT_KEY); } catch (e) {}
+  onStudentInput();
+}
+function studentMatchesVal(st, val) {
+  if (st.name.toLowerCase().indexOf(val) !== -1) return true;
+  var rl = (st.roll || '').toLowerCase();
+  if (rl && rl.indexOf(val) !== -1) return true;
+  var num = (st.roll || '').replace(/[^0-9]/g, '');
+  var vn = val.replace(/[^0-9]/g, '');
+  if (/^[0-9]+$/.test(val) && num && vn && (num.indexOf(vn) !== -1 || num.indexOf(vn.replace(/^0+/, '')) !== -1)) return true;
+  return false;
+}
 function buildStudentResults(val) {
   var recents = getRecentStudents();
   var recentSet = {};
   var recOut = [];
   for (var i = 0; i < recents.length; i++) {
-    if (recents[i].name.toLowerCase().indexOf(val) !== -1) {
+    if (studentMatchesVal(recents[i], val)) {
       recentSet[recents[i].name] = true;
       recOut.push(recents[i]);
     }
@@ -887,7 +922,7 @@ function buildStudentResults(val) {
   var rest = [];
   for (var j = 0; j < studentData.length; j++) {
     if (recentSet[studentData[j].name]) continue;
-    if (studentData[j].name.toLowerCase().indexOf(val) !== -1) rest.push(studentData[j]);
+    if (studentMatchesVal(studentData[j], val)) rest.push(studentData[j]);
   }
   return { recents: recOut, rest: rest };
 }
@@ -2257,6 +2292,7 @@ var STUDENTS = ["Aastha Saini", "Abhishek Kumar", "Aby K Mathai", "Aditya Chaube
 
 
 
+
 var PAL=[["#DBEAFE","#1E40AF","#1E40AF"],["#DCFCE7","#166534","#166534"],["#FEF3C7","#92400E","#B45309"],["#EDE9FE","#4C1D95","#6D28D9"],["#FFE4E6","#9F1239","#BE123C"],["#CCFBF1","#134E4A","#0F766E"],["#FEE2E2","#991B1B","#DC2626"],["#E0F2FE","#0C4A6E","#0369A1"],["#F3E8FF","#581C87","#7E22CE"],["#ECFCCB","#365314","#4D7C0F"],["#FFF7ED","#7C2D12","#EA580C"],["#FCE7F3","#831843","#BE185D"]];
 var sel={},so=[],ci=0,q='',sq='',ss='at',at='v';
 var ni={};for(var _=0;_<STUDENTS.length;_++)ni[STUDENTS[_]]=_;
@@ -2276,11 +2312,24 @@ function dN(name){
     var pp=k.trim().split(' ');var pi=pp.length>1?pp[pp.length-1][0]+'.':''
     if(pp[0]===f&&pp[0]+' '+pi===lb){c2=true;break;}}
   return c2?name:lb;}
+function rn(n,qq){
+  if(n.toLowerCase().indexOf(qq)!==-1)return true;
+  for(var i=0;i<DATA.students.length;i++){
+    if(DATA.students[i].name!==n)continue;
+    var rl=(DATA.students[i].roll||'').toLowerCase();
+    if(!rl)return false;
+    if(rl.indexOf(qq)!==-1)return true;
+    var rn2=rl.replace(/[^0-9]/g,''),qn=qq.replace(/[^0-9]/g,'');
+    if(/^[0-9]+$/.test(qq)&&qn&&(rn2.indexOf(qn)!==-1||rn2.indexOf(qn.replace(/^0+/,''))!==-1))return true;
+    return false;
+  }
+  return false;
+}
 function rL(){
   var el=document.getElementById('stList'),qq=q.toLowerCase(),o=[],f=0;
   for(var i=0;i<STUDENTS.length;i++){
     var n=STUDENTS[i];
-    if(qq&&n.toLowerCase().indexOf(qq)===-1)continue;
+    if(qq&&!rn(n,qq))continue;
     f++;var s=hs(n);
     if(s){
       var c=gc(n),subs='',sd=null;
