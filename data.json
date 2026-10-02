@@ -706,21 +706,6 @@
       "bs_div": ""
     },
     {
-      "name": "Abhijatya Negi",
-      "roll": "H057",
-      "email": "ABHIJATYA.NEGI@NMIMS.IN",
-      "major": "Marketing",
-      "minor": "Strategy;",
-      "gender": "",
-      "subjects": [
-        "DM",
-        "SBM_B",
-        "CTA_B",
-        "VA"
-      ],
-      "bs_div": ""
-    },
-    {
       "name": "Ankush P. Karwa",
       "roll": "H058",
       "email": "ankush.karwa19@nmims.in",
@@ -2215,7 +2200,7 @@
     "DM": {
       "code": "DM",
       "name": "Digital Marketing",
-      "student_count": 62
+      "student_count": 61
     },
     "SBM_A": {
       "code": "SBM_A",
@@ -2225,7 +2210,7 @@
     "SBM_B": {
       "code": "SBM_B",
       "name": "Strategic Brand Management B",
-      "student_count": 35
+      "student_count": 34
     },
     "SM": {
       "code": "SM",
@@ -2240,7 +2225,7 @@
     "CTA_B": {
       "code": "CTA_B",
       "name": "Corporate Turnaround B",
-      "student_count": 55
+      "student_count": 54
     },
     "MACR": {
       "code": "MACR",
@@ -2260,7 +2245,7 @@
     "VA": {
       "code": "VA",
       "name": "Visual Analytics",
-      "student_count": 37
+      "student_count": 36
     }
   },
   "timetable": [
@@ -3018,7 +3003,6 @@
         "cls": "Digital Marketing (Faculty)",
         "students": [
           "Aastha Saini",
-          "Abhijatya Negi",
           "Abhishek Kumar",
           "Aby K Mathai",
           "Aditya Chaubey",
@@ -3124,7 +3108,6 @@
         "cls": "Strategic Brand Management B (Faculty)",
         "students": [
           "Aastha Saini",
-          "Abhijatya Negi",
           "Abhishek Kumar",
           "Aby K Mathai",
           "Aman Shahin",
@@ -3273,7 +3256,6 @@
       {
         "cls": "Corporate Turnaround B (Faculty)",
         "students": [
-          "Abhijatya Negi",
           "Abhishek Kumar",
           "Akella Venkata Karthik",
           "Aman Shahin",
@@ -3451,7 +3433,6 @@
         "cls": "Visual Analytics (Faculty)",
         "students": [
           "Aastha Saini",
-          "Abhijatya Negi",
           "Aby K Mathai",
           "Aditya Chaubey",
           "Akshara T Santhosh",
@@ -3698,10 +3679,9 @@
       "cls": "Digital Marketing (Faculty)",
       "short": "Digital Marketing",
       "faculty": "Faculty",
-      "count": 62,
+      "count": 61,
       "students": [
         "Aastha Saini",
-        "Abhijatya Negi",
         "Abhishek Kumar",
         "Aby K Mathai",
         "Aditya Chaubey",
@@ -3814,10 +3794,9 @@
       "cls": "Strategic Brand Management B (Faculty)",
       "short": "Strategic Brand Management B",
       "faculty": "Faculty",
-      "count": 35,
+      "count": 34,
       "students": [
         "Aastha Saini",
-        "Abhijatya Negi",
         "Abhishek Kumar",
         "Aby K Mathai",
         "Aman Shahin",
@@ -3979,9 +3958,8 @@
       "cls": "Corporate Turnaround B (Faculty)",
       "short": "Corporate Turnaround B",
       "faculty": "Faculty",
-      "count": 55,
+      "count": 54,
       "students": [
-        "Abhijatya Negi",
         "Abhishek Kumar",
         "Akella Venkata Karthik",
         "Aman Shahin",
@@ -4176,10 +4154,9 @@
       "cls": "Visual Analytics (Faculty)",
       "short": "Visual Analytics",
       "faculty": "Faculty",
-      "count": 37,
+      "count": 36,
       "students": [
         "Aastha Saini",
-        "Abhijatya Negi",
         "Aby K Mathai",
         "Aditya Chaubey",
         "Akshara T Santhosh",

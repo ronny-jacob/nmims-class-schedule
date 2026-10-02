@@ -431,6 +431,12 @@ def parse_students():
             "bs_div": bs_div,
         })
 
+    # Students no longer part of the college are excluded from the roster;
+    # the source xlsx (regenerated from CI secret on every build) still lists
+    # them, so filtering happens here rather than by editing the file.
+    DEPARTED = ["Abhijatya Negi"]
+    students = [s for s in students if s["name"] not in DEPARTED]
+
     return students
 
 
