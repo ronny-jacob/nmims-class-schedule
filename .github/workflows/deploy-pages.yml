@@ -23,6 +23,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install openpyxl
+
+      # Rebuild data.json + index.html from the committed extract.py state.
+      # TIMETABLE is wired by the mail bot (check-timetable.yml). We do not
+      # fall back to the manual starter here — if TIMETABLE is unset and
+      # downloads/ has no dated Trim V file, the build fails loudly. The
+      # bot must run first.
+      - name: Rebuild from committed sources
+        env:
+          CI: '1'
+        run: python extract.py
+
+      - name: Validate placements schema
+        run: python tests/test_placements_schema.py
+
       - name: Bump SW cache version
         run: |
           TS="$(date -u +%Y%m%d%H%M%S)"
