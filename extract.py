@@ -12,7 +12,12 @@ def resolve(p):
     return p if os.path.isabs(p) else os.path.join(BASE_DIR, p)
 
 STUDENT_LIST = src("Trim-V student list.xlsx")
-TIMETABLE    = "sources/Trim V time table.xlsx"
+# TIMETABLE is normally written here by check_mail.py when a new weekly
+# timetable email arrives. When empty (e.g. fresh clone, or the bot
+# hasn't run yet), fall back to the most recently dated file in
+# downloads/, then to sources/Trim V time table.xlsx (manual starter).
+TIMETABLE    = ""
+TIMETABLE_NEXT = ""
 FOOD_MENU    = src("August-Sept Menu Updated.xlsx")
 FOOD_MENU_ANCHOR = "2026-08-03"
 PLACEMENTS   = "sources/placements.json"
@@ -25,6 +30,42 @@ HOLIDAYS = {
 
 TIMETABLE = resolve(TIMETABLE)
 FOOD_MENU = resolve(FOOD_MENU)
+
+
+def pick_timetable_fallback():
+    """Pick the most useful timetable when TIMETABLE is empty.
+
+    Priority order:
+    1. Trim V starter file (sources/Trim V time table.xlsx) — the layout
+       matters: dated files in downloads/ are likely Trim IV (date-named
+       sheets) and won't parse correctly under the Trim V parser.
+    2. The newest dated .xlsx in downloads/ — these are what the email bot
+       saves (dd.mm.yyyy to dd.mm.yyyy.xlsx). For Trim V weeks the bot may
+       drop these without yet committing a TIMETABLE rewrite.
+    Returns '' if nothing is available.
+    """
+    starter = src("Trim V time table.xlsx")
+    if os.path.isfile(starter):
+        return os.path.relpath(starter, BASE_DIR)
+    downloads_dir = os.path.join(BASE_DIR, "downloads")
+    pattern = re.compile(r'\d+\.\d+\.\d{4}\s*to\s*\d+\.\d+\.\d{4}')
+    candidates = []
+    if os.path.isdir(downloads_dir):
+        for name in os.listdir(downloads_dir):
+            if not name.endswith('.xlsx') or name.startswith('.'):
+                continue
+            full = os.path.join(downloads_dir, name)
+            if not pattern.search(name):
+                continue
+            try:
+                mtime = os.path.getmtime(full)
+            except OSError:
+                continue
+            candidates.append((mtime, os.path.relpath(full, BASE_DIR)))
+    if candidates:
+        candidates.sort(reverse=True)
+        return candidates[0][1]
+    return ""
 
 FOOD_MEALS = [
     {"key": "breakfast", "label": "Breakfast", "time": "8:00 To 9:30"},
@@ -440,6 +481,23 @@ def build_classes_and_subjects(students):
 
 def main():
     students = parse_students()
+
+    # Timetable source. The committed TIMETABLE constant is updated by the
+    # mail bot (check_mail.py) whenever a new weekly xlsx arrives in
+    # downloads/. When that constant is empty (e.g. fresh clone, or the
+    # bot hasn't run yet on this branch), pick a fallback so the build
+    # never silently emits an empty timetable:
+    #   1. The newest dated xlsx already in downloads/ (bot may have saved
+    #      a file there without yet committing a TIMETABLE rewrite).
+    #   2. The manual starter file in sources/.
+    global TIMETABLE
+    timetable_path = TIMETABLE
+    if not timetable_path or not os.path.isfile(resolve(timetable_path) if timetable_path else ""):
+        fallback = pick_timetable_fallback()
+        if fallback:
+            timetable_path = fallback
+            print(f"ℹ️ TIMETABLE unset, using fallback: {fallback}")
+    TIMETABLE = resolve(timetable_path) if timetable_path else ""
 
     # Timetable date range. The file may or may not contain a date pattern
     # in its name. When it does, parse it; otherwise anchor to the current

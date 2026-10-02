@@ -7,4 +7,10 @@ __pycache__/
 sources/Division wise List- Trimester IV.xlsx
 sources/First Year Division list.xlsx
 sources/Trim-V student list.xlsx
+# Trim V starter file (manual upload; superseded once the bot drops a
+# dated file into downloads/ via the email workflow).
+sources/Trim V time table.xlsx
+# Bot-managed metadata written by check_mail.py after each successful
+# inbox pull. Stays untracked; the next bot run will create a fresh one.
+last_updated.json
 .DS_Store
