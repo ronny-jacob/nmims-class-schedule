@@ -97,6 +97,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .slot .subj{font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .slot .det{font-size:11px;font-weight:500;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .slot.other{color:var(--text-light);font-size:11px;font-weight:500;background:transparent;flex:0 0 auto;padding:1px 0;box-shadow:none;min-height:0;line-height:1.3}
+.slot.preview{opacity:.5;filter:saturate(.45);box-shadow:none}
 .tt-count{display:flex;align-items:baseline;gap:10px;margin-bottom:8px}
 .cal-hdr{display:flex;flex-direction:column;gap:0}
 .cal-hdr-dates{font-size:20px;font-weight:600;letter-spacing:-.03em;color:var(--text);line-height:1.2;font-variant-numeric:tabular-nums}
@@ -1150,6 +1151,17 @@ function renderTimetable() {
     for (var tw = 0; tw < gridW.length; tw++) colTmplW += ' minmax(72px, 1fr)';
     gridEl.style.gridTemplateColumns = colTmplW;
     var numTimesW = gridW.length;
+    var gridWarn = {};
+    for (var dWg = 0; dWg < daysWithDataW.length; dWg++) {
+      gridWarn[daysWithDataW[dWg]] = {};
+      for (var tWg = 0; tWg < numTimesW; tWg++) gridWarn[daysWithDataW[dWg]][gridW[tWg]] = [];
+    }
+    if (resolved) {
+      for (var eWg = 0; eWg < resolved.data.length; eWg++) {
+        var enW = resolved.data[eWg];
+        if (gridWarn[enW.day] && gridWarn[enW.day][enW.time] !== undefined) gridWarn[enW.day][enW.time].push(enW);
+      }
+    }
     var htmlW = '';
     htmlW += '<div class="tt-gh tt-time">Day</div>';
     for (var tW = 0; tW < numTimesW; tW++) {
@@ -1164,10 +1176,27 @@ function renderTimetable() {
         continue;
       }
       for (var tW2 = 0; tW2 < numTimesW; tW2++) {
-        htmlW += '<div class="tt-gc tt-empty"></div>';
+        var tw2 = gridW[tW2];
+        var entriesW = gridWarn[dayDW][tw2];
+        if (!entriesW || entriesW.length === 0) {
+          htmlW += '<div class="tt-gc tt-empty"></div>';
+        } else {
+          htmlW += '<div class="tt-gc"><div class="tt-cell-flex">';
+          for (var eW = 0; eW < entriesW.length; eW++) {
+            var enW2 = entriesW[eW];
+            var hW = subjectHue(enW2.subject);
+            var rawW = enW2.raw_text ? enW2.raw_text.split('\n') : [enW2.subject];
+            htmlW += '<div class="slot preview" style="background:hsl(' + hW + ',78%,85%);color:hsl(' + hW + ',62%,18%)" title="' + (DATA.subjects[enW2.subject] ? DATA.subjects[enW2.subject].name : enW2.subject) + '">';
+            for (var riW = 0; riW < rawW.length; riW++) {
+              htmlW += '<span class="' + (riW === 0 ? 'subj' : 'det') + '">' + rawW[riW] + '</span>';
+            }
+            htmlW += '</div>';
+          }
+          htmlW += '</div></div>';
+        }
       }
     }
-    htmlW += '<div class="tt-gc tt-empty" style="grid-column:1 / span ' + (numTimesW + 1) + ';display:flex;align-items:center;justify-content:center;padding:16px 12px;text-align:center;color:var(--text-muted);font-size:12px">Type and select your name in the box above to see your schedule.</div>';
+    htmlW += '<div class="tt-gc tt-empty" style="grid-column:1 / span ' + (numTimesW + 1) + ';display:flex;align-items:center;justify-content:center;padding:16px 12px;text-align:center;color:var(--text-muted);font-size:12px">Showing all classes &mdash; select your name above to see only yours.</div>';
     gridEl.innerHTML = htmlW;
     return;
   }
