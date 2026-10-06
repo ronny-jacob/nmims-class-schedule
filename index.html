@@ -1134,13 +1134,7 @@ function renderTimetable() {
     var dayNumsW = resolved ? getDayNumbers(resolved.weekStart) : {};
     for (var dw = 0; dw < daysToShowW.length; dw++) {
       var dayW = daysToShowW[dw];
-      var hasDataW = false;
-      if (resolved) {
-        for (var eW = 0; eW < resolved.data.length; eW++) {
-          if (resolved.data[eW].day === dayW) { hasDataW = true; break; }
-        }
-      }
-      if (hasDataW || (weekISOsW[dayW] && holidaysW[weekISOsW[dayW]])) {
+      if (resolved || (weekISOsW[dayW] && holidaysW[weekISOsW[dayW]])) {
         daysWithDataW.push(dayW);
       }
     }
@@ -1201,14 +1195,7 @@ function renderTimetable() {
   var holidays = DATA.holidays || {};
   var weekISOs = getWeekISOs(wkStart);
   for (var d = 0; d < daysToShow.length; d++) {
-    var day = daysToShow[d];
-    var hasData = false;
-    for (var e = 0; e < ttData.length; e++) {
-      if (ttData[e].day === day) { hasData = true; break; }
-    }
-    if (hasData || (weekISOs[day] && holidays[weekISOs[day]])) {
-      daysWithData.push(day);
-    }
+    daysWithData.push(daysToShow[d]);
   }
   var holidayName = {};
   for (var d2 = 0; d2 < daysWithData.length; d2++) {
@@ -1648,12 +1635,7 @@ function renderFreeTogether() {
   else if (freeRange === 'tomorrow') { daysToShow = [getTomorrowDay()]; }
   else { daysToShow = DAY_NAMES.slice(); }
   for (var d = 0; d < daysToShow.length; d++) {
-    var day = daysToShow[d];
-    var hasData = false;
-    for (var e = 0; e < ttData.length; e++) {
-      if (ttData[e].day === day) { hasData = true; break; }
-    }
-    if (hasData || (weekISOs[day] && holidays[weekISOs[day]])) daysWithData.push(day);
+    daysWithData.push(daysToShow[d]);
   }
   var holidayName = {};
   for (var d2 = 0; d2 < daysWithData.length; d2++) {
