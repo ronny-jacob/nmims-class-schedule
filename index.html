@@ -357,19 +357,16 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .celeb-fade{opacity:0!important;transition:opacity 1.2s ease}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 @media (max-width:480px){.celeb{padding:0 12px;gap:8px}.celeb.show{max-height:56px;padding:9px 12px}.celeb-item{font-size:12.5px}}
-/* ── Greeting banner ───────────────────────────── */
-.greet{position:relative;top:0;left:0;right:0;z-index:69;display:flex;align-items:center;gap:10px;margin:0;max-height:0;overflow:hidden;padding:0 16px;background:rgba(250,247,240,.96);-webkit-backdrop-filter:blur(14px) saturate(1.1);backdrop-filter:blur(14px) saturate(1.1);border-bottom:1px solid transparent;box-shadow:none;transition:max-height .45s cubic-bezier(.22,1,.36,1),padding .45s cubic-bezier(.22,1,.36,1),opacity .4s ease,border-color .4s ease}
-.greet.show{max-height:56px;padding:10px 16px;opacity:1;border-bottom-color:var(--border);box-shadow:var(--shadow-md)}
-.greet.hiding{max-height:0;padding:0 16px;opacity:0;border-bottom-color:transparent}
-.greet-dot{flex-shrink:0;width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--accent-bg);animation:greetPulse 1.6s ease-in-out infinite}
-@keyframes greetPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.25);opacity:.55}}
-.greet-msg{flex:1;min-width:0;font-size:14px;font-weight:500;color:var(--text);letter-spacing:-.01em;line-height:1.35}
-.greet-msg b{font-weight:650;color:var(--text)}
-.greet-x{flex-shrink:0;border:none;background:var(--accent-bg);color:var(--text-muted);font-size:14px;line-height:1;min-width:44px;min-height:44px;border-radius:50%;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s,color .12s}
-@media(hover:hover){.greet-x:hover{background:var(--accent-active);color:var(--text)}}
-.greet-x:active{background:var(--accent-active)}
-@media (max-width:480px){.greet{padding:0 12px;gap:8px}.greet.show{max-height:52px;padding:9px 12px}.greet-msg{font-size:13px}}
-@media (prefers-reduced-motion:reduce){.greet,.greet-dot{animation:none;transition:none}}
+/* ── Greeting (Claude-style) ────────────────────── */
+.greet{display:none;align-items:center;gap:9px;max-width:640px;margin:0 auto 12px;padding:0 2px;color:var(--text)}
+.greet.show{display:flex}
+.greet-spark{flex-shrink:0;width:20px;height:20px;color:var(--greet-accent,#C75F3C);animation:greetBreathe 2.4s ease-in-out infinite}
+@keyframes greetBreathe{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.08);opacity:.72}}
+.greet-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;min-height:48px;justify-content:center}
+.greet-hi{font-size:clamp(21px,4.5vw,27px);font-weight:500;letter-spacing:-.03em;line-height:1.15;color:var(--text);font-family:Georgia,"Times New Roman",serif}
+.greet-sub{font-size:12.5px;font-weight:400;letter-spacing:0;color:var(--text-muted);line-height:1.4}
+@media (max-width:480px){.greet{margin-bottom:10px}.greet-hi{font-size:21px}}
+@media (prefers-reduced-motion:reduce){.greet-spark{animation:none}}
 @media (prefers-reduced-motion:reduce){.dntc-btn,.dntc-btn.hit,.dntc-dot,.dntc-petal,.dntc-petal-blow,.dntc-petal-drift,.dntc-petal-fall,.dntc-petal-spin,.dntc-petal-settle{animation:none}.dntc-punch{opacity:1;transform:none;transition:none}.dntc-toast{transition:none}.sf-btn,.sf-box{animation:none;transition:none}}
 /* ── Suggestion box ─────────────────────────────── */
 .sf-btn{position:fixed;left:16px;bottom:16px;z-index:60;display:flex;align-items:center;gap:8px;padding:9px 16px;border:none;border-radius:999px;background:linear-gradient(135deg,#52716a,#3f5a53);color:#fff;font-family:var(--font);font-size:12.5px;font-weight:700;letter-spacing:.01em;cursor:pointer;box-shadow:0 3px 10px rgba(44,42,38,.22);-webkit-tap-highlight-color:transparent;transition:transform .15s ease,box-shadow .15s ease}
@@ -442,11 +439,6 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
 </style>
 </head>
 <body>
-<div id="greet" class="greet" aria-live="polite">
-  <span class="greet-dot"></span>
-  <span class="greet-msg" id="greetMsg"></span>
-  <button type="button" class="greet-x" onclick="dismissGreet()" aria-label="Dismiss">&#215;</button>
-</div>
 <div id="celebrate" class="celeb" aria-live="polite">
   <div class="celeb-icon">&#127881;</div>
   <div class="celeb-body">
@@ -457,6 +449,15 @@ body.modal-open{overflow:hidden;overscroll-behavior:none;-webkit-overflow-scroll
 <div id="celebConfetti" class="celeb-confetti" aria-hidden="true"></div>
 <h1 class="sr-only">NMIMS Class Companion</h1>
 <div class="wrap">
+  <div class="greet" id="greet" aria-live="polite">
+    <svg class="greet-spark" viewBox="0 0 24 24" fill="currentColor" focusable="false" aria-hidden="true">
+      <path d="M12 3L13.6 8.2 17.9 12 13.6 15.8 12 21 10.4 15.8 6.1 12 10.4 8.2z"/>
+    </svg>
+    <div class="greet-text">
+      <div class="greet-hi" id="greetHi"></div>
+      <div class="greet-sub" id="greetSub"></div>
+    </div>
+  </div>
   <div class="id-bar">
     <div class="id-row">
       <span class="id-greeting">You:</span>
@@ -779,6 +780,7 @@ function clearStudent() {
   var input = document.getElementById('studentSelect');
   input.value = '';
   selectedStudent = null;
+  dismissGreet();
   var dd = document.getElementById('studentDropdown');
   dd.classList.remove('open');
   document.getElementById('studentInfo').innerHTML = '';
@@ -2311,6 +2313,7 @@ var STUDENTS = ["Aastha Saini", "Abhishek Kumar", "Aby K Mathai", "Aditya Chaube
 
 
 
+
 var PAL=[["#DBEAFE","#1E40AF","#1E40AF"],["#DCFCE7","#166534","#166534"],["#FEF3C7","#92400E","#B45309"],["#EDE9FE","#4C1D95","#6D28D9"],["#FFE4E6","#9F1239","#BE123C"],["#CCFBF1","#134E4A","#0F766E"],["#FEE2E2","#991B1B","#DC2626"],["#E0F2FE","#0C4A6E","#0369A1"],["#F3E8FF","#581C87","#7E22CE"],["#ECFCCB","#365314","#4D7C0F"],["#FFF7ED","#7C2D12","#EA580C"],["#FCE7F3","#831843","#BE185D"]];
 var sel={},so=[],ci=0,q='',sq='',ss='at',at='v';
 var ni={};for(var _=0;_<STUDENTS.length;_++)ni[STUDENTS[_]]=_;
@@ -2758,39 +2761,30 @@ function dismissCelebration() {
   if (host) host.innerHTML = '';
 }
 var GREETINGS=[
-  'Hello, {first}. Your classes and classmates are ready when you are.',
-  'Hi {first} — let\'s make today count.',
-  'Welcome back, {first}. What are we tackling first?',
-  'Good to see you, {first}. Schedule\'s loaded.',
-  'Hey {first}. Coffee\'s optional, attendance isn\'t.',
-  'Hello, {first}. Today\'s plan, one tap away.',
-  'Hi there, {first}. Ready when you are.',
-  'Welcome, {first}. Let\'s get into it.'
+  'Your classes and classmates are ready when you are.',
+  'What are we tackling first?',
+  'Today\'s plan, one tap away.',
+  'Coffee\'s optional, attendance isn\'t.',
+  'Ready when you are.',
+  'Let\'s make today count.',
+  'How can I help you today?',
+  'Your schedule\'s loaded. Pick up where you left off.'
 ];
-var greetTimer=null;
 function showGreeting(s){
   var first=(s&&s.name?String(s.name).trim():'').split(/\s+/)[0]||'friend';
-  var msg=GREETINGS[Math.floor(Math.random()*GREETINGS.length)].replace('{first}','<b>'+String(first).replace(/[<>&"]/g,'')+'</b>');
-  var g=document.getElementById('greet'),m=document.getElementById('greetMsg');
-  if(!g||!m)return;
-  m.innerHTML=msg;
-  g.classList.remove('hiding');
+  var hi='Hello, '+first+'.';
+  var sub=GREETINGS[Math.floor(Math.random()*GREETINGS.length)];
+  var g=document.getElementById('greet'),hiEl=document.getElementById('greetHi'),subEl=document.getElementById('greetSub');
+  if(!g)return;
+  if(hiEl)hiEl.textContent=hi;
+  if(subEl)subEl.textContent=sub;
+  g.classList.remove('show');
   void g.offsetWidth;
   g.classList.add('show');
-  if(greetTimer)clearTimeout(greetTimer);
-  greetTimer=setTimeout(function(){
-    var el=document.getElementById('greet');
-    if(!el)return;
-    el.classList.add('hiding');
-    el.classList.remove('show');
-    greetTimer=null;
-  },6000);
 }
 function dismissGreet(){
-  if(greetTimer){clearTimeout(greetTimer);greetTimer=null;}
   var g=document.getElementById('greet');
   if(!g)return;
-  g.classList.add('hiding');
   g.classList.remove('show');
 }
 function placedMatch(name){
