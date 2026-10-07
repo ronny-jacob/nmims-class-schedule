@@ -2289,6 +2289,8 @@ var STUDENTS = ["Aastha Saini", "Abhishek Kumar", "Aby K Mathai", "Aditya Chaube
 
 
 
+
+
 var PAL=[["#DBEAFE","#1E40AF","#1E40AF"],["#DCFCE7","#166534","#166534"],["#FEF3C7","#92400E","#B45309"],["#EDE9FE","#4C1D95","#6D28D9"],["#FFE4E6","#9F1239","#BE123C"],["#CCFBF1","#134E4A","#0F766E"],["#FEE2E2","#991B1B","#DC2626"],["#E0F2FE","#0C4A6E","#0369A1"],["#F3E8FF","#581C87","#7E22CE"],["#ECFCCB","#365314","#4D7C0F"],["#FFF7ED","#7C2D12","#EA580C"],["#FCE7F3","#831843","#BE185D"]];
 var sel={},so=[],ci=0,q='',sq='',ss='at',at='v';
 var ni={};for(var _=0;_<STUDENTS.length;_++)ni[STUDENTS[_]]=_;
@@ -2347,21 +2349,26 @@ function rB(){
   be.innerHTML=o.join('');}
 function rT(tk){
   var p=document.getElementById('panel-'+tk);
-  if(!selectedStudent){
-    p.innerHTML='<div class="empty">Type and select your name in the box above to see your schedule.</div>';
-    return;}
   var a=CLASSES[tk];
   if(!a||!a.length){
     p.innerHTML='<div class="empty">No class data for this trimester yet.</div>';
     return;}
-  var name=selectedStudent.name,matched=[];
-  for(var i=0;i<a.length;i++){var cls=a[i];
-    for(var j=0;j<cls.students.length;j++){if(cls.students[j]===name){matched.push(cls);break;}}}
-  if(!matched.length){
-    p.innerHTML='<div class="empty">'+he(name)+' is not enrolled in any subjects this trimester.</div>';
-    return;}
+  var name=selectedStudent?selectedStudent.name:null;
+  var list=[];
+  if(name){
+    for(var i=0;i<a.length;i++){var cls=a[i];
+      for(var j=0;j<cls.students.length;j++){if(cls.students[j]===name){list.push(cls);break;}}}
+    if(!list.length){
+      p.innerHTML='<div class="empty">'+he(name)+' is not enrolled in any subjects this trimester.</div>';
+      return;}
+  } else {
+    list=a;
+    if(!so.length){
+      p.innerHTML='<div class="empty">Add a few classmates above to see who shares each class \u2014 or select your name in the timetable to focus on your classes.</div>';
+      return;}
+  }
   var html='',seen={};
-  for(var i=0;i<matched.length;i++){var cls=matched[i],students=cls.students,dn=cls.cls;
+  for(var i=0;i<list.length;i++){var cls=list[i],students=cls.students,dn=cls.cls;
     var label=dn.replace(/\s*\([^)]*\)/,''),fac=fN(dn);
     html+='<div class="card">';
     html+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap">';
@@ -2369,7 +2376,7 @@ function rT(tk){
     html+='<span style="font-size:11px;color:var(--text-muted)">'+students.length+' classmate'+(students.length!==1?'s':'')+'</span>';
     if(fac){html+='<span style="font-size:11px;color:var(--text-light);margin-left:auto">'+he(fac)+'</span>';}
     html+='</div><div style="display:flex;flex-wrap:wrap;gap:4px">';
-    for(var k=0;k<students.length;k++){var sn=students[k],isMe=(sn===name);
+    for(var k=0;k<students.length;k++){var sn=students[k],isMe=(name&&sn===name);
       if(isMe){html+='<span class="tb" style="background:var(--accent);color:var(--surface)">'+he(sn)+'</span>';}
       else if(hs(sn)){var c=gc(sn);html+='<span class="tb" style="background:'+c[0]+';color:'+c[1]+'">'+he(sn)+'</span>';}
       else{html+='<span class="tb" style="background:var(--accent-bg);color:var(--text-light)">'+he(sn)+'</span>';}}
