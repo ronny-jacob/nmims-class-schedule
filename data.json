@@ -2287,6 +2287,15 @@
     },
     {
       "day": "Mon",
+      "time": "6:00-7:30",
+      "subject": "PM",
+      "raw_text": "PM\n(5:30 to 7:00pm)\nL12, 3rd floor\nDr Sasmita Misra",
+      "professor": "Dr Sasmita Misra",
+      "room": "L12, 3rd floor",
+      "div": ""
+    },
+    {
+      "day": "Mon",
       "time": "10:10-11:40",
       "subject": "DM",
       "raw_text": "DM\nProf Venugopal\nLR 06, 2nd floor",
@@ -2314,6 +2323,15 @@
     },
     {
       "day": "Tue",
+      "time": "11:50-1:20",
+      "subject": "PM",
+      "raw_text": "PM\n(11:55-1:25 pm)\nL12,3rd floor\nDr Sasmita Misra",
+      "professor": "Dr Sasmita Misra",
+      "room": "L12,3rd floor",
+      "div": ""
+    },
+    {
+      "day": "Tue",
       "time": "2:00-3:30",
       "subject": "VA",
       "raw_text": "VA\nDr Kamran\nL06, 2nd floor",
@@ -2334,9 +2352,9 @@
       "day": "Tue",
       "time": "10:10-11:40",
       "subject": "PM",
-      "raw_text": "PM\nL06, 2nd floor\nDr Sasmita Misra",
+      "raw_text": "PM\nL12, 3rd floor\nDr Sasmita Misra",
       "professor": "Dr Sasmita Misra",
-      "room": "L06, 2nd floor",
+      "room": "L12, 3rd floor",
       "div": ""
     },
     {
@@ -2385,26 +2403,71 @@
       "div": "Div B"
     },
     {
-      "day": "Wed",
+      "day": "Thu",
+      "time": "10:10-11:40",
+      "subject": "MACR",
+      "raw_text": "MACR\nL07, 2nd floor\nDr Narender Vunyale",
+      "professor": "Dr Narender Vunyale",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Thu",
+      "time": "11:50-1:20",
+      "subject": "CTA_A",
+      "raw_text": "CT-A\nDr Dileep Kumar\nL06,2nd floor",
+      "professor": "Dr Dileep Kumar",
+      "room": "L06,2nd floor",
+      "div": "Div A"
+    },
+    {
+      "day": "Thu",
       "time": "2:00-3:30",
-      "subject": "PM",
-      "raw_text": "PM\nL06, 2nd floor\nDr Sasmita Misra",
-      "professor": "Dr Sasmita Misra",
+      "subject": "IB_A",
+      "raw_text": "IBDiv A\nDr Narender Vunyale\nL07, 2nd floor",
+      "professor": "Dr Narender Vunyale",
+      "room": "L07, 2nd floor",
+      "div": "Div A"
+    },
+    {
+      "day": "Thu",
+      "time": "2:00-3:30",
+      "subject": "CTA_B",
+      "raw_text": "CT-B\nDr Dileep Kumar\nL06,2nd floor",
+      "professor": "Dr Dileep Kumar",
+      "room": "L06,2nd floor",
+      "div": "Div B"
+    },
+    {
+      "day": "Fri",
+      "time": "8:30-10:00",
+      "subject": "CTA_A",
+      "raw_text": "CT-A\nRescheduled class\nDr Dileep Kumar\nL06,2nd floor",
+      "professor": "Dr Dileep Kumar",
+      "room": "L06,2nd floor",
+      "div": "Div A"
+    },
+    {
+      "day": "Fri",
+      "time": "10:10-11:40",
+      "subject": "WM",
+      "raw_text": "WM\nDr Showkat Ahmad\nL06, 2nd floor",
+      "professor": "Dr Showkat Ahmad",
       "room": "L06, 2nd floor",
       "div": ""
     },
     {
-      "day": "Sat",
-      "time": "10:10-11:40",
-      "subject": "SBM_A",
-      "raw_text": "SBM Div A\nL06, 2nd floor\nProf Murtuza",
-      "professor": "Prof Murtuza",
-      "room": "L06, 2nd floor",
-      "div": "Div A"
-    },
-    {
-      "day": "Sat",
+      "day": "Fri",
       "time": "11:50-1:20",
+      "subject": "WM",
+      "raw_text": "WM\nDr Showkat Ahmad\nL06, 2nd floor",
+      "professor": "Dr Showkat Ahmad",
+      "room": "L06, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Fri",
+      "time": "2:00-3:30",
       "subject": "SBM_A",
       "raw_text": "SBM Div A\nL06, 2nd floor\nProf Murtuza",
       "professor": "Prof Murtuza",
@@ -2412,17 +2475,17 @@
       "div": "Div A"
     },
     {
-      "day": "Sat",
-      "time": "2:00-3:30",
-      "subject": "SBM_B",
-      "raw_text": "SBM Div B\nL06, 2nd floor\nProf Murtuza",
-      "professor": "Prof Murtuza",
-      "room": "L06, 2nd floor",
-      "div": "Div B"
-    },
-    {
-      "day": "Sat",
+      "day": "Fri",
       "time": "3:40-5:10",
+      "subject": "SBM_A",
+      "raw_text": "SBM Div A\nL06, 2nd floor\nProf Murtuza",
+      "professor": "Prof Murtuza",
+      "room": "L06, 2nd floor",
+      "div": "Div A"
+    },
+    {
+      "day": "Fri",
+      "time": "6:00-7:30",
       "subject": "SBM_B",
       "raw_text": "SBM Div B\nL06, 2nd floor\nProf Murtuza",
       "professor": "Prof Murtuza",
@@ -2430,8 +2493,17 @@
       "div": "Div B"
     },
     {
-      "day": "Sat",
-      "time": "6:00-7:30",
+      "day": "Fri",
+      "time": "7:35 to 9:05",
+      "subject": "SBM_B",
+      "raw_text": "SBM Div B\nL06, 2nd floor\nProf Murtuza",
+      "professor": "Prof Murtuza",
+      "room": "L06, 2nd floor",
+      "div": "Div B"
+    },
+    {
+      "day": "Fri",
+      "time": "10:10-11:40",
       "subject": "SM",
       "raw_text": "SM\nL06, 2nd floor\nProf Murtuza",
       "professor": "Prof Murtuza",
@@ -2439,8 +2511,8 @@
       "div": ""
     },
     {
-      "day": "Sat",
-      "time": "7:35 to 9:05",
+      "day": "Fri",
+      "time": "11:50-1:20",
       "subject": "SM",
       "raw_text": "SM\nL06, 2nd floor\nProf Murtuza",
       "professor": "Prof Murtuza",
@@ -4501,6 +4573,6 @@
     "sender": "Sadashiv Bhimanna <sadashiv.bhimanna@nmims.edu>",
     "received_at": "4:16 PM IST on 10 Oct 2026",
     "subject": "Next week time table from 12.10.2026",
-    "updated_at": "2026-10-10T10:58:08.100425+00:00"
+    "updated_at": "2026-10-10T15:32:04.091402+00:00"
   }
 }

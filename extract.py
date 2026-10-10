@@ -16,7 +16,7 @@ STUDENT_LIST = src("Trim-V student list.xlsx")
 # timetable email arrives. When empty (e.g. fresh clone, or the bot
 # hasn't run yet), fall back to the most recently dated file in
 # downloads/, then to sources/Trim V time table.xlsx (manual starter).
-TIMETABLE    = "downloads/05.10.2026-11.10.2026.xlsx"
+TIMETABLE    = "downloads/12.010.2026 to 18.10.2026.xlsx"
 TIMETABLE_NEXT = "downloads/12.10.2026 to 18.10.2026.xlsx"
 FOOD_MENU    = src("August-Sept Menu Updated.xlsx")
 FOOD_MENU_ANCHOR = "2026-08-03"
