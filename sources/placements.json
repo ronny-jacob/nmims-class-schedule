@@ -5,126 +5,235 @@
       "role": "Senior Analyst - Portfolio Management Group",
       "type": "final",
       "announced_on": "2026-07-10",
-      "names": ["Ishita Sinha", "Vasu Jain", {"name": "Karthik Akella", "roster": "Akella Venkata Karthik"}]
+      "names": [
+        "Ishita Sinha",
+        "Vasu Jain",
+        {
+          "name": "Karthik Akella",
+          "roster": "Akella Venkata Karthik"
+        }
+      ]
     },
     {
       "company": "Ironsides Advisory",
       "role": "Associate Consultant - FDD",
       "type": "final",
       "announced_on": "2026-07-14",
-      "names": ["Umang Gupta", "Naman Jain"]
+      "names": [
+        "Umang Gupta",
+        "Naman Jain"
+      ]
     },
     {
       "company": "Wells Fargo",
       "role": "PPO",
       "type": "ppo",
       "announced_on": "2026-07-17",
-      "names": ["Medha Jha", "Saksham Gupta", {"name": "Darshana I", "roster": "I Dharshana"}]
+      "names": [
+        "Medha Jha",
+        "Saksham Gupta",
+        {
+          "name": "Darshana I",
+          "roster": "I Dharshana"
+        }
+      ]
     },
     {
       "company": "Verity Knowledge Solutions",
       "role": "PPO",
       "type": "ppo",
       "announced_on": "2026-07-21",
-      "names": ["Shreya Gupta"]
+      "names": [
+        "Shreya Gupta"
+      ]
     },
     {
       "company": "NetElixir",
       "role": "PPO",
       "type": "ppo",
       "announced_on": "2026-07-24",
-      "names": [{"name": "Arsh Sinha", "roster": "Arsh Vardhan Sinha"}]
+      "names": [
+        {
+          "name": "Arsh Sinha",
+          "roster": "Arsh Vardhan Sinha"
+        }
+      ]
     },
     {
       "company": "EPAM Systems",
       "role": "PPO",
       "type": "ppo",
       "announced_on": "2026-07-28",
-      "names": ["Jyoti Bikas Das", "Tina Kewlani", "Heeral Tandon"]
+      "names": [
+        "Jyoti Bikas Das",
+        "Tina Kewlani",
+        "Heeral Tandon"
+      ]
     },
     {
       "company": "Crisil",
       "role": "PPO",
       "type": "ppo",
       "announced_on": "2026-07-31",
-      "names": ["Swechha Jaiswal", {"name": "Tharini S S", "roster": "Tharani S S"}]
+      "names": [
+        "Swechha Jaiswal",
+        {
+          "name": "Tharini S S",
+          "roster": "Tharani S S"
+        }
+      ]
     },
     {
       "company": "EY",
       "role": "PPO",
       "type": "ppo",
       "announced_on": "2026-08-03",
-      "names": ["Pilla Venkata Sai Tharun", {"name": "Yendluri Deepti Chowdary", "roster": "Deepti Yendluri"}]
+      "names": [
+        "Pilla Venkata Sai Tharun",
+        {
+          "name": "Yendluri Deepti Chowdary",
+          "roster": "Deepti Yendluri"
+        }
+      ]
     },
     {
       "company": "Oxane Partners",
       "role": "PPO",
       "type": "ppo",
       "announced_on": "2026-08-01",
-      "names": ["Sudhanshu Chauhan", "Ayush Dutta", "Dibyendu Das"]
+      "names": [
+        "Sudhanshu Chauhan",
+        "Ayush Dutta",
+        "Dibyendu Das"
+      ]
     },
     {
       "company": "Wipro",
       "role": "PPO",
       "type": "ppo",
       "announced_on": "2026-08-06",
-      "names": ["Shwetha R"]
+      "names": [
+        "Shwetha R"
+      ]
     },
     {
       "company": "Arcesium",
       "role": "PPO",
       "type": "ppo",
       "announced_on": "2026-08-18",
-      "names": [{"name": "Harmit Singh", "roster": "HARMIT SINGH"}]
+      "names": [
+        {
+          "name": "Harmit Singh",
+          "roster": "HARMIT SINGH"
+        }
+      ]
     },
     {
       "company": "Zeta Global",
       "role": "FP&A",
       "type": "final",
       "announced_on": "2026-08-31",
-      "names": ["Vaishnavi Dudem"]
+      "names": [
+        "Vaishnavi Dudem"
+      ]
     },
     {
       "company": "Crisil",
       "role": "Final Placement",
       "type": "final",
       "announced_on": "2026-09-07",
-      "names": ["Pratham Goel", "Anna Ria", "Girish Kabra", "Kritik Pillai"]
+      "names": [
+        "Pratham Goel",
+        "Anna Ria",
+        "Girish Kabra",
+        "Kritik Pillai"
+      ]
     },
     {
       "company": "Invesco",
       "role": "Final Placement",
       "type": "final",
       "announced_on": "2026-09-09",
-      "names": [{"name": "Ruttva Raj", "roster": "Ruttva Virendrasinh Raj"}, "Mahi Kinariwala"]
+      "names": [
+        {
+          "name": "Ruttva Raj",
+          "roster": "Ruttva Virendrasinh Raj"
+        },
+        "Mahi Kinariwala"
+      ]
     },
     {
       "company": "Quest Global",
       "role": "Final Placement",
       "type": "final",
       "announced_on": "2026-09-14",
-      "names": ["Jay Dave"]
+      "names": [
+        "Jay Dave"
+      ]
     },
     {
       "company": "Wipro",
       "role": "Final Placement",
       "type": "final",
       "announced_on": "2026-09-18",
-      "names": ["Prerna Tekade"]
+      "names": [
+        "Prerna Tekade"
+      ]
     },
     {
       "company": "Policy Bazaar",
       "role": "Final Placement",
       "type": "final",
       "announced_on": "2026-09-18",
-      "names": ["Samhita Banerjee"]
+      "names": [
+        "Samhita Banerjee"
+      ]
     },
     {
       "company": "JPMorgan Chase & Co.",
       "role": "Operations Analyst",
       "type": "final",
       "announced_on": "2026-10-09",
-      "names": ["Ridhi Kothari", "Ankush P. Karwa", "Tushita Mishra"]
+      "names": [
+        "Ridhi Kothari",
+        "Ankush P. Karwa",
+        "Tushita Mishra"
+      ]
+    },
+    {
+      "company": "EY",
+      "role": "Tech Risk Assurance",
+      "type": "final",
+      "announced_on": "2026-10-13",
+      "names": [
+        "Ankita Patwardhan",
+        {
+          "name": "Akshara T Santosh",
+          "roster": "Akshara T Santhosh"
+        },
+        "Kurian George",
+        "Tejaswita"
+      ]
+    },
+    {
+      "company": "EY",
+      "role": "Forensics & Integrity Services",
+      "type": "final",
+      "announced_on": "2026-10-13",
+      "names": [
+        "Ashish Gupta",
+        "Kanishka Gupta",
+        "Shrishti Mittal"
+      ]
+    },
+    {
+      "company": "EY",
+      "role": "Technology Consulting",
+      "type": "final",
+      "announced_on": "2026-10-13",
+      "names": [
+        "Akshita Chopde"
+      ]
     }
   ]
 }

@@ -2287,15 +2287,6 @@
     },
     {
       "day": "Mon",
-      "time": "6:00-7:30",
-      "subject": "PM",
-      "raw_text": "PM\n(5:30 to 7:00pm)\nL12, 3rd floor\nDr Sasmita Misra",
-      "professor": "Dr Sasmita Misra",
-      "room": "L12, 3rd floor",
-      "div": ""
-    },
-    {
-      "day": "Mon",
       "time": "10:10-11:40",
       "subject": "DM",
       "raw_text": "DM\nProf Venugopal\nLR 06, 2nd floor",
@@ -2323,15 +2314,6 @@
     },
     {
       "day": "Tue",
-      "time": "11:50-1:20",
-      "subject": "PM",
-      "raw_text": "PM\n(11:55-1:25 pm)\nL12,3rd floor\nDr Sasmita Misra",
-      "professor": "Dr Sasmita Misra",
-      "room": "L12,3rd floor",
-      "div": ""
-    },
-    {
-      "day": "Tue",
       "time": "2:00-3:30",
       "subject": "VA",
       "raw_text": "VA\nDr Kamran\nL06, 2nd floor",
@@ -2352,9 +2334,9 @@
       "day": "Tue",
       "time": "10:10-11:40",
       "subject": "PM",
-      "raw_text": "PM\nL12, 3rd floor\nDr Sasmita Misra",
+      "raw_text": "PM\nL06, 2nd floor\nDr Sasmita Misra",
       "professor": "Dr Sasmita Misra",
-      "room": "L12, 3rd floor",
+      "room": "L06, 2nd floor",
       "div": ""
     },
     {
@@ -2403,71 +2385,17 @@
       "div": "Div B"
     },
     {
-      "day": "Thu",
-      "time": "10:10-11:40",
-      "subject": "MACR",
-      "raw_text": "MACR\nL07, 2nd floor\nDr Narender Vunyale",
-      "professor": "Dr Narender Vunyale",
-      "room": "L07, 2nd floor",
-      "div": ""
-    },
-    {
-      "day": "Thu",
-      "time": "11:50-1:20",
-      "subject": "CTA_A",
-      "raw_text": "CT-A\nDr Dileep Kumar\nL06,2nd floor",
-      "professor": "Dr Dileep Kumar",
-      "room": "L06,2nd floor",
-      "div": "Div A"
-    },
-    {
-      "day": "Thu",
+      "day": "Wed",
       "time": "2:00-3:30",
-      "subject": "IB_A",
-      "raw_text": "IBDiv A\nDr Narender Vunyale\nL07, 2nd floor",
-      "professor": "Dr Narender Vunyale",
-      "room": "L07, 2nd floor",
-      "div": "Div A"
-    },
-    {
-      "day": "Thu",
-      "time": "2:00-3:30",
-      "subject": "CTA_B",
-      "raw_text": "CT-B\nDr Dileep Kumar\nL06,2nd floor",
-      "professor": "Dr Dileep Kumar",
-      "room": "L06,2nd floor",
-      "div": "Div B"
-    },
-    {
-      "day": "Fri",
-      "time": "8:30-10:00",
-      "subject": "CTA_A",
-      "raw_text": "CT-A\nRescheduled class\nDr Dileep Kumar\nL06,2nd floor",
-      "professor": "Dr Dileep Kumar",
-      "room": "L06,2nd floor",
-      "div": "Div A"
-    },
-    {
-      "day": "Fri",
-      "time": "10:10-11:40",
-      "subject": "WM",
-      "raw_text": "WM\nDr Showkat Ahmad\nL06, 2nd floor",
-      "professor": "Dr Showkat Ahmad",
+      "subject": "PM",
+      "raw_text": "PM\nL06, 2nd floor\nDr Sasmita Misra",
+      "professor": "Dr Sasmita Misra",
       "room": "L06, 2nd floor",
       "div": ""
     },
     {
-      "day": "Fri",
-      "time": "11:50-1:20",
-      "subject": "WM",
-      "raw_text": "WM\nDr Showkat Ahmad\nL06, 2nd floor",
-      "professor": "Dr Showkat Ahmad",
-      "room": "L06, 2nd floor",
-      "div": ""
-    },
-    {
-      "day": "Fri",
-      "time": "2:00-3:30",
+      "day": "Sat",
+      "time": "10:10-11:40",
       "subject": "SBM_A",
       "raw_text": "SBM Div A\nL06, 2nd floor\nProf Murtuza",
       "professor": "Prof Murtuza",
@@ -2475,35 +2403,35 @@
       "div": "Div A"
     },
     {
-      "day": "Fri",
+      "day": "Sat",
+      "time": "11:50-1:20",
+      "subject": "SBM_A",
+      "raw_text": "SBM Div A\nL06, 2nd floor\nProf Murtuza",
+      "professor": "Prof Murtuza",
+      "room": "L06, 2nd floor",
+      "div": "Div A"
+    },
+    {
+      "day": "Sat",
+      "time": "2:00-3:30",
+      "subject": "SBM_B",
+      "raw_text": "SBM Div B\nL06, 2nd floor\nProf Murtuza",
+      "professor": "Prof Murtuza",
+      "room": "L06, 2nd floor",
+      "div": "Div B"
+    },
+    {
+      "day": "Sat",
       "time": "3:40-5:10",
-      "subject": "SBM_A",
-      "raw_text": "SBM Div A\nL06, 2nd floor\nProf Murtuza",
+      "subject": "SBM_B",
+      "raw_text": "SBM Div B\nL06, 2nd floor\nProf Murtuza",
       "professor": "Prof Murtuza",
       "room": "L06, 2nd floor",
-      "div": "Div A"
+      "div": "Div B"
     },
     {
-      "day": "Fri",
+      "day": "Sat",
       "time": "6:00-7:30",
-      "subject": "SBM_B",
-      "raw_text": "SBM Div B\nL06, 2nd floor\nProf Murtuza",
-      "professor": "Prof Murtuza",
-      "room": "L06, 2nd floor",
-      "div": "Div B"
-    },
-    {
-      "day": "Fri",
-      "time": "7:35 to 9:05",
-      "subject": "SBM_B",
-      "raw_text": "SBM Div B\nL06, 2nd floor\nProf Murtuza",
-      "professor": "Prof Murtuza",
-      "room": "L06, 2nd floor",
-      "div": "Div B"
-    },
-    {
-      "day": "Fri",
-      "time": "10:10-11:40",
       "subject": "SM",
       "raw_text": "SM\nL06, 2nd floor\nProf Murtuza",
       "professor": "Prof Murtuza",
@@ -2511,8 +2439,8 @@
       "div": ""
     },
     {
-      "day": "Fri",
-      "time": "11:50-1:20",
+      "day": "Sat",
+      "time": "7:35 to 9:05",
       "subject": "SM",
       "raw_text": "SM\nL06, 2nd floor\nProf Murtuza",
       "professor": "Prof Murtuza",
@@ -3168,6 +3096,62 @@
       "name": "Tushita Mishra",
       "company": "JPMorgan Chase & Co.",
       "date": "2026-10-09",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Ankita Patwardhan",
+      "company": "EY",
+      "date": "2026-10-13",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Akshara T Santosh",
+      "company": "EY",
+      "date": "2026-10-13",
+      "roster": "Akshara T Santhosh",
+      "type": "final"
+    },
+    {
+      "name": "Kurian George",
+      "company": "EY",
+      "date": "2026-10-13",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Tejaswita",
+      "company": "EY",
+      "date": "2026-10-13",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Ashish Gupta",
+      "company": "EY",
+      "date": "2026-10-13",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Kanishka Gupta",
+      "company": "EY",
+      "date": "2026-10-13",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Shrishti Mittal",
+      "company": "EY",
+      "date": "2026-10-13",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Akshita Chopde",
+      "company": "EY",
+      "date": "2026-10-13",
       "roster": null,
       "type": "final"
     }

@@ -178,6 +178,62 @@ def parse_file_dates(name):
         return None
 
 
+def parse_any_date(text):
+    """Best-effort dd.mm.yyyy parse from any text (repairs typos like
+    '12.010.2026' -> 12 Oct 2026, or picks the first date out of the
+    email subject)."""
+    if not text:
+        return None
+    for m in re.finditer(r'(\d{1,2})[./-](\d{1,2})[./-](\d{4})', text):
+        d, mo, y = (m.group(1), m.group(2), m.group(3))
+        # Repair obvious typos where the month picked up an extra digit
+        # (e.g. '12.010.2026'): re-anchor so dates stay dd.mm.yyyy.
+        p = m.start()
+        seg = text[max(0, p - 4):m.end()]
+        dm = re.search(r'(\d{1,2})\.(\d{1,2})\.(\d{4})', seg)
+        if dm:
+            try:
+                return datetime.strptime(
+                    f"{dm.group(1)}.{dm.group(2)}.{dm.group(3)}", "%d.%m.%Y").date()
+            except ValueError:
+                pass
+        try:
+            cand = datetime.strptime(f"{d}.{mo}.{y}", "%d.%m.%Y").date()
+            if 1 <= cand.month <= 12 and 1 <= cand.day <= 31:
+                return cand
+        except ValueError:
+            continue
+    return None
+
+
+def repair_timetable_filename(name):
+    """Return a canonical, parseable filename, repairing typos like the
+    sender's '12.010.2026 to 18.10.2026.xlsx' (extra digit in the month)
+    so the date parser can route the file to the right TIMETABLE slot."""
+    if parse_file_dates(name):
+        return name
+    # Tolerant capture: allow oversized month groups (sender typos) so we
+    # can isolate the FIRST token as the start date.
+    tokens = re.findall(r'(\d+)\.(\d+)\.(\d+)', name or "")
+    if len(tokens) < 2:
+        return None
+
+    def fix(token):
+        d, mo, y = token
+        for cand_mo in {mo, mo.lstrip("0") or "0"}:
+            try:
+                return datetime.strptime(f"{d}.{cand_mo}.{y}", "%d.%m.%Y")
+            except ValueError:
+                continue
+        return None
+
+    start = fix(tokens[0])
+    if not start:
+        return None
+    end = fix(tokens[1]) or start + timedelta(days=6)
+    return f"{start.strftime('%d.%m.%Y')} to {end.strftime('%d.%m.%Y')}.xlsx"
+
+
 def monday_of(d):
     return d - timedelta(days=d.weekday())
 
@@ -212,6 +268,13 @@ def main():
 
     is_timetable, sender, received_label, subject, att_name, att_content = result
 
+    # Repair sender filename typos (e.g. '12.010.2026 to ...xlsx') so the
+    # date parser can route the file to the correct TIMETABLE slot.
+    repaired_name = repair_timetable_filename(att_name)
+    if repaired_name and repaired_name != att_name:
+        print(f"🔧 Repaired attachment filename: {att_name!r} -> {repaired_name!r}")
+        att_name = repaired_name
+
     # Build path — save in repo's downloads/ directory
     os.makedirs(os.path.join(TIMETABLE_DIR, "downloads"), exist_ok=True)
     new_path = os.path.join(TIMETABLE_DIR, "downloads", att_name)
@@ -232,21 +295,26 @@ def main():
     new_slot = None
     promoted = False
 
-    if new_week:
-        if new_week < this_week:
-            print(f"ℹ️ {att_name} is for a past week — saved but not wired in")
-            return
-        # Promote TIMETABLE_NEXT to TIMETABLE when its week becomes current/latest
-        nw = week_of_path(cur_next)
-        cw = week_of_path(cur)
-        if nw and nw <= this_week and (cw is None or nw > cw):
-            new_src = re.sub(r'^TIMETABLE\s*=\s*"[^"]*"', f'TIMETABLE    = "{cur_next}"', new_src, count=1, flags=re.M)
-            new_src = re.sub(r'^TIMETABLE_NEXT\s*=\s*"[^"]*"', 'TIMETABLE_NEXT = ""', new_src, count=1, flags=re.M)
-            promoted = True
-            print(f"♻️ Promoted {cur_next} to current timetable")
-        new_slot = "TIMETABLE_NEXT" if new_week > this_week else "TIMETABLE"
-    else:
-        new_slot = "TIMETABLE"
+    if new_week is None:
+        # No date could be recovered from the filename or email subject.
+        # Do NOT guess — save the file but leave the TIMETABLE wiring
+        # untouched, rather than clobbering the current week with an
+        # unparseable attachment.
+        print(f"⚠️ {att_name!r} has no recoverable week date — saved but not wired in")
+        return
+
+    if new_week < this_week:
+        print(f"ℹ️ {att_name} is for a past week — saved but not wired in")
+        return
+    # Promote TIMETABLE_NEXT to TIMETABLE when its week becomes current/latest
+    nw = week_of_path(cur_next)
+    cw = week_of_path(cur)
+    if nw and nw <= this_week and (cw is None or nw > cw):
+        new_src = re.sub(r'^TIMETABLE\s*=\s*"[^"]*"', f'TIMETABLE    = "{cur_next}"', new_src, count=1, flags=re.M)
+        new_src = re.sub(r'^TIMETABLE_NEXT\s*=\s*"[^"]*"', 'TIMETABLE_NEXT = ""', new_src, count=1, flags=re.M)
+        promoted = True
+        print(f"♻️ Promoted {cur_next} to current timetable")
+    new_slot = "TIMETABLE_NEXT" if new_week > this_week else "TIMETABLE"
 
     if new_slot == "TIMETABLE":
         new_src = re.sub(r'^TIMETABLE\s*=\s*"[^"]*"', f'TIMETABLE    = "{new_rel}"', new_src, count=1, flags=re.M)
