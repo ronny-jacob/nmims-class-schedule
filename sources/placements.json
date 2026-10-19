@@ -253,6 +253,34 @@
       "names": [
         "Sanskar Mahalka"
       ]
+    },
+    {
+      "company": "ICICI Bank",
+      "role": "Final Placement",
+      "type": "final",
+      "announced_on": "2026-10-19",
+      "names": [
+        "Antara Gupta",
+        "Savitha Sri S",
+        "S K Harrish",
+        "Rituparna Sharma",
+        "Mridul Arora",
+        "Koustav Jana",
+        "Chandrakant Narwani",
+        "Gaurav Wadhwa",
+        "Priyanshu Mittal",
+        {
+          "name": "Vishnu PS",
+          "roster": "Vishnu P S"
+        },
+        "Srishti Shinde",
+        "Paridhi Rungta",
+        "Uzma Khan",
+        "Shubh Gupta",
+        "Masoom Singh",
+        "Suraj Satpute",
+        "Gaurav Agarwal"
+      ]
     }
   ]
 }

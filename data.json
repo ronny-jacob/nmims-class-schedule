@@ -2287,278 +2287,6 @@
     },
     {
       "day": "Mon",
-      "time": "6:00-7:30",
-      "subject": "PM",
-      "raw_text": "PM\n(5:30 to 7:00pm)\nL12, 3rd floor\nDr Sasmita Misra",
-      "professor": "Dr Sasmita Misra",
-      "room": "L12, 3rd floor",
-      "div": ""
-    },
-    {
-      "day": "Mon",
-      "time": "10:10-11:40",
-      "subject": "DM",
-      "raw_text": "DM\nProf Venugopal\nLR 06, 2nd floor",
-      "professor": "Prof Venugopal",
-      "room": "LR 06, 2nd floor",
-      "div": ""
-    },
-    {
-      "day": "Mon",
-      "time": "11:50-1:20",
-      "subject": "DM",
-      "raw_text": "DM\nProf Venugopal\nLR 06, 2nd floor",
-      "professor": "Prof Venugopal",
-      "room": "LR 06, 2nd floor",
-      "div": ""
-    },
-    {
-      "day": "Tue",
-      "time": "10:10-11:40",
-      "subject": "IB_B",
-      "raw_text": "IB Div B\nDr Narender Vunyale\nL07, 2nd floor",
-      "professor": "Dr Narender Vunyale",
-      "room": "L07, 2nd floor",
-      "div": "Div B"
-    },
-    {
-      "day": "Tue",
-      "time": "11:50-1:20",
-      "subject": "PM",
-      "raw_text": "PM\n(11:55-1:25 pm)\nL12,3rd floor\nDr Sasmita Misra",
-      "professor": "Dr Sasmita Misra",
-      "room": "L12,3rd floor",
-      "div": ""
-    },
-    {
-      "day": "Tue",
-      "time": "2:00-3:30",
-      "subject": "VA",
-      "raw_text": "VA\nDr Kamran\nL06, 2nd floor",
-      "professor": "Dr Kamran",
-      "room": "L06, 2nd floor",
-      "div": ""
-    },
-    {
-      "day": "Tue",
-      "time": "3:40-5:10",
-      "subject": "GS",
-      "raw_text": "GOS\nDr Srividya Raghavan\nLR06, 2nd floor",
-      "professor": "Dr Srividya Raghavan",
-      "room": "LR06, 2nd floor",
-      "div": ""
-    },
-    {
-      "day": "Tue",
-      "time": "10:10-11:40",
-      "subject": "PM",
-      "raw_text": "PM\nL12, 3rd floor\nDr Sasmita Misra",
-      "professor": "Dr Sasmita Misra",
-      "room": "L12, 3rd floor",
-      "div": ""
-    },
-    {
-      "day": "Wed",
-      "time": "10:10-11:40",
-      "subject": "CTA_A",
-      "raw_text": "CT-A\nDr Dileep Kumar\nL06,2nd floor",
-      "professor": "Dr Dileep Kumar",
-      "room": "L06,2nd floor",
-      "div": "Div A"
-    },
-    {
-      "day": "Wed",
-      "time": "11:50-1:20",
-      "subject": "IB_A",
-      "raw_text": "IB Div A\nDr Narender Vunyale\nL07, 2nd floor",
-      "professor": "Dr Narender Vunyale",
-      "room": "L07, 2nd floor",
-      "div": "Div A"
-    },
-    {
-      "day": "Wed",
-      "time": "2:00-3:30",
-      "subject": "IB_B",
-      "raw_text": "IBDiv B\nDr Narender Vunyale\nL07, 2nd floor",
-      "professor": "Dr Narender Vunyale",
-      "room": "L07, 2nd floor",
-      "div": "Div B"
-    },
-    {
-      "day": "Wed",
-      "time": "3:40-5:10",
-      "subject": "VA",
-      "raw_text": "VA\nDr Kamran\nL06, 2nd floor",
-      "professor": "Dr Kamran",
-      "room": "L06, 2nd floor",
-      "div": ""
-    },
-    {
-      "day": "Wed",
-      "time": "11:50-1:20",
-      "subject": "CTA_B",
-      "raw_text": "CT-B\nDr Dileep Kumar\nL06,2nd floor",
-      "professor": "Dr Dileep Kumar",
-      "room": "L06,2nd floor",
-      "div": "Div B"
-    },
-    {
-      "day": "Thu",
-      "time": "10:10-11:40",
-      "subject": "MACR",
-      "raw_text": "MACR\nL07, 2nd floor\nDr Narender Vunyale",
-      "professor": "Dr Narender Vunyale",
-      "room": "L07, 2nd floor",
-      "div": ""
-    },
-    {
-      "day": "Thu",
-      "time": "11:50-1:20",
-      "subject": "CTA_A",
-      "raw_text": "CT-A\nDr Dileep Kumar\nL06,2nd floor",
-      "professor": "Dr Dileep Kumar",
-      "room": "L06,2nd floor",
-      "div": "Div A"
-    },
-    {
-      "day": "Thu",
-      "time": "2:00-3:30",
-      "subject": "IB_A",
-      "raw_text": "IBDiv A\nDr Narender Vunyale\nL07, 2nd floor",
-      "professor": "Dr Narender Vunyale",
-      "room": "L07, 2nd floor",
-      "div": "Div A"
-    },
-    {
-      "day": "Thu",
-      "time": "2:00-3:30",
-      "subject": "CTA_B",
-      "raw_text": "CT-B\nDr Dileep Kumar\nL06,2nd floor",
-      "professor": "Dr Dileep Kumar",
-      "room": "L06,2nd floor",
-      "div": "Div B"
-    },
-    {
-      "day": "Fri",
-      "time": "8:30-10:00",
-      "subject": "CTA_A",
-      "raw_text": "CT-A\nRescheduled class\nDr Dileep Kumar\nL06,2nd floor",
-      "professor": "Dr Dileep Kumar",
-      "room": "L06,2nd floor",
-      "div": "Div A"
-    },
-    {
-      "day": "Fri",
-      "time": "10:10-11:40",
-      "subject": "WM",
-      "raw_text": "WM\nDr Showkat Ahmad\nL06, 2nd floor",
-      "professor": "Dr Showkat Ahmad",
-      "room": "L06, 2nd floor",
-      "div": ""
-    },
-    {
-      "day": "Fri",
-      "time": "11:50-1:20",
-      "subject": "WM",
-      "raw_text": "WM\nDr Showkat Ahmad\nL06, 2nd floor",
-      "professor": "Dr Showkat Ahmad",
-      "room": "L06, 2nd floor",
-      "div": ""
-    },
-    {
-      "day": "Fri",
-      "time": "2:00-3:30",
-      "subject": "SBM_A",
-      "raw_text": "SBM Div A\nL06, 2nd floor\nProf Murtuza",
-      "professor": "Prof Murtuza",
-      "room": "L06, 2nd floor",
-      "div": "Div A"
-    },
-    {
-      "day": "Fri",
-      "time": "3:40-5:10",
-      "subject": "SBM_A",
-      "raw_text": "SBM Div A\nL06, 2nd floor\nProf Murtuza",
-      "professor": "Prof Murtuza",
-      "room": "L06, 2nd floor",
-      "div": "Div A"
-    },
-    {
-      "day": "Fri",
-      "time": "6:00-7:30",
-      "subject": "SBM_B",
-      "raw_text": "SBM Div B\nL06, 2nd floor\nProf Murtuza",
-      "professor": "Prof Murtuza",
-      "room": "L06, 2nd floor",
-      "div": "Div B"
-    },
-    {
-      "day": "Fri",
-      "time": "7:35 to 9:05",
-      "subject": "SBM_B",
-      "raw_text": "SBM Div B\nL06, 2nd floor\nProf Murtuza",
-      "professor": "Prof Murtuza",
-      "room": "L06, 2nd floor",
-      "div": "Div B"
-    },
-    {
-      "day": "Fri",
-      "time": "10:10-11:40",
-      "subject": "SM",
-      "raw_text": "SM\nL06, 2nd floor\nProf Murtuza",
-      "professor": "Prof Murtuza",
-      "room": "L06, 2nd floor",
-      "div": ""
-    },
-    {
-      "day": "Fri",
-      "time": "11:50-1:20",
-      "subject": "SM",
-      "raw_text": "SM\nL06, 2nd floor\nProf Murtuza",
-      "professor": "Prof Murtuza",
-      "room": "L06, 2nd floor",
-      "div": ""
-    }
-  ],
-  "timetable_next": [
-    {
-      "day": "Mon",
-      "time": "10:10-11:40",
-      "subject": "IF",
-      "raw_text": "IF\nProf. Vittal\nLR 07, 2nd floor",
-      "professor": "Prof. Vittal",
-      "room": "LR 07, 2nd floor",
-      "div": ""
-    },
-    {
-      "day": "Mon",
-      "time": "11:50-1:20",
-      "subject": "IF",
-      "raw_text": "IF\nProf. Vittal\nLR 07, 2nd floor",
-      "professor": "Prof. Vittal",
-      "room": "LR 07, 2nd floor",
-      "div": ""
-    },
-    {
-      "day": "Mon",
-      "time": "2:00-3:30",
-      "subject": "MACR",
-      "raw_text": "MACR\nL07, 2nd floor\nDr Narender Vunyale",
-      "professor": "Dr Narender Vunyale",
-      "room": "L07, 2nd floor",
-      "div": ""
-    },
-    {
-      "day": "Mon",
-      "time": "3:40-5:10",
-      "subject": "GS",
-      "raw_text": "GOS\nDr Srividya Raghavan\nLR06, 2nd floor",
-      "professor": "Dr Srividya Raghavan",
-      "room": "LR06, 2nd floor",
-      "div": ""
-    },
-    {
-      "day": "Mon",
       "time": "5:10 to 6:10",
       "subject": "WM",
       "raw_text": "WM\nDr Showkat Ahmad\nL06, 2nd floor\n(5:20 to 6:50pm)",
@@ -2774,17 +2502,8 @@
       "div": ""
     }
   ],
+  "timetable_next": [],
   "time_slots": [
-    "8:30-10:00",
-    "10:10-11:40",
-    "11:50-1:20",
-    "1:20-1:50",
-    "2:00-3:30",
-    "3:40-5:10",
-    "6:00-7:30",
-    "7:35 to 9:05"
-  ],
-  "time_slots_next": [
     "8:30-10:00",
     "10:10-11:40",
     "11:50-1:20",
@@ -2794,6 +2513,7 @@
     "5:10 to 6:10",
     "6:00 to 7:30"
   ],
+  "time_slots_next": [],
   "food_menu": {
     "week1": {
       "Mon": {
@@ -3229,6 +2949,125 @@
       "date": "2026-10-16",
       "roster": null,
       "type": "final"
+    },
+    {
+      "name": "Antara Gupta",
+      "company": "ICICI Bank",
+      "date": "2026-10-19",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Savitha Sri S",
+      "company": "ICICI Bank",
+      "date": "2026-10-19",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "S K Harrish",
+      "company": "ICICI Bank",
+      "date": "2026-10-19",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Rituparna Sharma",
+      "company": "ICICI Bank",
+      "date": "2026-10-19",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Mridul Arora",
+      "company": "ICICI Bank",
+      "date": "2026-10-19",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Koustav Jana",
+      "company": "ICICI Bank",
+      "date": "2026-10-19",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Chandrakant Narwani",
+      "company": "ICICI Bank",
+      "date": "2026-10-19",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Gaurav Wadhwa",
+      "company": "ICICI Bank",
+      "date": "2026-10-19",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Priyanshu Mittal",
+      "company": "ICICI Bank",
+      "date": "2026-10-19",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Vishnu PS",
+      "company": "ICICI Bank",
+      "date": "2026-10-19",
+      "roster": "Vishnu P S",
+      "type": "final"
+    },
+    {
+      "name": "Srishti Shinde",
+      "company": "ICICI Bank",
+      "date": "2026-10-19",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Paridhi Rungta",
+      "company": "ICICI Bank",
+      "date": "2026-10-19",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Uzma Khan",
+      "company": "ICICI Bank",
+      "date": "2026-10-19",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Shubh Gupta",
+      "company": "ICICI Bank",
+      "date": "2026-10-19",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Masoom Singh",
+      "company": "ICICI Bank",
+      "date": "2026-10-19",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Suraj Satpute",
+      "company": "ICICI Bank",
+      "date": "2026-10-19",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Gaurav Agarwal",
+      "company": "ICICI Bank",
+      "date": "2026-10-19",
+      "roster": null,
+      "type": "final"
     }
   ],
   "placements_window_days": 1,
@@ -3244,12 +3083,12 @@
     "Fri",
     "Sat"
   ],
-  "date_range": "Mon 12 Oct \u2013 Sun 18 Oct 2026",
-  "date_range_next": "Mon 19 Oct \u2013 Sun 25 Oct 2026",
-  "week_start": "2026-10-12",
-  "week_end": "2026-10-18",
-  "week_start_next": "2026-10-19",
-  "week_end_next": "2026-10-25",
+  "date_range": "Mon 19 Oct \u2013 Sun 25 Oct 2026",
+  "date_range_next": "",
+  "week_start": "2026-10-19",
+  "week_end": "2026-10-25",
+  "week_start_next": "",
+  "week_end_next": "",
   "classes": {
     "v": [
       {

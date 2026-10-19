@@ -134,11 +134,14 @@ def main() -> int:
             else:
                 seen_names[key] = date_str
 
-    # Sanity: warn on bursts (more than ~10 placements in one day)
+    # Sanity: warn on bursts (more than ~10 placements in one day). This
+    # is advisory only — some companies (e.g. ICICI Bank) announce large
+    # batches at once, which is legitimate.
+    warnings: list[str] = []
     for d, n in sorted(by_date.items()):
         if n > 12:
-            errors.append(
-                f"warning: {n} placements on {d} (>12) — verify this is intentional"
+            warnings.append(
+                f"{n} placements on {d} (>12) — verify this is intentional"
             )
 
     if errors:
@@ -146,6 +149,9 @@ def main() -> int:
         for e in errors:
             print(f"  - {e}")
         return 1
+
+    for w in warnings:
+        print(f"WARN: {w}")
 
     print(f"OK: {len(announcements)} announcements, "
           f"{sum(len(a.get('names', [])) for a in announcements)} names, "
