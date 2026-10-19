@@ -2306,6 +2306,7 @@ var STUDENTS = ["Aastha Saini", "Abhishek Kumar", "Aby K Mathai", "Aditya Chaube
 
 
 
+
 var PAL=[["#DBEAFE","#1E40AF","#1E40AF"],["#DCFCE7","#166534","#166534"],["#FEF3C7","#92400E","#B45309"],["#EDE9FE","#4C1D95","#6D28D9"],["#FFE4E6","#9F1239","#BE123C"],["#CCFBF1","#134E4A","#0F766E"],["#FEE2E2","#991B1B","#DC2626"],["#E0F2FE","#0C4A6E","#0369A1"],["#F3E8FF","#581C87","#7E22CE"],["#ECFCCB","#365314","#4D7C0F"],["#FFF7ED","#7C2D12","#EA580C"],["#FCE7F3","#831843","#BE185D"]];
 var sel={},so=[],ci=0,q='',sq='',ss='at',at='v';
 var ni={};for(var _=0;_<STUDENTS.length;_++)ni[STUDENTS[_]]=_;
@@ -2730,9 +2731,11 @@ function buildCelebration(){
     var short = [];
     for (var n = 0; n < grp.names.length; n++) short.push(shortPlaceName(grp.names[n], allNames));
     var joined;
-    if (short.length === 1) joined = '<b>' + he(short[0]) + '</b>';
-    else if (short.length === 2) joined = '<b>' + he(short[0]) + '</b> and <b>' + he(short[1]) + '</b>';
-    else joined = '<b>' + he(short.slice(0, -1).join('</b>, <b>')) + '</b> and <b>' + he(short[short.length - 1]) + '</b>';
+    var esc = [];
+    for (var s = 0; s < short.length; s++) esc.push(he(short[s]));
+    if (esc.length === 1) joined = '<b>' + esc[0] + '</b>';
+    else if (esc.length === 2) joined = '<b>' + esc[0] + '</b> and <b>' + esc[1] + '</b>';
+    else joined = '<b>' + esc.slice(0, -1).join('</b>, <b>') + '</b> and <b>' + esc[esc.length - 1] + '</b>';
     items.push('<span class="celeb-sep">&#183;</span><span class="celeb-item"><i class="ce-emoji">' + e[0] + '</i> Congrats ' + joined + ', ' + phr + ' <em>' + he(grp.company) + '</em> <i class="ce-emoji">' + e[1] + '</i></span>');
   }
   items.push('<span class="celeb-sep">&#183;</span>');
