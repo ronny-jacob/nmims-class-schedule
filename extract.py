@@ -174,6 +174,24 @@ def dedupe_consecutive(lst):
     return result
 
 
+def _norm_month(mo):
+    """Normalise a month token that may carry a sender typo ('010' -> '10')."""
+    for cand in (str(mo).lstrip("0"), str(mo)[-2:]):
+        if cand.isdigit() and 1 <= int(cand) <= 12:
+            return cand
+    return None
+
+
+def _mk_date(d, mo, y):
+    m = _norm_month(mo)
+    if not m:
+        return None
+    try:
+        return datetime.strptime(f"{int(d)}.{m}.{int(y)}", "%d.%m.%Y")
+    except (ValueError, TypeError):
+        return None
+
+
 def start_and_end_from_filepath(filepath):
     """Return (start_date, end_date) parsed from a timetable filename like
     '07.09.2026 to 13.09.2026.xlsx' or '05.10.2026-11.10.2026.xlsx'.
@@ -182,12 +200,11 @@ def start_and_end_from_filepath(filepath):
     if not mt:
         return (None, None)
     d1, m1, y1, d2, m2, y2 = mt.groups()
-    try:
-        dt_from = datetime.strptime(f"{d1}.{m1}.{y1}", "%d.%m.%Y")
-        dt_to   = datetime.strptime(f"{d2}.{m2}.{y2}", "%d.%m.%Y")
-    except ValueError:
+    dt_from = _mk_date(d1, m1, y1)
+    dt_to   = _mk_date(d2, m2, y2)
+    if dt_from is None:
         return (None, None)
-    if dt_to <= dt_from:
+    if dt_to is None or dt_to <= dt_from:
         dt_to = dt_from + timedelta(days=6)
     return (dt_from, dt_to)
 

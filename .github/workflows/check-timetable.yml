@@ -44,6 +44,9 @@ jobs:
       - name: Validate placements schema
         run: python tests/test_placements_schema.py
 
+      - name: Validate mail routing
+        run: python tests/test_mail_routing.py
+
       - name: Check inbox and update
         env:
           IMAP_USER: ${{ secrets.IMAP_USER }}
