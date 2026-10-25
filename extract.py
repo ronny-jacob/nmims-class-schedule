@@ -146,8 +146,11 @@ def normalize(s, underscores=False):
 
 
 def parse_time_labels_from_sheet(ws, header_row=2):
-    """Read column time labels from `header_row`. Empty cells inherit previous label."""
+    """Read column time labels from `header_row`. Empty cells inherit the
+    previous label. Also returns the set of columns that carry their own
+    header — only those headers are trusted as a cell's true slot."""
     labels = OrderedDict()
+    own_cols = set()
     prev = ''
     for col_idx in range(2, ws.max_column + 1):
         cell = ws.cell(row=header_row, column=col_idx)
@@ -158,10 +161,124 @@ def parse_time_labels_from_sheet(ws, header_row=2):
             raw = re.sub(r'(\s)0(\d)', r'\1\2', raw)
             raw = re.sub(r'\s*-\s*', '-', raw)
             labels[col_idx] = raw
+            own_cols.add(col_idx)
             prev = raw
         elif prev:
             labels[col_idx] = prev
-    return labels
+    return labels, own_cols
+
+
+# A time range written inside a cell, e.g. "SM (6:00 pm to 7:30 pm)".
+TIME_IN_TEXT_RE = re.compile(
+    r'(\d{1,2}:\d{2}(?::\d{2})?\s*(?:am|pm)?)\s*(?:to|-|–)\s*'
+    r'(\d{1,2}:\d{2}(?::\d{2})?\s*(?:am|pm)?)', re.I)
+
+
+def extract_time_label(text):
+    """Pull an explicit time range out of a cell's text.
+
+    Used when the sender leaves a column's header blank (the evening
+    block of the sheet): the class still states its own time, e.g.
+    'SM (6:00 pm to 7:30 pm)' -> '6:00 to 7:30'.
+    """
+    if not text:
+        return None
+    m = TIME_IN_TEXT_RE.search(text)
+    if not m:
+        return None
+
+    def clean(t):
+        t = re.sub(r'\s*(?:am|pm)\s*$', '', t.strip(), flags=re.I)
+        parts = t.split(':')
+        h, mi = int(parts[0]), int(parts[1]) if len(parts) > 1 else 0
+        return f"{h}:{mi:02d}"
+
+    try:
+        return f"{clean(m.group(1))} to {clean(m.group(2))}"
+    except (ValueError, IndexError):
+        return None
+
+
+def _slot_start_minutes(label):
+    """Sort key for a slot label like '5:40 to 7:10'."""
+    m = re.search(r'(\d{1,2}):(\d{2})', label or "")
+    if not m:
+        return 0
+    return int(m.group(1)) * 60 + int(m.group(2))
+
+
+def _slot_window(label):
+    """(start, end) in minutes for a slot label, wrap-aware for pm ranges."""
+    if not label:
+        return None
+    m = re.search(r'(\d{1,2}):(\d{2})\s*(?:to|-|–)\s*(\d{1,2}):(\d{2})', label)
+    if m:
+        start = int(m.group(1)) * 60 + int(m.group(2))
+        end = int(m.group(3)) * 60 + int(m.group(4))
+    else:
+        m = re.search(r'(\d{1,2}):(\d{2})', label)
+        if not m:
+            return None
+        start = int(m.group(1)) * 60 + int(m.group(2))
+        end = start + 60
+    if end < start:
+        end += 720          # e.g. '11:50-1:20' ends in the afternoon
+    return (start, end)
+
+
+def cell_time_label(col_label, is_own_col, raw_text):
+    """The slot a cell belongs to.
+
+    A column that carries its own header is authoritative — that is where
+    the sender put the class. Columns whose header was left blank (the
+    evening block of the sheet) get their slot from the time the class
+    states in its own text, e.g. 'SM (6:00 pm to 7:30 pm)' -> '6:00 to
+    7:30', so evening classes do not pile up under the last labelled
+    column.
+    """
+    if is_own_col:
+        return col_label
+    derived = extract_time_label(raw_text)
+    return derived or col_label
+
+
+def build_time_slots(ws, header_row=2, used_labels=None):
+    """Ordered list of the time-slot columns shown in the grid.
+
+    Columns that carry their own header use that header. Columns whose
+    header was left blank by the sender use the times stated inside the
+    cells themselves, so evening classes get their own slot instead of
+    piling up under the last labelled column. `used_labels` limits the
+    derived slots to those that actually carry a class.
+    """
+    labels, own_cols = parse_time_labels_from_sheet(ws, header_row)
+    per_col = {}
+    for row_idx in range(header_row + 1, ws.max_row + 1):
+        for col_idx in range(2, ws.max_column + 1):
+            v = ws.cell(row=row_idx, column=col_idx).value
+            if not v:
+                continue
+            eff = cell_time_label(labels.get(col_idx, ''), col_idx in own_cols, str(v))
+            per_col.setdefault(col_idx, []).append(eff)
+
+    slots = []
+    for col_idx in range(2, ws.max_column + 1):
+        own = labels.get(col_idx) if col_idx in own_cols else None
+        derived = []
+        for eff in per_col.get(col_idx, []):
+            if eff and eff != own and eff not in derived:
+                derived.append(eff)
+        if own:
+            labs = [own] + sorted(derived, key=_slot_start_minutes)
+        else:
+            labs = sorted(derived, key=_slot_start_minutes) or [labels.get(col_idx)]
+        for lab in labs:
+            if not lab or lab in slots:
+                continue
+            if own is None and used_labels is not None and lab not in used_labels:
+                continue
+            slots.append(lab)
+    return slots
 
 
 def dedupe_consecutive(lst):
@@ -244,7 +361,7 @@ def parse_timetable(filepath):
     else:
         ws = wb[wb.sheetnames[0]]
 
-    time_labels = parse_time_labels_from_sheet(ws, header_row=2)
+    time_labels, own_label_cols = parse_time_labels_from_sheet(ws, header_row=2)
 
     # Find row ranges for each day. Day labels look like "Mon. ", "Tue. ", etc.
     # Multi-line cells may have e.g. "Mon.\n" or just "Mon". Continuation rows
@@ -263,6 +380,11 @@ def parse_timetable(filepath):
                     matched_day = d
                     break
         if matched_day:
+            if last_day is not None and matched_day == last_day:
+                # The sender repeated a day label (e.g. 'Sat.' twice in a
+                # row). The second one is really the next day of the week.
+                idx = DAY_LABELS.index(matched_day)
+                matched_day = DAY_LABELS[(idx + 1) % len(DAY_LABELS)]
             if last_day is not None:
                 day_row_ranges.append((last_day, last_start, last_end or last_start))
             last_day = matched_day
@@ -292,7 +414,10 @@ def parse_timetable(filepath):
                 lines = [normalize(l) for l in raw_lines]
                 if not lines:
                     continue
-                time_label = time_labels.get(col_idx, "?")
+                time_label = cell_time_label(
+                    time_labels.get(col_idx, "?"),
+                    col_idx in own_label_cols,
+                    '\n'.join(raw_lines))
 
                 subject_text = normalize(lines[0], underscores=True)
                 alt_text = None
@@ -611,7 +736,8 @@ def main():
     try:
         wb = openpyxl.load_workbook(TIMETABLE)
         ws = wb['TT'] if 'TT' in wb.sheetnames else wb[wb.sheetnames[0]]
-        time_slots = dedupe_consecutive(list(parse_time_labels_from_sheet(ws).values()))
+        time_slots = build_time_slots(
+            ws, used_labels={e["time"] for e in timetable})
     except Exception:
         time_slots = []
     time_slots_next = []
@@ -619,7 +745,8 @@ def main():
         try:
             wb_next = openpyxl.load_workbook(resolve(TIMETABLE_NEXT))
             ws_next = wb_next['TT'] if 'TT' in wb_next.sheetnames else wb_next[wb_next.sheetnames[0]]
-            time_slots_next = dedupe_consecutive(list(parse_time_labels_from_sheet(ws_next).values()))
+            time_slots_next = build_time_slots(
+                ws_next, used_labels={e["time"] for e in timetable_next})
         except Exception:
             pass
 
