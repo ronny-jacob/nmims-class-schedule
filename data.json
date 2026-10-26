@@ -2853,89 +2853,89 @@
   "food_menu": {
     "week1": {
       "Mon": {
-        "breakfast": "Aloo Paratha, Curd, Pickel, Vermicelli, Bread,Butter Jam, Tea &Coffee",
-        "lunch": "Black Chana Masala Fry , Palak Paneer, Chapati, Steam Rice, Dal Tadka, Rasam, ButterMilk, Salad, Papad & Pickel",
-        "snacks": "Dhokla , Tea & Coffee,Fruits",
-        "dinner": "Dal makhani, Jeera Rice, Methi Aloo Sabzi, Chapati, Salad, Pickle, Jalebi"
+        "breakfast": "paneer Paratha, Curd, Pickel, Vermicelli, Bread,Butter Jam, Tea &Coffee",
+        "lunch": "Black Chana Masala Fry , Paneer methi malai, Chapati, Steam Rice, Dal Tadka, Rasam, ButterMilk, Salad, Papad & Pickel",
+        "snacks": "Hakka Noodles, Tea & Coffee",
+        "dinner": "Aloo Masala, Lauki Dal, Steam Rice, Chapathi, Dal Makhni, Salad, Pickle, Shrikhand"
       },
       "Tue": {
-        "breakfast": "Idli Wada Sambar, Tomato Spicy Chutney, Bread,Butter Jam, Tea & Coffee",
-        "lunch": "Soyabean, Dum Aloo, Dal Fry, Steam Rice, Chapati, Salad, Papad, Pickle, Boondi Raita, Sambhar",
-        "snacks": "Vada Pav, Green Chutney, RED CHUTNEY , Deep Fried Green Chilli Tea & Coffee,",
-        "dinner": "Corn Capsicum Masala, Chana Dal, Jeera Rice, Chapathi, Salad, Sevai Kheer"
+        "breakfast": "Idli Wada Sambar, coconut Chutney, Bread,Butter Jam, Tea & Coffee",
+        "lunch": "Rajma masala, Rajashtani Bhindi, Dal Massor, Jeera Rice, Sambhar, Chapathi, Salad, Papad,Curd",
+        "snacks": "Vada Pav, Green Chutney, Red chutney, Deep Fried Green Chilli, Tea & Coffee,",
+        "dinner": "baby Corn Capsicum Masala, Chana Dal, Jeera Rice, Chapathi, Salad, Sevai Kheer"
       },
       "Wed": {
         "breakfast": "Aloo Sabji, Poori, Poha, bread ,Butter Jam, Tea &Coffee",
-        "lunch": "Cabbage Matar Dry, Kadhi Pakoda, Dal Fry , Chapati, jeera rice, Sambar , Nimbu Panni , Chopped onions, Papad",
-        "snacks": "Masala Maggi , Tea And Coffee",
-        "dinner": "Egg Masala, Kadhai Paneer, Dal Tadka, Steam rice, chapati, Salad, Pickle, Besan Barfi"
+        "lunch": "Cabbage Matar Dry, Mix Veg, Dal Fry , Chapati, jeera rice, Sambar , Nimbu Panni , Chopped onions, Papad",
+        "snacks": "Veg sandwich, Tea & Coffee,Fruits",
+        "dinner": "Egg Masala, Kadhai Paneer, Dal Tadka, Steam rice, chapati, Salad, Pickle, gulab jamun"
       },
       "Thu": {
         "breakfast": "Misal Pav, Upma,Farsan, Bread, Jam, Butter, Tea Coffee",
         "lunch": "Poori, Pindi-Chole Masala, Green Peas Pulao, Lassi, Chopped onions, Papad",
-        "snacks": "Hakka Noodles, Tea & Coffee",
-        "dinner": "Rajasthani Dahi, Sev Tamatar, Steam Rice, Chapati, Salad, Pickle, Shahi Tukda"
+        "snacks": "Masala Maggi , Tea And Coffee",
+        "dinner": "Rajasthani Dahi, Baigan kaala Masala, Steam Rice, Chapati, Salad, Pickle, shahi tukda"
       },
       "Fri": {
         "breakfast": "Idli Wada Sambar, Tamato Spicy Chutney, Bread, Butter Jam, Tea & Coffee",
-        "lunch": "Aloo Gobhi , Steam Rice, Dal Makhani, Chapati, Salad, Pickle, Rasam and Papad Nimbu Paani",
-        "snacks": "White Bread Cutlet, Green Chutney Fruits Tea &Coffee",
-        "dinner": "Tomato Rice, Matki Gravy,Veg Kolhapuri, Chapati, Salad, Onion Raita, Dahi Vada"
+        "lunch": "Aloo Gobhi , Steam Rice, Dal Makhani, Chapati, Salad, Pickle, Rasam and Papad, pineapple juice",
+        "snacks": "Pani Puri , hot ragda, Tea &Coffee",
+        "dinner": "steam Rice, Matki Gravy, Veg Kolhapuri, Chapati, Salad, Onion Raita, Dahi Vada"
       },
       "Sat": {
-        "breakfast": "Thepla, Upma Sev, Bread, Jam, Butter, Tea Coffee",
-        "lunch": "Rajma masala, Rajashtani Bhindi, Dal Massor, Jeera Rice, Sambhar, Chapathi, Salad, Papad,Curd",
+        "breakfast": "Thepla, Pongal, tomato chutney Bread, Jam, Butter, Tea Coffee",
+        "lunch": "Soyabean, Dum Aloo, Dal Fry, Steam Rice, Chapati, Salad, Papad, Pickle, Boondi Raita, Sambhar",
         "snacks": "Macroni, Tea & Coffee",
         "dinner": "Fried rice, Egg fried rice, Manchurian semi gravy, Chop Onion, Ice cream"
       },
       "Sun": {
         "breakfast": "Tarri Poha,Chopped Onions,Tea & Coffee, Boiled Egg, Banana, Bread Butter Jam",
-        "lunch": "Aloo Puri, Veg Pulao, Methi Dal, Chopped Onion, Papad, Pickle, Lassi",
+        "lunch": "Chole Bhature, Jeera rice, Dal tadka, Chopped Onion, Papad, Pickle, Lassi",
         "snacks": "Kachori Chaat (Imly chutney), Tea & Coffee",
-        "dinner": "Paneer Do Payaaza, Soyabean Biryani Spicy, Chop Onion, Raita, Fruit Custard, Roti"
+        "dinner": "Paneer Do Payaaza, Soyabean Biryani Spicy, Chop Onion, Raita, coconut barfi, Roti"
       }
     },
     "week2": {
       "Mon": {
-        "breakfast": "Paneer Paratha, Curd, Pickel, Upma Sev, Bread, Butter, Jam, Tea &Coffee",
-        "lunch": "Kadhi Pakoda, Masoor dal dry, Steam Rice, Chapathi, Salad, Papad & Pickel, Nimbu Paani, Sambhar",
+        "breakfast": "gobi Paratha, Curd, Pickel, Upma Sev, Bread, Butter, Jam, Tea &Coffee",
+        "lunch": "paneer butter Masala, Lobia dry, Chapati, jeera rice, Dal fry, Rasam, Chopped onions, Papad, ButterMilk",
         "snacks": "Dabeli, Green and Imly chutney, Tea & Coffee",
-        "dinner": "Aloo Masala, Lauki Dal, Steam Rice, Chapathi, Dal Makhni, Salad, Pickle, Shrikhand"
+        "dinner": "Dal makhani, Jeera Rice, rajasthani bhindi Chapati, Salad, Pickle, Jalebi"
       },
       "Tue": {
         "breakfast": "Idli Wada Sambar, Chutney, Bread, Butter Jam, Tea & Coffee",
-        "lunch": "Baigan Masala, Mix Veg, Dal Kolhapuri, Steam Rice, Papad, Chapati, Rasam, Masala Chhach",
-        "snacks": "Masala Maggi , Tea & Coffee",
-        "dinner": "Tomato Bharta, tawa vegetable, Dal Tadka, Steam rice, Chapati, Salad, Pickle, Dry Fruit Sheera"
+        "lunch": "Black Chana Masala fry, Dum Aloo, Dal Tadka, Steam Rice, Chapati, Salad, Papad, Pickle, Curd, Sambhar",
+        "snacks": "Sweet corn chat, Fruits, Tea & Coffee",
+        "dinner": "soyabean sabzi, lobia masala ,(sev bhaji), Dal Tadka, Steam rice, Chapati, Salad, Pickle, besan barfi"
       },
       "Wed": {
-        "breakfast": "Methi Paratha, Coconut chutney ,Upma Sev, Bread, Butter Jam, Tea &Coffee",
-        "lunch": "Palak Poori,Aloo- Chole Masala , Jeera Rice, Dal Lasuni, Lassi, Chopped onions, Papad",
-        "snacks": "Masala Idli, Fruits, Tea & Coffee",
+        "breakfast": "Matar kulche, onions, Upma Sev, Bread, Butter Jam, Tea &Coffee",
+        "lunch": "Baigan Masala, Soyabean dry, Dal Kolhapuri, Steam Rice, Papad, Chapati, Rasam, Masala Chhach",
+        "snacks": "Masala Maggi , Tea And Coffee",
         "dinner": "Paneer Lababdar, Egg masala, Dal tadka, Steam Rice, Chapati, Salad, Pickle, Moong dal halwa"
       },
       "Thu": {
-        "breakfast": "Uttapam, Aloo Curry, Tomato Chutney, Vermicelli, Tea & Coffee",
-        "lunch": "Black Chana Masala, Dum Aloo, Dal Tadka, Steam Rice, Chapati, Salad, Papad, Pickle, Curd, Sambhar",
-        "snacks": "Ragda Patties, Chutney Tea & Coffee",
-        "dinner": "Sev Bhaji, Aloo Gobi Fry Steam Rice, Dal Kolhapuri, Chapati,Salad,Pickle And Gulab Jamun"
+        "breakfast": "Uttapam, Aloo Curry, coconut Chutney, Vermicelli, Tea & Coffee",
+        "lunch": "Palak Poori, Chole Masala , Jeera Rice, Dal Lasuni, Lassi, Chopped onions, Papad",
+        "snacks": "White sauce Pasta ,Fruits, Tea & Coffee",
+        "dinner": "corn capsicum masala, Aloo Gobi Fry Steam Rice, Dal Kolhapuri, Chapati,Salad,Pickle And Gulab Jamun"
       },
       "Fri": {
-        "breakfast": "Misal Pav,Aloo Sabudana khichdi , Farsan, Bread, Jam, Butter, Tea Coffee",
+        "breakfast": "Misal Pav, Sabudana khichdi , Farsan, Bread, Jam, Butter, Tea Coffee",
         "lunch": "Rajma Masala , Rajashtani Bhindi, Chapati, jeera rice, Dal fry, Rasam, Chopped onions, Papad, Nimbu Paani",
         "snacks": "Pani Puri,Hot Ragda Tea & Coffee",
-        "dinner": "Palak Paneer, Steam Rice, Dal Kolhapuri, Chapati, Salad, Pickle , Lauki halwa"
+        "dinner": "Kadai Paneer, Steam Rice, Dal Kolhapuri, Chapati, Salad, Pickle , Lauki halwa"
       },
       "Sat": {
         "breakfast": "Idli Wada Sambar, Chutney, Bread, Butter Jam, Tea & Coffee",
-        "lunch": "paneer butter Masala, Lobia Masala Chapati, jeera rice, Dal fry, Rasam, Chopped onions, Papad, ButterMilk",
-        "snacks": "Bhel Puri ,Fruits, Tea & Coffee",
+        "lunch": "Kadhi Pakoda, Masoor dal dry, Steam Rice, Chapathi, Salad, Papad & Pickel, Nimbu Paani, Sambhar",
+        "snacks": "Bread Pakoda, imly chutney, green chutney Tea & Coffee",
         "dinner": "Fried rice, Egg fried rice, Manchurian semi gravy, Chop Onion, Ice cream"
       },
       "Sun": {
         "breakfast": "Poha, Coconut chutney,Banana, Tea & Coffee, Boiled egg, Bread Butter Jam",
         "lunch": "Chole Bhature, Veg Pulao, Methi Dal, Chopped Onion, Papad, Pickle, Lassi",
-        "snacks": "Singaporian Noodles, Tea & Coffee",
+        "snacks": "Ragda Patties, Chutney Tea & Coffee",
         "dinner": "Pav Bhaji, Paneer Handi Biryani Spicy, Chop Onion, Mix Vegetable Raita, Fruit Custard."
       }
     }
@@ -2962,7 +2962,7 @@
       "time": "8:00 To 9:30"
     }
   ],
-  "food_menu_anchor": "2026-08-03",
+  "food_menu_anchor": "2026-10-05",
   "placements": [
     {
       "name": "Ishita Sinha",

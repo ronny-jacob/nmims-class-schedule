@@ -18,8 +18,11 @@ STUDENT_LIST = src("Trim-V student list.xlsx")
 # downloads/, then to sources/Trim V time table.xlsx (manual starter).
 TIMETABLE    = "downloads/19.10.2026 to25.10.2026.xlsx"
 TIMETABLE_NEXT = "downloads/26.10.2026 to 1.11.2026.xlsx"
-FOOD_MENU    = src("August-Sept Menu Updated.xlsx")
-FOOD_MENU_ANCHOR = "2026-08-03"
+FOOD_MENU    = src("October Menu.xlsx")
+# Monday of the week the sheet labels "1st Week Oct 2026". The app
+# alternates between the sheet's two weeks from here, so the week of
+# 19 Oct 2026 falls on the 1st-week menu.
+FOOD_MENU_ANCHOR = "2026-10-05"
 PLACEMENTS   = "sources/placements.json"
 OUTPUT       = "data.json"
 PLACEMENT_WINDOW_DAYS = 1
