@@ -19,10 +19,10 @@ STUDENT_LIST = src("Trim-V student list.xlsx")
 TIMETABLE    = "downloads/19.10.2026 to25.10.2026.xlsx"
 TIMETABLE_NEXT = "downloads/26.10.2026 to 1.11.2026.xlsx"
 FOOD_MENU    = src("October Menu.xlsx")
-# Monday of the week the sheet labels "1st Week Oct 2026". The app
-# alternates between the sheet's two weeks from here, so the week of
-# 19 Oct 2026 falls on the 1st-week menu.
-FOOD_MENU_ANCHOR = "2026-10-05"
+# Monday of the week that runs the sheet's "1st Week Oct 2026" menu. The
+# app alternates between the sheet's two weeks from here, so the week of
+# 26 Oct 2026 runs the 1st-week menu and the week after runs the 2nd.
+FOOD_MENU_ANCHOR = "2026-10-26"
 PLACEMENTS   = "sources/placements.json"
 OUTPUT       = "data.json"
 PLACEMENT_WINDOW_DAYS = 1
