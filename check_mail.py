@@ -1,4 +1,4 @@
-import imaplib, email, email.utils, json, os, re, subprocess, sys, hashlib, tempfile
+import imaplib, email, email.utils, json, os, re, shutil, subprocess, sys, hashlib, tempfile
 from datetime import datetime, timezone, timedelta
 from email.header import decode_header
 
@@ -129,16 +129,15 @@ def search_timetable_mail():
     if not candidates:
         return None
 
-    # candidates are newest-first: take the newest one we can date.
+    # candidates are newest-first.
+    print(f"📬 {len(candidates)} timetable email(s) in the last {LOOKBACK_DAYS} days")
     for c in candidates:
-        if resolve_week(c["att_name"], c["subject"], c["body"]):
-            return c
-    # Nothing dateable — fall back to the newest revision-style email
-    # (a reschedule whose dates are missing everywhere).
-    for c in candidates:
-        if looks_like_revision(c["subject"], c["body"], c["att_name"]):
-            return c
-    return candidates[0]
+        wk = resolve_week(c["att_name"], c["subject"], c["body"])
+        c["week"] = wk
+        c["revision"] = looks_like_revision(c["subject"], c["body"], c["att_name"])
+        print(f"   • {c['received_label']} | {c['subject'][:55]!r} | file={c['att_name']!r} "
+              f"| week={wk or '-'} | revision={c['revision']}")
+    return candidates
 
 
 def file_hash(path):
@@ -366,24 +365,10 @@ def main():
         print("   See SETUP.md for instructions.")
         sys.exit(1)
 
-    result = search_timetable_mail()
-    if not result:
+    candidates = search_timetable_mail()
+    if not candidates:
         print(f"ℹ️ No timetable email found as of {ist_now()}")
         return
-
-    sender = result["sender"]
-    received_label = result["received_label"]
-    subject = result["subject"]
-    body = result["body"]
-    att_name = result["att_name"]
-    att_content = result["att_content"]
-
-    # Repair sender filename typos (e.g. '12.010.2026 to ...xlsx') so the
-    # date parser can route the file to the correct TIMETABLE slot.
-    repaired_name = repair_timetable_filename(att_name)
-    if repaired_name and repaired_name != att_name:
-        print(f"🔧 Repaired attachment filename: {att_name!r} -> {repaired_name!r}")
-        att_name = repaired_name
 
     extract_path, src, cur, cur_next = read_extract()
     cw = week_of_path(cur)
@@ -404,25 +389,52 @@ def main():
         cur, cur_next = cur_next, ""
         cw, nw = nw, None
 
+    # Walk the emails newest-first. The newest one the sender sent wins —
+    # a reschedule is always later than the mail it replaces — and if it
+    # cannot be applied we fall through to the next one instead of
+    # silently using an older timetable.
+    for cand in candidates:
+        if apply_candidate(cand, extract_path, src, cur, cur_next, cw, nw, this_week):
+            return
+    print("ℹ️ No usable timetable email — nothing updated")
+
+
+def apply_candidate(cand, extract_path, src, cur, cur_next, cw, nw, this_week):
+    """Apply one candidate email. Returns True when it was handled
+    (applied, or knowingly a no-op) and False to try the next one."""
+    sender = cand["sender"]
+    received_label = cand["received_label"]
+    subject = cand["subject"]
+    body = cand["body"]
+    att_name = cand["att_name"]
+    att_content = cand["att_content"]
+
+    # Repair sender filename typos (e.g. '12.010.2026 to ...xlsx') so the
+    # date parser can route the file to the correct TIMETABLE slot.
+    repaired_name = repair_timetable_filename(att_name)
+    if repaired_name and repaired_name != att_name:
+        print(f"🔧 Repaired attachment filename: {att_name!r} -> {repaired_name!r}")
+        att_name = repaired_name
+
     # Which week does this attachment belong to?
-    new_week = resolve_week(att_name, subject, body)
-    revision = looks_like_revision(subject, body, att_name)
+    new_week = cand.get("week") or resolve_week(att_name, subject, body)
+    revision = cand.get("revision") or looks_like_revision(subject, body, att_name)
 
     if new_week is None:
         # No date anywhere in filename / subject / body. If it is clearly a
         # reschedule, apply it to the week that is currently published —
-        # a correction for "this week" is the common case. Otherwise do
-        # NOT guess: leave the wiring untouched.
+        # a correction for "this week" is the common case. Otherwise move
+        # on to the next (older) email.
         if revision and cw:
             new_week = cw
             print(f"♻️ No date found in {att_name!r} — applying it to the current week")
         else:
-            print(f"⚠️ {att_name!r} has no recoverable week date — not wired in")
-            return
+            print(f"⚠️ {att_name!r} has no recoverable week date — skipping this email")
+            return False
 
     if new_week < this_week and new_week != cw:
-        print(f"ℹ️ {att_name} is for a past week ({new_week}) — not wired in")
-        return
+        print(f"ℹ️ {att_name} is for a past week ({new_week}) — skipping this email")
+        return False
 
     # Where should the file live?
     #   • a reschedule of the week that is already wired → overwrite it, so
@@ -443,19 +455,23 @@ def main():
     os.makedirs(os.path.dirname(new_path), exist_ok=True)
     existing_hash = file_hash(new_path)
 
-    with open(new_path, "wb") as f:
+    # Sniff the attachment before it is allowed to touch the live file: a
+    # junk xlsx must never overwrite the timetable that is published.
+    tmp_path = os.path.join(TIMETABLE_DIR, "downloads",
+                            ".incoming-" + os.path.basename(att_name))
+    with open(tmp_path, "wb") as f:
         f.write(att_content)
-    print(f"💾 Saved: {target_rel}")
-
-    # Safety net: never wire a file that is not a Trim V timetable.
-    layout_ok = file_has_timetable_layout(new_path)
+    layout_ok = file_has_timetable_layout(tmp_path)
     if layout_ok is False and not TIMETABLE_PATTERN.search(os.path.basename(att_name)):
-        print(f"⚠️ {att_name!r} does not look like a timetable — not wired in")
+        print(f"⚠️ {att_name!r} does not look like a timetable — skipping this email")
         try:
-            os.remove(new_path)
+            os.remove(tmp_path)
         except OSError:
             pass
-        return
+        return False
+
+    shutil.move(tmp_path, new_path)
+    print(f"💾 Saved: {target_rel}")
 
     new_src = src
     if target_rel == cur:
@@ -479,9 +495,10 @@ def main():
     new_hash = hashlib.sha256(att_content).hexdigest()
     if new_hash == existing_hash and not src_changed:
         print(f"ℹ️ {target_rel} unchanged — no update needed")
-        return
+        return True
 
     rebuild_and_commit(new_path, sender, received_label, subject)
+    return True
 
 
 if __name__ == "__main__":
