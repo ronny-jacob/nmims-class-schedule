@@ -380,26 +380,41 @@ def main():
     this_week = monday_of(today)
 
     # Promote TIMETABLE_NEXT to TIMETABLE once its week has started.
+    # The rewritten source is applied at the end (with the candidate's
+    # own wiring) so that a promotion is always committed, even when the
+    # timetable file itself has not changed.
+    promoted = False
+    base_src = src
     if nw and nw <= this_week and (cw is None or nw > cw):
-        src = re.sub(r'^TIMETABLE\s*=\s*"[^"]*"', f'TIMETABLE    = "{cur_next}"', src, count=1, flags=re.M)
-        src = re.sub(r'^TIMETABLE_NEXT\s*=\s*"[^"]*"', 'TIMETABLE_NEXT = ""', src, count=1, flags=re.M)
-        with open(extract_path, "w") as f:
-            f.write(src)
-        print(f"♻️ Promoted {cur_next} to current timetable")
+        promoted_from = cur_next
         cur, cur_next = cur_next, ""
         cw, nw = nw, None
+        promoted = True
+        base_src = re.sub(r'^TIMETABLE\s*=\s*"[^"]*"', f'TIMETABLE    = "{cur}"', base_src, count=1, flags=re.M)
+        base_src = re.sub(r'^TIMETABLE_NEXT\s*=\s*"[^"]*"', 'TIMETABLE_NEXT = ""', base_src, count=1, flags=re.M)
+        print(f"♻️ Promoted {promoted_from} to current timetable")
 
     # Walk the emails newest-first. The newest one the sender sent wins —
     # a reschedule is always later than the mail it replaces — and if it
     # cannot be applied we fall through to the next one instead of
     # silently using an older timetable.
     for cand in candidates:
-        if apply_candidate(cand, extract_path, src, cur, cur_next, cw, nw, this_week):
+        if apply_candidate(cand, extract_path, src, base_src, cur, cur_next,
+                           cw, nw, this_week):
             return
+    if promoted:
+        # Nothing usable in the inbox, but the week still rolled over.
+        with open(extract_path, "w") as f:
+            f.write(base_src)
+        print("🔧 Updated extract.py (promotion)")
+        rebuild_and_commit(os.path.join(TIMETABLE_DIR, cur), "", ist_now(),
+                           "week rollover")
+        return
     print("ℹ️ No usable timetable email — nothing updated")
 
 
-def apply_candidate(cand, extract_path, src, cur, cur_next, cw, nw, this_week):
+def apply_candidate(cand, extract_path, src, base_src, cur, cur_next, cw, nw,
+                    this_week):
     """Apply one candidate email. Returns True when it was handled
     (applied, or knowingly a no-op) and False to try the next one."""
     sender = cand["sender"]
@@ -473,7 +488,7 @@ def apply_candidate(cand, extract_path, src, cur, cur_next, cw, nw, this_week):
     shutil.move(tmp_path, new_path)
     print(f"💾 Saved: {target_rel}")
 
-    new_src = src
+    new_src = base_src
     if target_rel == cur:
         new_slot = "TIMETABLE"
     elif target_rel == cur_next:
