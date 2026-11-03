@@ -2327,6 +2327,7 @@ var STUDENTS = ["Aastha Saini", "Abhishek Kumar", "Aby K Mathai", "Aditya Chaube
 
 
 
+
 var PAL=[["#DBEAFE","#1E40AF","#1E40AF"],["#DCFCE7","#166534","#166534"],["#FEF3C7","#92400E","#B45309"],["#EDE9FE","#4C1D95","#6D28D9"],["#FFE4E6","#9F1239","#BE123C"],["#CCFBF1","#134E4A","#0F766E"],["#FEE2E2","#991B1B","#DC2626"],["#E0F2FE","#0C4A6E","#0369A1"],["#F3E8FF","#581C87","#7E22CE"],["#ECFCCB","#365314","#4D7C0F"],["#FFF7ED","#7C2D12","#EA580C"],["#FCE7F3","#831843","#BE185D"]];
 var sel={},so=[],ci=0,q='',sq='',ss='at',at='v';
 var ni={};for(var _=0;_<STUDENTS.length;_++)ni[STUDENTS[_]]=_;
@@ -2735,19 +2736,30 @@ function buildCelebration(){
     if (j >= i) j++;
     return [ce[i], ce[j]];
   }
-  // Group records from the same announcement (company + type + date) so a
-  // batch of names reads as one line — "Congrats A, B and C, on securing
-  // a Final Placement at X" — instead of one sentence per student.
+  // Group every placement in the window into one line per type — "Congrats
+  // A, B and C, on securing Final Placements at X, Y and Z" — instead of
+  // one sentence per student, per company or per day.
   var groups = [], gIndex = {};
   for (var j = 0; j < rec.length; j++) {
-    var key = (rec[j].company || '') + '\u0001' + (rec[j].type || '') + '\u0001' + (rec[j].date || '');
-    if (!(key in gIndex)) { gIndex[key] = groups.length; groups.push({ company: rec[j].company, type: rec[j].type, names: [] }); }
-    groups[gIndex[key]].names.push(rec[j].name);
+    var key = rec[j].type || '';
+    if (!(key in gIndex)) { gIndex[key] = groups.length; groups.push({ type: rec[j].type, companies: [], names: [] }); }
+    var grp = groups[gIndex[key]];
+    var comp = rec[j].company || '';
+    if (grp.companies.indexOf(comp) === -1) grp.companies.push(comp);
+    grp.names.push(rec[j].name);
   }
   for (var g = 0; g < groups.length; g++) {
     var grp = groups[g];
     var e = pickEmojis();
-    var phr = (grp.type === 'final') ? 'on securing a Final Placement at' : 'on securing PPO at';
+    var multi = grp.companies.length > 1;
+    var phr = (grp.type === 'final')
+      ? (multi ? 'on securing Final Placements at' : 'on securing a Final Placement at')
+      : (multi ? 'on securing PPOs at' : 'on securing a PPO at');
+    var comps = [];
+    for (var c = 0; c < grp.companies.length; c++) comps.push(he(grp.companies[c]));
+    var compTxt = comps.length === 1 ? comps[0]
+      : (comps.length === 2 ? comps[0] + ' and ' + comps[1]
+      : comps.slice(0, -1).join(', ') + ' and ' + comps[comps.length - 1]);
     var short = [];
     for (var n = 0; n < grp.names.length; n++) short.push(shortPlaceName(grp.names[n], allNames));
     var joined;
@@ -2756,7 +2768,7 @@ function buildCelebration(){
     if (esc.length === 1) joined = '<b>' + esc[0] + '</b>';
     else if (esc.length === 2) joined = '<b>' + esc[0] + '</b> and <b>' + esc[1] + '</b>';
     else joined = '<b>' + esc.slice(0, -1).join('</b>, <b>') + '</b> and <b>' + esc[esc.length - 1] + '</b>';
-    items.push('<span class="celeb-sep">&#183;</span><span class="celeb-item"><i class="ce-emoji">' + e[0] + '</i> Congrats ' + joined + ', ' + phr + ' <em>' + he(grp.company) + '</em> <i class="ce-emoji">' + e[1] + '</i></span>');
+    items.push('<span class="celeb-sep">&#183;</span><span class="celeb-item"><i class="ce-emoji">' + e[0] + '</i> Congrats ' + joined + ', ' + phr + ' <em>' + compTxt + '</em> <i class="ce-emoji">' + e[1] + '</i></span>');
   }
   items.push('<span class="celeb-sep">&#183;</span>');
   var seq = items.join('');
