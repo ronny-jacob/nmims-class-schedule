@@ -2376,7 +2376,62 @@
       "div": "Div B"
     }
   ],
-  "timetable_next": [],
+  "timetable_next": [
+    {
+      "day": "Sat",
+      "time": "10:10-11:40",
+      "subject": "SBM_A",
+      "raw_text": "SBM Div A\nL06, 2nd floor\nProf Murtuza",
+      "professor": "Prof Murtuza",
+      "room": "L06, 2nd floor",
+      "div": "Div A"
+    },
+    {
+      "day": "Sat",
+      "time": "11:50-1:20",
+      "subject": "SBM_A",
+      "raw_text": "SBM Div A\nL06, 2nd floor\nProf Murtuza",
+      "professor": "Prof Murtuza",
+      "room": "L06, 2nd floor",
+      "div": "Div A"
+    },
+    {
+      "day": "Sat",
+      "time": "2:00-3:30",
+      "subject": "SBM_B",
+      "raw_text": "SBM Div B\nL06, 2nd floor\nProf Murtuza",
+      "professor": "Prof Murtuza",
+      "room": "L06, 2nd floor",
+      "div": "Div B"
+    },
+    {
+      "day": "Sat",
+      "time": "3:40-5:10",
+      "subject": "SBM_B",
+      "raw_text": "SBM Div B\nL06, 2nd floor\nProf Murtuza",
+      "professor": "Prof Murtuza",
+      "room": "L06, 2nd floor",
+      "div": "Div B"
+    },
+    {
+      "day": "Sat",
+      "time": "6:00-7:30",
+      "subject": "SM",
+      "raw_text": "SM\nL07, 2nd floor\nProf Murtuza",
+      "professor": "Prof Murtuza",
+      "room": "L07, 2nd floor",
+      "div": ""
+    },
+    {
+      "day": "Sat",
+      "time": "7:35 to 9:05",
+      "subject": "SM",
+      "raw_text": "SM\nL07, 2nd floor\nProf Murtuza",
+      "professor": "Prof Murtuza",
+      "room": "L07, 2nd floor",
+      "div": ""
+    }
+  ],
   "time_slots": [
     "8:30-10:00",
     "10:10-11:40",
@@ -2387,7 +2442,15 @@
     "6:00-7:30",
     "7:35 to 9:05"
   ],
-  "time_slots_next": [],
+  "time_slots_next": [
+    "10:10-11:40",
+    "11:50-1:20",
+    "1:20-1:50",
+    "2:00-3:30",
+    "3:40-5:10",
+    "6:00-7:30",
+    "7:35 to 9:05"
+  ],
   "food_menu": {
     "week1": {
       "Mon": {
@@ -3000,11 +3063,11 @@
     "Sat"
   ],
   "date_range": "Mon 2 Nov \u2013 Thu 5 Nov 2026",
-  "date_range_next": "",
+  "date_range_next": "Thu 12 Nov \u2013 Sun 15 Nov 2026",
   "week_start": "2026-11-02",
   "week_end": "2026-11-05",
-  "week_start_next": "",
-  "week_end_next": "",
+  "week_start_next": "2026-11-12",
+  "week_end_next": "2026-11-15",
   "classes": {
     "v": [
       {
@@ -4385,8 +4448,8 @@
   "mx": 69,
   "last_updated": {
     "sender": "Sadashiv Bhimanna <sadashiv.bhimanna@nmims.edu>",
-    "received_at": "4:26 PM IST on 31 Oct 2026",
-    "subject": "Next week time table",
-    "updated_at": "2026-11-02T16:52:04.101574+00:00"
+    "received_at": "3:57 PM IST on 4 Nov 2026",
+    "subject": "Next week time table trim-V from 13.11.2026",
+    "updated_at": "2026-11-04T18:09:51.428368+00:00"
   }
 }
