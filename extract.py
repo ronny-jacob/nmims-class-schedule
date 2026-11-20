@@ -17,7 +17,7 @@ STUDENT_LIST = src("Trim-V student list.xlsx")
 # hasn't run yet), fall back to the most recently dated file in
 # downloads/, then to sources/Trim V time table.xlsx (manual starter).
 TIMETABLE    = "downloads/16.11.2026 to 22.11.2026...xlsx"
-TIMETABLE_NEXT = ""
+TIMETABLE_NEXT = "downloads/23.11.2026 to 29.11.2026.xlsx"
 FOOD_MENU    = src("October Menu.xlsx")
 # Monday of the week that runs the sheet's "1st Week Oct 2026" menu. The
 # app alternates between the sheet's two weeks from here, so the week of
