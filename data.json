@@ -3166,9 +3166,79 @@
       "date": "2026-11-03",
       "roster": null,
       "type": "final"
+    },
+    {
+      "name": "Dhairya Mehta",
+      "company": "Kotrike Financial Advisory Services",
+      "date": "2026-11-20",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Himanshi Tanwar",
+      "company": "Kotrike Financial Advisory Services",
+      "date": "2026-11-20",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Swapnil Tiwari",
+      "company": "Kotrike Financial Advisory Services",
+      "date": "2026-11-20",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Tushar Soni",
+      "company": "Kotrike Financial Advisory Services",
+      "date": "2026-11-20",
+      "roster": "Tushar soni",
+      "type": "final"
+    },
+    {
+      "name": "Aastha Saini",
+      "company": "Capgemini",
+      "date": "2026-11-20",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Nachiketh N",
+      "company": "Capgemini",
+      "date": "2026-11-20",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Mahika Vasandani",
+      "company": "Capgemini",
+      "date": "2026-11-20",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Marie Aparajith Rajashankar",
+      "company": "Capgemini",
+      "date": "2026-11-20",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Prateek Gaur",
+      "company": "Preferred Square",
+      "date": "2026-11-20",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Rishabh Tulsian",
+      "company": "Preferred Square",
+      "date": "2026-11-20",
+      "roster": null,
+      "type": "final"
     }
   ],
-  "placements_window_days": 1,
+  "placements_window_days": 7,
   "holidays": {
     "2026-08-15": "Independence Day"
   },

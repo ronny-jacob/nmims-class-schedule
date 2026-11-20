@@ -25,7 +25,7 @@ FOOD_MENU    = src("October Menu.xlsx")
 FOOD_MENU_ANCHOR = "2026-10-26"
 PLACEMENTS   = "sources/placements.json"
 OUTPUT       = "data.json"
-PLACEMENT_WINDOW_DAYS = 1
+PLACEMENT_WINDOW_DAYS = 7
 
 HOLIDAYS = {
     "2026-08-15": "Independence Day",
@@ -520,6 +520,18 @@ def parse_students():
                        Minor, [subject codes 9..22]
       row 3+: student rows. Name2 is the canonical display name.
     """
+    if not os.path.exists(STUDENT_LIST):
+        print(f"ℹ️ Student list '{STUDENT_LIST}' not found locally.")
+        if os.path.exists(OUTPUT):
+            print(f"   Reusing existing student roster from {OUTPUT}")
+            try:
+                with open(OUTPUT) as f:
+                    existing_data = json.load(f)
+                return existing_data.get("students", [])
+            except Exception as e:
+                print(f"⚠️ Could not read {OUTPUT}: {e}")
+        return []
+
     wb = openpyxl.load_workbook(STUDENT_LIST)
     ws = wb[wb.sheetnames[0]]
 

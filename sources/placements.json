@@ -311,6 +311,43 @@
         "Varun Patwary",
         "Ayush Kayande"
       ]
+    },
+    {
+      "company": "Kotrike Financial Advisory Services",
+      "role": "Valuation Analyst",
+      "type": "final",
+      "announced_on": "2026-11-20",
+      "names": [
+        "Dhairya Mehta",
+        "Himanshi Tanwar",
+        "Swapnil Tiwari",
+        {
+          "name": "Tushar Soni",
+          "roster": "Tushar soni"
+        }
+      ]
+    },
+    {
+      "company": "Capgemini",
+      "role": "Final Placement",
+      "type": "final",
+      "announced_on": "2026-11-20",
+      "names": [
+        "Aastha Saini",
+        "Nachiketh N",
+        "Mahika Vasandani",
+        "Marie Aparajith Rajashankar"
+      ]
+    },
+    {
+      "company": "Preferred Square",
+      "role": "Senior Business Analyst",
+      "type": "final",
+      "announced_on": "2026-11-20",
+      "names": [
+        "Prateek Gaur",
+        "Rishabh Tulsian"
+      ]
     }
   ]
 }
