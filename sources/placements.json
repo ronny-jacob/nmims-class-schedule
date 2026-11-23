@@ -348,6 +348,19 @@
         "Prateek Gaur",
         "Rishabh Tulsian"
       ]
+    },
+    {
+      "company": "ADP",
+      "role": "Sr. Associate Functional Consultant",
+      "type": "final",
+      "announced_on": "2026-11-23",
+      "names": [
+        "Arjya Bose",
+        {
+          "name": "Krish Sidhharth Negi",
+          "roster": "Krish Siddharth Negi"
+        }
+      ]
     }
   ]
 }

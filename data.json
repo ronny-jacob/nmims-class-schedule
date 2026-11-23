@@ -3199,6 +3199,20 @@
       "date": "2026-11-20",
       "roster": null,
       "type": "final"
+    },
+    {
+      "name": "Arjya Bose",
+      "company": "ADP",
+      "date": "2026-11-23",
+      "roster": null,
+      "type": "final"
+    },
+    {
+      "name": "Krish Sidhharth Negi",
+      "company": "ADP",
+      "date": "2026-11-23",
+      "roster": "Krish Siddharth Negi",
+      "type": "final"
     }
   ],
   "placements_window_days": 2,
