@@ -3201,7 +3201,7 @@
       "type": "final"
     }
   ],
-  "placements_window_days": 7,
+  "placements_window_days": 2,
   "holidays": {
     "2026-08-15": "Independence Day"
   },

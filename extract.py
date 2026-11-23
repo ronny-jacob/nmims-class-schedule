@@ -25,7 +25,7 @@ FOOD_MENU    = src("October Menu.xlsx")
 FOOD_MENU_ANCHOR = "2026-10-26"
 PLACEMENTS   = "sources/placements.json"
 OUTPUT       = "data.json"
-PLACEMENT_WINDOW_DAYS = 7
+PLACEMENT_WINDOW_DAYS = 2
 
 HOLIDAYS = {
     "2026-08-15": "Independence Day",
